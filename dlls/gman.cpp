@@ -109,7 +109,7 @@ void CGMan :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 int CGMan :: ISoundMask ( void )
 {
-	return	nullptr;
+	return	0;
 }
 
 //=========================================================
