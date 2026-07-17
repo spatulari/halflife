@@ -48,12 +48,12 @@ extern "C"
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
-TeamFortressViewport *gViewPort = NULL;
+TeamFortressViewport *gViewPort = nullptr;
 
 
 #include "particleman.h"
-CSysModule *g_hParticleManModule = NULL;
-IParticleMan *g_pParticleMan = NULL;
+CSysModule *g_hParticleManModule = nullptr;
+IParticleMan *g_pParticleMan = nullptr;
 
 void CL_LoadParticleMan( void );
 void CL_UnloadParticleMan( void );
@@ -308,8 +308,8 @@ void CL_UnloadParticleMan( void )
 {
 	Sys_UnloadModule( g_hParticleManModule );
 
-	g_pParticleMan = NULL;
-	g_hParticleManModule = NULL;
+	g_pParticleMan = nullptr;
+	g_hParticleManModule = nullptr;
 }
 
 void CL_LoadParticleMan( void )
@@ -318,22 +318,22 @@ void CL_LoadParticleMan( void )
 
 	if ( gEngfuncs.COM_ExpandFilename( PARTICLEMAN_DLLNAME, szPDir, sizeof( szPDir ) ) == FALSE )
 	{
-		g_pParticleMan = NULL;
-		g_hParticleManModule = NULL;
+		g_pParticleMan = nullptr;
+		g_hParticleManModule = nullptr;
 		return;
 	}
 
 	g_hParticleManModule = Sys_LoadModule( szPDir );
 	CreateInterfaceFn particleManFactory = Sys_GetFactory( g_hParticleManModule );
 
-	if ( particleManFactory == NULL )
+	if ( particleManFactory == nullptr )
 	{
-		g_pParticleMan = NULL;
-		g_hParticleManModule = NULL;
+		g_pParticleMan = nullptr;
+		g_hParticleManModule = nullptr;
 		return;
 	}
 
-	g_pParticleMan = (IParticleMan *)particleManFactory( PARTICLEMAN_INTERFACE, NULL);
+	g_pParticleMan = (IParticleMan *)particleManFactory( PARTICLEMAN_INTERFACE, nullptr);
 
 	if ( g_pParticleMan )
 	{

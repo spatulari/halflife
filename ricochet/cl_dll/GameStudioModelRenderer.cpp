@@ -715,7 +715,7 @@ int CGameStudioModelRenderer::_StudioDrawPlayer( int flags, entity_state_t *ppla
 		return 0;
 
 	m_pRenderModel = IEngineStudio.SetupPlayerModel( m_nPlayerIndex );
-	if (m_pRenderModel == NULL)
+	if (m_pRenderModel == nullptr)
 		return 0;
 
 	m_pStudioHeader = (studiohdr_t *)IEngineStudio.Mod_Extradata (m_pRenderModel);
@@ -732,7 +732,7 @@ int CGameStudioModelRenderer::_StudioDrawPlayer( int flags, entity_state_t *ppla
 		StudioProcessGait( pplayer );
 
 		m_pPlayerInfo->gaitsequence = pplayer->gaitsequence;
-		m_pPlayerInfo = NULL;
+		m_pPlayerInfo = nullptr;
 
 		StudioSetUpTransform( 0 );
 		VectorCopy( orig_angles, m_pCurrentEntity->angles );
@@ -772,7 +772,7 @@ int CGameStudioModelRenderer::_StudioDrawPlayer( int flags, entity_state_t *ppla
 	StudioSaveBones( );
 	m_pPlayerInfo->renderframe = m_nFrameCount;
 
-	m_pPlayerInfo = NULL;
+	m_pPlayerInfo = nullptr;
 
 	if (flags & STUDIO_EVENTS)
 	{
@@ -827,7 +827,7 @@ int CGameStudioModelRenderer::_StudioDrawPlayer( int flags, entity_state_t *ppla
 		IEngineStudio.StudioSetRemapColors( m_nTopColor, m_nBottomColor );
 
 		StudioRenderModel( );
-		m_pPlayerInfo = NULL;
+		m_pPlayerInfo = nullptr;
 
 		if (pplayer->weaponmodel)
 		{

@@ -55,7 +55,7 @@ float *GetClientColor( int clientIndex )
 	const char *teamName = g_PlayerExtraInfo[clientIndex].teamname;
 
 	if ( !teamName || *teamName == 0 ) 
-		return NULL;
+		return nullptr;
 
 	if ( !stricmp( "blue", teamName ) )
 		return g_ColorBlue;
@@ -66,7 +66,7 @@ float *GetClientColor( int clientIndex )
 	else if ( !stricmp( "yellow", teamName ) )
 		return g_ColorYellow;
 
-	return NULL;
+	return nullptr;
 }
 
 
@@ -206,7 +206,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 	}
 
 	// Get the Victim's name
-	char *victim_name = NULL;
+	char *victim_name = nullptr;
 	// If victim is -1, the killer killed a specific, non-player object (like a sentrygun)
 	if ( ((char)victim) != -1 )
 		victim_name = g_PlayerInfoList[ victim ].name;

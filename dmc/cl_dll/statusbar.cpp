@@ -76,7 +76,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 
 	GetPlayerInfo( indexval, &g_PlayerInfoList[indexval] );
 
-	if ( g_PlayerInfoList[indexval].name != NULL )
+	if ( g_PlayerInfoList[indexval].name != nullptr )
 	{
 		strncpy( m_szName[line_num], g_PlayerInfoList[indexval].name, MAX_PLAYER_NAME_LENGTH );
 	}
@@ -228,7 +228,7 @@ int CHudStatusBar :: MsgFunc_StatusText( const char *pszName, int iSize, void *p
 		return 1;
 
 	strncpy( m_szStatusText[line], READ_STRING(), MAX_STATUSTEXT_LENGTH );
-	m_szStatusText[line][MAX_STATUSTEXT_LENGTH-1] = 0;  // ensure it's null terminated ( strncpy() won't null terminate if read string too long)
+	m_szStatusText[line][MAX_STATUSTEXT_LENGTH-1] = 0;  // ensure it's nullptr terminated ( strncpy() won't nullptr terminate if read string too long)
 
 	if ( m_szStatusText[0] == 0 )
 		m_iFlags &= ~HUD_ACTIVE;

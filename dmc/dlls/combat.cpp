@@ -72,7 +72,7 @@ void CGib :: SpawnStickyGibs( entvars_t *pevVictim, Vector vecOrigin, int cGibs 
 
 	for ( i = 0 ; i < cGibs ; i++ )
 	{
-		CGib *pGib = GetClassPtr( (CGib *)NULL );
+		CGib *pGib = GetClassPtr( (CGib *)nullptr );
 
 		pGib->Spawn( "models/stickygib.mdl" );
 		pGib->pev->body = RANDOM_LONG(0,2);
@@ -123,7 +123,7 @@ void CGib :: SpawnStickyGibs( entvars_t *pevVictim, Vector vecOrigin, int cGibs 
 			pGib->pev->solid = SOLID_BBOX;
 			UTIL_SetSize ( pGib->pev, Vector ( 0, 0 ,0 ), Vector ( 0, 0, 0 ) );
 			pGib->SetTouch ( &CGib::StickyGibTouch );
-			pGib->SetThink (NULL);
+			pGib->SetThink (nullptr);
 		}
 		pGib->LimitVelocity();
 	}
@@ -131,7 +131,7 @@ void CGib :: SpawnStickyGibs( entvars_t *pevVictim, Vector vecOrigin, int cGibs 
 
 void CGib :: SpawnHeadGib( entvars_t *pevVictim )
 {
-	CGib *pGib = GetClassPtr( (CGib *)NULL );
+	CGib *pGib = GetClassPtr( (CGib *)nullptr );
 
 	if ( g_Language == LANGUAGE_GERMAN )
 	{
@@ -193,7 +193,7 @@ void CGib :: SpawnRandomGibs( entvars_t *pevVictim, int cGibs, int human )
 
 	for ( cSplat = 0 ; cSplat < cGibs ; cSplat++ )
 	{
-		CGib *pGib = GetClassPtr( (CGib *)NULL );
+		CGib *pGib = GetClassPtr( (CGib *)nullptr );
 
 		if ( g_Language == LANGUAGE_GERMAN )
 		{
@@ -771,7 +771,7 @@ int CBaseMonster :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker,
 			Killed( pevAttacker, GIB_NORMAL );
 		}
 
-		g_pevLastInflictor = NULL;
+		g_pevLastInflictor = nullptr;
 
 		return 0;
 	}
@@ -785,7 +785,7 @@ int CBaseMonster :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker,
 			// enemy's last known position is somewhere down the vector that the attack came from.
 			if (pevInflictor)
 			{
-				if (m_hEnemy == NULL || pevInflictor == m_hEnemy->pev || !HasConditions(bits_COND_SEE_ENEMY))
+				if (m_hEnemy == nullptr || pevInflictor == m_hEnemy->pev || !HasConditions(bits_COND_SEE_ENEMY))
 				{
 					m_vecEnemyLKP = pevInflictor->origin;
 				}
@@ -885,7 +885,7 @@ float CBaseMonster :: DamageForce( float damage )
 	
 void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType )
 {
-	CBaseEntity *pEntity = NULL;
+	CBaseEntity *pEntity = nullptr;
 	TraceResult	tr;
 	float		flAdjustedDamage, falloff;
 	Vector		vecSpot;
@@ -903,7 +903,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 		pevAttacker = pevInflictor;
 
 	// iterate on all entities in the vicinity.
-	while ((pEntity = UTIL_FindEntityInSphere( pEntity, vecSrc, flRadius )) != NULL)
+	while ((pEntity = UTIL_FindEntityInSphere( pEntity, vecSrc, flRadius )) != nullptr)
 	{
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{

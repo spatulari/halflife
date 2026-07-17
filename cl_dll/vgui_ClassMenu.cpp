@@ -199,7 +199,7 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide
 		// Open up the Class Briefing File
 		sprintf(sz, "classes/short_%s.txt", sTFClassSelection[i]);
 		char *cText = "Class Description not available.";
-		char *pfile = (char *)gEngfuncs.COM_LoadFile( sz, 5, NULL );
+		char *pfile = (char *)gEngfuncs.COM_LoadFile( sz, 5, nullptr );
 		if (pfile)
 		{
 			cText = pfile;
@@ -226,7 +226,7 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide
 
 		//check to see if the image goes lower than the text
 		//just use the red teams [0] images
-		if(m_pClassImages[0][i]!=null)
+		if(m_pClassImages[0][i]!=nullptr)
 		{
 			m_pClassImages[0][i]->getPos(xx,yy);
 			if((yy+m_pClassImages[0][i]->getTall())>maxY)
@@ -302,7 +302,7 @@ void CClassMenuPanel::Update()
 		int iTotal = 0;
 		for ( int j = 1; j < MAX_PLAYERS; j++ )
 		{
-			if ( g_PlayerInfoList[j].name == NULL )
+			if ( g_PlayerInfoList[j].name == nullptr )
 				continue; // empty player slot, skip
 			if ( g_PlayerExtraInfo[j].teamname[0] == 0 )
 				continue; // skip over players who are not in a team
@@ -338,7 +338,7 @@ void CClassMenuPanel::Update()
 			}
 
 			// set the current team image
-			if ( m_pClassImages[g_iTeamNumber-1][i] != NULL )
+			if ( m_pClassImages[g_iTeamNumber-1][i] != nullptr )
 			{
 				m_pClassImages[g_iTeamNumber-1][i]->setVisible( true );
 			}

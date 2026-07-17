@@ -76,7 +76,7 @@ static CDMCVoiceStatusHelper g_VoiceStatusHelper;
 extern client_sprite_t *GetSpriteList(client_sprite_t *pList, const char *psz, int iRes, int iCount);
 
 extern cvar_t *sensitivity;
-cvar_t *cl_lw = NULL;
+cvar_t *cl_lw = nullptr;
 cvar_t *cl_autowepswitch;
 cvar_t *cl_rollspeed;
 cvar_t *cl_rollangle;
@@ -223,7 +223,7 @@ void CHud :: Init( void )
 	cl_fov = gEngfuncs.pfnRegisterVariable ( "cl_fov", "90", FCVAR_USERINFO|FCVAR_ARCHIVE );
 	/************************ CLIENT CVAR DEFINITIONS ************************/
 
-	m_pSpriteList = NULL;
+	m_pSpriteList = nullptr;
 
 	// Clear any old HUD list
 	if ( m_pHudList )
@@ -235,7 +235,7 @@ void CHud :: Init( void )
 			m_pHudList = m_pHudList->pNext;
 			free( pList );
 		}
-		m_pHudList = NULL;
+		m_pHudList = nullptr;
 	}
 
 	// In case we get messages before the first update -- time will be valid
@@ -264,10 +264,10 @@ void CHud :: Init( void )
 
 	ServersInit();
 
-	MsgFunc_ResetHUD(0, 0, NULL );
+	MsgFunc_ResetHUD(0, 0, nullptr );
 }
 
-CHud::CHud() : m_iSpriteCount(0), m_pHudList(NULL)
+CHud::CHud() : m_iSpriteCount(0), m_pHudList(nullptr)
 {
 }
 
@@ -288,7 +288,7 @@ CHud :: ~CHud()
 			m_pHudList = m_pHudList->pNext;
 			free( pList );
 		}
-		m_pHudList = NULL;
+		m_pHudList = nullptr;
 	}
 
 	ServersShutdown();

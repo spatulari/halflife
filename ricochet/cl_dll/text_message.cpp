@@ -84,7 +84,7 @@ char *CHudTextMessage::LocaliseTextString( const char *msg, char *dst_buffer, in
 		}
 	}
 
-	dst_buffer[len-1] = 0; // ensure null termination
+	dst_buffer[len-1] = 0; // ensure nullptr termination
 	return dst_buffer;
 }
 

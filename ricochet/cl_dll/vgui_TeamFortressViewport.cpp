@@ -271,7 +271,7 @@ CommandButton *CCommandMenu::FindButtonWithSubmenu( CCommandMenu *pSubMenu )
 			return m_aButtons[i];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 // Recalculate the visible buttons
@@ -291,7 +291,7 @@ bool CCommandMenu::RecalculateVisibles( int iNewYPos, bool bHideAll )
 		if ( (iClass && iClass != g_iPlayerClass ) || ( m_aButtons[i]->IsNotValid() ) || bHideAll )
 		{
 			m_aButtons[i]->setVisible( false );
-			if ( m_aButtons[i]->GetSubMenu() != NULL )
+			if ( m_aButtons[i]->GetSubMenu() != nullptr )
 			{
 				(m_aButtons[i]->GetSubMenu())->RecalculateVisibles( _pos[1] + iCurrentY, true );
 			}
@@ -299,7 +299,7 @@ bool CCommandMenu::RecalculateVisibles( int iNewYPos, bool bHideAll )
 		else
 		{
  			// If it's got a submenu, force it to check visibilities
-			if ( m_aButtons[i]->GetSubMenu() != NULL )
+			if ( m_aButtons[i]->GetSubMenu() != nullptr )
 			{
 				if ( !(m_aButtons[i]->GetSubMenu())->RecalculateVisibles( _pos[1] + iCurrentY, false ) )
 				{
@@ -367,7 +367,7 @@ void CCommandMenu::MakeVisible( CCommandMenu *pChildMenu )
 	// Push down the button leading to the child menu
 	for (int i = 0; i < m_iButtons; i++)
 	{
-		if ( (pChildMenu != NULL) && (m_aButtons[i]->GetSubMenu() == pChildMenu) )
+		if ( (pChildMenu != nullptr) && (m_aButtons[i]->GetSubMenu() == pChildMenu) )
 		{
 			m_aButtons[i]->setArmed( true );
 		}
@@ -478,10 +478,10 @@ TeamFortressViewport::TeamFortressViewport(int x,int y,int wide,int tall) : Pane
 {
 	gViewPort = this;
 	m_iInitialized = false;
-	m_pScoreBoard = NULL;
-	m_pSpectatorMenu = NULL;
-	m_pCurrentMenu = NULL;
-	m_pCurrentCommandMenu = NULL;
+	m_pScoreBoard = nullptr;
+	m_pSpectatorMenu = nullptr;
+	m_pCurrentMenu = nullptr;
+	m_pCurrentCommandMenu = nullptr;
 
 	CVAR_CREATE( "hud_classautokill", "1", FCVAR_ARCHIVE );		// controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
@@ -597,7 +597,7 @@ void TeamFortressViewport::CreateCommandMenu( void )
 {
 	// COMMAND MENU
 	// Create the root of the Command Menu
-	m_pCommandMenus[0] = new CCommandMenu(NULL, 0, CMENU_TOP, CMENU_SIZE_X, 300);	// This will be resized once we know how many items are in it
+	m_pCommandMenus[0] = new CCommandMenu(nullptr, 0, CMENU_TOP, CMENU_SIZE_X, 300);	// This will be resized once we know how many items are in it
 	m_pCommandMenus[0]->setParent(this);
 	m_pCommandMenus[0]->setVisible(false);
 	m_iNumMenus = 1;
@@ -605,11 +605,11 @@ void TeamFortressViewport::CreateCommandMenu( void )
 
 	// Read Command Menu from the txt file
 	char token[1024];
-	char *pfile = (char*)gEngfuncs.COM_LoadFile("commandmenu.txt", 5, NULL);
+	char *pfile = (char*)gEngfuncs.COM_LoadFile("commandmenu.txt", 5, nullptr);
 	if (!pfile)
 	{
 		gEngfuncs.Con_DPrintf( "Unable to open commandmenu.txt\n");
-		SetCurrentCommandMenu( NULL );
+		SetCurrentCommandMenu( nullptr );
 		return;
 	}
 
@@ -643,7 +643,7 @@ try
 			int  iCustom = false;
 			int  iTeamOnly = 0;
 			bool bGetExtraToken = true;
-			CommandButton *pButton = NULL;
+			CommandButton *pButton = nullptr;
 			
 			// We should never be here without a Command Menu
 			if (!m_pCurrentCommandMenu)
@@ -803,14 +803,14 @@ catch( CException *e )
 {
 	e;
 	//e->Delete();
-	e = NULL;
+	e = nullptr;
 	m_iInitialized = false;
 	return;
 }
 #endif
 
-	SetCurrentMenu( NULL );
-	SetCurrentCommandMenu( NULL );
+	SetCurrentMenu( nullptr );
+	SetCurrentCommandMenu( nullptr );
 	gEngfuncs.COM_FreeFile( pfile );
 
 	m_iInitialized = true;
@@ -851,8 +851,8 @@ CCommandMenu *TeamFortressViewport::CreateDisguiseSubmenu( CommandButton *pButto
 //-----------------------------------------------------------------------------
 CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char *pButtonName )
 {
-	CommandButton *pButton = NULL;
-	CCommandMenu  *pMenu = NULL;
+	CommandButton *pButton = nullptr;
+	CCommandMenu  *pMenu = nullptr;
 
 	// ChangeTeam
 	if ( !strcmp( pButtonName, "!CHANGETEAM" ) )
@@ -1194,7 +1194,7 @@ void TeamFortressViewport::HideCommandMenu( void )
 	}
 
 	m_flMenuOpenTime = 0.0f;
-	SetCurrentCommandMenu( NULL );
+	SetCurrentCommandMenu( nullptr );
 	UpdateCursorState();
 }
 
@@ -1278,7 +1278,7 @@ void TeamFortressViewport::SetCurrentCommandMenu( CCommandMenu *pNewMenu )
 	m_pCurrentCommandMenu = pNewMenu;
 
 	if (m_pCurrentCommandMenu)
-		m_pCurrentCommandMenu->MakeVisible( NULL );
+		m_pCurrentCommandMenu->MakeVisible( nullptr );
 }
 
 void TeamFortressViewport::UpdateCommandMenu()
@@ -1388,7 +1388,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 {
 	char sz[256];
 	char *cText;
-	char *pfile = NULL;
+	char *pfile = nullptr;
 	static const int MAX_TITLE_LENGTH = 32;
 	char cTitle[MAX_TITLE_LENGTH];
 
@@ -1414,7 +1414,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 		{
 			const char *level = gEngfuncs.pfnGetLevelName();
 			if (!level)
-				return NULL;
+				return nullptr;
 
 			strcpy( sz, level );
 			char *ch = strchr( sz, '.' );
@@ -1437,10 +1437,10 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 			}
 		}
 
-		pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, NULL );
+		pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, nullptr );
 
 		if (!pfile)
-			return NULL;
+			return nullptr;
 
 		cText = pfile;
 
@@ -1472,7 +1472,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 		case PC_CIVILIAN:	cText = CHudTextMessage::BufferedLocaliseTextString( "#Help_civilian" );
 							CHudTextMessage::LocaliseTextString( "#Title_civilian", cTitle, MAX_TITLE_LENGTH ); break;
 		default:
-			return NULL;
+			return nullptr;
 		}
 
 		if ( g_iPlayerClass == PC_CIVILIAN )
@@ -1483,7 +1483,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 		{
 			sprintf(sz, "classes/long_%s.txt", sTFClassSelection[ g_iPlayerClass ]);
 		}
-		char *pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, NULL );
+		char *pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, nullptr );
 		if (pfile)
 		{
 			cText = pfile;
@@ -1504,7 +1504,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 // VGUI Menus
 void TeamFortressViewport::ShowVGUIMenu( int iMenu )
 {
-	CMenuPanel *pNewMenu = NULL;
+	CMenuPanel *pNewMenu = nullptr;
 
 	// Don't open menus in demo playback
 	if ( gEngfuncs.pDemoAPI->IsPlayingback() )
@@ -1514,7 +1514,7 @@ void TeamFortressViewport::ShowVGUIMenu( int iMenu )
 	if (m_pCurrentMenu)
 	{
 		CMenuPanel *pMenu = m_pCurrentMenu;
-		while (pMenu != NULL)
+		while (pMenu != nullptr)
 		{
 			if (pMenu->GetMenuID() == iMenu)
 				return;
@@ -1698,7 +1698,7 @@ void TeamFortressViewport::UpdateCursorState()
 void TeamFortressViewport::UpdateHighlights()
 {
 	if (m_pCurrentCommandMenu)
-		m_pCurrentCommandMenu->MakeVisible( NULL );
+		m_pCurrentCommandMenu->MakeVisible( nullptr );
 }
 
 void TeamFortressViewport::GetAllPlayersInfo( void )
@@ -1802,7 +1802,7 @@ void CDragNDropHandler::cursorMoved(int x,int y,Panel* panel)
 		App::getInstance()->getCursorPos(x,y);			
 		m_pPanel->setPos(m_iaDragOrgPos[0]+(x-m_iaDragStart[0]),m_iaDragOrgPos[1]+(y-m_iaDragStart[1]));
 		
-		if(m_pPanel->getParent()!=null)
+		if(m_pPanel->getParent()!=nullptr)
 		{			
 			m_pPanel->getParent()->repaint();
 		}
@@ -1827,7 +1827,7 @@ void CDragNDropHandler::mouseReleased(MouseCode code,Panel* panel)
 {
 	m_bDragging=false;
 	m_pPanel->setDragged(m_bDragging);
-	App::getInstance()->setMouseCapture(null);
+	App::getInstance()->setMouseCapture(nullptr);
 }
 
 //================================================================

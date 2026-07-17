@@ -61,7 +61,7 @@ void CHudMessage::Reset( void )
 	
 	m_bEndAfterMessage = false;
 	m_gameTitleTime = 0;
-	m_pGameTitle = NULL;
+	m_pGameTitle = nullptr;
 }
 
 
@@ -404,7 +404,7 @@ int CHudMessage::Draw( float fTime )
 			else
 			{
 				// The message is over
-				m_pMessages[i] = NULL;
+				m_pMessages[i] = nullptr;
 
 				if (m_bEndAfterMessage)
 				{
@@ -476,7 +476,7 @@ void CHudMessage::MessageAdd( const char *pName, float time )
 					{
 						if ( fabs( tempMessage->x - m_pMessages[j]->x ) < 0.0001 )
 						{
-							m_pMessages[j] = NULL;
+							m_pMessages[j] = nullptr;
 						}
 					}
 				}
@@ -519,7 +519,7 @@ int CHudMessage::MsgFunc_HudText( const char *pszName,  int iSize, void *pbuf )
 int CHudMessage::MsgFunc_GameTitle( const char *pszName,  int iSize, void *pbuf )
 {
 	m_pGameTitle = TextMessageGet( "GAMETITLE" );
-	if ( m_pGameTitle != NULL )
+	if ( m_pGameTitle != nullptr )
 	{
 		m_gameTitleTime = gHUD.m_flTime;
 

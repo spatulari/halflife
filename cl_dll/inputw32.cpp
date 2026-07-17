@@ -128,7 +128,7 @@ DWORD		joy_oldbuttonstate, joy_oldpovstate;
 int			joy_id;
 DWORD		joy_numbuttons;
 
-SDL_GameController *s_pJoystick = NULL;
+SDL_GameController *s_pJoystick = nullptr;
 
 // none of these cvars are saved over a session
 // this means that advanced controller configuration needs to be executed
@@ -196,7 +196,7 @@ long ThreadInterlockedExchange( long *pDest, long value )
 
 DWORD WINAPI MousePos_ThreadFunction( LPVOID p )
 {
-	s_hMouseDoneQuitEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
+	s_hMouseDoneQuitEvent = CreateEvent( nullptr, FALSE, FALSE, nullptr );
 
 	while ( 1 )
 	{
@@ -272,7 +272,7 @@ IN_StartupMouse
 */
 void IN_StartupMouse (void)
 {
-	if ( gEngfuncs.CheckParm ("-nomouse", NULL ) ) 
+	if ( gEngfuncs.CheckParm ("-nomouse", nullptr ) ) 
 		return; 
 
 	mouseinitialized = 1;
@@ -281,16 +281,16 @@ void IN_StartupMouse (void)
 
 	if (mouseparmsvalid)
 	{
-		if ( gEngfuncs.CheckParm ("-noforcemspd", NULL ) ) 
+		if ( gEngfuncs.CheckParm ("-noforcemspd", nullptr ) ) 
 			newmouseparms[2] = originalmouseparms[2];
 
-		if ( gEngfuncs.CheckParm ("-noforcemaccel", NULL ) ) 
+		if ( gEngfuncs.CheckParm ("-noforcemaccel", nullptr ) ) 
 		{
 			newmouseparms[0] = originalmouseparms[0];
 			newmouseparms[1] = originalmouseparms[1];
 		}
 
-		if ( gEngfuncs.CheckParm ("-noforcemparms", NULL ) ) 
+		if ( gEngfuncs.CheckParm ("-noforcemparms", nullptr ) ) 
 		{
 			newmouseparms[0] = originalmouseparms[0];
 			newmouseparms[1] = originalmouseparms[1];
@@ -688,7 +688,7 @@ IN_StartupJoystick
 void IN_StartupJoystick (void) 
 { 
 	// abort startup if user requests no joystick
-	if ( gEngfuncs.CheckParm ("-nojoy", NULL ) ) 
+	if ( gEngfuncs.CheckParm ("-nojoy", nullptr ) ) 
 		return; 
 
 	static float flLastCheck = 0.0f;
@@ -702,7 +702,7 @@ void IN_StartupJoystick (void)
 	int nJoysticks = SDL_NumJoysticks();
 	if ( nJoysticks > 0 )
 	{
-		if ( s_pJoystick == NULL )
+		if ( s_pJoystick == nullptr )
 		{
 			for ( int i = 0; i < nJoysticks; i++ )
 			{
@@ -734,7 +734,7 @@ void IN_StartupJoystick (void)
 	{
 		if ( s_pJoystick )
 			SDL_GameControllerClose( s_pJoystick );
-		s_pJoystick = NULL;
+		s_pJoystick = nullptr;
 		if ( joy_avail )
 		{
 			joy_avail = 0; 
@@ -1154,17 +1154,17 @@ void IN_Init (void)
 	m_rawinput 				= gEngfuncs.pfnGetCvarPointer("m_rawinput");
 
 #ifdef _WIN32
-	m_bMouseThread			= gEngfuncs.CheckParm ("-mousethread", NULL ) != NULL;
+	m_bMouseThread			= gEngfuncs.CheckParm ("-mousethread", nullptr ) != nullptr;
 	m_mousethread_sleep			= gEngfuncs.pfnRegisterVariable ( "m_mousethread_sleep", "10", FCVAR_ARCHIVE );
 
 	if ( !IN_UseRawInput() && m_bMouseThread && m_mousethread_sleep ) 
 	{
 		s_mouseDeltaX = s_mouseDeltaY = 0;
 		
-		s_hMouseQuitEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
+		s_hMouseQuitEvent = CreateEvent( nullptr, FALSE, FALSE, nullptr );
 		if ( s_hMouseQuitEvent )
 		{
-			s_hMouseThread = CreateThread( NULL, 0, MousePos_ThreadFunction, NULL, 0, &s_hMouseThreadId );
+			s_hMouseThread = CreateThread( nullptr, 0, MousePos_ThreadFunction, nullptr, 0, &s_hMouseThreadId );
 		}
 	}
 #endif

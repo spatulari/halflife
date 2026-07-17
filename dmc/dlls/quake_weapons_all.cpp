@@ -150,7 +150,7 @@ void CBasePlayer::W_SetCurrentAmmo( int sendanim /* = 1 */ )
 	// Find out what weapon the player's using
 	if (m_iQuakeWeapon == IT_AXE)
 	{
-		m_pCurrentAmmo = NULL;
+		m_pCurrentAmmo = nullptr;
 		viewmodel = "models/v_crowbar.mdl";
 		iszViewModel = MAKE_STRING(viewmodel);
 		szAnimExt = "crowbar";
@@ -222,7 +222,7 @@ void CBasePlayer::W_SetCurrentAmmo( int sendanim /* = 1 */ )
 #ifdef THREEWAVE
 	else if (m_iQuakeWeapon == IT_EXTRA_WEAPON)
 	{
-		m_pCurrentAmmo = NULL;
+		m_pCurrentAmmo = nullptr;
 		viewmodel = "models/v_grapple.mdl";
 		iszViewModel = MAKE_STRING(viewmodel);
 		szAnimExt = "crowbar";
@@ -231,7 +231,7 @@ void CBasePlayer::W_SetCurrentAmmo( int sendanim /* = 1 */ )
 
 	else
 	{
-		m_pCurrentAmmo = NULL;
+		m_pCurrentAmmo = nullptr;
 	}
 
 #if !defined( CLIENT_DLL )
@@ -577,7 +577,7 @@ float Q_CanDamage(CBaseEntity *pTarget, CBaseEntity *pInflictor)
 	// bmodels need special checking because their origin is 0,0,0
 	if (pTarget->pev->movetype == MOVETYPE_PUSH)
 	{
-		UTIL_TraceLine( pInflictor->pev->origin, 0.5 * (pTarget->pev->absmin + pTarget->pev->absmax), ignore_monsters, NULL, &trace );
+		UTIL_TraceLine( pInflictor->pev->origin, 0.5 * (pTarget->pev->absmin + pTarget->pev->absmax), ignore_monsters, nullptr, &trace );
 		if (trace.flFraction == 1)
 			return TRUE;
 		CBaseEntity *pEntity = CBaseEntity::Instance(trace.pHit);
@@ -586,19 +586,19 @@ float Q_CanDamage(CBaseEntity *pTarget, CBaseEntity *pInflictor)
 		return FALSE;
 	}
 	
-	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin, ignore_monsters, NULL, &trace );
+	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin, ignore_monsters, nullptr, &trace );
 	if (trace.flFraction == 1)
 		return TRUE;
-	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(15,15,0), ignore_monsters, NULL, &trace );
+	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(15,15,0), ignore_monsters, nullptr, &trace );
 	if (trace.flFraction == 1)
 		return TRUE;
-	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(-15,-15,0), ignore_monsters, NULL, &trace );
+	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(-15,-15,0), ignore_monsters, nullptr, &trace );
 	if (trace.flFraction == 1)
 		return TRUE;
-	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(-15,15,0), ignore_monsters, NULL, &trace );
+	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(-15,15,0), ignore_monsters, nullptr, &trace );
 	if (trace.flFraction == 1)
 		return TRUE;
-	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(15,-15,0), ignore_monsters, NULL, &trace );
+	UTIL_TraceLine( pInflictor->pev->origin, pTarget->pev->origin + Vector(15,-15,0), ignore_monsters, nullptr, &trace );
 	if (trace.flFraction == 1)
 		return TRUE;
 
@@ -644,9 +644,9 @@ void CBasePlayer::Q_FireBullets(int iShots, Vector vecDir, Vector vecSpread)
 // Quake Radius damage
 void Q_RadiusDamage( CBaseEntity *pInflictor, CBaseEntity *pAttacker, float flDamage, CBaseEntity *pIgnore )
 {
-	CBaseEntity *pEnt = NULL;
+	CBaseEntity *pEnt = nullptr;
 
-	while ( (pEnt = UTIL_FindEntityInSphere( pEnt, pInflictor->pev->origin, flDamage+40 )) != NULL )
+	while ( (pEnt = UTIL_FindEntityInSphere( pEnt, pInflictor->pev->origin, flDamage+40 )) != nullptr )
 	{
 		if (pEnt != pIgnore)
 		{
@@ -699,8 +699,8 @@ void CBasePlayer::LightningDamage( Vector p1, Vector p2, CBaseEntity *pAttacker,
 	vecThru.z = 0;
 	vecThru = vecThru * 16;
 
-	CBaseEntity *pEntity1 = NULL;
-	CBaseEntity *pEntity2 = NULL;
+	CBaseEntity *pEntity1 = nullptr;
+	CBaseEntity *pEntity2 = nullptr;
 
 	// Hit first target?
 	UTIL_TraceLine( p1, p2, dont_ignore_monsters, ENT(pev), &trace );
@@ -899,7 +899,7 @@ void CBasePlayer::W_FireLightning( int iQuadSound )
 			*m_pCurrentAmmo = 0;
 			W_SetCurrentAmmo();
 #if !defined( CLIENT_DLL )
-			Q_RadiusDamage( this, this, 35 * flCellsBurnt, NULL );
+			Q_RadiusDamage( this, this, 35 * flCellsBurnt, nullptr );
 #endif
 			return;
 		}

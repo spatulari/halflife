@@ -112,7 +112,7 @@ void CDiscwarPowerup::PowerupTouch( CBaseEntity *pOther )
 	// Give the powerup to the player
 	pPlayer->GivePowerup( m_iPowerupType );
 	m_hPlayerIGaveTo = pPlayer;
-	SetTouch( NULL );
+	SetTouch( nullptr );
 	pev->effects |= EF_NODRAW;
 
 	// Choose another powerup soon 
@@ -128,8 +128,8 @@ void CDiscwarPowerup::Disable()
 {
 	pev->effects |= EF_NODRAW;
 	pev->nextthink = 0;
-	SetThink( NULL );
-	SetTouch( NULL );
+	SetThink( nullptr );
+	SetTouch( nullptr );
 }
 
 // Come back and pick a new powerup
@@ -176,7 +176,7 @@ void CDiscwarPowerup::AnimateThink( void )
 // Remove the powerup from the person we gave it to
 void CDiscwarPowerup::RemovePowerupThink( void )
 {
-	if (m_hPlayerIGaveTo == NULL)
+	if (m_hPlayerIGaveTo == nullptr)
 		return;
 
 	((CBasePlayer*)(CBaseEntity*)m_hPlayerIGaveTo)->RemovePowerup( m_iPowerupType );
@@ -196,7 +196,7 @@ void CBasePlayer::GivePowerup( int iPowerupType )
 	if ( m_iPowerups & POW_HARD )
 		strcpy( m_szAnimExtention, "models/p_disc_hard.mdl" );
 
-	MESSAGE_BEGIN( MSG_ONE, gmsgPowerup, NULL, pev );
+	MESSAGE_BEGIN( MSG_ONE, gmsgPowerup, nullptr, pev );
 		WRITE_BYTE( m_iPowerups );
 	MESSAGE_END();
 
@@ -210,7 +210,7 @@ void CBasePlayer::RemovePowerup( int iPowerupType )
 
 	m_iPowerups &= ~iPowerupType;
 
-	MESSAGE_BEGIN( MSG_ONE, gmsgPowerup, NULL, pev );
+	MESSAGE_BEGIN( MSG_ONE, gmsgPowerup, nullptr, pev );
 		WRITE_BYTE( m_iPowerups );
 	MESSAGE_END();
 
@@ -222,7 +222,7 @@ void CBasePlayer::RemoveAllPowerups( void )
 	m_iPowerups = 0;
 	m_iPowerupDiscs = 0;
 
-	MESSAGE_BEGIN( MSG_ONE, gmsgPowerup, NULL, pev );
+	MESSAGE_BEGIN( MSG_ONE, gmsgPowerup, nullptr, pev );
 		WRITE_BYTE( m_iPowerups );
 	MESSAGE_END();
 }

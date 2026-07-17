@@ -192,7 +192,7 @@ void Ricochet_ProcessEnts( char *buffer )
 {	
 	int i;
 	char token[ 1024 ];
-	ric_pad_t	*pad = NULL;
+	ric_pad_t	*pad = nullptr;
 	int			error = 0;
 	
 	// parse entities from entity lump of .bsp file
@@ -238,7 +238,7 @@ void Ricochet_ProcessEnts( char *buffer )
 		}
 
 		// Load up the model
-		pad->model = gEngfuncs.CL_LoadModel( pad->modelname, NULL );
+		pad->model = gEngfuncs.CL_LoadModel( pad->modelname, nullptr );
 		if ( pad->model )
 		{
 			// Fill in abs bbox
@@ -271,11 +271,11 @@ char *Ricochet_LoadEntityLump( const char *filename )
 	dheader_t	header;
 	int			size = 0;
 	lump_t		*curLump;
-	char		*fileBuffer = NULL, *buffer, *entlump;
+	char		*fileBuffer = nullptr, *buffer, *entlump;
 
 	fileBuffer = (char *)gEngfuncs.COM_LoadFile((char *)filename, 5, &size);
 	if (size < sizeof(dheader_t))
-		return NULL;
+		return nullptr;
 
 	// Read in the .bsp header
 	memcpy(&header, fileBuffer, sizeof(dheader_t));
@@ -286,7 +286,7 @@ char *Ricochet_LoadEntityLump( const char *filename )
 	{
 		gEngfuncs.COM_FreeFile(fileBuffer);
 		gEngfuncs.Con_Printf("Ricochet_LoadEntityLump:  Map [%s] has incorrect BSP version (%i should be %i).\n", filename, i, BSPVERSION);
-		return NULL;
+		return nullptr;
 	}
 
 	// Get entity lump
@@ -303,7 +303,7 @@ char *Ricochet_LoadEntityLump( const char *filename )
 	{
 		gEngfuncs.COM_FreeFile(fileBuffer);
 		gEngfuncs.Con_Printf("Ricochet_LoadEntityLump:  Couldn't allocate %i bytes\n", size + 1 );
-		return NULL;
+		return nullptr;
 	}
 
 	// Read in the entity lump
@@ -329,7 +329,7 @@ Load in the .bsp file and process the entities
 */
 void Ricochet_LoadJumpPads( const char *map )
 {
-	char	*buffer = NULL;
+	char	*buffer = nullptr;
 	char	filename[ 256 ];
 
 	sprintf( filename, "%s/%s", gEngfuncs.pfnGetGameDirectory(), map );
@@ -376,7 +376,7 @@ ric_pad_t *Ricochet_FindTarget( const char *name, int numpads, ric_pad_t *pads )
 		return target;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /*
@@ -465,7 +465,7 @@ void Ricochet_PadTouched( int numpads, ric_pad_t *pads, ric_pad_t *pad, struct l
 	// Play sound if appropriate
 	if ( s_usJump && g_runfuncs )
 	{
-		gEngfuncs.pfnPlaybackEvent( FEV_NOTHOST, NULL, s_usJump, 0.0, zero, zero, 0.0, 0.0, 0, 0, 0, 0 );
+		gEngfuncs.pfnPlaybackEvent( FEV_NOTHOST, nullptr, s_usJump, 0.0, zero, zero, 0.0, 0.0, 0, 0, 0, 0 );
 	}
 }
 

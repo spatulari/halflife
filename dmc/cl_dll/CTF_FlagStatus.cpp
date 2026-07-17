@@ -110,15 +110,15 @@ int CHudFlagStatus ::Draw(float flTime )
    {
 	   case BLUE_FLAG_STOLE:
 		   SPR_Set( m_hBlueStolen, r, g, b );
-		   SPR_DrawHoles( 1, x, y, NULL );
+		   SPR_DrawHoles( 1, x, y, nullptr );
 		   break;
        case BLUE_FLAG_LOST:
 		   SPR_Set( m_hBlueLost, r, g, b );
-		   SPR_DrawHoles( 1, x, y, NULL );
+		   SPR_DrawHoles( 1, x, y, nullptr );
 		   break;
 	   case BLUE_FLAG_ATBASE:
 		   SPR_Set( m_hBlueAtBase, r, g, b );
-		   SPR_DrawHoles( 1, x, y, NULL );
+		   SPR_DrawHoles( 1, x, y, nullptr );
 		   break;
    }
 
@@ -139,15 +139,15 @@ int CHudFlagStatus ::Draw(float flTime )
    {
 	   case RED_FLAG_STOLE:
 		   SPR_Set( m_hRedStolen, r, g, b );
-		   SPR_DrawHoles( 1, x, y, NULL );
+		   SPR_DrawHoles( 1, x, y, nullptr );
 		   break;
        case RED_FLAG_LOST:
 		   SPR_Set( m_hRedLost, r, g, b );
-		   SPR_DrawHoles( 1, x, y, NULL );
+		   SPR_DrawHoles( 1, x, y, nullptr );
 		   break;
 	   case RED_FLAG_ATBASE:
 		   SPR_Set( m_hRedAtBase, r, g, b );
-		   SPR_DrawHoles( 1, x, y, NULL );
+		   SPR_DrawHoles( 1, x, y, nullptr );
 		   break;
    }
  
@@ -167,22 +167,22 @@ int CHudFlagStatus ::Draw(float flTime )
    {
 		case ITEM_RUNE1_FLAG:
 		   SPR_Set( m_hRune1, r, g, b );
-		   SPR_Draw( 1, x, y, NULL );
+		   SPR_Draw( 1, x, y, nullptr );
 		   break;
 
 		case ITEM_RUNE2_FLAG:
 		   SPR_Set( m_hRune2, r, g, b );
-		   SPR_Draw( 1, x, y, NULL );
+		   SPR_Draw( 1, x, y, nullptr );
 		   break;
 
 		case ITEM_RUNE3_FLAG:
 		   SPR_Set( m_hRune3, r, g, b );
-		   SPR_Draw( 1, x, y, NULL );
+		   SPR_Draw( 1, x, y, nullptr );
 		   break;
 
 		case ITEM_RUNE4_FLAG:
 		   SPR_Set( m_hRune4, r, g, b );
-		   SPR_Draw( 1, x, y, NULL );
+		   SPR_Draw( 1, x, y, nullptr );
 		   break;
    }
 	   

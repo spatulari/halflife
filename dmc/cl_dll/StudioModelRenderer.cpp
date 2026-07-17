@@ -69,22 +69,22 @@ CStudioModelRenderer::CStudioModelRenderer( void )
 {
 	m_fDoInterp			= 1;
 	m_fGaitEstimation	= 1;
-	m_pCurrentEntity	= NULL;
-	m_pCvarHiModels		= NULL;
-	m_pCvarDeveloper	= NULL;
-	m_pCvarDrawEntities	= NULL;
-	m_pChromeSprite		= NULL;
-	m_pStudioModelCount	= NULL;
-	m_pModelsDrawn		= NULL;
-	m_protationmatrix	= NULL;
-	m_paliastransform	= NULL;
-	m_pbonetransform	= NULL;
-	m_plighttransform	= NULL;
-	m_pStudioHeader		= NULL;
-	m_pBodyPart			= NULL;
-	m_pSubModel			= NULL;
-	m_pPlayerInfo		= NULL;
-	m_pRenderModel		= NULL;
+	m_pCurrentEntity	= nullptr;
+	m_pCvarHiModels		= nullptr;
+	m_pCvarDeveloper	= nullptr;
+	m_pCvarDrawEntities	= nullptr;
+	m_pChromeSprite		= nullptr;
+	m_pStudioModelCount	= nullptr;
+	m_pModelsDrawn		= nullptr;
+	m_protationmatrix	= nullptr;
+	m_paliastransform	= nullptr;
+	m_pbonetransform	= nullptr;
+	m_plighttransform	= nullptr;
+	m_pStudioHeader		= nullptr;
+	m_pBodyPart			= nullptr;
+	m_pSubModel			= nullptr;
+	m_pPlayerInfo		= nullptr;
+	m_pRenderModel		= nullptr;
 }
 
 /*
@@ -368,7 +368,7 @@ mstudioanim_t *CStudioModelRenderer::StudioGetAnim( model_t *m_pSubModel, mstudi
 
 	paSequences = (cache_user_t *)m_pSubModel->submodels;
 
-	if (paSequences == NULL)
+	if (paSequences == nullptr)
 	{
 		paSequences = (cache_user_t *)IEngineStudio.Mem_Calloc( 16, sizeof( cache_user_t ) ); // UNDONE: leak!
 		m_pSubModel->submodels = (dmodel_t *)paSequences;
@@ -1370,7 +1370,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		return 0;
 
 	m_pRenderModel = IEngineStudio.SetupPlayerModel( m_nPlayerIndex );
-	if (m_pRenderModel == NULL)
+	if (m_pRenderModel == nullptr)
 		return 0;
 
 	m_pStudioHeader = (studiohdr_t *)IEngineStudio.Mod_Extradata (m_pRenderModel);
@@ -1387,7 +1387,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		StudioProcessGait( pplayer );
 
 		m_pPlayerInfo->gaitsequence = pplayer->gaitsequence;
-		m_pPlayerInfo = NULL;
+		m_pPlayerInfo = nullptr;
 
 		StudioSetUpTransform( 0 );
 		VectorCopy( orig_angles, m_pCurrentEntity->angles );
@@ -1428,7 +1428,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 	StudioSaveBones( );
 	m_pPlayerInfo->renderframe = m_nFrameCount;
 
-	m_pPlayerInfo = NULL;
+	m_pPlayerInfo = nullptr;
 
 	if (flags & STUDIO_EVENTS)
 	{
@@ -1484,7 +1484,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		IEngineStudio.StudioSetRemapColors( m_nTopColor, m_nBottomColor );
 
 		StudioRenderModel( );
-		m_pPlayerInfo = NULL;
+		m_pPlayerInfo = nullptr;
 
 		if ( pplayer->weaponmodel )
 		{

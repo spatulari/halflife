@@ -228,7 +228,7 @@ void CDiscArena_RoundStart::RecalculateText( void )
 	char szTemp[256];
 	char szTemp2[256];
 	char szTemp3[256];
-	char *pszLocalized = NULL;
+	char *pszLocalized = nullptr;
 
 	// Round started?
 	if (m_iSecondsToGo == 0)
@@ -419,7 +419,7 @@ void CDiscArena_RoundEnd::RecalculateText( void )
 		}
 		else 
 		{
-			char *pszTemp = NULL;
+			char *pszTemp = nullptr;
 
 			GetClientList( sz );
 

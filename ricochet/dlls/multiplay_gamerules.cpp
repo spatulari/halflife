@@ -58,7 +58,7 @@ public:
 		if ( InArenaMode() == FALSE )
 			 return true;
 		
-		if ( pListener->m_pCurrentArena == NULL && pTalker->m_pCurrentArena == NULL )
+		if ( pListener->m_pCurrentArena == nullptr && pTalker->m_pCurrentArena == nullptr )
 			 return true; //Both spectating
 
 		if ( pListener->m_pCurrentArena == pTalker->m_pCurrentArena )
@@ -316,7 +316,7 @@ BOOL CHalfLifeMultiplay :: GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerI
 	int i;
 
 	iBestWeight = -1;// no weapon lower than -1 can be autoswitched to
-	pBest = NULL;
+	pBest = nullptr;
 
 	if ( !pCurrentWeapon->CanHolster() )
 	{
@@ -362,7 +362,7 @@ BOOL CHalfLifeMultiplay :: GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerI
 	// if we make it here, we've checked all the weapons and found no useable 
 	// weapon in the same catagory as the current weapon. 
 	
-	// if pBest is null, we didn't find ANYTHING. Shouldn't be possible- should always 
+	// if pBest is nullptr, we didn't find ANYTHING. Shouldn't be possible- should always 
 	// at least get the crowbar, but ya never know.
 	if ( !pBest )
 	{
@@ -381,7 +381,7 @@ BOOL CHalfLifeMultiplay :: ClientConnected( edict_t *pEntity, const char *pszNam
 	g_VoiceGameMgr.ClientConnected(pEntity);
 	
 	// Increase their speed to the Discwar speed
-	MESSAGE_BEGIN( MSG_ONE, SVC_STUFFTEXT, NULL, pEntity );
+	MESSAGE_BEGIN( MSG_ONE, SVC_STUFFTEXT, nullptr, pEntity );
 		WRITE_STRING( UTIL_VarArgs("cl_forwardspeed %d\ncl_backspeed %d\ncl_sidespeed %d\n", 320, 320, 320) );
 	MESSAGE_END();
 
@@ -394,7 +394,7 @@ extern int gmsgGameMode;
 
 void CHalfLifeMultiplay :: UpdateGameMode( CBasePlayer *pPlayer )
 {
-	MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, NULL, pPlayer->edict() );
+	MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, pPlayer->edict() );
 		WRITE_BYTE( InArenaMode() );  // game mode none
 	MESSAGE_END();
 }
@@ -411,7 +411,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 
 	// sending just one score makes the hud scoreboard active;  otherwise
 	// it is just disabled for single play
-	MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, NULL, pl->edict() );
+	MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, nullptr, pl->edict() );
 		WRITE_BYTE( ENTINDEX(pl->edict()) );
 		WRITE_SHORT( 0 );
 		WRITE_SHORT( 0 );
@@ -431,7 +431,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 		{
 			ALERT( at_console, "Sending %s data to %s\n", STRING(plr->pev->netname), STRING( pl->pev->netname ) );
 
-			MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, NULL, pl->edict() );
+			MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, nullptr, pl->edict() );
 				WRITE_BYTE( i );	// client number
 				WRITE_SHORT( plr->pev->frags );
 				WRITE_SHORT( plr->m_iDeaths );
@@ -440,7 +440,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 			MESSAGE_END();
 
 			// Send their spectator state
-			MESSAGE_BEGIN( MSG_ONE, gmsgSpectator, NULL, pl->edict() );  
+			MESSAGE_BEGIN( MSG_ONE, gmsgSpectator, nullptr, pl->edict() );  
 				WRITE_BYTE( i );
 				WRITE_BYTE( (plr->pev->iuser1 != 0) );
 			MESSAGE_END();
@@ -449,7 +449,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 
 	if ( g_fGameOver )
 	{
-		MESSAGE_BEGIN( MSG_ONE, SVC_INTERMISSION, NULL, pl->edict() );
+		MESSAGE_BEGIN( MSG_ONE, SVC_INTERMISSION, nullptr, pl->edict() );
 		MESSAGE_END();
 	}
 }
@@ -480,8 +480,8 @@ void CHalfLifeMultiplay :: ClientDisconnected( edict_t *pClient )
 				WRITE_BYTE( 0 );
 			MESSAGE_END();
 
-			CBasePlayer *client = NULL;
-			while ( ((client = (CBasePlayer*)UTIL_FindEntityByClassname( client, "player" )) != NULL) && (!FNullEnt(client->edict())) ) 
+			CBasePlayer *client = nullptr;
+			while ( ((client = (CBasePlayer*)UTIL_FindEntityByClassname( client, "player" )) != nullptr) && (!FNullEnt(client->edict())) ) 
 			{
 				if ( !client->pev )
 					continue;
@@ -493,7 +493,7 @@ void CHalfLifeMultiplay :: ClientDisconnected( edict_t *pClient )
 				{
 					int iMode = client->pev->iuser1;
 					client->pev->iuser1 = 0;
-					client->m_hObserverTarget = NULL;
+					client->m_hObserverTarget = nullptr;
 					client->Observer_SetMode( iMode );
 				}
 			}
@@ -549,7 +549,7 @@ void CHalfLifeMultiplay :: PlayerThink( CBasePlayer *pPlayer )
 void CHalfLifeMultiplay :: PlayerSpawn( CBasePlayer *pPlayer )
 {
 	BOOL		addDefault;
-	CBaseEntity	*pWeaponEntity = NULL;
+	CBaseEntity	*pWeaponEntity = nullptr;
 
 	pPlayer->pev->weapons |= (1<<WEAPON_SUIT);
 	
@@ -605,7 +605,7 @@ void CHalfLifeMultiplay :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKille
 	DeathNotice( pVictim, pKiller, pInflictor );
 
 	FireTargets( "game_playerdie", pVictim, pVictim, USE_TOGGLE, 0 );
-	CBasePlayer *peKiller = NULL;
+	CBasePlayer *peKiller = nullptr;
 	CBaseEntity *ktmp = CBaseEntity::Instance( pKiller );
 	if ( ktmp && (ktmp->Classify() == CLASS_PLAYER) )
 		peKiller = (CBasePlayer*)ktmp;
@@ -717,7 +717,7 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 				pKiller->frags += 1;
 
 				// Bring up the reward window on the killer's screen
-				MESSAGE_BEGIN( MSG_ONE, gmsgReward, NULL, Killer->edict() );
+				MESSAGE_BEGIN( MSG_ONE, gmsgReward, nullptr, Killer->edict() );
 					WRITE_SHORT( REWARD_DECAPITATE | iTele );
 				MESSAGE_END();
 
@@ -728,14 +728,14 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 			if ( pVictim->m_iLastDiscBounces == 0 )
 			{
 				// Bring up the reward window on the killer's screen
-				MESSAGE_BEGIN( MSG_ONE, gmsgReward, NULL, Killer->edict() );
+				MESSAGE_BEGIN( MSG_ONE, gmsgReward, nullptr, Killer->edict() );
 					WRITE_SHORT( REWARD_BOUNCE_NONE | iTele );
 				MESSAGE_END();
 			}
 			else if ( pVictim->m_iLastDiscBounces == 1 )
 			{
 				// Bring up the reward window on the killer's screen
-				MESSAGE_BEGIN( MSG_ONE, gmsgReward, NULL, Killer->edict() );
+				MESSAGE_BEGIN( MSG_ONE, gmsgReward, nullptr, Killer->edict() );
 					WRITE_SHORT( REWARD_BOUNCE_ONE | iTele );
 				MESSAGE_END();
 			}
@@ -744,14 +744,14 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 				if ( pVictim->m_iLastDiscBounces == 2 )
 				{
 					// Bring up the reward window on the killer's screen
-					MESSAGE_BEGIN( MSG_ONE, gmsgReward, NULL, Killer->edict() );
+					MESSAGE_BEGIN( MSG_ONE, gmsgReward, nullptr, Killer->edict() );
 						WRITE_SHORT( REWARD_BOUNCE_TWO | iTele );
 					MESSAGE_END();
 				}
 				else
 				{
 					// Bring up the reward window on the killer's screen
-					MESSAGE_BEGIN( MSG_ONE, gmsgReward, NULL, Killer->edict() );
+					MESSAGE_BEGIN( MSG_ONE, gmsgReward, nullptr, Killer->edict() );
 						WRITE_SHORT( REWARD_BOUNCE_THREE | iTele );
 					MESSAGE_END();
 
@@ -1128,8 +1128,8 @@ void DestroyMapCycle( mapcycle_t *cycle )
 		
 		delete cycle->items;
 	}
-	cycle->items = NULL;
-	cycle->next_item = NULL;
+	cycle->items = nullptr;
+	cycle->next_item = nullptr;
 }
 
 static char com_token[ 1500 ];
@@ -1150,14 +1150,14 @@ char *COM_Parse (char *data)
 	com_token[0] = 0;
 	
 	if (!data)
-		return NULL;
+		return nullptr;
 		
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
 	{
 		if (c == 0)
-			return NULL;                    // end of file;
+			return nullptr;                    // end of file;
 		data++;
 	}
 	
@@ -1250,7 +1250,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 	char *pFileList;
 	char *aFileList = pFileList = (char*)LOAD_FILE_FOR_ME( filename, &length );
 	int hasbuffer;
-	mapcycle_item_s *item, *newlist = NULL, *next;
+	mapcycle_item_s *item, *newlist = nullptr, *next;
 
 	if ( pFileList && length )
 	{
@@ -1467,7 +1467,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 
 	// find the map to change to
 	char *mapcfile = (char*)CVAR_GET_STRING( "mapcyclefile" );
-	ASSERT( mapcfile != NULL );
+	ASSERT( mapcfile != nullptr );
 
 	szCommands[ 0 ] = '\0';
 	szRules[ 0 ] = '\0';
@@ -1503,7 +1503,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 		{
 			keeplooking = FALSE;
 
-			ASSERT( item != NULL );
+			ASSERT( item != nullptr );
 
 			if ( item->minplayers != 0 )
 			{
@@ -1570,7 +1570,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 		ALERT( at_console, "RULES:  %s\n", szRules );
 	}
 	
-	CHANGE_LEVEL( szNextMap, NULL );
+	CHANGE_LEVEL( szNextMap, nullptr );
 	if ( strlen( szCommands ) > 0 )
 	{
 		SERVER_COMMAND( szCommands );
@@ -1601,7 +1601,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 		else
 		{
 			strncpy( chunk, pFileList, MAX_MOTD_CHUNK );
-			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the null terminator
+			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the nullptr terminator
 		}
 
 		char_count += strlen( chunk );
@@ -1610,7 +1610,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 		else
 			*pFileList = 0;
 
-		MESSAGE_BEGIN( MSG_ONE, gmsgMOTD, NULL, client );
+		MESSAGE_BEGIN( MSG_ONE, gmsgMOTD, nullptr, client );
 			WRITE_BYTE( *pFileList ? FALSE : TRUE );	// FALSE means there is still more message to come
 			WRITE_STRING( chunk );
 		MESSAGE_END();

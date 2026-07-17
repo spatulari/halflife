@@ -75,7 +75,7 @@ void ConsolePanel::doExecCommand()
 {
 	char buf[2048];
 	_textEntry->getText(0,buf,2048);
-	_textEntry->setText(null,0);
+	_textEntry->setText(nullptr,0);
 	gEngfuncs.pfnClientCmd(buf);
 }
 

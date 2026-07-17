@@ -111,7 +111,7 @@ void CDisc::Spawn( void )
 	m_fDontTouchEnemies = 0;
 	m_bRemoveSelf = false;
 	m_bTeleported = false;
-	m_pLockTarget = NULL;
+	m_pLockTarget = nullptr;
 
 	UTIL_MakeVectors( pev->angles );
 
@@ -124,7 +124,7 @@ void CDisc::Spawn( void )
 	// Pull our owner out so we will still touch it
 	if ( pev->owner )
 		m_hOwner = Instance(pev->owner);
-	pev->owner = NULL;
+	pev->owner = nullptr;
 
 	// Trail
 	MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
@@ -333,22 +333,22 @@ void CDisc::DiscThink()
 	if ( (m_iPowerupFlags & POW_FREEZE) && (m_iBounces == 0) )
 	{
 		// Use an existing target if he's still in the view cone
-		if ( m_pLockTarget != NULL )
+		if ( m_pLockTarget != nullptr )
 		{
 			Vector vecDir = (m_pLockTarget->pev->origin - pev->origin).Normalize();
 			UTIL_MakeVectors( pev->angles );
 			float flDot = DotProduct( gpGlobals->v_forward, vecDir );
 			if ( flDot < 0.6 )
-				m_pLockTarget = NULL;
+				m_pLockTarget = nullptr;
 		}
 
 		// Get a new target if we don't have one
-		if ( m_pLockTarget == NULL )
+		if ( m_pLockTarget == nullptr )
 		{
-			CBaseEntity *pOther = NULL;
+			CBaseEntity *pOther = nullptr;
 
 			// Examine all entities within a reasonable radius
-			while ((pOther = UTIL_FindEntityByClassname( pOther, "player" )) != NULL)
+			while ((pOther = UTIL_FindEntityByClassname( pOther, "player" )) != nullptr)
 			{
 				// Skip the guy who threw this
 				if ( ((CBaseEntity*)m_hOwner) == pOther )
@@ -370,7 +370,7 @@ void CDisc::DiscThink()
 		}
 
 		// Track towards our target
-		if ( m_pLockTarget != NULL )
+		if ( m_pLockTarget != nullptr )
 		{
 			// Calculate new velocity
 			Vector vecDir = (m_pLockTarget->pev->origin - pev->origin).Normalize();
@@ -421,7 +421,7 @@ void CDisc::DiscThink()
 
 CDisc *CDisc::CreateDisc( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner, CDiscWeapon *pLauncher, bool bDecapitator, int iPowerupFlags )
 {
-	CDisc *pDisc = GetClassPtr( (CDisc *)NULL );
+	CDisc *pDisc = GetClassPtr( (CDisc *)nullptr );
 
 	UTIL_SetOrigin( pDisc->pev, vecOrigin );
 	pDisc->m_iPowerupFlags = iPowerupFlags;
@@ -484,7 +484,7 @@ int CDiscWeapon::GetItemInfo(ItemInfo *p)
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "disc";
 	p->iMaxAmmo1 = MAX_DISCS;
-	p->pszAmmo2 = NULL;
+	p->pszAmmo2 = nullptr;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
 	p->iSlot = 4;
@@ -522,12 +522,12 @@ void CDiscWeapon::Holster( int skiplocal /* = 0 */ )
 		pev->nextthink = gpGlobals->time + 0.1;
 	}
 
-	EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "common/null.wav", 1.0, ATTN_NORM);
+	EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "common/nullptr.wav", 1.0, ATTN_NORM);
 }
 
 CDisc *CDiscWeapon::FireDisc( bool bDecapitator )
 {
-	CDisc *pReturnDisc = NULL;
+	CDisc *pReturnDisc = nullptr;
 
 	SendWeaponAnim( DISC_THROW1, 1 );
 

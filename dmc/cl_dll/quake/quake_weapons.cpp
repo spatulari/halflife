@@ -103,22 +103,22 @@ void HUD_PrepEntity( CBaseEntity *pEntity, CBasePlayer *pWeaponOwner )
 
 CQuakeRocket *CQuakeRocket::CreateRocket( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner )
 {
-	return NULL;
+	return nullptr;
 }
 
 CQuakeRocket *CQuakeRocket::CreateGrenade( Vector vecOrigin, Vector vecVelocity, CBaseEntity *pOwner )
 {
-	return NULL;
+	return nullptr;
 }
 
 CQuakeNail *CQuakeNail::CreateSuperNail( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner )
 {
-	return NULL;
+	return nullptr;
 }
 
 CQuakeNail *CQuakeNail::CreateNail( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner )
 {
-	return NULL;
+	return nullptr;
 }
 
 void CBasePlayer :: Precache( void )
@@ -363,7 +363,7 @@ void CBasePlayer::SelectItem(const char *pstr)
 	if (!pstr)
 		return;
 
-	CBasePlayerItem *pItem = NULL;
+	CBasePlayerItem *pItem = nullptr;
 
 	if (!pItem)
 		return;
@@ -635,7 +635,7 @@ void HUD_InitClientWeapons( void )
 	g_engfuncs.pfnRandomLong		= gEngfuncs.pfnRandomLong;
 
 	// Allocate a slot for the local player
-	HUD_PrepEntity( &player		, NULL );
+	HUD_PrepEntity( &player		, nullptr );
 
 	// Allocate slot(s) for each weapon that we are going to be predicting
 	HUD_PrepEntity( &g_QuakeGun	, &player );
@@ -688,7 +688,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 {
 	int i;
 	int buttonsChanged;
-	CBasePlayerWeapon *pWeapon = NULL;
+	CBasePlayerWeapon *pWeapon = nullptr;
 	CBasePlayerWeapon *pCurrent;
 	weapon_data_t nulldata, *pfrom, *pto;
 	static int lasthealth;
@@ -720,7 +720,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	{
 		if ( to->client.health <= 0 && lasthealth > 0 )
 		{
-			player.Killed( NULL, 0 );
+			player.Killed( nullptr, 0 );
 		}
 		else if ( to->client.health > 0 && lasthealth <= 0 )
 		{
@@ -854,10 +854,10 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		}
 	}
 
-	if ( player.m_iQuakeWeapon != IT_LIGHTNING && pBeam != NULL )
+	if ( player.m_iQuakeWeapon != IT_LIGHTNING && pBeam != nullptr )
 	{
 		pBeam->die = 0.0;
-		pBeam = NULL;
+		pBeam = nullptr;
 	}
 	// Copy in results of predcition code
 	
@@ -952,7 +952,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	// Store off the last position from the predicted state.
 	HUD_SetLastOrg();
 	// Wipe it so we can't use it after this frame
-	g_finalstate = NULL;
+	g_finalstate = nullptr;
 }
 
 /*

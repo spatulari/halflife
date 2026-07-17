@@ -83,9 +83,9 @@ CommandButton::CommandButton( int iPlayerClass, const char* text,int x,int y,int
 
 void CommandButton::Init( void )
 {
-	m_pSubMenu = NULL;
-	m_pSubLabel = NULL;
-	m_pParentMenu = NULL;
+	m_pSubMenu = nullptr;
+	m_pSubLabel = nullptr;
+	m_pParentMenu = nullptr;
 
 	// Set text color to orange
 	setFgColor(Scheme::sc_primary1);

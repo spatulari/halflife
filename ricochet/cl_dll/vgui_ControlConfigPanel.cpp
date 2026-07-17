@@ -170,7 +170,7 @@ void ControlConfigPanel::GetCVar(int index,char* cvar,int cvarLen,char* desc,int
 
 void ControlConfigPanel::AddCVarFromInputStream(InputStream* is)
 {
-	if(is==null)
+	if(is==nullptr)
 	{
 		return;
 	}

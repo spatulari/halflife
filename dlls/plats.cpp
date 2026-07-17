@@ -108,7 +108,7 @@ void CBasePlatTrain::Precache( void )
 	switch (m_bMoveSnd)
 	{
 	case	0:
-		pev->noiseMoving = MAKE_STRING("common/null.wav");
+		pev->noiseMoving = MAKE_STRING("common/nullptr.wav");
 		break;
 	case	1:
 		PRECACHE_SOUND ("plats/bigmove1.wav");
@@ -163,7 +163,7 @@ void CBasePlatTrain::Precache( void )
 		pev->noiseMoving = MAKE_STRING("plats/talkmove2.wav");
 		break;
 	default:
-		pev->noiseMoving = MAKE_STRING("common/null.wav");
+		pev->noiseMoving = MAKE_STRING("common/nullptr.wav");
 		break;
 	}
 
@@ -171,7 +171,7 @@ void CBasePlatTrain::Precache( void )
 	switch (m_bStopSnd)
 	{
 	case	0:
-		pev->noiseArrived = MAKE_STRING("common/null.wav");
+		pev->noiseArrived = MAKE_STRING("common/nullptr.wav");
 		break;
 	case	1:
 		PRECACHE_SOUND ("plats/bigstop1.wav");
@@ -207,7 +207,7 @@ void CBasePlatTrain::Precache( void )
 		break;
 
 	default:
-		pev->noiseArrived = MAKE_STRING("common/null.wav");
+		pev->noiseArrived = MAKE_STRING("common/nullptr.wav");
 		break;
 	}
 }
@@ -341,7 +341,7 @@ void CFuncPlat :: Spawn( )
 
 static void PlatSpawnInsideTrigger(entvars_t* pevPlatform)
 {
-	GetClassPtr( (CPlatTrigger *)NULL)->SpawnInsideTrigger( GetClassPtr( (CFuncPlat *)pevPlatform ) );
+	GetClassPtr( (CPlatTrigger *)nullptr)->SpawnInsideTrigger( GetClassPtr( (CFuncPlat *)pevPlatform ) );
 }
 		
 
@@ -417,7 +417,7 @@ void CFuncPlat :: PlatUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 	}
 	else
 	{
-		SetUse( NULL );
+		SetUse( nullptr );
 
 		if (m_toggle_state == TS_AT_TOP)
 			GoDown();
@@ -814,7 +814,7 @@ void CFuncTrain :: Activate( void )
 	if ( !m_activated )
 	{
 		m_activated = TRUE;
-		entvars_t	*pevTarg = VARS( FIND_ENTITY_BY_TARGETNAME (NULL, STRING(pev->target) ) );
+		entvars_t	*pevTarg = VARS( FIND_ENTITY_BY_TARGETNAME (nullptr, STRING(pev->target) ) );
 		
 		pev->target = pevTarg->target;
 		m_pevCurrentTarget = pevTarg;// keep track of this since path corners change our target for us.
@@ -1047,7 +1047,7 @@ void CFuncTrackTrain :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 			pev->velocity = g_vecZero;
 			pev->avelocity = g_vecZero;
 			StopSound();
-			SetThink( NULL );
+			SetThink( nullptr );
 		}
 	}
 	else
@@ -1171,7 +1171,7 @@ void CFuncTrackTrain :: Next( void )
 	}
 
 //	if ( !m_ppath )
-//		m_ppath = CPathTrack::Instance(FIND_ENTITY_BY_TARGETNAME( NULL, STRING(pev->target) ));
+//		m_ppath = CPathTrack::Instance(FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(pev->target) ));
 	if ( !m_ppath )
 	{	
 		ALERT( at_aiconsole, "TRAIN(%s): Lost path\n", STRING(pev->targetname) );
@@ -1374,7 +1374,7 @@ BOOL CFuncTrackTrain :: OnControls( entvars_t *pevTest )
 
 void CFuncTrackTrain :: Find( void )
 {
-	m_ppath = CPathTrack::Instance(FIND_ENTITY_BY_TARGETNAME( NULL, STRING(pev->target) ));
+	m_ppath = CPathTrack::Instance(FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(pev->target) ));
 	if ( !m_ppath )
 		return;
 
@@ -1382,7 +1382,7 @@ void CFuncTrackTrain :: Find( void )
 	if ( !FClassnameIs( pevTarget, "path_track" ) )
 	{
 		ALERT( at_error, "func_track_train must be on a path of path_track\n" );
-		m_ppath = NULL;
+		m_ppath = nullptr;
 		return;
 	}
 
@@ -1411,13 +1411,13 @@ void CFuncTrackTrain :: Find( void )
 
 void CFuncTrackTrain :: NearestPath( void )
 {
-	CBaseEntity *pTrack = NULL;
-	CBaseEntity *pNearest = NULL;
+	CBaseEntity *pTrack = nullptr;
+	CBaseEntity *pNearest = nullptr;
 	float dist, closest;
 
 	closest = 1024;
 
-	while ((pTrack = UTIL_FindEntityInSphere( pTrack, pev->origin, 1024 )) != NULL)
+	while ((pTrack = UTIL_FindEntityInSphere( pTrack, pev->origin, 1024 )) != nullptr)
 	{
 		// filter out non-tracks
 		if ( !(pTrack->pev->flags & (FL_CLIENT|FL_MONSTER)) && FClassnameIs( pTrack->pev, "path_track" ) )
@@ -1434,7 +1434,7 @@ void CFuncTrackTrain :: NearestPath( void )
 	if ( !pNearest )
 	{
 		ALERT( at_console, "Can't find a nearby track !!!\n" );
-		SetThink(NULL);
+		SetThink(nullptr);
 		return;
 	}
 
@@ -1468,7 +1468,7 @@ CFuncTrackTrain *CFuncTrackTrain::Instance( edict_t *pent )
 { 
 	if ( FClassnameIs( pent, "func_tracktrain" ) )
 		return (CFuncTrackTrain *)GET_PRIVATE(pent);
-	return NULL;
+	return nullptr;
 }
 
 /*QUAKED func_train (0 .5 .8) ?
@@ -1561,7 +1561,7 @@ LINK_ENTITY_TO_CLASS( func_traincontrols, CFuncTrainControls );
 
 void CFuncTrainControls :: Find( void )
 {
-	edict_t *pTarget = NULL;
+	edict_t *pTarget = nullptr;
 
 	do 
 	{
@@ -1760,18 +1760,18 @@ void CFuncTrackChange :: Find( void )
 	// Find track entities
 	edict_t *target;
 
-	target = FIND_ENTITY_BY_TARGETNAME( NULL, STRING(m_trackTopName) );
+	target = FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trackTopName) );
 	if ( !FNullEnt(target) )
 	{
 		m_trackTop = CPathTrack::Instance( target );
-		target = FIND_ENTITY_BY_TARGETNAME( NULL, STRING(m_trackBottomName) );
+		target = FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trackBottomName) );
 		if ( !FNullEnt(target) )
 		{
 			m_trackBottom = CPathTrack::Instance( target );
-			target = FIND_ENTITY_BY_TARGETNAME( NULL, STRING(m_trainName) );
+			target = FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trainName) );
 			if ( !FNullEnt(target) )
 			{
-				m_train = CFuncTrackTrain::Instance( FIND_ENTITY_BY_TARGETNAME( NULL, STRING(m_trainName) ) );
+				m_train = CFuncTrackTrain::Instance( FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trainName) ) );
 				if ( !m_train )
 				{
 					ALERT( at_error, "Can't find train for track change! %s\n", STRING(m_trainName) );
@@ -1781,13 +1781,13 @@ void CFuncTrackChange :: Find( void )
 				m_trackBottom = m_trackBottom->Nearest( center );
 				m_trackTop = m_trackTop->Nearest( center );
 				UpdateAutoTargets( m_toggle_state );
-				SetThink( NULL );
+				SetThink( nullptr );
 				return;
 			}
 			else
 			{
 				ALERT( at_error, "Can't find train for track change! %s\n", STRING(m_trainName) );
-				target = FIND_ENTITY_BY_TARGETNAME( NULL, STRING(m_trainName) );
+				target = FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trainName) );
 			}
 		}
 		else
@@ -1878,7 +1878,7 @@ void CFuncTrackChange :: GoDown( void )
 	if ( m_code == TRAIN_FOLLOWING )
 	{
 		UpdateTrain( m_start );
-		m_train->m_ppath = NULL;
+		m_train->m_ppath = nullptr;
 	}
 }
 
@@ -1915,7 +1915,7 @@ void CFuncTrackChange :: GoUp( void )
 	if ( m_code == TRAIN_FOLLOWING )
 	{
 		UpdateTrain( m_end );
-		m_train->m_ppath = NULL;
+		m_train->m_ppath = nullptr;
 	}
 }
 
@@ -1980,7 +1980,7 @@ void CFuncTrackChange :: HitBottom( void )
 //		UpdateTrain();
 		m_train->SetTrack( m_trackBottom );
 	}
-	SetThink( NULL );
+	SetThink( nullptr );
 	pev->nextthink = -1;
 
 	UpdateAutoTargets( m_toggle_state );
@@ -2002,7 +2002,7 @@ void CFuncTrackChange :: HitTop( void )
 	}
 	
 	// Don't let the plat go back down
-	SetThink( NULL );
+	SetThink( nullptr );
 	pev->nextthink = -1;
 	UpdateAutoTargets( m_toggle_state );
 	EnableUse();
@@ -2062,7 +2062,7 @@ void CFuncTrackAuto :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 	else if ( m_toggle_state == TS_AT_BOTTOM )
 		pTarget = m_trackBottom;
 	else
-		pTarget = NULL;
+		pTarget = nullptr;
 
 	if ( FClassnameIs( pActivator->pev, "func_tracktrain" ) )
 	{
@@ -2188,7 +2188,7 @@ void CGunTarget::Start( void )
 
 void CGunTarget::Next( void )
 {
-	SetThink( NULL );
+	SetThink( nullptr );
 
 	m_hTargetEnt = GetNextTarget();
 	CBaseEntity *pTarget = m_hTargetEnt;
@@ -2274,7 +2274,7 @@ void CGunTarget::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE us
 	{
 		pev->takedamage = DAMAGE_AIM;
 		m_hTargetEnt = GetNextTarget();
-		if ( m_hTargetEnt == NULL )
+		if ( m_hTargetEnt == nullptr )
 			return;
 		pev->health = pev->max_health;
 		Next();

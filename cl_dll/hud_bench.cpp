@@ -1119,7 +1119,7 @@ void Bench_SetViewOrigin( float *vieworigin, float frametime )
 	
 	ang = vec3_origin;
 
-	AngleVectors( ang, NULL, right, NULL );
+	AngleVectors( ang, nullptr, right, nullptr );
 
 	// offset along right axis
 	move = right * drift;

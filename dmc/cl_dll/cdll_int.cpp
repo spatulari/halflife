@@ -36,14 +36,14 @@
 #include "winsani_out.h"
 #endif
 
-CSysModule *g_pFileSystemModule = NULL;
-IFileSystem *g_pFileSystem = NULL;
+CSysModule *g_pFileSystemModule = nullptr;
+IFileSystem *g_pFileSystem = nullptr;
 
-CSysModule *g_hTrackerModule = NULL;
+CSysModule *g_hTrackerModule = nullptr;
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
-TeamFortressViewport *gViewPort = NULL;
+TeamFortressViewport *gViewPort = nullptr;
 
 extern "C"
 {
@@ -200,7 +200,7 @@ int EXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
 		return false;
 	}
 
-	g_pFileSystem = ( IFileSystem * )fileSystemFactory( FILESYSTEM_INTERFACE_VERSION, NULL );
+	g_pFileSystem = ( IFileSystem * )fileSystemFactory( FILESYSTEM_INTERFACE_VERSION, nullptr );
 	assert( g_pFileSystem );
 	if( !g_pFileSystem )
 	{

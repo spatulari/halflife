@@ -49,7 +49,7 @@ LINK_ENTITY_TO_CLASS( laser_spot, CLaserSpot );
 //=========================================================
 CLaserSpot *CLaserSpot::CreateSpot( void )
 {
-	CLaserSpot *pSpot = GetClassPtr( (CLaserSpot *)NULL );
+	CLaserSpot *pSpot = GetClassPtr( (CLaserSpot *)nullptr );
 	pSpot->Spawn();
 
 	pSpot->pev->classname = MAKE_STRING("laser_spot");
@@ -91,7 +91,7 @@ void CLaserSpot::Revive( void )
 {
 	pev->effects &= ~EF_NODRAW;
 
-	SetThink( NULL );
+	SetThink( nullptr );
 }
 
 void CLaserSpot::Precache( void )
@@ -105,7 +105,7 @@ LINK_ENTITY_TO_CLASS( rpg_rocket, CRpgRocket );
 //=========================================================
 CRpgRocket *CRpgRocket::CreateRpgRocket( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner, CRpg *pLauncher )
 {
-	CRpgRocket *pRocket = GetClassPtr( (CRpgRocket *)NULL );
+	CRpgRocket *pRocket = GetClassPtr( (CRpgRocket *)nullptr );
 
 	UTIL_SetOrigin( pRocket->pev, vecOrigin );
 	pRocket->pev->angles = vecAngles;
@@ -159,7 +159,7 @@ void CRpgRocket :: RocketTouch ( CBaseEntity *pOther )
 	{
 		// my launcher is still around, tell it I'm dead.
 		GetLauncher()->m_cActiveRockets--;
-		m_hLauncher = NULL;
+		m_hLauncher = nullptr;
 	}	
 
 	STOP_SOUND( edict(), CHAN_VOICE, "weapons/rocket1.wav" );
@@ -177,7 +177,7 @@ void CRpgRocket::Explode( TraceResult *pTrace, int bitsDamageType )
 	{
 		// my launcher is still around, tell it I'm dead.
 		GetLauncher()->m_cActiveRockets--;
-		m_hLauncher = NULL;
+		m_hLauncher = nullptr;
 	}	
 
 	CGrenade::Explode( pTrace, bitsDamageType );
@@ -229,14 +229,14 @@ void CRpgRocket :: IgniteThink( void  )
 CRpg* CRpgRocket::GetLauncher()
 {
 	if ( !m_hLauncher )
-		return NULL;
+		return nullptr;
 
 	return (CRpg*)( (CBaseEntity*)m_hLauncher );
 }
 
 void CRpgRocket :: FollowThink( void  )
 {
-	CBaseEntity *pOther = NULL;
+	CBaseEntity *pOther = nullptr;
 	Vector vecTarget;
 	Vector vecDir;
 	float flDist, flMax, flDot;
@@ -248,7 +248,7 @@ void CRpgRocket :: FollowThink( void  )
 	flMax = 4096;
 
 	// Examine all entities within a reasonable radius
-	while ((pOther = UTIL_FindEntityByClassname( pOther, "laser_spot" )) != NULL)
+	while ((pOther = UTIL_FindEntityByClassname( pOther, "laser_spot" )) != nullptr)
 	{
 		Vector vSpotLocation = pOther->pev->origin;
 
@@ -322,7 +322,7 @@ void CRpgRocket :: FollowThink( void  )
 		{
 			//ALERT( at_console, "RPG too far (%f)!\n", flDistance );
 			GetLauncher()->m_cActiveRockets--;
-			m_hLauncher = NULL;
+			m_hLauncher = nullptr;
 		}
 
 		//ALERT( at_console, "%.0f, m_pLauncher: %u, flDistance: %f\n", flSpeed, GetLauncher(), flDistance );
@@ -441,7 +441,7 @@ int CRpg::GetItemInfo(ItemInfo *p)
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "rockets";
 	p->iMaxAmmo1 = ROCKET_MAX_CARRY;
-	p->pszAmmo2 = NULL;
+	p->pszAmmo2 = nullptr;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = RPG_MAX_CLIP;
 	p->iSlot = 3;
@@ -457,7 +457,7 @@ int CRpg::AddToPlayer( CBasePlayer *pPlayer )
 {
 	if ( CBasePlayerWeapon::AddToPlayer( pPlayer ) )
 	{
-		MESSAGE_BEGIN( MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev );
+		MESSAGE_BEGIN( MSG_ONE, gmsgWeapPickup, nullptr, pPlayer->pev );
 			WRITE_BYTE( m_iId );
 		MESSAGE_END();
 		return TRUE;
@@ -498,8 +498,8 @@ void CRpg::Holster( int skiplocal /* = 0 */ )
 #ifndef CLIENT_DLL
 	if (m_pSpot)
 	{
-		m_pSpot->Killed( NULL, GIB_NEVER );
-		m_pSpot = NULL;
+		m_pSpot->Killed( nullptr, GIB_NEVER );
+		m_pSpot = nullptr;
 	}
 #endif
 
@@ -561,8 +561,8 @@ void CRpg::SecondaryAttack()
 #ifndef CLIENT_DLL
 	if (!m_fSpotActive && m_pSpot)
 	{
-		m_pSpot->Killed( NULL, GIB_NORMAL );
-		m_pSpot = NULL;
+		m_pSpot->Killed( nullptr, GIB_NORMAL );
+		m_pSpot = nullptr;
 	}
 #endif
 

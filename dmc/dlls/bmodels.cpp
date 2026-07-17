@@ -493,7 +493,7 @@ void CFuncRotating :: Precache( void )
 				break;
 			} else
 			{
-				pev->noiseRunning = ALLOC_STRING("common/null.wav");
+				pev->noiseRunning = ALLOC_STRING("common/nullptr.wav");
 				break;
 			}
 		}
@@ -842,7 +842,7 @@ void CPendulum :: PendulumUse( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 		else
 		{
 			pev->speed = 0;		// Dead stop
-			SetThink( NULL );
+			SetThink( nullptr );
 			pev->avelocity = g_vecZero;
 		}
 	}
@@ -860,7 +860,7 @@ void CPendulum :: Stop( void )
 {
 	pev->angles = m_start;
 	pev->speed = 0;
-	SetThink( NULL );
+	SetThink( nullptr );
 	pev->avelocity = g_vecZero;
 }
 
@@ -901,7 +901,7 @@ void CPendulum :: Swing( void )
 		{
 			pev->angles = m_center;
 			pev->speed = 0;
-			SetThink( NULL );
+			SetThink( nullptr );
 			pev->avelocity = g_vecZero;
 		}
 		else if ( pev->speed > m_dampSpeed )

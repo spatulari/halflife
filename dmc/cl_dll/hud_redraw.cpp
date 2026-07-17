@@ -143,7 +143,7 @@ int CHud :: Redraw( float flTime, int intermission )
 		int iFrame = (int)(flTime * 20) % MAX_LOGO_FRAMES;
 		i = grgLogoFrame[iFrame] - 1;
 
-		SPR_DrawAdditive(i, x, y, NULL);
+		SPR_DrawAdditive(i, x, y, nullptr);
 	}
 	
 
@@ -186,7 +186,7 @@ int CHud :: DrawHudStringCTF(int xpos, int ypos, int iMaxX, char *szIt, int r, i
 	int WantColor = 0;
 	int Color = 0;
 	
-	// draw the string until we hit the null character or a newline character
+	// draw the string until we hit the nullptr character or a newline character
 	for ( ; *szIt != 0 && *szIt != '\n'; szIt++ )
 	{
 		int next;// = xpos + gHUD.m_scrinfo.charWidths[ *szIt ]; // variable-width fonts look cool
@@ -305,7 +305,7 @@ int CHud :: DrawHudStringCTF(int xpos, int ypos, int iMaxX, char *szIt, int r, i
 
 int CHud :: DrawHudString(int xpos, int ypos, int iMaxX, char *szIt, int r, int g, int b )
 {
-	// draw the string until we hit the null character or a newline character
+	// draw the string until we hit the nullptr character or a newline character
 	for ( ; *szIt != 0 && *szIt != '\n'; szIt++ )
 	{
 		int next = xpos + gHUD.m_scrinfo.charWidths[ *szIt ]; // variable-width fonts look cool
