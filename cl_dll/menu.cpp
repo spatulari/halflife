@@ -22,7 +22,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "vgui_TeamFortressViewport.h"
 

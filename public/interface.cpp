@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <cstdio>
 #include "interface.h"
 
 #if !defined ( _WIN32 )

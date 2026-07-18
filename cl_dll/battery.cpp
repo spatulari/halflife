@@ -23,7 +23,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 DECLARE_MESSAGE(m_Battery, Battery)
 

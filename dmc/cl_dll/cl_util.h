@@ -23,7 +23,7 @@
 #define FALSE 0
 #endif
 
-#include <stdio.h> // for safe_sprintf()
+#include <cstdio> // for safe_sprintf()
 #include <stdarg.h> // "
 #include <string.h> // for safe_strcpy()
 

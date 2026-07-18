@@ -6,7 +6,7 @@
 //=============================================================================
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "voice_banmgr.h"
 
 

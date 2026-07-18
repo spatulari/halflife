@@ -16,7 +16,7 @@
 #include "bench.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "parsemsg.h"
 
 #include "con_nprint.h"

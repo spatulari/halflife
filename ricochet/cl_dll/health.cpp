@@ -18,7 +18,7 @@
 // implementation of CHudHealth class
 //
 
-#include "stdio.h"
+#include "cstdio"
 #include "stdlib.h"
 #include "math.h"
 

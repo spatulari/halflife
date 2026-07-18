@@ -23,7 +23,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include <malloc.h> // _alloca
 
 #include "vgui_TeamFortressViewport.h"

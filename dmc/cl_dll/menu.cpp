@@ -22,7 +22,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "vgui_viewport.h"
 
 #define MAX_MENU_STRING	512

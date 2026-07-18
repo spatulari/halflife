@@ -22,7 +22,7 @@
 #include "cl_util.h"
 #include <string.h>
 #include <time.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "parsemsg.h"
 

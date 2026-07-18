@@ -6,7 +6,7 @@
 //=============================================================================
 
 #include <stdarg.h>
-#include <stdio.h>
+#include <cstdio>
 #include "vgui_checkbutton2.h"
 #include "vgui_loadtga.h"
 

@@ -24,7 +24,7 @@
 #include "pm_shared.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "ammohistory.h"
 #include "vgui_TeamFortressViewport.h"

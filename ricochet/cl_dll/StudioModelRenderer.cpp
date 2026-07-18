@@ -11,7 +11,7 @@
 #include "dlight.h"
 #include "triangleapi.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <string.h>
 #include <memory.h>
 #include <math.h>

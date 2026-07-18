@@ -22,7 +22,7 @@
 #include "cl_util.h"
 #include "commonmacros.h"
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "parsemsg.h"
 
 DECLARE_MESSAGE( m_Message, HudText )
