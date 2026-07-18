@@ -326,25 +326,38 @@ edict_t *DBG_EntOfVars( const entvars_t *pev )
 #endif //DEBUG
 
 
-#ifdef	DEBUG
-	void
-DBG_AssertFunction(
-	BOOL		fExpr,
-	const char*	szExpr,
-	const char*	szFile,
-	int			szLine,
-	const char*	szMessage)
-	{
-	if (fExpr)
-		return;
+#ifdef DEBUG
+#include <string_view>
+#include <cstdio> // for snprintf
+
+void DBG_AssertFunction(bool expr, // TODO 1
+	std::string_view condition,
+	std::string_view file,
+	int line,
+	std::string_view message)
+{
+	if (expr) return;
+
 	char szOut[512];
-	if (szMessage != nullptr)
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)\n%s", szExpr, szFile, szLine, szMessage);
-	else
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)", szExpr, szFile, szLine);
-	ALERT(at_console, szOut);
+
+	// Using snprintf is safer than sprintf to prevent buffer overflows
+	if (!message.empty()) {
+		std::snprintf(szOut, sizeof(szOut), "ASSERT FAILED:\n %.*s \n(%.*s@%d)\n%.*s",
+			(int)condition.size(), condition.data(),
+			(int)file.size(), file.data(),
+			line,
+			(int)message.size(), message.data());
 	}
-#endif	// DEBUG
+	else {
+		std::snprintf(szOut, sizeof(szOut), "ASSERT FAILED:\n %.*s \n(%.*s@%d)",
+			(int)condition.size(), condition.data(),
+			(int)file.size(), file.data(),
+			line);
+	}
+
+	ALERT(at_console, szOut);
+}
+#endif // DEBUG
 
 BOOL UTIL_GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon )
 {

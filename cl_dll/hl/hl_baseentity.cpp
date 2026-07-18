@@ -29,6 +29,7 @@ This file contains "stubs" of class member implementations so that we can predic
 #include	"nodes.h"
 #include	"soundent.h"
 #include	"skill.h"
+#include <string_view>
 
 // Globals used by game logic
 const Vector g_vecZero = Vector( 0, 0, 0 );
@@ -67,7 +68,7 @@ int CBaseAnimating::Save( class CSave & ) { return 1; }
 
 // DEBUG Stubs
 edict_t *DBG_EntOfVars( const entvars_t *pev ) { return nullptr; }
-void DBG_AssertFunction(BOOL fExpr,	const char*	szExpr,	const char*	szFile,	int szLine,	const char*	szMessage) { }
+void DBG_AssertFunction(bool Expr, std::string_view condition, std::string_view file, int line, std::string_view message) {} // TODO 1
 
 // UTIL_* Stubs
 void UTIL_PrecacheOther( const char *szClassname ) { }
