@@ -243,13 +243,13 @@
     <ClCompile Include="..\..\dlls\plats.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_shared.c">
+    <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
       <Filter>Source Files\pm_shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_debug.c">
+    <ClCompile Include="..\..\pm_shared\pm_debug.cpp">
       <Filter>Source Files\pm_shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_math.c">
+    <ClCompile Include="..\..\pm_shared\pm_math.cpp">
       <Filter>Source Files\pm_shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\python.cpp">
