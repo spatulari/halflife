@@ -21,10 +21,10 @@
 #include	"gamerules.h"
 #include	"game.h"
 
-extern "C" void PM_Move ( struct playermove_s *ppmove, int server );
-extern "C" void PM_Init ( struct playermove_s *ppmove  );
-extern "C" char PM_FindTextureType( char *name );
-
+// TODO: Just include pm_shared.h, but I am too scared to face potential linker errors right now
+void PM_Move(struct playermove_s* ppmove, int server);
+void PM_Init(struct playermove_s* ppmove);
+char PM_FindTextureType(char* name);
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd );
 
 extern Vector VecBModelOrigin( entvars_t* pevBModel );
