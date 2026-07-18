@@ -37,7 +37,7 @@ extra_player_info_t  g_PlayerExtraInfo[MAX_PLAYERS+1];   // additional player in
 class CHLVoiceStatusHelper : public IVoiceStatusHelper
 {
 public:
-	virtual void GetPlayerTextColor(int entindex, int color[3])
+	virtual void GetPlayerTextColor(int entindex, int color[3]) override
 	{
 		color[0] = color[1] = color[2] = 255;
 
@@ -58,17 +58,17 @@ public:
 		}
 	}
 
-	virtual void UpdateCursorState()
+	virtual void UpdateCursorState() override
 	{
 		gViewPort->UpdateCursorState();
 	}
 
-	virtual int	GetAckIconHeight()
+	virtual int	GetAckIconHeight() override
 	{
 		return ScreenHeight - gHUD.m_iFontHeight*3 - 6;
 	}
 
-	virtual bool			CanShowSpeakerLabels()
+	virtual bool CanShowSpeakerLabels() override
 	{
 		if( gViewPort && gViewPort->m_pScoreBoard )
 			return !gViewPort->m_pScoreBoard->isVisible();

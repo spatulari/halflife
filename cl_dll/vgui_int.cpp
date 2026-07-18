@@ -42,19 +42,19 @@ public:
 		_textEntry->addActionSignal(this);
 	}
 public:
-	virtual bool isWithin(int x,int y)
+	virtual bool isWithin(int x,int y) override
 	{
 		return _textEntry->isWithin(x,y);
 	}
 public:
-	virtual void actionPerformed(Panel* panel)
+	virtual void actionPerformed(Panel* panel) override
 	{
 		char buf[256];
 		_textEntry->getText(0,buf,256);
 		sscanf(buf,"%d",&_bindIndex);
 	}
 protected:
-	virtual void paintBackground()
+	virtual void paintBackground() override
 	{
 			Panel::paintBackground();
 			
