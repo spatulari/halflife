@@ -30,7 +30,6 @@
 #include "player.h"
 #include "weapons.h"
 #include "gamerules.h"
-#include <source_location>
 
 float UTIL_WeaponTimeBase( void )
 {
@@ -329,38 +328,31 @@ edict_t *DBG_EntOfVars( const entvars_t *pev )
 
 #ifdef DEBUG
 #include <string_view>
-#include <cstdio>
-void debug::Assert(
-	bool expr,
+#include <cstdio> // for snprintf
+
+void DBG_AssertFunction(bool expr, // TODO 1
 	std::string_view condition,
-	std::string_view message,
-	std::source_location location)
+	std::string_view file,
+	int line,
+	std::string_view message)
 {
-	if (expr)
-		return;
+	if (expr) return;
 
 	char szOut[512];
 
-	if (!message.empty())
-	{
-		std::snprintf(
-			szOut,
-			sizeof(szOut),
-			"ASSERT FAILED:\n %.*s \n(%s@%u)\n%.*s",
-			static_cast<int>(condition.size()), condition.data(),
-			location.file_name(),
-			location.line(),
-			static_cast<int>(message.size()), message.data());
+	// Using snprintf is safer than sprintf to prevent buffer overflows
+	if (!message.empty()) {
+		std::snprintf(szOut, sizeof(szOut), "ASSERT FAILED:\n %.*s \n(%.*s@%d)\n%.*s",
+			(int)condition.size(), condition.data(),
+			(int)file.size(), file.data(),
+			line,
+			(int)message.size(), message.data());
 	}
-	else
-	{
-		std::snprintf(
-			szOut,
-			sizeof(szOut),
-			"ASSERT FAILED:\n %.*s \n(%s@%u)",
-			static_cast<int>(condition.size()), condition.data(),
-			location.file_name(),
-			location.line());
+	else {
+		std::snprintf(szOut, sizeof(szOut), "ASSERT FAILED:\n %.*s \n(%.*s@%d)",
+			(int)condition.size(), condition.data(),
+			(int)file.size(), file.data(),
+			line);
 	}
 
 	ALERT(at_console, szOut);

@@ -14,7 +14,6 @@
 ****/
 #include "archtypes.h"     // DAL
 #include <string_view>
-#include <source_location>
 
 //
 // Misc utility code
@@ -360,15 +359,12 @@ extern int BuildChangeList( LEVELLIST *pLevelList, int maxList );
 // How did I ever live without ASSERT?
 //
 #ifdef	DEBUG
-namespace debug
-{
-	void Assert(bool expr, std::string_view condition, std::string_view message = {}, std::source_location location = std::source_location::current());
-}
-#define ASSERT(expr)         debug::Assert((expr), #expr)
-#define ASSERTSZ(expr, msg)  debug::Assert((expr), #expr, (msg))
+void DBG_AssertFunction(bool expr, std::string_view condition, std::string_view file, int line, std::string_view message); // TODO 1
+#define ASSERT(f) DBG_AssertFunction(f, #f, __FILE__, __LINE__, "")														   // TODO 1
+#define ASSERTSZ(f, sz)	DBG_AssertFunction(f, #f, __FILE__, __LINE__, sz)												   // TODO 1
 #else	// !DEBUG
-#define ASSERT(expr)
-#define ASSERTSZ(expr, msg)
+#define ASSERT(f)
+#define ASSERTSZ(f, sz)
 #endif	// !DEBUG
 
 
