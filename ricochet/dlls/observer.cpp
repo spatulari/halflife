@@ -42,17 +42,17 @@ void CBasePlayer::StartObserver( Vector vecPosition, Vector vecViewAngle )
 	if (m_pActiveItem)
 		m_pActiveItem->Holster( );
 
-	if ( m_pTank != NULL )
+	if ( m_pTank != nullptr )
 	{
 		m_pTank->Use( this, this, USE_OFF, 0 );
-		m_pTank = NULL;
+		m_pTank = nullptr;
 	}
 
 	// clear out the suit message cache so we don't keep chattering
-	SetSuitUpdate(NULL, FALSE, 0);
+	SetSuitUpdate(nullptr, FALSE, 0);
 
 	// Tell Ammo Hud that the player is dead
-	MESSAGE_BEGIN( MSG_ONE, gmsgCurWeapon, NULL, pev );
+	MESSAGE_BEGIN( MSG_ONE, gmsgCurWeapon, nullptr, pev );
 		WRITE_BYTE(0);
 		WRITE_BYTE(0XFF);
 		WRITE_BYTE(0xFF);
@@ -61,7 +61,7 @@ void CBasePlayer::StartObserver( Vector vecPosition, Vector vecViewAngle )
 	// reset FOV
 	m_iFOV = m_iClientFOV = 0;
 	pev->fov = m_iFOV;
-	MESSAGE_BEGIN( MSG_ONE, gmsgSetFOV, NULL, pev );
+	MESSAGE_BEGIN( MSG_ONE, gmsgSetFOV, nullptr, pev );
 		WRITE_BYTE(0);
 	MESSAGE_END();
 
@@ -120,7 +120,7 @@ void CBasePlayer::StopObserver( void )
 		MESSAGE_END();
 
 		pev->iuser1 = pev->iuser2 = 0; 
-		m_hObserverTarget = NULL;
+		m_hObserverTarget = nullptr;
 	}
 
 	m_fWeapon = FALSE; // force weapon send
@@ -139,7 +139,7 @@ void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
 	else
 		iStart = ENTINDEX( edict() );
 	int	    iCurrent = iStart;
-	m_hObserverTarget = NULL;
+	m_hObserverTarget = nullptr;
 	int iDir = bReverse ? -1 : 1; 
 
 	do
@@ -282,7 +282,7 @@ void CBasePlayer::Observer_SetMode( int iMode )
 	if ( iMode == OBS_LOCKEDVIEW )
 	{
 		// Find the spectator spawn position
-		CBaseEntity *pSpot = UTIL_FindEntityByClassname( NULL, "info_player_spectator");
+		CBaseEntity *pSpot = UTIL_FindEntityByClassname( nullptr, "info_player_spectator");
 		
 		if ( pSpot )
 		{
@@ -304,7 +304,7 @@ void CBasePlayer::Observer_SetMode( int iMode )
 	if ( iMode == OBS_CHASE_FREE )
 	{
 		// If changing from Roaming, or starting observing, make sure there is a target
-		if ( m_hObserverTarget == NULL )
+		if ( m_hObserverTarget == nullptr )
 			Observer_FindNextPlayer( false );
 
 		if (m_hObserverTarget)

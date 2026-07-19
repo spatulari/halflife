@@ -22,7 +22,7 @@
 
 extern IFileSystem *g_pFileSystem;
 
-extern "C" playermove_t *pmove;
+extern playermove_t* pmove;
 extern int g_runfuncs;
 
 // Don't support more than MAX_TELE teleporters ( map still can load tho )
@@ -201,7 +201,7 @@ Parse through entity lump looking for teleporters or targets
 void Dmc_ProcessEnts( char *buffer )
 {	
 	char token[ 1024 ];
-	dmc_tele_t	*pTele = NULL;
+	dmc_tele_t	*pTele = nullptr;
 	int			error = 0;
 	
 	// parse entities from entity lump of .bsp file
@@ -269,18 +269,18 @@ char *Dmc_LoadEntityLump( const char *filename )
 	dheader_t	header;
 	int			size;
 	lump_t		*curLump;
-	char		*buffer = NULL;
+	char		*buffer = nullptr;
 
 	fp = g_pFileSystem->Open( filename, "rb" );
 	if ( !fp )
-		return NULL;
+		return nullptr;
 
 	// Read in the .bsp header
 	if ( g_pFileSystem->Read(&header, sizeof(dheader_t), fp) != sizeof(dheader_t) )
 	{
 		gEngfuncs.Con_Printf("Dmc_LoadEntityLump:  Could not read BSP header for map [%s].\n", filename);
 		g_pFileSystem->Close(fp);
-		return NULL;
+		return nullptr;
 	}
 
 	// Check the version
@@ -289,7 +289,7 @@ char *Dmc_LoadEntityLump( const char *filename )
 	{
 		g_pFileSystem->Close(fp);
 		gEngfuncs.Con_Printf("Dmc_LoadEntityLump:  Map [%s] has incorrect BSP version (%i should be %i).\n", filename, i, BSPVERSION);
-		return NULL;
+		return nullptr;
 	}
 
 	// Get entity lump
@@ -306,7 +306,7 @@ char *Dmc_LoadEntityLump( const char *filename )
 	{
 		g_pFileSystem->Close(fp);
 		gEngfuncs.Con_Printf("Dmc_LoadEntityLump:  Couldn't allocate %i bytes\n", size + 1 );
-		return NULL;
+		return nullptr;
 	}
 
 	// Read in the entity lump
@@ -332,7 +332,7 @@ Load in the .bsp file and process the entities
 */
 void Dmc_LoadTeleporters( const char *map )
 {
-	char	*buffer = NULL;
+	char	*buffer = nullptr;
 	char	filename[ 256 ];
 
 	sprintf( filename, "%s", map );
@@ -380,7 +380,7 @@ dmc_tele_t *Dmc_FindTarget( const char *name, int numtele, dmc_tele_t *pTeles )
 		return target;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /*
@@ -424,7 +424,7 @@ void Dmc_TeleporterTouched( int numtele, dmc_tele_t *pTeles, dmc_tele_t *pTele, 
 
 		bChangeAngles = true;
 		
-		gEngfuncs.pfnPlaybackEvent( FEV_NOTHOST, NULL, s_usTeleport, 0.0, target->origin, zero, 0.0, 0.0, 0, 0, 0, 0 );
+		gEngfuncs.pfnPlaybackEvent( FEV_NOTHOST, nullptr, s_usTeleport, 0.0, target->origin, zero, 0.0, 0.0, 0, 0, 0, 0 );
 	}
 }
 

@@ -24,7 +24,7 @@
 #include "event_api.h"
 #include "pmtrace.h"
 #include "hltv.h"
-
+#include "Exports.h"
 
 // QUAKECLASSIC
 extern int iMouseInUse;
@@ -36,23 +36,20 @@ extern bool	bChangeAngles;
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
 
-extern "C" 
-{
-	int CL_IsThirdPerson( void );
-	void CL_CameraOffset( float *ofs );
+//int CL_IsThirdPerson(void);
+//void CL_CameraOffset(float* ofs);
 
-	void EXPORT V_CalcRefdef( struct ref_params_s *pparams );
+extern "C" void EXPORT V_CalcRefdef(struct ref_params_s* pparams);
 
-	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
-	int PM_GetInfo( int ent );
-	void	InterpolateAngles(  float * start, float * end, float * output, float frac );
-	void	NormalizeAngles( float * angles );
-	float	Distance(const float * v1, const float * v2);
-	float	AngleBetweenVectors(  const float * v1,  const float * v2 );
+void PM_ParticleLine(float* start, float* end, int pcolor, float life, float vert);
+int PM_GetInfo(int ent);
+void InterpolateAngles(float* start, float* end, float* output, float frac);
+void NormalizeAngles(float* angles);
+float Distance(const float* v1, const float* v2);
+float AngleBetweenVectors(const float* v1, const float* v2);
 
-	float	vJumpOrigin[3];
-	float	vJumpAngles[3];
-}
+float vJumpOrigin[3];
+float vJumpAngles[3];
 
 #include "r_studioint.h"
 #include "com_model.h"
@@ -443,7 +440,7 @@ void V_CalcIntermissionRefdef ( struct ref_params_s *pparams )
 	VectorCopy ( pparams->simorg, pparams->vieworg );
 	VectorCopy ( pparams->cl_viewangles, pparams->viewangles );
 
-	view->model = NULL;
+	view->model = nullptr;
 
 	// allways idle in intermission
 	old = v_idlescale;
@@ -568,7 +565,7 @@ void V_CalcNormalRefdef ( struct ref_params_s *pparams )
 			if ( waterEntity >= 0 && waterEntity < pparams->max_entities )
 			{
 				pwater = gEngfuncs.GetEntityByIndex( waterEntity );
-				if ( pwater && ( pwater->model != NULL ) )
+				if ( pwater && ( pwater->model != nullptr ) )
 				{
 					waterDist += ( pwater->curstate.scale * 16 );	// Add in wave height
 				}
@@ -587,7 +584,7 @@ void V_CalcNormalRefdef ( struct ref_params_s *pparams )
 			point[2] -= waterDist;
 			for ( i = 0; i < waterDist; i++ )
 			{
-				contents = gEngfuncs.PM_PointContents( point, NULL );
+				contents = gEngfuncs.PM_PointContents( point, nullptr );
 				if ( contents > CONTENTS_WATER )
 					break;
 				point[2] += 1;
@@ -601,7 +598,7 @@ void V_CalcNormalRefdef ( struct ref_params_s *pparams )
 
 			for ( i = 0; i < waterDist; i++ )
 			{
-				contents = gEngfuncs.PM_PointContents( point, NULL );
+				contents = gEngfuncs.PM_PointContents( point, nullptr );
 				if ( contents <= CONTENTS_WATER )
 					break;
 				point[2] -= 1;
@@ -886,7 +883,7 @@ void V_GetChaseOrigin( float * angles, float * origin, float distance, qboolean 
 	pmtrace_t * trace;
 	
 	// Trace back from the target using the player's view angles
-	AngleVectors(angles, forward, NULL, NULL);
+	AngleVectors(angles, forward, nullptr, nullptr);
 	
 	VectorScale(forward,-1,forward);
 
@@ -1053,7 +1050,7 @@ void V_GetChasePos(int target, float * cl_angles, float * origin, float * angles
 	}
 	else
 	{
-		if ( cl_angles == NULL )	// no mouse angles given, use entity angles ( locked mode )
+		if ( cl_angles == nullptr )	// no mouse angles given, use entity angles ( locked mode )
 		{
 			VectorCopy ( ent->angles, angles);
 			angles[0]*=-1;
@@ -1125,7 +1122,7 @@ void V_GetMapFreePosition( float * cl_angles, float * origin, float * angles )
 	zScaledTarget[2] = gHUD.m_Spectator.m_mapOrigin[2] * (( 90.0f - angles[0] ) / 90.0f );
 	
 
-	AngleVectors(angles, forward, NULL, NULL);
+	AngleVectors(angles, forward, nullptr, nullptr);
 
 	VectorNormalize(forward);
 
@@ -1168,7 +1165,7 @@ void V_GetMapChasePosition(int target, float * cl_angles, float * origin, float 
 	origin[2] *= (( 90.0f - angles[0] ) / 90.0f );
 	angles[2] = 0.0f;	// don't roll angle (if chased player is dead)
 
-	AngleVectors(angles, forward, NULL, NULL);
+	AngleVectors(angles, forward, nullptr, nullptr);
 
 	VectorNormalize(forward);
 
@@ -1192,7 +1189,7 @@ int V_FindViewModelByWeaponModel(int weaponindex)
 		{ "models/p_rock.mdl",			"models/v_rock.mdl"			},
 		{ "models/p_rock2.mdl",			"models/v_rock2.mdl"		},
 		{ "models/p_light.mdl",			"models/v_light.mdl"		},
-		{ NULL, NULL } };
+		{ nullptr, nullptr } };
 
 	struct model_s * weaponModel = IEngineStudio.GetModelByIndex( weaponindex );
 
@@ -1201,7 +1198,7 @@ int V_FindViewModelByWeaponModel(int weaponindex)
 		int len = strlen( weaponModel->name );
 		int i = 0;
 
-		while ( *modelmap[i] != NULL )
+		while ( *modelmap[i] != nullptr )
 		{
 			if ( !strnicmp( weaponModel->name, modelmap[i][0], len ) )
 			{
@@ -1260,7 +1257,7 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 
 		switch ( g_iUser1 )
 		{
-			case OBS_CHASE_LOCKED:	V_GetChasePos( g_iUser2, NULL, v_origin, v_angles );
+			case OBS_CHASE_LOCKED:	V_GetChasePos( g_iUser2, nullptr, v_origin, v_angles );
 									break;
 
 			case OBS_CHASE_FREE:	V_GetChasePos( g_iUser2, v_cl_angles, v_origin, v_angles );
@@ -1363,8 +1360,8 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 				float  da;
 				vec3_t	v1,v2;
 
-				AngleVectors( ViewInterp.Angles[ foundidx & ORIGIN_MASK ], v1, NULL, NULL );
-				AngleVectors( ViewInterp.Angles[ (foundidx + 1) & ORIGIN_MASK ], v2, NULL, NULL );
+				AngleVectors( ViewInterp.Angles[ foundidx & ORIGIN_MASK ], v1, nullptr, nullptr );
+				AngleVectors( ViewInterp.Angles[ (foundidx + 1) & ORIGIN_MASK ], v2, nullptr, nullptr );
 				da = AngleBetweenVectors( v1, v2 );
 
 				dt = ViewInterp.AngleTime[ (foundidx + 1) & ORIGIN_MASK ] - ViewInterp.AngleTime[ foundidx & ORIGIN_MASK ];
@@ -1470,7 +1467,7 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 		}
 
 		vec3_t forward;
-		AngleVectors(v_angles, forward, NULL, NULL );
+		AngleVectors(v_angles, forward, nullptr, nullptr );
 
 		for ( int i = 0; i < 3; i++ )
 		{
@@ -1498,7 +1495,7 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 			else
 			{
 				// model not found
-				gunModel->model = NULL;	// disable weaopn model
+				gunModel->model = nullptr;	// disable weaopn model
 				lastWeaponModelIndex = lastViewModelIndex = 0;
 			}
 		}
@@ -1513,12 +1510,12 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 		}
 		else
 		{
-			gunModel->model = NULL;	// disable weaopn model
+			gunModel->model = nullptr;	// disable weaopn model
 		}
 	}
 	else
 	{
-		gunModel->model = NULL;	// disable weaopn model
+		gunModel->model = nullptr;	// disable weaopn model
 		lastWeaponModelIndex = lastViewModelIndex = 0;
 	}
 

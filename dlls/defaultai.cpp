@@ -1033,7 +1033,7 @@ Schedule_t *CBaseMonster :: ScheduleInList( const char *pName, Schedule_t **pLis
 	if ( !pName )
 	{
 		ALERT( at_console, "%s set to unnamed schedule!\n", STRING(pev->classname) );
-		return NULL;
+		return nullptr;
 	}
 
 
@@ -1047,7 +1047,7 @@ Schedule_t *CBaseMonster :: ScheduleInList( const char *pName, Schedule_t **pLis
 		if ( stricmp( pName, pList[i]->pName ) == 0 )
 			return pList[i];
 	}
-	return NULL;
+	return nullptr;
 }
 
 //=========================================================
@@ -1062,7 +1062,7 @@ Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type )
 	// This is the schedule for scripted sequences AND scripted AI
 	case SCHED_AISCRIPT:
 		{
-			ASSERT( m_pCine != NULL );
+			ASSERT( m_pCine != nullptr );
 			if ( !m_pCine )
 			{
 				ALERT( at_aiconsole, "Script failed for %s\n", STRING(pev->classname) );
@@ -1228,5 +1228,5 @@ Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type )
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }

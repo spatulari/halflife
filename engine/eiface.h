@@ -23,7 +23,7 @@
 #define INTERFACE_VERSION		140
 #endif // !HLDEMO_BUILD
 
-#include <stdio.h>
+#include <cstdio>
 #include "custom.h"
 #include "cvardef.h"
 #include "Sequence.h"
@@ -209,10 +209,10 @@ typedef struct enginefuncs_s
 	void		(*pfnCvar_RegisterVariable) (cvar_t *variable);
 	void        (*pfnFadeClientVolume)      (const edict_t *pEdict, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds);
 	void        (*pfnSetClientMaxspeed)     (const edict_t *pEdict, float fNewMaxspeed);
-	edict_t *	(*pfnCreateFakeClient)		(const char *netname);	// returns NULL if fake client can't be created
+	edict_t *	(*pfnCreateFakeClient)		(const char *netname);	// returns nullptr if fake client can't be created
 	void		(*pfnRunPlayerMove)			(edict_t *fakeclient, const float *viewangles, float forwardmove, float sidemove, float upmove, unsigned short buttons, byte impulse, byte msec );
 	int			(*pfnNumberOfEntities)		(void);
-	char*		(*pfnGetInfoKeyBuffer)		(edict_t *e);	// passing in NULL gets the serverinfo
+	char*		(*pfnGetInfoKeyBuffer)		(edict_t *e);	// passing in nullptr gets the serverinfo
 	char*		(*pfnInfoKeyValue)			(char *infobuffer, char *key);
 	void		(*pfnSetKeyValue)			(char *infobuffer, char *key, char *value);
 	void		(*pfnSetClientKeyValue)		(int clientIndex, char *infobuffer, char *key, char *value);
@@ -528,7 +528,7 @@ typedef struct
 } NEW_DLL_FUNCTIONS;
 typedef int	(*NEW_DLL_FUNCTIONS_FN)( NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
 
-// Pointers will be null if the game DLL doesn't support this API.
+// Pointers will be nullptr if the game DLL doesn't support this API.
 extern NEW_DLL_FUNCTIONS	gNewDLLFunctions;
 
 typedef int	(*APIFUNCTION)( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );

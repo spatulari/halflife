@@ -130,7 +130,7 @@ public:
 		_useFgColorAsImageColor = state;
 	}
 
-	virtual void setText(int textBufferLen, const char* text)
+	virtual void setText(int textBufferLen, const char* text) override
 	{
 		_dualImage->GetImage(0)->setText(text);
 
@@ -235,7 +235,7 @@ private:
 	class HitTestPanel : public Panel
 	{
 	public:
-		virtual void	internalMousePressed(MouseCode code);
+		virtual void internalMousePressed(MouseCode code);
 	};
 
 

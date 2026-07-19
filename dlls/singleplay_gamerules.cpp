@@ -94,7 +94,7 @@ BOOL HLGetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon 
 	int i;
 
 	iBestWeight = -1;// no weapon lower than -1 can be autoswitched to
-	pBest = NULL;
+	pBest = nullptr;
 
 	if ( !pCurrentWeapon->CanHolster() )
 	{
@@ -146,7 +146,7 @@ BOOL HLGetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon 
 	// if we make it here, we've checked all the weapons and found no useable 
 	// weapon in the same catagory as the current weapon. 
 
-	// if pBest is null, we didn't find ANYTHING. Shouldn't be possible- should always 
+	// if pBest is nullptr, we didn't find ANYTHING. Shouldn't be possible- should always 
 	// at least get the crowbar, but ya never know.
 	if ( !pBest )
 	{

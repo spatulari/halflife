@@ -116,7 +116,7 @@ int Trace_GetHopCount( char *pServer, int nMaxHops )
 	/*
 	// This is how you do a raw ping
 	npings = 1;
-	pfnICMPSendEcho( hIP, *dwIPAddr, 0, 0, NULL, &E, sizeof( E ), 2000 );
+	pfnICMPSendEcho( hIP, *dwIPAddr, 0, 0, nullptr, &E, sizeof( E ), 2000 );
 	*ping = (double)E.RoundTripTime / 1000.0;
 	*/
 
@@ -201,7 +201,7 @@ void Trace_StartTrace( int *results, int *finished, const char *server )
 
 	Trace_Cleanup();
 
-	tp.hEventDone = CreateEvent( NULL, TRUE, FALSE, NULL );
+	tp.hEventDone = CreateEvent( nullptr, TRUE, FALSE, nullptr );
 	if ( !tp.hEventDone )
 	{
 		return;
@@ -210,7 +210,7 @@ void Trace_StartTrace( int *results, int *finished, const char *server )
 	tp.p_ndone = finished;
 	*tp.p_ndone = 0;
 
-	tp.hThread = CreateThread( NULL, 0, Trace_ThreadFunction, results, 0, &tp.hThreadId );
+	tp.hThread = CreateThread( nullptr, 0, Trace_ThreadFunction, results, 0, &tp.hThreadId );
 #endif
 }
 

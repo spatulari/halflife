@@ -355,7 +355,7 @@ extern int gmsgGameMode;
 
 void CHalfLifeMultiplay :: UpdateGameMode( CBasePlayer *pPlayer )
 {
-	MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, NULL, pPlayer->edict() );
+	MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, pPlayer->edict() );
 		WRITE_BYTE( 0 );  // game mode none
 	MESSAGE_END();
 }
@@ -388,7 +388,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 
 	// sending just one score makes the hud scoreboard active;  otherwise
 	// it is just disabled for single play
-	MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, NULL, pl->edict() );
+	MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, nullptr, pl->edict() );
 		WRITE_BYTE( ENTINDEX(pl->edict()) );
 		WRITE_SHORT( 0 );
 		WRITE_SHORT( 0 );
@@ -406,7 +406,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 
 		if ( plr )
 		{
-			MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, NULL, pl->edict() );
+			MESSAGE_BEGIN( MSG_ONE, gmsgScoreInfo, nullptr, pl->edict() );
 				WRITE_BYTE( i );	// client number
 				WRITE_SHORT( plr->pev->frags );
 				WRITE_SHORT( plr->m_iDeaths );
@@ -418,7 +418,7 @@ void CHalfLifeMultiplay :: InitHUD( CBasePlayer *pl )
 
 	if ( g_fGameOver )
 	{
-		MESSAGE_BEGIN( MSG_ONE, SVC_INTERMISSION, NULL, pl->edict() );
+		MESSAGE_BEGIN( MSG_ONE, SVC_INTERMISSION, nullptr, pl->edict() );
 		MESSAGE_END();
 	}
 }
@@ -506,7 +506,7 @@ void CHalfLifeMultiplay :: PlayerThink( CBasePlayer *pPlayer )
 void CHalfLifeMultiplay :: PlayerSpawn( CBasePlayer *pPlayer )
 {
 	BOOL		addDefault;
-	CBaseEntity	*pWeaponEntity = NULL;
+	CBaseEntity	*pWeaponEntity = nullptr;
 
 	int iAutoWepSwitch = pPlayer->m_iAutoWepSwitch;
 	pPlayer->m_iAutoWepSwitch = 1;
@@ -565,14 +565,14 @@ int CHalfLifeMultiplay :: IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *p
 //=========================================================
 void CHalfLifeMultiplay :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor )
 {
-	CBasePlayer* peKiller = NULL;
+	CBasePlayer* peKiller = nullptr;
 	CBaseEntity* ktmp = CBaseEntity::Instance( pKiller );
 	if ( ktmp && ( ktmp->Classify() == CLASS_PLAYER ) )
 		peKiller = (CBasePlayer*)ktmp;
 	else if ( ktmp && ( ktmp->Classify() == CLASS_VEHICLE ) )
 	{
 		CBasePlayer* pDriver = ( (CFuncVehicle*)ktmp )->m_pDriver;
-		if ( pDriver != NULL )
+		if ( pDriver != nullptr )
 		{
 			peKiller = pDriver;
 			ktmp = pDriver;
@@ -929,7 +929,7 @@ BOOL CHalfLifeMultiplay::CanHavePlayerItem( CBasePlayer *pPlayer, CBasePlayerIte
 		{
 			CBasePlayerItem *it = pPlayer->m_rgpPlayerItems[i];
 
-			while ( it != NULL )
+			while ( it != nullptr )
 			{
 				if ( it->m_iId == pItem->m_iId )
 				{
@@ -1166,8 +1166,8 @@ void DestroyMapCycle( mapcycle_t *cycle )
 		
 		delete cycle->items;
 	}
-	cycle->items = NULL;
-	cycle->next_item = NULL;
+	cycle->items = nullptr;
+	cycle->next_item = nullptr;
 }
 
 static char com_token[ 1500 ];
@@ -1188,14 +1188,14 @@ char *COM_Parse (char *data)
 	com_token[0] = 0;
 	
 	if (!data)
-		return NULL;
+		return nullptr;
 		
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
 	{
 		if (c == 0)
-			return NULL;                    // end of file;
+			return nullptr;                    // end of file;
 		data++;
 	}
 	
@@ -1290,7 +1290,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 	char *pFileList;
 	char *aFileList = pFileList = (char*)LOAD_FILE_FOR_ME( filename, &length );
 	int hasbuffer;
-	mapcycle_item_s *item, *newlist = NULL, *next;
+	mapcycle_item_s *item, *newlist = nullptr, *next;
 
 	if ( pFileList && length )
 	{
@@ -1506,7 +1506,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 
 	// find the map to change to
 	char *mapcfile = (char*)CVAR_GET_STRING( "mapcyclefile" );
-	ASSERT( mapcfile != NULL );
+	ASSERT( mapcfile != nullptr );
 
 	szCommands[ 0 ] = '\0';
 	szRules[ 0 ] = '\0';
@@ -1542,7 +1542,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 		{
 			keeplooking = FALSE;
 
-			ASSERT( item != NULL );
+			ASSERT( item != nullptr );
 
 			if ( item->minplayers != 0 )
 			{
@@ -1609,7 +1609,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 		ALERT( at_console, "RULES:  %s\n", szRules );
 	}
 	
-	CHANGE_LEVEL( szNextMap, NULL );
+	CHANGE_LEVEL( szNextMap, nullptr );
 	if ( strlen( szCommands ) > 0 )
 	{
 		SERVER_COMMAND( szCommands );
@@ -1627,7 +1627,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 	char *aFileList = pFileList = (char*)LOAD_FILE_FOR_ME( (char *)CVAR_GET_STRING( "motdfile" ), &length );
 
 	// send the server name
-	MESSAGE_BEGIN( MSG_ONE, gmsgServerName, NULL, client );
+	MESSAGE_BEGIN( MSG_ONE, gmsgServerName, nullptr, client );
 		WRITE_STRING( CVAR_GET_STRING("hostname") );
 	MESSAGE_END();
 
@@ -1645,7 +1645,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 		else
 		{
 			strncpy( chunk, pFileList, MAX_MOTD_CHUNK );
-			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the null terminator
+			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the nullptr terminator
 		}
 
 		char_count += strlen( chunk );
@@ -1654,7 +1654,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 		else
 			*pFileList = 0;
 
-		MESSAGE_BEGIN( MSG_ONE, gmsgMOTD, NULL, client );
+		MESSAGE_BEGIN( MSG_ONE, gmsgMOTD, nullptr, client );
 			WRITE_BYTE( *pFileList ? FALSE : TRUE );	// FALSE means there is still more message to come
 			WRITE_STRING( chunk );
 		MESSAGE_END();
@@ -1744,7 +1744,7 @@ void CMultiplayBusters::PlayerKilled( CBasePlayer* pVictim, entvars_t* pKiller, 
 		//Reset egon check time
 		m_flEgonBustingCheckTime = -1;
 
-		CBasePlayer *peKiller = NULL;
+		CBasePlayer *peKiller = nullptr;
 		CBaseEntity *ktmp = CBaseEntity::Instance( pKiller );
 
 		if ( ktmp && ( ktmp->Classify() == CLASS_PLAYER ) )
@@ -1755,7 +1755,7 @@ void CMultiplayBusters::PlayerKilled( CBasePlayer* pVictim, entvars_t* pKiller, 
 		{
 			CBasePlayer *pDriver = ( (CFuncVehicle*)ktmp )->m_pDriver;
 
-			if ( pDriver != NULL )
+			if ( pDriver != nullptr )
 			{
 				peKiller = pDriver;
 				ktmp = pDriver;
@@ -1824,7 +1824,7 @@ void CMultiplayBusters::CheckForEgons()
 		}
 
 		int bBestFrags = 9999;
-		CBasePlayer* pBestPlayer = NULL;
+		CBasePlayer* pBestPlayer = nullptr;
 
 		for ( int i = 1; i <= gpGlobals->maxClients; i++ )
 		{
@@ -1841,10 +1841,10 @@ void CMultiplayBusters::CheckForEgons()
 		{
 			pBestPlayer->GiveNamedItem( "weapon_egon" );
 
-			CBaseEntity* pEntity = NULL;
+			CBaseEntity* pEntity = nullptr;
 
 			//Find a weaponbox that includes an Egon, then destroy it
-			while ( ( pEntity = UTIL_FindEntityByClassname( pEntity, "weaponbox" ) ) != NULL )
+			while ( ( pEntity = UTIL_FindEntityByClassname( pEntity, "weaponbox" ) ) != nullptr )
 			{
 				CWeaponBox* pWeaponBox = (CWeaponBox*)pEntity;
 

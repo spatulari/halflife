@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include<stdio.h>
+#include<cstdio>
 #include"vgui_ControlConfigPanel.h"
 #include<VGUI_HeaderPanel.h>
 #include<VGUI_TablePanel.h>
@@ -39,15 +39,15 @@ public:
 		//_textEntry->setFont(Scheme::sf_primary3);
 	}
 public:
-	virtual int getRowCount()
+	virtual int getRowCount() override
 	{
 		return _controlConfigPanel->GetCVarCount();
 	}
-	virtual int getCellTall(int row)
+	virtual int getCellTall(int row) override
 	{
 		return 12;
 	}
-	virtual Panel* getCellRenderer(int column,int row,bool columnSelected,bool rowSelected,bool cellSelected)
+	virtual Panel* getCellRenderer(int column,int row,bool columnSelected,bool rowSelected,bool cellSelected) override
 	{
 		char cvar[128],desc[128],bind[128],bindAlt[128];
 		_controlConfigPanel->GetCVar(row,cvar,128,desc,128);
@@ -100,7 +100,7 @@ public:
 
 		return _label;
 	}
-	virtual Panel* startCellEditing(int column,int row)
+	virtual Panel* startCellEditing(int column,int row) override
 	{
 		_textEntry->setText("Goat",strlen("Goat"));
 		_textEntry->requestFocus();
@@ -176,7 +176,7 @@ void ControlConfigPanel::GetCVar(int index,char* cvar,int cvarLen,char* desc,int
 
 void ControlConfigPanel::AddCVarFromInputStream(InputStream* is)
 {
-	if(is==null)
+	if(is==nullptr)
 	{
 		return;
 	}

@@ -39,10 +39,7 @@ extern engine_studio_api_t IEngineStudio;
 
 static int tracerCount[ 32 ];
 
-extern "C"
-{
 #include "pm_shared.h"
-}
 
 void V_PunchAxis( int axis, float punch );
 void VectorAngles( const float *forward, float *angles );
@@ -97,7 +94,7 @@ float EV_HLDM_PlayTextureSound( int idx, pmtrace_t *ptr, float *vecSrc, float *v
 {
 	// hit the world, try to play sound based on texture material type
 	char chTextureType = CHAR_TEX_CONCRETE;
-	cl_entity_t *cl_entity = NULL;
+	cl_entity_t *cl_entity = nullptr;
 	float fvol;
 	float fvolbar;
 	char *rgsz[4];
@@ -982,14 +979,14 @@ void EV_FireGauss( event_args_t *args )
 		}
 
 		pEntity = gEngfuncs.pEventAPI->EV_GetPhysent( tr.ent );
-		if ( pEntity == NULL )
+		if ( pEntity == nullptr )
 			break;
 
 		if ( pEntity->solid == SOLID_BSP )
 		{
 			float n;
 
-			pentIgnore = NULL;
+			pentIgnore = nullptr;
 
 			n = -DotProduct( tr.plane.normal, forward );
 
@@ -1282,7 +1279,7 @@ void EV_FireCrossbow2( event_args_t *args )
 			gEngfuncs.pEventAPI->EV_PlaySound( 0, tr.endpos, CHAN_BODY, "weapons/xbow_hit1.wav", gEngfuncs.pfnRandomFloat(0.95, 1.0), ATTN_NORM, 0, PITCH_NORM );
 		
 			//Not underwater, do some sparks...
-			if ( gEngfuncs.PM_PointContents( tr.endpos, NULL ) != CONTENTS_WATER)
+			if ( gEngfuncs.PM_PointContents( tr.endpos, nullptr ) != CONTENTS_WATER)
 				 gEngfuncs.pEfxAPI->R_SparkShower( tr.endpos );
 
 			vec3_t vBoltAngles;
@@ -1508,14 +1505,14 @@ void EV_EgonStop( event_args_t *args )
 		if ( pBeam )
 		{
 			pBeam->die = 0.0;
-			pBeam = NULL;
+			pBeam = nullptr;
 		}
 			
 		
 		if ( pBeam2 )
 		{
 			pBeam2->die = 0.0;
-			pBeam2 = NULL;
+			pBeam2 = nullptr;
 		}
 	}
 }
@@ -1590,7 +1587,7 @@ void EV_TripmineFire( event_args_t *args )
 	VectorCopy( args->origin, vecSrc );
 	VectorCopy( args->angles, angles );
 
-	AngleVectors ( angles, forward, NULL, NULL );
+	AngleVectors ( angles, forward, nullptr, nullptr );
 		
 	if ( !EV_IsLocal ( idx ) )
 		return;
@@ -1643,7 +1640,7 @@ void EV_SnarkFire( event_args_t *args )
 	VectorCopy( args->origin, vecSrc );
 	VectorCopy( args->angles, angles );
 
-	AngleVectors ( angles, forward, NULL, NULL );
+	AngleVectors ( angles, forward, nullptr, nullptr );
 		
 	if ( !EV_IsLocal ( idx ) )
 		return;

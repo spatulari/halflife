@@ -327,10 +327,10 @@ void CBaseDoor::Spawn( )
 	m_fNextSoundPlay = 0;
 	m_bIsReopening = false;
 	m_bStoppedOpenSound = false;
-	// if the door is flagged for USE button activation only, use NULL touch function
+	// if the door is flagged for USE button activation only, use nullptr touch function
 	if ( FBitSet ( pev->spawnflags, SF_DOOR_USE_ONLY ) )
 	{
-		SetTouch ( NULL );
+		SetTouch ( nullptr );
 	}
 	else // touchable button
 		SetTouch( &CBaseDoor::DoorTouch );
@@ -354,7 +354,7 @@ void CBaseDoor::Precache( void )
 	switch (m_bMoveSnd)
 	{
 	case	0:
-		pev->noiseMoving = ALLOC_STRING("common/null.wav");
+		pev->noiseMoving = ALLOC_STRING("common/nullptr.wav");
 		break;
 	case	1:
 		PRECACHE_SOUND ("doors/doormove1.wav");
@@ -397,7 +397,7 @@ void CBaseDoor::Precache( void )
 		pev->noiseMoving = ALLOC_STRING("doors/doormove10.wav");
 		break;
 	default:
-		pev->noiseMoving = ALLOC_STRING("common/null.wav");
+		pev->noiseMoving = ALLOC_STRING("common/nullptr.wav");
 		break;
 	}
 
@@ -405,7 +405,7 @@ void CBaseDoor::Precache( void )
 	switch (m_bStopSnd)
 	{
 	case	0:
-		pev->noiseArrived = ALLOC_STRING("common/null.wav");
+		pev->noiseArrived = ALLOC_STRING("common/nullptr.wav");
 		break;
 	case	1:
 		PRECACHE_SOUND ("doors/doorstop1.wav");
@@ -440,7 +440,7 @@ void CBaseDoor::Precache( void )
 		pev->noiseArrived = ALLOC_STRING("doors/doorstop8.wav");
 		break;
 	default:
-		pev->noiseArrived = ALLOC_STRING("common/null.wav");
+		pev->noiseArrived = ALLOC_STRING("common/nullptr.wav");
 		break;
 	}
 
@@ -526,7 +526,7 @@ void CBaseDoor::DoorTouch( CBaseEntity *pOther )
 	m_hActivator = pOther;// remember who activated the door
 
 	if (DoorActivate( ))
-		SetTouch( NULL ); // Temporarily disable the touch function, until movement is finished.
+		SetTouch( nullptr ); // Temporarily disable the touch function, until movement is finished.
 }
 
 
@@ -556,7 +556,7 @@ int CBaseDoor::DoorActivate( )
 	else
 	{// door should open
 
-		if ( m_hActivator != NULL && m_hActivator->IsPlayer() )
+		if ( m_hActivator != nullptr && m_hActivator->IsPlayer() )
 		{// give health if player opened the door (medikit)
 		// VARS( m_eoActivator )->health += m_bHealthValue;
 	
@@ -596,7 +596,7 @@ void CBaseDoor::DoorGoUp( void )
 		{
 			Vector vecCenter( Center() );
 			float *pCenter = (float *)&vecCenter;
-			PLAYBACK_EVENT_FULL( FEV_RELIABLE, NULL, m_usDoorGoUp, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
+			PLAYBACK_EVENT_FULL( FEV_RELIABLE, nullptr, m_usDoorGoUp, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
 #if defined ( OLD_SOUNDS )
 			STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving) );
 			EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving), 1, ATTN_NORM);
@@ -611,7 +611,7 @@ void CBaseDoor::DoorGoUp( void )
 	{
 		float	sign = 1.0;
 
-		if ( m_hActivator != NULL )
+		if ( m_hActivator != nullptr )
 		{
 			pevActivator = m_hActivator->pev;
 			
@@ -651,7 +651,7 @@ void CBaseDoor::DoorHitTop( void )
 			Vector vecCenter( Center() );
 			float *pCenter = (float *)&vecCenter;
 
-			PLAYBACK_EVENT_FULL( FEV_RELIABLE, NULL, m_usDoorHitTop, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
+			PLAYBACK_EVENT_FULL( FEV_RELIABLE, nullptr, m_usDoorHitTop, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
 #if defined ( OLD_SOUNDS )
 			STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving) );
 			EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), 1, ATTN_NORM);
@@ -703,7 +703,7 @@ void CBaseDoor::DoorGoDown( void )
 			Vector vecCenter( Center() );
 			float *pCenter = (float *)&vecCenter;
 
-			PLAYBACK_EVENT_FULL( FEV_RELIABLE, NULL, m_usDoorGoDown, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
+			PLAYBACK_EVENT_FULL( FEV_RELIABLE, nullptr, m_usDoorGoDown, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
 #if defined ( OLD_SOUNDS )
 			STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving) );
 			EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving), 1, ATTN_NORM);
@@ -735,7 +735,7 @@ void CBaseDoor::DoorHitBottom( void )
 		{
 			Vector vecCenter( Center() );
 			float *pCenter = (float *)&vecCenter;
-			PLAYBACK_EVENT_FULL( FEV_RELIABLE, NULL, m_usDoorHitBottom, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
+			PLAYBACK_EVENT_FULL( FEV_RELIABLE, nullptr, m_usDoorHitBottom, 0.0, pCenter, (float *)&g_vecZero, 0.0, 0.0, ( m_bMoveSnd << 8 ) | ( m_bStopSnd & 0xff ), 0, 0, 0 );
 #if defined ( OLD_SOUNDS )
 			STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving) );
 			EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), 1, ATTN_NORM);
@@ -749,7 +749,7 @@ void CBaseDoor::DoorHitBottom( void )
 	// Re-instate touch method, cycle is complete
 	if ( FBitSet ( pev->spawnflags, SF_DOOR_USE_ONLY ) )
 	{// use only door
-		SetTouch ( NULL );
+		SetTouch ( nullptr );
 	}
 	else // touchable door
 		SetTouch( &CBaseDoor::DoorTouch );
@@ -763,8 +763,8 @@ void CBaseDoor::DoorHitBottom( void )
 
 void CBaseDoor::Blocked( CBaseEntity *pOther )
 {
-	edict_t	*pentTarget = NULL;
-	CBaseDoor	*pDoor		= NULL;
+	edict_t	*pentTarget = nullptr;
+	CBaseDoor	*pDoor		= nullptr;
 
 
 	// Hurt the blocker a little.
@@ -930,7 +930,7 @@ void CRotDoor::Spawn( void )
 
 	if ( FBitSet ( pev->spawnflags, SF_DOOR_USE_ONLY ) )
 	{
-		SetTouch ( NULL );
+		SetTouch ( nullptr );
 	}
 	else // touchable button
 		SetTouch( &CRotDoor::DoorTouch );
@@ -1000,7 +1000,7 @@ void CMomentaryDoor::Spawn( void )
 		m_vecPosition2 = m_vecPosition1;
 		m_vecPosition1 = pev->origin;
 	}
-	SetTouch( NULL );
+	SetTouch( nullptr );
 	
 	Precache();
 }
@@ -1012,7 +1012,7 @@ void CMomentaryDoor::Precache( void )
 	switch (m_bMoveSnd)
 	{
 	case	0:
-		pev->noiseMoving = ALLOC_STRING("common/null.wav");
+		pev->noiseMoving = ALLOC_STRING("common/nullptr.wav");
 		break;
 	case	1:
 		PRECACHE_SOUND ("doors/doormove1.wav");
@@ -1047,7 +1047,7 @@ void CMomentaryDoor::Precache( void )
 		pev->noiseMoving = ALLOC_STRING("doors/doormove8.wav");
 		break;
 	default:
-		pev->noiseMoving = ALLOC_STRING("common/null.wav");
+		pev->noiseMoving = ALLOC_STRING("common/nullptr.wav");
 		break;
 	}
 }

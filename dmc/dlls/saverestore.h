@@ -54,8 +54,8 @@ public:
 	void	WriteFloat( const char *pname, const float *value, int count );	// Save a float
 	void	WriteTime( const char *pname, const float *value, int count );	// Save a float (timevalue)
 	void	WriteData( const char *pname, int size, const char *pdata );		// Save a binary data block
-	void	WriteString( const char *pname, const char *pstring );			// Save a null-terminated string
-	void	WriteString( const char *pname, const int *stringId, int count );	// Save a null-terminated string (engine string)
+	void	WriteString( const char *pname, const char *pstring );			// Save a nullptr-terminated string
+	void	WriteString( const char *pname, const int *stringId, int count );	// Save a nullptr-terminated string (engine string)
 	void	WriteVector( const char *pname, const Vector &value );				// Save a vector
 	void	WriteVector( const char *pname, const float *value, int count );	// Save a vector
 	void	WritePositionVector( const char *pname, const Vector &value );		// Offset for landmark if necessary
@@ -91,7 +91,7 @@ public:
 	short	ReadShort( void );
 	int		ReadNamedInt( const char *pName );
 	char	*ReadNamedString( const char *pName );
-	int		Empty( void ) { return (m_pdata == NULL) || ((m_pdata->pCurrentData-m_pdata->pBaseData)>=m_pdata->bufferSize); }
+	int		Empty( void ) { return (m_pdata == nullptr) || ((m_pdata->pCurrentData-m_pdata->pBaseData)>=m_pdata->bufferSize); }
 	inline	void SetGlobalMode( int global ) { m_global = global; }
 	void	PrecacheMode( BOOL mode ) { m_precache = mode; }
 
@@ -150,7 +150,7 @@ public:
 	void			EntityUpdate( string_t globalname, string_t mapname );
 	const globalentity_t	*EntityFromTable( string_t globalname );
 	GLOBALESTATE	EntityGetState( string_t globalname );
-	int				EntityInTable( string_t globalname ) { return (Find( globalname ) != NULL) ? 1 : 0; }
+	int				EntityInTable( string_t globalname ) { return (Find( globalname ) != nullptr) ? 1 : 0; }
 	int				Save( CSave &save );
 	int				Restore( CRestore &restore );
 	static TYPEDESCRIPTION m_SaveData[];

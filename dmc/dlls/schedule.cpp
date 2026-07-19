@@ -36,4 +36,4 @@ int CBaseMonster :: IScheduleFlags ( void ) { return 0; };
 BOOL CBaseMonster :: FScheduleValid ( void ) { return FALSE; };
 void CBaseMonster :: MaintainSchedule ( void ) { };
 void CBaseMonster :: SetTurnActivity ( void ) { };
-Task_t	*CBaseMonster :: GetTask ( void ) { return NULL; };
+Task_t	*CBaseMonster :: GetTask ( void ) { return nullptr; };

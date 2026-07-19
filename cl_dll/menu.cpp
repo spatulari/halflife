@@ -22,7 +22,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "vgui_TeamFortressViewport.h"
 
@@ -237,7 +237,7 @@ void CHudMenu :: SelectMenuItem( int menu_item )
 // if this message is never received, then scores will simply be the combined totals of the players.
 int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 {
-	char *temp = NULL;
+	char *temp = nullptr;
 
 	BEGIN_READ( pbuf, iSize );
 
@@ -260,7 +260,7 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 		{  // append to the current menu string
 			strncat( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING - strlen(g_szPrelocalisedMenuString) );
 		}
-		g_szPrelocalisedMenuString[MAX_MENU_STRING-1] = 0;  // ensure null termination (strncat/strncpy does not)
+		g_szPrelocalisedMenuString[MAX_MENU_STRING-1] = 0;  // ensure nullptr termination (strncat/strncpy does not)
 
 		if ( !NeedMore )
 		{  // we have the whole string, so we can localise it now

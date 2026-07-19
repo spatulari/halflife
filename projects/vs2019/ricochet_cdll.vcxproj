@@ -74,9 +74,9 @@
     <ClCompile Include="..\..\ricochet\cl_dll\view.cpp" />
     <ClCompile Include="..\..\ricochet\cl_dll\voice_status.cpp" />
     <ClCompile Include="..\..\ricochet\dlls\wpn_shared\disc_weapon_disc.cpp" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.c" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.c" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.c" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.cpp" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.cpp" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\parsemsg.h" />
@@ -170,6 +170,10 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CLIENT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>..\..\ricochet;..\..\ricochet\dlls;..\..\ricochet\cl_dll;..\..\game_shared;..\..\engine;..\..\public;..\..\common;..\..\ricochet\pm_shared;..\..\utils\vgui\include;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
+      <ConformanceMode>false</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,6 +181,7 @@
       <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc16\vgui.lib;wsock32.lib;..\..\lib\public\sdl2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
+      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>call ..\..\filecopy.bat $(TargetPath) ..\..\..\game\mod\cl_dlls\$(TargetName).dll
@@ -197,6 +202,10 @@ call ..\..\filecopy.bat $(TargetDir)\$(TargetName).pdb ..\..\..\game\mod\cl_dlls
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;CLIENT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>..\..\ricochet;..\..\ricochet\dlls;..\..\ricochet\cl_dll;..\..\game_shared;..\..\engine;..\..\public;..\..\common;..\..\ricochet\pm_shared;..\..\utils\vgui\include;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
+      <ConformanceMode>false</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -206,6 +215,7 @@ call ..\..\filecopy.bat $(TargetDir)\$(TargetName).pdb ..\..\..\game\mod\cl_dlls
       <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc16\vgui.lib;wsock32.lib;..\..\lib\public\sdl2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
+      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>call ..\..\filecopy.bat $(TargetPath) ..\..\..\game\mod\cl_dlls\$(TargetName).dll

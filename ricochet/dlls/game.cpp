@@ -47,9 +47,9 @@ cvar_t	teamoverride = {"mp_teamoverride","1" };
 cvar_t	defaultteam = {"mp_defaultteam","0" };
 cvar_t	allowmonsters={"mp_allowmonsters","0", FCVAR_SERVER };
 
-cvar_t 	*g_psv_gravity = NULL;
-cvar_t	*g_psv_aim = NULL;
-cvar_t	*g_footsteps = NULL;
+cvar_t 	*g_psv_gravity = nullptr;
+cvar_t	*g_psv_aim = nullptr;
+cvar_t	*g_footsteps = nullptr;
 
 //CVARS FOR SKILL LEVEL SETTINGS
 // Agrunt

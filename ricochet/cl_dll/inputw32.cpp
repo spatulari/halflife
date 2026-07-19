@@ -105,7 +105,7 @@ DWORD		joy_oldbuttonstate, joy_oldpovstate;
 
 int			joy_id;
 DWORD		joy_numbuttons;
-SDL_GameController *s_pJoystick = NULL;
+SDL_GameController *s_pJoystick = nullptr;
 
 
 // none of these cvars are saved over a session
@@ -195,7 +195,7 @@ IN_StartupMouse
 */
 void IN_StartupMouse (void)
 {
-	if ( gEngfuncs.CheckParm ("-nomouse", NULL ) ) 
+	if ( gEngfuncs.CheckParm ("-nomouse", nullptr ) ) 
 		return; 
 
 	mouseinitialized = 1;
@@ -204,16 +204,16 @@ void IN_StartupMouse (void)
 
 	if (mouseparmsvalid)
 	{
-		if ( gEngfuncs.CheckParm ("-noforcemspd", NULL ) ) 
+		if ( gEngfuncs.CheckParm ("-noforcemspd", nullptr ) ) 
 			newmouseparms[2] = originalmouseparms[2];
 
-		if ( gEngfuncs.CheckParm ("-noforcemaccel", NULL ) ) 
+		if ( gEngfuncs.CheckParm ("-noforcemaccel", nullptr ) ) 
 		{
 			newmouseparms[0] = originalmouseparms[0];
 			newmouseparms[1] = originalmouseparms[1];
 		}
 
-		if ( gEngfuncs.CheckParm ("-noforcemparms", NULL ) ) 
+		if ( gEngfuncs.CheckParm ("-noforcemparms", nullptr ) ) 
 		{
 			newmouseparms[0] = originalmouseparms[0];
 			newmouseparms[1] = originalmouseparms[1];
@@ -498,7 +498,7 @@ IN_StartupJoystick
 void IN_StartupJoystick (void) 
 { 
 	// abort startup if user requests no joystick
-	if ( gEngfuncs.CheckParm ("-nojoy", NULL ) ) 
+	if ( gEngfuncs.CheckParm ("-nojoy", nullptr ) ) 
 		return; 
 	
 	// assume no joystick

@@ -183,13 +183,13 @@
     <ClCompile Include="..\..\common\parsemsg.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.c">
+    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.cpp">
       <Filter>Source Files\dmc\pm_shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.c">
+    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.cpp">
       <Filter>Source Files\dmc\pm_shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dmc\pm_shared\pm_math.c">
+    <ClCompile Include="..\..\dmc\pm_shared\pm_math.cpp">
       <Filter>Source Files\dmc\pm_shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dmc\cl_dll\util.cpp">

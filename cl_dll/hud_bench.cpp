@@ -16,7 +16,7 @@
 #include "bench.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "parsemsg.h"
 
 #include "con_nprint.h"
@@ -1119,7 +1119,7 @@ void Bench_SetViewOrigin( float *vieworigin, float frametime )
 	
 	ang = vec3_origin;
 
-	AngleVectors( ang, NULL, right, NULL );
+	AngleVectors( ang, nullptr, right, nullptr );
 
 	// offset along right axis
 	move = right * drift;

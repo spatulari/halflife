@@ -186,7 +186,7 @@ struct playermove_s
 	void			(*Con_Printf)( char *fmt, ... );
 	double			(*Sys_FloatTime)( void );
 	void			(*PM_StuckTouch)( int hitent, pmtrace_t *ptraceresult );
-	int				(*PM_PointContents) (vec3_t p, int *truecontents /*filled in if this is non-null*/ );
+	int				(*PM_PointContents) (vec3_t p, int *truecontents /*filled in if this is non-nullptr*/ );
 	int				(*PM_TruePointContents) (vec3_t p);
 	int				(*PM_HullPointContents) ( struct hull_s *hull, int num, vec3_t p);   
 	pmtrace_t		(*PM_PlayerTrace) (vec3_t start, vec3_t end, int traceFlags, int ignore_pe );

@@ -77,7 +77,7 @@ CSchemeManager::CScheme::CScheme()
 	fontName[0] = 0;
 	fontSize = 0;
 	fontWeight = 0;
-	font = NULL;
+	font = nullptr;
 	ownFontPointer = false;
 }
 
@@ -117,24 +117,24 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 		resNum--;
 
 		if ( resNum < 0 )
-			return NULL;
+			return nullptr;
 	}
 
 	// try open the file
-	byte *pFile = NULL;
+	byte *pFile = nullptr;
 	while ( 1 )
 	{
 
 		// try load
 		char fname[256];
 		sprintf( fname, "%s%d%s", filePrefix, g_ResArray[resNum], filePostfix );
-		pFile = gEngfuncs.COM_LoadFile( fname, 5, NULL );
+		pFile = gEngfuncs.COM_LoadFile( fname, 5, nullptr );
 
 		if ( pFile )
 			break;
 
 		if ( resNum == 0 )
-			return NULL;
+			return nullptr;
 
 		resNum--;
 	};
@@ -161,7 +161,7 @@ static void ParseRGBAFromString( byte colorArray[4], const char *colorVector )
 CSchemeManager::CSchemeManager( int xRes, int yRes )
 {
 	// basic setup
-	m_pSchemeList = NULL;
+	m_pSchemeList = nullptr;
 	m_iNumSchemes = 0;
 
 	// find the closest matching scheme file to our resolution
@@ -187,7 +187,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 	static CScheme tmpSchemes[numTmpSchemes];
 	memset( tmpSchemes, 0, sizeof(tmpSchemes) );
 	int currentScheme = -1;
-	CScheme *pScheme = NULL;
+	CScheme *pScheme = nullptr;
 
 	if ( !pFile )
 	{
@@ -206,7 +206,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 		char paramName[tokenSize], paramValue[tokenSize];
 
 		strncpy( paramName, token, tokenSize );
-		paramName[tokenSize-1] = 0; // ensure null termination
+		paramName[tokenSize-1] = 0; // ensure nullptr termination
 
 		// get the '=' character
 		pFile = gEngfuncs.COM_ParseFile( pFile, token );
@@ -226,7 +226,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 		// get paramValue
 		pFile = gEngfuncs.COM_ParseFile( pFile, token );
 		strncpy( paramValue, token, tokenSize );
-		paramValue[tokenSize-1] = 0; // ensure null termination
+		paramValue[tokenSize-1] = 0; // ensure nullptr termination
 		
 		// is this a new scheme?
 		if ( !stricmp(paramName, "SchemeName") )
@@ -279,7 +279,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 			hasFgColor = hasBgColor = hasArmedFgColor = hasArmedBgColor = hasMouseDownFgColor = hasMouseDownBgColor = false;
 
 			strncpy( pScheme->schemeName, paramValue, CScheme::SCHEME_NAME_LENGTH );
-			pScheme->schemeName[CScheme::SCHEME_NAME_LENGTH-1] = '\0'; // ensure null termination of string
+			pScheme->schemeName[CScheme::SCHEME_NAME_LENGTH-1] = '\0'; // ensure nullptr termination of string
 		}
 
 		if ( !pScheme )
@@ -371,7 +371,7 @@ buildDefaultFont:
 	// create the fonts
 	for ( int i = 0; i < m_iNumSchemes; i++ )
 	{
-		m_pSchemeList[i].font = NULL;
+		m_pSchemeList[i].font = nullptr;
 
 		// see if the current font values exist in a previously loaded font
 		for ( int j = 0; j < i; j++ )
@@ -391,7 +391,7 @@ buildDefaultFont:
 		if ( !m_pSchemeList[i].font )
 		{
 			fontFileLength = -1;
-			pFontData = NULL;
+			pFontData = nullptr;
 
 			if(g_CV_BitmapFonts && g_CV_BitmapFonts->value)
 			{

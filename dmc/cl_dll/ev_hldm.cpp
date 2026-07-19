@@ -22,7 +22,7 @@
 #define Q_SMALL_PUNCHANGLE_KICK		-2
 #define Q_BIG_PUNCHANGLE_KICK		-4
 
-extern "C" char PM_FindTextureType( char *name );
+extern char PM_FindTextureType( char *name );
 
 void V_PunchAxis( int axis, float punch );
 extern vec3_t v_origin;
@@ -83,7 +83,7 @@ float EV_HLDM_PlayTextureSound( int idx, pmtrace_t *ptr, float *vecSrc, float *v
 {
 	// hit the world, try to play sound based on texture material type
 	char chTextureType = CHAR_TEX_CONCRETE;
-	cl_entity_t *cl_entity = NULL;
+	cl_entity_t *cl_entity = nullptr;
 	float fvol;
 	float fvolbar;
 	char *rgsz[4];
@@ -776,10 +776,10 @@ void EV_FollowCarrier (event_args_t *args)
 		gEngfuncs.pEfxAPI->R_KillAttachedTents ( iEntIndex );
 	else
 	{
-		TEMPENTITY *pTrailSpawner = NULL;
+		TEMPENTITY *pTrailSpawner = nullptr;
 		pTrailSpawner = gEngfuncs.pEfxAPI->R_TempModel ( args->origin, args->velocity, args->angles, 9999, modelIndex, TE_BOUNCE_NULL );
 
-		if ( pTrailSpawner != NULL)
+		if ( pTrailSpawner != nullptr)
 		{
 		   pTrailSpawner->flags |= ( FTENT_PLYRATTACHMENT | FTENT_PERSIST | FTENT_NOMODEL | FTENT_CLIENTCUSTOM );
 		   pTrailSpawner->clientIndex = iEntIndex;  
@@ -907,10 +907,10 @@ void EV_PlayerPowerup (event_args_t *args)
 
 	if ( iPowerUp )
 	{
-		TEMPENTITY *pTrailSpawner = NULL;
+		TEMPENTITY *pTrailSpawner = nullptr;
 		pTrailSpawner = gEngfuncs.pEfxAPI->R_TempModel ( args->origin, args->velocity, args->angles, 9999, modelIndex, TE_BOUNCE_NULL );
 
-		if ( pTrailSpawner != NULL)
+		if ( pTrailSpawner != nullptr)
 		{
 		   pTrailSpawner->flags |= ( FTENT_PLYRATTACHMENT | FTENT_PERSIST | FTENT_NOMODEL | FTENT_CLIENTCUSTOM );
 		   pTrailSpawner->clientIndex = iEntIndex;  
@@ -980,7 +980,7 @@ void EV_FireLightning( event_args_t *args )
 		EV_Quake_PlayQuadSound( idx, origin, args->iparam1 );
 	}
 
-	if ( iShutDown == 0 && EV_IsLocal( idx ) && pBeam == NULL )
+	if ( iShutDown == 0 && EV_IsLocal( idx ) && pBeam == nullptr )
 	{
 		vec3_t vecSrc, vecEnd, origin, angles, forward, right, up;
 		pmtrace_t tr;
@@ -1020,7 +1020,7 @@ void EV_FireLightning( event_args_t *args )
 			if ( pBeam )
 			{
 				pBeam->die = 0.0;
-				pBeam = NULL;
+				pBeam = nullptr;
 			}
 		}
 	}
@@ -1263,7 +1263,7 @@ void EV_Gibbed (event_args_t *args)
 
 		vec3_t origin, velocity, angles, rotate;
         int modelindex, i;
-        TEMPENTITY *pGib = NULL;
+        TEMPENTITY *pGib = nullptr;
         int gibs = 5;
         char *model1 = "models/gib_1.mdl";
 		char *model2 = "models/gib_2.mdl";
@@ -1304,7 +1304,7 @@ void EV_Gibbed (event_args_t *args)
 
                 pGib = gEngfuncs.pEfxAPI->R_TempModel (origin, velocity, rotate, 15, modelindex, TE_BOUNCE_NULL);
 
-                if (pGib != NULL)
+                if (pGib != nullptr)
                 {
                         pGib->flags |= (FTENT_COLLIDEWORLD | FTENT_ROTATE | FTENT_FADEOUT | FTENT_CLIENTCUSTOM  | FTENT_SMOKETRAIL);
                         pGib->hitcallback = EV_GibTouch;
@@ -1366,11 +1366,11 @@ void EV_RocketTrailCallback ( struct tempent_s *ent, float frametime, float curr
 void EV_Trail (event_args_t *args)
 {
 	int iEntIndex = args->iparam1;
-	TEMPENTITY *pTrailSpawner = NULL;
+	TEMPENTITY *pTrailSpawner = nullptr;
 	
 	pTrailSpawner = gEngfuncs.pEfxAPI->CL_TempEntAllocNoModel ( args->origin );
 
-	if ( pTrailSpawner != NULL)
+	if ( pTrailSpawner != nullptr)
 	{
 	   pTrailSpawner->flags |= ( FTENT_PLYRATTACHMENT | FTENT_COLLIDEKILL | FTENT_CLIENTCUSTOM | FTENT_SMOKETRAIL | FTENT_COLLIDEWORLD );
 	   pTrailSpawner->callback = EV_RocketTrailCallback;
@@ -1427,7 +1427,7 @@ char *EV_DMC_LookupDoorSound( int type, int index )
 	int idx;
 
 	// Assume the worst
-	strcpy( sound, "common/null.wav");
+	strcpy( sound, "common/nullptr.wav");
 
 	if ( type == EV_DMC_MOVE_SOUND )
 	{
@@ -1436,7 +1436,7 @@ char *EV_DMC_LookupDoorSound( int type, int index )
 		switch (idx)
 		{
 		case	0:
-			strcpy( sound, "common/null.wav");
+			strcpy( sound, "common/nullptr.wav");
 			break;
 		case	1:
 			strcpy( sound, "doors/doormove1.wav");
@@ -1469,7 +1469,7 @@ char *EV_DMC_LookupDoorSound( int type, int index )
 			strcpy( sound, "doors/doormove10.wav");
 			break;
 		default:
-			strcpy( sound, "common/null.wav");
+			strcpy( sound, "common/nullptr.wav");
 			break;
 		}
 	}
@@ -1481,7 +1481,7 @@ char *EV_DMC_LookupDoorSound( int type, int index )
 		switch ( idx )
 		{
 		case	0:
-			strcpy( sound, "common/null.wav");
+			strcpy( sound, "common/nullptr.wav");
 			break;
 		case	1:
 			strcpy( sound, "doors/doorstop1.wav");
@@ -1508,7 +1508,7 @@ char *EV_DMC_LookupDoorSound( int type, int index )
 			strcpy( sound, "doors/doorstop8.wav");
 			break;
 		default:
-			strcpy( sound, "common/null.wav");
+			strcpy( sound, "common/nullptr.wav");
 			break;
 		}
 	}

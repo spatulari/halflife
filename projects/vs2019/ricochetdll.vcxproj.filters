@@ -147,13 +147,13 @@
     <ClCompile Include="..\..\ricochet\dlls\plats.cpp">
       <Filter>Source Files\ricochet\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.c">
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.cpp">
       <Filter>Source Files\ricochet\pm_shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.c">
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.cpp">
       <Filter>Source Files\ricochet\pm_shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.c">
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.cpp">
       <Filter>Source Files\ricochet\pm_shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ricochet\dlls\world.cpp">

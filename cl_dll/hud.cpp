@@ -21,7 +21,7 @@
 #include "hud.h"
 #include "cl_util.h"
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "parsemsg.h"
 #include "hud_servers.h"
 #include "vgui_int.h"
@@ -37,7 +37,7 @@ extra_player_info_t  g_PlayerExtraInfo[MAX_PLAYERS+1];   // additional player in
 class CHLVoiceStatusHelper : public IVoiceStatusHelper
 {
 public:
-	virtual void GetPlayerTextColor(int entindex, int color[3])
+	virtual void GetPlayerTextColor(int entindex, int color[3]) override
 	{
 		color[0] = color[1] = color[2] = 255;
 
@@ -58,17 +58,17 @@ public:
 		}
 	}
 
-	virtual void UpdateCursorState()
+	virtual void UpdateCursorState() override
 	{
 		gViewPort->UpdateCursorState();
 	}
 
-	virtual int	GetAckIconHeight()
+	virtual int	GetAckIconHeight() override
 	{
 		return ScreenHeight - gHUD.m_iFontHeight*3 - 6;
 	}
 
-	virtual bool			CanShowSpeakerLabels()
+	virtual bool CanShowSpeakerLabels() override
 	{
 		if( gViewPort && gViewPort->m_pScoreBoard )
 			return !gViewPort->m_pScoreBoard->isVisible();
@@ -83,7 +83,7 @@ extern client_sprite_t *GetSpriteList(client_sprite_t *pList, const char *psz, i
 
 extern float IN_GetMouseSensitivity();
 
-cvar_t *cl_lw = NULL;
+cvar_t *cl_lw = nullptr;
 
 void ShutdownInput (void);
 
@@ -334,7 +334,7 @@ void CHud :: Init( void )
 	m_pCvarDraw = CVAR_CREATE( "hud_draw", "1", FCVAR_ARCHIVE );
 	cl_lw = gEngfuncs.pfnGetCvarPointer( "cl_lw" );
 
-	m_pSpriteList = NULL;
+	m_pSpriteList = nullptr;
 
 	// Clear any old HUD list
 	if ( m_pHudList )
@@ -346,7 +346,7 @@ void CHud :: Init( void )
 			m_pHudList = m_pHudList->pNext;
 			free( pList );
 		}
-		m_pHudList = NULL;
+		m_pHudList = nullptr;
 	}
 
 	// In case we get messages before the first update -- time will be valid
@@ -372,7 +372,7 @@ void CHud :: Init( void )
 	
 	ServersInit();
 
-	MsgFunc_ResetHUD(0, 0, NULL );
+	MsgFunc_ResetHUD(0, 0, nullptr );
 
 	gEngfuncs.pfnClientCmd("richpresence_gamemode\n"); // reset
 	gEngfuncs.pfnClientCmd("richpresence_update\n");
@@ -395,7 +395,7 @@ CHud :: ~CHud()
 			m_pHudList = m_pHudList->pNext;
 			free( pList );
 		}
-		m_pHudList = NULL;
+		m_pHudList = nullptr;
 	}
 
 	ServersShutdown();

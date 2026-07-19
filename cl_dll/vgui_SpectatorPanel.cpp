@@ -217,7 +217,7 @@ void SpectatorPanel::Initialize()
 	m_BottomMainLabel->setPaintBackgroundEnabled(false);
 	m_BottomMainLabel->setFgColor( Scheme::sc_primary1 );
 	m_BottomMainLabel->setContentAlignment( vgui::Label::a_center );
-	m_BottomMainLabel->setBorder( NULL );
+	m_BottomMainLabel->setBorder( nullptr );
 	m_BottomMainLabel->setVisible(false);
 	
 	m_InsetViewButton = new ColorButton("", XRES_HD(2), YRES_HD(2), XRES_HD(240), YRES_HD(180), false, false );
@@ -280,7 +280,7 @@ void SpectatorPanel::ShowMenu(bool isVisible)
 			_snprintf( string, sizeof( string ) - 1, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( "#Spec_Duck" ) );
 			string[ sizeof( string ) - 1 ] = '\0';
 
-			gHUD.m_TextMessage.MsgFunc_TextMsg( NULL, strlen( string ) + 1, string );
+			gHUD.m_TextMessage.MsgFunc_TextMsg( nullptr, strlen( string ) + 1, string );
 		}
 	}
 

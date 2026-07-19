@@ -17,7 +17,7 @@
 //
 
 // Misc C-runtime library headers
-#include "stdio.h"
+#include "cstdio"
 #include "stdlib.h"
 #include "math.h"
 

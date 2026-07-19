@@ -91,7 +91,7 @@ private:
 LINK_ENTITY_TO_CLASS( garg_stomp, CStomp );
 CStomp *CStomp::StompCreate( const Vector &origin, const Vector &end, float speed )
 {
-	CStomp *pStomp = GetClassPtr( (CStomp *)NULL );
+	CStomp *pStomp = GetClassPtr( (CStomp *)nullptr );
 	
 	pStomp->pev->origin = origin;
 	Vector dir = (end - origin);
@@ -235,7 +235,7 @@ public:
 	void FlameUpdate( void );
 	void FlameControls( float angleX, float angleY );
 	void FlameDestroy( void );
-	inline BOOL FlameIsOn( void ) { return m_pFlame[0] != NULL; }
+	inline BOOL FlameIsOn( void ) { return m_pFlame[0] != nullptr; }
 
 	void FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType );
 
@@ -607,7 +607,7 @@ void CGargantua :: FlameUpdate( void )
 
 void CGargantua :: FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType )
 {
-	CBaseEntity *pEntity = NULL;
+	CBaseEntity *pEntity = nullptr;
 	TraceResult	tr;
 	float		flAdjustedDamage;
 	Vector		vecSpot;
@@ -619,7 +619,7 @@ void CGargantua :: FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevIn
 	Vector vecAim = (vecEnd - vecStart).Normalize( );
 
 	// iterate on all entities in the vicinity.
-	while ((pEntity = UTIL_FindEntityInSphere( pEntity, vecMid, searchRadius )) != NULL)
+	while ((pEntity = UTIL_FindEntityInSphere( pEntity, vecMid, searchRadius )) != nullptr)
 	{
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
@@ -684,7 +684,7 @@ void CGargantua :: FlameDestroy( void )
 		if ( m_pFlame[i] )
 		{
 			UTIL_Remove( m_pFlame[i] );
-			m_pFlame[i] = NULL;
+			m_pFlame[i] = nullptr;
 		}
 	}
 }
@@ -896,7 +896,7 @@ void CGargantua::DeathEffect( void )
 		position.z += 15;
 	}
 
-	CBaseEntity *pSmoker = CBaseEntity::Create( "env_smoker", pev->origin, g_vecZero, NULL );
+	CBaseEntity *pSmoker = CBaseEntity::Create( "env_smoker", pev->origin, g_vecZero, nullptr );
 	pSmoker->pev->health = 1;	// 1 smoke balls
 	pSmoker->pev->scale = 46;	// 4.6X normal size
 	pSmoker->pev->dmg = 0;		// 0 radial distribution
@@ -908,7 +908,7 @@ void CGargantua::Killed( entvars_t *pevAttacker, int iGib )
 {
 	EyeOff();
 	UTIL_Remove( m_pEyeGlow );
-	m_pEyeGlow = NULL;
+	m_pEyeGlow = nullptr;
 	CBaseMonster::Killed( pevAttacker, GIB_NEVER );
 }
 
@@ -999,7 +999,7 @@ void CGargantua::HandleAnimEvent(MonsterEvent_t *pEvent)
 				EMIT_SOUND_DYN ( edict(), CHAN_WEAPON, pAttackMissSounds[ RANDOM_LONG(0,ARRAYSIZE(pAttackMissSounds)-1) ], 1.0, ATTN_NORM, 0, 50 + RANDOM_LONG(0,15) );
 
 			Vector forward;
-			UTIL_MakeVectorsPrivate( pev->angles, forward, NULL, NULL );
+			UTIL_MakeVectorsPrivate( pev->angles, forward, nullptr, nullptr );
 		}
 		break;
 
@@ -1059,7 +1059,7 @@ CBaseEntity* CGargantua::GargantuaCheckTraceHullAttack(float flDist, int iDamage
 		return pEntity;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1131,7 +1131,7 @@ void CGargantua::RunTask( Task_t *pTask )
 			int parts = MODEL_FRAMES( gGargGibModel );
 			for ( i = 0; i < 10; i++ )
 			{
-				CGib *pGib = GetClassPtr( (CGib *)NULL );
+				CGib *pGib = GetClassPtr( (CGib *)nullptr );
 
 				pGib->Spawn( GARG_GIB_MODEL );
 				
@@ -1291,9 +1291,9 @@ void CSpiral::Spawn( void )
 CSpiral *CSpiral::Create( const Vector &origin, float height, float radius, float duration )
 {
 	if ( duration <= 0 )
-		return NULL;
+		return nullptr;
 
-	CSpiral *pSpiral = GetClassPtr( (CSpiral *)NULL );
+	CSpiral *pSpiral = GetClassPtr( (CSpiral *)nullptr );
 	pSpiral->Spawn();
 	pSpiral->pev->dmgtime = pSpiral->pev->nextthink;
 	pSpiral->pev->origin = origin;
@@ -1351,7 +1351,7 @@ void SpawnExplosion( Vector center, float randomRange, float time, int magnitude
 	center.x += RANDOM_FLOAT( -randomRange, randomRange );
 	center.y += RANDOM_FLOAT( -randomRange, randomRange );
 
-	CBaseEntity *pExplosion = CBaseEntity::Create( "env_explosion", center, g_vecZero, NULL );
+	CBaseEntity *pExplosion = CBaseEntity::Create( "env_explosion", center, g_vecZero, nullptr );
 	sprintf( buf, "%3d", magnitude );
 	kvd.szKeyName = "iMagnitude";
 	kvd.szValue = buf;

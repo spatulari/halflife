@@ -42,19 +42,19 @@ public:
 		_textEntry->addActionSignal(this);
 	}
 public:
-	virtual bool isWithin(int x,int y)
+	virtual bool isWithin(int x,int y) override
 	{
 		return _textEntry->isWithin(x,y);
 	}
 public:
-	virtual void actionPerformed(Panel* panel)
+	virtual void actionPerformed(Panel* panel) override
 	{
 		char buf[256];
 		_textEntry->getText(0,buf,256);
 		sscanf(buf,"%d",&_bindIndex);
 	}
 protected:
-	virtual void paintBackground()
+	virtual void paintBackground() override
 	{
 			Panel::paintBackground();
 			
@@ -93,13 +93,13 @@ void VGui_Startup()
 	
 	//root->getSurfaceBase()->setEmulatedCursorVisible(true);
 
-	if (gViewPort != NULL)
+	if (gViewPort != nullptr)
 	{
 //		root->removeChild(gViewPort);
 
 		// free the memory
 //		delete gViewPort;
-//		gViewPort = NULL;
+//		gViewPort = nullptr;
 
 		gViewPort->Initialize();
 	}
@@ -119,7 +119,7 @@ void VGui_Startup()
 void VGui_Shutdown()
 {
 	delete gViewPort;
-	gViewPort = NULL;
+	gViewPort = nullptr;
 }
 
 

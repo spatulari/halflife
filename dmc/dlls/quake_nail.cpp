@@ -28,7 +28,7 @@ LINK_ENTITY_TO_CLASS( quake_nail, CQuakeNail );
 //=========================================================
 CQuakeNail *CQuakeNail::CreateNail( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner )
 {
-	CQuakeNail *pNail = GetClassPtr( (CQuakeNail *)NULL );
+	CQuakeNail *pNail = GetClassPtr( (CQuakeNail *)nullptr );
 
 	UTIL_SetOrigin( pNail->pev, vecOrigin );
 

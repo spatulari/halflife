@@ -264,7 +264,7 @@ public:
 
 	virtual Panel* startCellEditing(int column,int row)
 	{
-		return null;
+		return nullptr;
 	}
 
 };
@@ -435,7 +435,7 @@ private:
 public:
 	CSBLabel( char *name, char *sortkey ) : Label( name )
 	{
-		m_pBrowser = NULL;
+		m_pBrowser = nullptr;
 
 		strcpy( m_szSortKey, sortkey );
 

@@ -20,7 +20,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "vgui_viewport.h"
 
@@ -77,7 +77,7 @@ int GetTeamIndex( int clientIndex )
 	const char *teamName = g_PlayerExtraInfo[ clientIndex].teamname;
 
 	if ( !teamName || *teamName == 0 ) 
-		return NULL;
+		return 0;
 
 	if ( !stricmp( "red", teamName ) )
 		return 1;

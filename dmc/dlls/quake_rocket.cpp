@@ -32,7 +32,7 @@ LINK_ENTITY_TO_CLASS( quake_rocket, CQuakeRocket );
 //=========================================================
 CQuakeRocket *CQuakeRocket::CreateRocket( Vector vecOrigin, Vector vecAngles, CBaseEntity *pOwner )
 {
-	CQuakeRocket *pRocket = GetClassPtr( (CQuakeRocket *)NULL );
+	CQuakeRocket *pRocket = GetClassPtr( (CQuakeRocket *)nullptr );
 	
 	UTIL_SetOrigin( pRocket->pev, vecOrigin );
 	SET_MODEL(ENT(pRocket->pev), "models/rocket.mdl");
@@ -67,7 +67,7 @@ CQuakeRocket *CQuakeRocket::CreateRocket( Vector vecOrigin, Vector vecAngles, CB
 //=========================================================
 CQuakeRocket *CQuakeRocket::CreateGrenade( Vector vecOrigin, Vector vecVelocity, CBaseEntity *pOwner )
 {
-	CQuakeRocket *pRocket = GetClassPtr( (CQuakeRocket *)NULL );
+	CQuakeRocket *pRocket = GetClassPtr( (CQuakeRocket *)nullptr );
 
 	UTIL_SetOrigin( pRocket->pev, vecOrigin );
 	SET_MODEL(ENT(pRocket->pev), "models/grenade.mdl");
@@ -175,7 +175,7 @@ void CQuakeRocket::GrenadeTouch( CBaseEntity *pOther )
 void CQuakeRocket::GrenadeExplode()
 {
 	CBaseEntity *pOwner = CBaseEntity::Instance(pev->owner);
-	Q_RadiusDamage(this, pOwner, 120, NULL);
+	Q_RadiusDamage(this, pOwner, 120, nullptr);
 
 	// Finish and remove
 	Explode();

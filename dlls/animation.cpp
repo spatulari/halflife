@@ -12,7 +12,7 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include <stdio.h>
+#include <cstdio>
 #include <stdlib.h>
 #include <string.h>
 

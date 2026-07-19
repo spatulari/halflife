@@ -348,7 +348,7 @@ void CBasePlayer::SelectItem(const char *pstr)
 	if (!pstr)
 		return;
 
-	CBasePlayerItem *pItem = NULL;
+	CBasePlayerItem *pItem = nullptr;
 
 	if (!pItem)
 		return;
@@ -563,7 +563,7 @@ void HUD_InitClientWeapons( void )
 	g_engfuncs.pfnRandomLong		= gEngfuncs.pfnRandomLong;
 
 	// Allocate a slot for the local player
-	HUD_PrepEntity( &player		, NULL );
+	HUD_PrepEntity( &player		, nullptr );
 
 	// Allocate slot(s) for each weapon that we are going to be predicting
 	HUD_PrepEntity( &g_Disc	, &player );
@@ -1065,7 +1065,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 {
 	int i;
 	int buttonsChanged;
-	CBasePlayerWeapon *pWeapon = NULL;
+	CBasePlayerWeapon *pWeapon = nullptr;
 	CBasePlayerWeapon *pCurrent;
 	weapon_data_t nulldata, *pfrom, *pto;
 	static int lasthealth;
@@ -1178,7 +1178,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	{
 		if ( to->client.health <= 0 && lasthealth > 0 )
 		{
-			player.Killed( NULL, 0 );
+			player.Killed( nullptr, 0 );
 		}
 		else if ( to->client.health > 0 && lasthealth <= 0 )
 		{
@@ -1324,7 +1324,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	}
 
 	// Wipe it so we can't use it after this frame
-	g_finalstate = NULL;
+	g_finalstate = nullptr;
 }
 
 /*

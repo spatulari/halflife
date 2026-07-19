@@ -24,7 +24,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 DECLARE_MESSAGE( m_StatusBar, StatusText );
 DECLARE_MESSAGE( m_StatusBar, StatusValue );
@@ -143,7 +143,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 						{
 						case 'p':  // player name
 							gEngfuncs.pfnGetPlayerInfo( indexval, &g_PlayerInfoList[indexval] );
-							if ( g_PlayerInfoList[indexval].name != NULL )
+							if ( g_PlayerInfoList[indexval].name != nullptr )
 							{
 								strncpy( szRepString, g_PlayerInfoList[indexval].name, MAX_PLAYER_NAME_LENGTH );
 								m_pflNameColors[line_num] = GetClientColor( indexval );
@@ -237,7 +237,7 @@ int CHudStatusBar :: MsgFunc_StatusText( const char *pszName, int iSize, void *p
 		return 1;
 
 	strncpy( m_szStatusText[line], READ_STRING(), MAX_STATUSTEXT_LENGTH );
-	m_szStatusText[line][MAX_STATUSTEXT_LENGTH-1] = 0;  // ensure it's null terminated ( strncpy() won't null terminate if read string too long)
+	m_szStatusText[line][MAX_STATUSTEXT_LENGTH-1] = 0;  // ensure it's nullptr terminated ( strncpy() won't nullptr terminate if read string too long)
 
 	m_iFlags |= HUD_ACTIVE;
 	m_bReparseString = TRUE;

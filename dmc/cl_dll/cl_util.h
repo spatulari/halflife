@@ -23,7 +23,7 @@
 #define FALSE 0
 #endif
 
-#include <stdio.h> // for safe_sprintf()
+#include <cstdio> // for safe_sprintf()
 #include <stdarg.h> // "
 #include <string.h> // for safe_strcpy()
 
@@ -130,7 +130,7 @@ inline char *safe_strcpy( char *dst, const char *src, int len_dst)
 {
 	if( len_dst <= 0 )
 	{
-		return NULL; // this is bad
+		return nullptr; // this is bad
 	}
 
 	strncpy(dst,src,len_dst);

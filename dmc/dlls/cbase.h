@@ -177,8 +177,8 @@ public:
 	virtual int		BloodColor( void ) { return DONT_BLEED; }
 	virtual void	TraceBleed( float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
 	virtual BOOL    IsTriggered( CBaseEntity *pActivator ) {return TRUE;}
-	virtual CBaseMonster *MyMonsterPointer( void ) { return NULL;}
-	virtual CSquadMonster *MySquadMonsterPointer( void ) { return NULL;}
+	virtual CBaseMonster *MyMonsterPointer( void ) { return nullptr;}
+	virtual CSquadMonster *MySquadMonsterPointer( void ) { return nullptr;}
 	virtual	int		GetToggleState( void ) { return TS_AT_TOP; }
 	virtual void	AddPoints( int score, BOOL bAllowNegativeScore ) {}
 	virtual void	AddPointsToTeam( int score, BOOL bAllowNegativeScore ) {}
@@ -246,9 +246,9 @@ public:
 	void EXPORT SUB_FadeOut ( void );
 	void EXPORT SUB_CallUseToggle( void ) { this->Use( this, this, USE_TOGGLE, 0 ); }
 	int			ShouldToggle( USE_TYPE useType, BOOL currentState );
-	void		FireBullets( ULONG	cShots, Vector  vecSrc, Vector	vecDirShooting,	Vector	vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t *pevAttacker = NULL  );
+	void		FireBullets( ULONG	cShots, Vector  vecSrc, Vector	vecDirShooting,	Vector	vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t *pevAttacker = nullptr  );
 
-	virtual CBaseEntity *Respawn( void ) { return NULL; }
+	virtual CBaseEntity *Respawn( void ) { return nullptr; }
 
 	void SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, float value );
 	// Do the bounding boxes of these two intersect?
@@ -273,14 +273,14 @@ public:
 		CBaseEntity *pEntity = Instance( pevMonster );
 		if ( pEntity )
 			return pEntity->MyMonsterPointer();
-		return NULL;
+		return nullptr;
 	}
 	CBaseMonster *GetMonsterPointer( edict_t *pentMonster ) 
 	{ 
 		CBaseEntity *pEntity = Instance( pentMonster );
 		if ( pEntity )
 			return pEntity->MyMonsterPointer();
-		return NULL;
+		return nullptr;
 	}
 
 
@@ -329,7 +329,7 @@ public:
 
 
 	//
-	static CBaseEntity *Create( char *szName, const Vector &vecOrigin, const Vector &vecAngles, edict_t *pentOwner = NULL );
+	static CBaseEntity *Create( char *szName, const Vector &vecOrigin, const Vector &vecAngles, edict_t *pentOwner = nullptr );
 
 	virtual BOOL FBecomeProne( void ) {return FALSE;};
 	edict_t *edict() { return ENT( pev ); };
@@ -702,7 +702,7 @@ public:
 	BOOL	m_fStayPushed;	// button stays pushed in until touched again?
 	BOOL	m_fRotating;		// a rotating button?  default is a sliding button.
 
-	string_t m_strChangeTarget;	// if this field is not null, this is an index into the engine string array.
+	string_t m_strChangeTarget;	// if this field is not nullptr, this is an index into the engine string array.
 							// when this button is touched, it's target entity's TARGET field will be set
 							// to the button's ChangeTarget. This allows you to make a func_train switch paths, etc.
 
@@ -730,13 +730,13 @@ template <class T> T * GetClassPtr( T *a )
 	entvars_t *pev = (entvars_t *)a;
 
 	// allocate entity if necessary
-	if (pev == NULL)
+	if (pev == nullptr)
 		pev = VARS(CREATE_ENTITY());
 
 	// get the private data
 	a = (T *)GET_PRIVATE(ENT(pev));
 
-	if (a == NULL) 
+	if (a == nullptr) 
 	{
 		// allocate private data 
 		a = new(pev) T;

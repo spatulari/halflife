@@ -145,7 +145,7 @@ public:
 		ServerPlayers( 0 );
 	}
 
-	virtual int getRowCount()
+	virtual int getRowCount() override
 	{
 		int rowcount;
 		int height, width;
@@ -161,12 +161,12 @@ public:
 		return rowcount;
 	}
 
-	virtual int getCellTall(int row)
+	virtual int getCellTall(int row) override
 	{
 		return CELL_HEIGHT - 2;
 	}
 	
-	virtual Panel* getCellRenderer(int column,int row,bool columnSelected,bool rowSelected,bool cellSelected)
+	virtual Panel* getCellRenderer(int column,int row,bool columnSelected,bool rowSelected,bool cellSelected) override
 	{
 		const char *info;
 		const char *val, *val2;
@@ -268,9 +268,9 @@ public:
 		return m_pLabel;
 	}
 
-	virtual Panel* startCellEditing(int column,int row)
+	virtual Panel* startCellEditing(int column,int row) override
 	{
-		return null;
+		return nullptr;
 	}
 
 };
@@ -286,7 +286,7 @@ public:
 		m_pBrowser = browser;	
 	}
 
-	virtual void actionPerformed( Panel *panel )
+	virtual void actionPerformed( Panel *panel ) override
 	{
 		m_pBrowser->DoConnect();
 	}
@@ -441,7 +441,7 @@ private:
 public:
 	CSBLabel( char *name, char *sortkey ) : Label( name )
 	{
-		m_pBrowser = NULL;
+		m_pBrowser = nullptr;
 
 		strcpy( m_szSortKey, sortkey );
 

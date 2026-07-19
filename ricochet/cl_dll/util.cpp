@@ -18,7 +18,7 @@
 // implementation of class-less helper functions
 //
 
-#include "stdio.h"
+#include "cstdio"
 #include "stdlib.h"
 #include "math.h"
 

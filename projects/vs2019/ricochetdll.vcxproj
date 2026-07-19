@@ -60,9 +60,9 @@
     <ClCompile Include="..\..\ricochet\dlls\world.cpp" />
     <ClCompile Include="..\..\ricochet\dlls\wpn_shared\disc_weapon_disc.cpp" />
     <ClCompile Include="..\..\ricochet\dlls\xen.cpp" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.c" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.c" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.c" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.cpp" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.cpp" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ricochet\dlls\activity.h" />
@@ -161,6 +161,10 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;VALVE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\ricochet\dlls;..\..\engine;..\..\common;..\..\public;..\..\game_shared;..\..\ricochet\pm_shared;..\..\ricochet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
+      <ConformanceMode>false</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,6 +190,10 @@ call ..\..\filecopy.bat $(TargetDir)\$(TargetName).pdb ..\..\..\game\mod\dlls\$(
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;VALVE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\ricochet\dlls;..\..\engine;..\..\common;..\..\public;..\..\game_shared;..\..\ricochet\pm_shared;..\..\ricochet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
+      <ConformanceMode>false</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

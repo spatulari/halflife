@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <cstdio>
 #include "interface.h"
 
 #if !defined ( _WIN32 )
@@ -12,18 +12,18 @@ void *GetModuleHandle(const char *name)
         void *handle;
 
 
-        if( name == NULL )
+        if( name == nullptr )
         {
                 // hmm, how can this be handled under linux....
                 // is it even needed?
-                return NULL;
+                return nullptr;
         }
 
-        if( (handle=dlopen(name, RTLD_NOW))==NULL)
+        if( (handle=dlopen(name, RTLD_NOW))==nullptr)
         {   
 		//printf("Error:%s\n",dlerror());
                 // couldn't open this file
-                return NULL;
+                return nullptr;
         }
 
         // read "man dlopen" for details
@@ -37,7 +37,7 @@ void *GetModuleHandle(const char *name)
 // ------------------------------------------------------------------------------------ //
 // InterfaceReg.
 // ------------------------------------------------------------------------------------ //
-InterfaceReg *InterfaceReg::s_pInterfaceRegs = NULL;
+InterfaceReg *InterfaceReg::s_pInterfaceRegs = nullptr;
 
 
 InterfaceReg::InterfaceReg( InstantiateInterfaceFn fn, const char *pName ) :
@@ -73,7 +73,7 @@ EXPORT_FUNCTION void *CreateInterface( const char *pName, int *pReturnCode )
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;	
+	return nullptr;	
 }
 
 // BEN-NOTE: unifying this on all platforms
@@ -99,7 +99,7 @@ static IBaseInterface *CreateInterfaceLocal( const char *pName, int *pReturnCode
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;	
+	return nullptr;	
 }
 #endif // LINUX
 #endif // 0
@@ -145,7 +145,7 @@ CSysModule	*Sys_LoadModule( const char *pModuleName )
 #if defined ( _WIN32 )
 	HMODULE hDLL = LoadLibrary( pModuleName );
 #else
-	HMODULE hDLL  = NULL;
+	HMODULE hDLL  = nullptr;
 	char szAbsoluteModuleName[1024];
 	szAbsoluteModuleName[0] = 0;
 	if ( pModuleName[0] != '/' )
@@ -216,7 +216,7 @@ void Sys_UnloadModule( CSysModule *pModule )
 CreateInterfaceFn Sys_GetFactory( CSysModule *pModule )
 {
 	if ( !pModule )
-		return NULL;
+		return nullptr;
 
 	HMODULE	hDLL = reinterpret_cast<HMODULE>(pModule);
 #if defined ( _WIN32 )

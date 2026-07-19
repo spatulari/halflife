@@ -21,7 +21,7 @@
 #include "entity_state.h"
 #include "cl_entity.h"
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "parsemsg.h"
 #include "event_api.h"
 

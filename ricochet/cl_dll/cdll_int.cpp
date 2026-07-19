@@ -28,17 +28,14 @@
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD	;
-TeamFortressViewport *gViewPort = NULL;
+TeamFortressViewport *gViewPort = nullptr;
 
-extern "C"
-{
 #include "pm_shared.h"
-}
 
 #include "hud_servers.h"
 #include "vgui_int.h"
 
-CSysModule *g_hTrackerModule = NULL;
+CSysModule *g_hTrackerModule = nullptr;
 #ifdef _WIN32
 #endif
 void InitInput (void);

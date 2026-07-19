@@ -49,9 +49,9 @@ void CQuakeGun::Precache( void )
 int CQuakeGun::GetItemInfo(ItemInfo *p)
 {
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = NULL;
+	p->pszAmmo1 = nullptr;
 	p->iMaxAmmo1 = -1;
-	p->pszAmmo2 = NULL;
+	p->pszAmmo2 = nullptr;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = -1;
 	p->iSlot = 1;
@@ -70,7 +70,7 @@ void CQuakeGun::DestroyEffect( void )
 	if ( m_pBeam )
 	{
 		UTIL_Remove( m_pBeam );
-		m_pBeam = NULL;
+		m_pBeam = nullptr;
 	}
 #endif
 

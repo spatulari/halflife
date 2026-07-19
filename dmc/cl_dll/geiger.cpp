@@ -22,7 +22,7 @@
 #include "cl_util.h"
 #include <string.h>
 #include <time.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "parsemsg.h"
 
@@ -37,7 +37,7 @@ int CHudGeiger::Init(void)
 
 	gHUD.AddHudElem(this);
 
-	srand( (unsigned)time( NULL ) );
+	srand( (unsigned)time( nullptr ) );
 
 	return 1;
 };

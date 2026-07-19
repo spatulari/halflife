@@ -20,7 +20,7 @@
 #include "parsemsg.h"
 
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "vgui_TeamFortressViewport.h"
 
@@ -64,7 +64,7 @@ float *GetClientColor( int clientIndex )
 		default	: return g_ColorGrey;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 int CHudDeathNotice :: Init( void )
@@ -215,7 +215,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 	}
 
 	// Get the Victim's name
-	char *victim_name = NULL;
+	char *victim_name = nullptr;
 	// If victim is -1, the killer killed a specific, non-player object (like a sentrygun)
 	if ( ((char)victim) != -1 )
 		victim_name = g_PlayerInfoList[ victim ].name;

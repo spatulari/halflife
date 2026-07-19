@@ -84,7 +84,7 @@ void CBasePlayer::UpdateStatusBar()
 	{
 		if ( newSBarState[i] != m_izSBarState[i] )
 		{
-			MESSAGE_BEGIN( MSG_ONE, gmsgStatusValue, NULL, pev );
+			MESSAGE_BEGIN( MSG_ONE, gmsgStatusValue, nullptr, pev );
 				WRITE_BYTE( i );
 				WRITE_SHORT( newSBarState[i] );
 			MESSAGE_END();
@@ -238,7 +238,7 @@ int CBasePlayer::TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, fl
 
 		Killed( pevAttacker, GIB_NORMAL );
 	
-		g_pevLastInflictor = NULL;
+		g_pevLastInflictor = nullptr;
 		return 0;
 	}
 

@@ -26,7 +26,7 @@
 #include "nodes.h"
 #include "monsters.h"
  
-CBaseEntity* CBaseMonster :: CheckTraceHullAttack( float flDist, int iDamage, int iDmgType ) { return NULL; }
+CBaseEntity* CBaseMonster :: CheckTraceHullAttack( float flDist, int iDamage, int iDmgType ) { return nullptr; }
 void CBaseMonster :: Eat ( float flFullDuration ) { }
 BOOL CBaseMonster :: FShouldEat ( void ) { return TRUE; }
 void CBaseMonster :: BarnacleVictimBitten ( entvars_t *pevBarnacle ) { }
@@ -36,8 +36,8 @@ float CBaseMonster :: FLSoundVolume ( CSound *pSound ) { return 0.0; }
 BOOL CBaseMonster :: FValidateHintType ( short sHint ) { return FALSE; }
 void CBaseMonster :: Look ( int iDistance ) { }
 int CBaseMonster :: ISoundMask ( void ) { return 0; }
-CSound* CBaseMonster :: PBestSound ( void ) { return NULL; }
-CSound* CBaseMonster :: PBestScent ( void ) { return NULL; } 
+CSound* CBaseMonster :: PBestSound ( void ) { return nullptr; }
+CSound* CBaseMonster :: PBestScent ( void ) { return nullptr; } 
 void CBaseMonster :: MonsterThink ( void ) { }
 void CBaseMonster :: MonsterUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) { }
 int CBaseMonster :: IgnoreConditions ( void ) { return 0; }
@@ -81,7 +81,7 @@ int CBaseMonster::TaskIsRunning( void ) { return 0; }
 int CBaseMonster::IRelationship ( CBaseEntity *pTarget ) { return 0; }
 BOOL CBaseMonster :: FindCover ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist ) { return FALSE; }
 BOOL CBaseMonster :: BuildNearestRoute ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist ) { return FALSE; }
-CBaseEntity *CBaseMonster :: BestVisibleEnemy ( void ) { return NULL; }
+CBaseEntity *CBaseMonster :: BestVisibleEnemy ( void ) { return nullptr; }
 BOOL CBaseMonster :: FInViewCone ( CBaseEntity *pEntity ) { return FALSE; }
 BOOL CBaseMonster :: FInViewCone ( Vector *pOrigin ) { return FALSE; }
 BOOL CBaseEntity :: FVisible ( CBaseEntity *pEntity ) { return FALSE; }
@@ -113,17 +113,17 @@ void CBaseMonster :: MonsterInitDead( void ) { }
 BOOL CBaseMonster :: BBoxFlat ( void ) { return TRUE; }
 BOOL CBaseMonster :: GetEnemy ( void ) { return FALSE; }
 void CBaseMonster :: TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) { }
-CBaseEntity* CBaseMonster :: DropItem ( char *pszItemName, const Vector &vecPos, const Vector &vecAng ) { return NULL; }
+CBaseEntity* CBaseMonster :: DropItem ( char *pszItemName, const Vector &vecPos, const Vector &vecAng ) { return nullptr; }
 BOOL CBaseMonster :: ShouldFadeOnDeath( void ) { return FALSE; }
 void CBaseMonster::FadeMonster( void ) { }
 BOOL CBaseMonster :: HasHumanGibs( void ) { return TRUE; }
 BOOL CBaseMonster :: HasAlienGibs( void ) { return FALSE; }
 MONSTERSTATE CBaseMonster :: GetIdealState ( void ) { return MONSTERSTATE_ALERT; }
-Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type ) { return NULL; }
-Schedule_t *CBaseMonster :: GetSchedule ( void ) { return NULL; }
+Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type ) { return nullptr; }
+Schedule_t *CBaseMonster :: GetSchedule ( void ) { return nullptr; }
 void CBaseMonster :: RunTask ( Task_t *pTask ) { }
 void CBaseMonster :: StartTask ( Task_t *pTask ) { }
-Schedule_t *CBaseMonster::ScheduleFromName( const char *pName ) { return NULL;}
+Schedule_t *CBaseMonster::ScheduleFromName( const char *pName ) { return nullptr;}
 void CBaseMonster::BecomeDead( void ) {}
 void CBaseMonster :: RunAI ( void ) {}
 void CBaseMonster :: Killed( entvars_t *pevAttacker, int iGib ) {}

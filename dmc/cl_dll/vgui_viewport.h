@@ -1045,7 +1045,7 @@ public:
 		if (m_bBeingDragged)
 			setBorder(m_pBorder);
 		else
-			setBorder(NULL);
+			setBorder(nullptr);
 	}
 };
 
@@ -1097,7 +1097,7 @@ public:
 
 	virtual void Reset( void )
 	{
-		m_pNextMenu = NULL;
+		m_pNextMenu = nullptr;
 		m_iIsActive = false;
 		m_flOpenTime = 0;
 	}

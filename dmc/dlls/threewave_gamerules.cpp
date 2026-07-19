@@ -228,7 +228,7 @@ void CThreeWave :: Think ( void )
 		SpawnRunes();
 
 	if ( m_flFlagStatusTime && m_flFlagStatusTime <= gpGlobals->time )
-         GetFlagStatus( NULL );
+         GetFlagStatus( nullptr );
 	
 	// Updates when frags change
 	if ( frags_remaining != last_frags )
@@ -273,8 +273,8 @@ void CThreeWave :: JoinTeam ( CBasePlayer *pPlayer, int iTeam )
 int CThreeWave::TeamWithFewestPlayers( void )
 {
 
-	CBaseEntity *pPlayer = NULL;
-	CBasePlayer *player = NULL;
+	CBaseEntity *pPlayer = nullptr;
+	CBasePlayer *player = nullptr;
 
 	int iNumRed, iNumBlue;
 	
@@ -285,7 +285,7 @@ int CThreeWave::TeamWithFewestPlayers( void )
 	
 	pPlayer = UTIL_FindEntityByClassname ( pPlayer, "player" );
 
-	while (	(pPlayer != NULL) && (!FNullEnt(pPlayer->edict()))	)
+	while (	(pPlayer != nullptr) && (!FNullEnt(pPlayer->edict()))	)
 	{
 		if (pPlayer->pev->flags != FL_DORMANT)
 		{
@@ -415,7 +415,7 @@ extern int gmsgTeamInfo;
 
 void CThreeWave :: UpdateGameMode( CBasePlayer *pPlayer )
 {
-	MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, NULL, pPlayer->edict() );
+	MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, pPlayer->edict() );
 		WRITE_BYTE( 1 );  // game mode teamplay
 	MESSAGE_END();
 }
@@ -468,7 +468,7 @@ void CThreeWave :: PlayerTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacke
 void CThreeWave :: PlayerSpawn( CBasePlayer *pPlayer )
 {
 	BOOL		addDefault;
-	CBaseEntity	*pWeaponEntity = NULL;
+	CBaseEntity	*pWeaponEntity = nullptr;
 
 	if ( pPlayer->pev->team == 0 )
 	{
@@ -516,14 +516,14 @@ void CThreeWave :: PlayerSpawn( CBasePlayer *pPlayer )
 		}
 	}
 
-/*	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pPlayer->pev);
+/*	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pPlayer->pev);
 		WRITE_BYTE( pPlayer->m_iRuneStatus );
 	MESSAGE_END();*/
 }
 
 void CBasePlayer::ShowMenu ( int bitsValidSlots, int nDisplayTime, BOOL fNeedMore, char *pszText )
 {
-	MESSAGE_BEGIN( MSG_ONE, gmsgShowMenu, NULL, pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgShowMenu, nullptr, pev);
         WRITE_SHORT( bitsValidSlots);
         WRITE_CHAR( nDisplayTime );
         WRITE_BYTE( fNeedMore );
@@ -546,14 +546,14 @@ void CThreeWave::InitHUD( CBasePlayer *pPlayer )
 		CBaseEntity *plr = UTIL_PlayerByIndex( i );
 		if ( plr )
 		{
-			MESSAGE_BEGIN( MSG_ONE, gmsgTeamInfo, NULL, pPlayer->edict() );
+			MESSAGE_BEGIN( MSG_ONE, gmsgTeamInfo, nullptr, pPlayer->edict() );
 				WRITE_BYTE( plr->entindex() );
 				WRITE_STRING( plr->TeamID() );
 			MESSAGE_END();
 
 			if ( ((CBasePlayer *)plr)->m_bHasFlag )
 			{
-				MESSAGE_BEGIN( MSG_ONE, gmsgFlagCarrier, NULL, pPlayer->edict() );
+				MESSAGE_BEGIN( MSG_ONE, gmsgFlagCarrier, nullptr, pPlayer->edict() );
 					WRITE_BYTE( plr->entindex() );
 					WRITE_BYTE( 1 );
 				MESSAGE_END();
@@ -562,7 +562,7 @@ void CThreeWave::InitHUD( CBasePlayer *pPlayer )
 	}
 
 	//Remove Rune icon if we have one.
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pPlayer->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pPlayer->pev);
 		WRITE_BYTE( 0 );
 	MESSAGE_END();
 
@@ -734,7 +734,7 @@ void CThreeWave :: ClientDisconnected( edict_t *pClient )
 				pPlayer->edict(), g_usCarried, 0, (float *)&g_vecZero, (float *)&g_vecZero, 
 				0.0, 0.0, pPlayer->entindex(), pPlayer->pev->team, 1, 0 );
 
-				MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+				MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 					if ( pPlayer->pev->team == RED )
 						WRITE_BYTE( BLUE_FLAG_LOST );
 					else if ( pPlayer->pev->team == BLUE )
@@ -756,7 +756,7 @@ void CThreeWave :: ClientDisconnected( edict_t *pClient )
 			{
 				case ITEM_RUNE1_FLAG:
 
-					pRune = CBaseEntity::Create( "item_rune1", pPlayer->pev->origin, pPlayer->pev->angles, NULL );
+					pRune = CBaseEntity::Create( "item_rune1", pPlayer->pev->origin, pPlayer->pev->angles, nullptr );
 					
 					pRune->pev->velocity = pPlayer->pev->velocity * 1.5; 
 					pRune->pev->angles.x = 0;
@@ -768,7 +768,7 @@ void CThreeWave :: ClientDisconnected( edict_t *pClient )
 
 				case ITEM_RUNE2_FLAG:
 
-					pRune = CBaseEntity::Create( "item_rune2", pPlayer->pev->origin, pPlayer->pev->angles, NULL );
+					pRune = CBaseEntity::Create( "item_rune2", pPlayer->pev->origin, pPlayer->pev->angles, nullptr );
 
 					pRune->pev->velocity = pPlayer->pev->velocity * 1.5; 
 					pRune->pev->angles.x = 0;
@@ -780,7 +780,7 @@ void CThreeWave :: ClientDisconnected( edict_t *pClient )
 
 				case ITEM_RUNE3_FLAG:
 			
-					pRune = CBaseEntity::Create( "item_rune3", pPlayer->pev->origin, pPlayer->pev->angles, NULL );
+					pRune = CBaseEntity::Create( "item_rune3", pPlayer->pev->origin, pPlayer->pev->angles, nullptr );
 
 					pRune->pev->velocity = pPlayer->pev->velocity * 1.5; 
 					pRune->pev->angles.x = 0;
@@ -792,7 +792,7 @@ void CThreeWave :: ClientDisconnected( edict_t *pClient )
 
 				case ITEM_RUNE4_FLAG:
 			
-					pRune = CBaseEntity::Create( "item_rune4", pPlayer->pev->origin, pPlayer->pev->angles, NULL );
+					pRune = CBaseEntity::Create( "item_rune4", pPlayer->pev->origin, pPlayer->pev->angles, nullptr );
 
 					pRune->pev->velocity = pPlayer->pev->velocity * 1.5; 
 					pRune->pev->angles.x = 0;
@@ -851,19 +851,19 @@ void CThreeWave :: PlayerThink( CBasePlayer *pPlayer )
 	if ( pPlayer->pFlagCarrierKiller )
 	{
 		if ( pPlayer->m_flFlagCarrierKillTime <= gpGlobals->time )
-			pPlayer->pFlagCarrierKiller = NULL;
+			pPlayer->pFlagCarrierKiller = nullptr;
 	}
 
 	if ( pPlayer->pFlagReturner )
 	{
 		if ( pPlayer->m_flFlagReturnTime <= gpGlobals->time )
-			pPlayer->pFlagReturner = NULL;
+			pPlayer->pFlagReturner = nullptr;
 	}
 
 	if ( pPlayer->pCarrierHurter )
 	{
 		if ( pPlayer->m_flCarrierHurtTime <= gpGlobals->time )
-			 pPlayer->pCarrierHurter = NULL;
+			 pPlayer->pCarrierHurter = nullptr;
 	}
 
 	if ( pPlayer->m_iRuneStatus == ITEM_RUNE4_FLAG) 
@@ -908,7 +908,7 @@ void CThreeWave :: PlayerThink( CBasePlayer *pPlayer )
 //=========================================================
 void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor )
 {
-	CBasePlayer *pk = NULL; 
+	CBasePlayer *pk = nullptr; 
 	
 	if ( pKiller )
 	{
@@ -1031,7 +1031,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 
 		pFlag->m_flDroppedTime = gpGlobals->time + TEAM_CAPTURE_FLAG_RETURN_TIME;
 
-        MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+        MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 			if ( pVictim->pev->team == RED )
 				WRITE_BYTE( BLUE_FLAG_LOST );
 			else if ( pVictim->pev->team == BLUE )
@@ -1124,14 +1124,14 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 	}
 
 	// Find if this guy is near our flag or our flag carrier
-	CBaseEntity *ent = NULL;
+	CBaseEntity *ent = nullptr;
 	float Dist;
 
 	if ( pk )
 	{
 		if ( pk->pev->team == RED )
 		{
-			while((ent = UTIL_FindEntityByClassname( ent, "item_flag_team1")) != NULL)
+			while((ent = UTIL_FindEntityByClassname( ent, "item_flag_team1")) != nullptr)
 			{
 				//Do not defend a invisible flag
 				if ( ent->pev->effects & EF_NODRAW )
@@ -1183,7 +1183,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 		}
 		else if ( pk->pev->team == BLUE )
 		{
-			while((ent = UTIL_FindEntityByClassname( ent, "item_flag_team2")) != NULL)
+			while((ent = UTIL_FindEntityByClassname( ent, "item_flag_team2")) != nullptr)
 			{
 				//Do not defend a invisible flag
 				if ( ent->pev->effects & EF_NODRAW )
@@ -1242,7 +1242,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 	{
 		case ITEM_RUNE1_FLAG:
 
-			pRune = CBaseEntity::Create( "item_rune1", pVictim->pev->origin, pVictim->pev->angles, NULL );
+			pRune = CBaseEntity::Create( "item_rune1", pVictim->pev->origin, pVictim->pev->angles, nullptr );
 			
 			pRune->pev->velocity = pVictim->pev->velocity * 1.5; 
 			pRune->pev->angles.x = 0;
@@ -1254,7 +1254,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 
 		case ITEM_RUNE2_FLAG:
 
-			pRune = CBaseEntity::Create( "item_rune2", pVictim->pev->origin, pVictim->pev->angles, NULL );
+			pRune = CBaseEntity::Create( "item_rune2", pVictim->pev->origin, pVictim->pev->angles, nullptr );
 
 			pRune->pev->velocity = pVictim->pev->velocity * 1.5; 
 			pRune->pev->angles.x = 0;
@@ -1266,7 +1266,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 
 		case ITEM_RUNE3_FLAG:
 	
-			pRune = CBaseEntity::Create( "item_rune3", pVictim->pev->origin, pVictim->pev->angles, NULL );
+			pRune = CBaseEntity::Create( "item_rune3", pVictim->pev->origin, pVictim->pev->angles, nullptr );
 
 			pRune->pev->velocity = pVictim->pev->velocity * 1.5; 
 			pRune->pev->angles.x = 0;
@@ -1278,7 +1278,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 
 		case ITEM_RUNE4_FLAG:
 	
-			pRune = CBaseEntity::Create( "item_rune4", pVictim->pev->origin, pVictim->pev->angles, NULL );
+			pRune = CBaseEntity::Create( "item_rune4", pVictim->pev->origin, pVictim->pev->angles, nullptr );
 
 			pRune->pev->velocity = pVictim->pev->velocity * 1.5; 
 			pRune->pev->angles.x = 0;
@@ -1310,7 +1310,7 @@ void CThreeWave :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entva
 
 	pVictim->m_iRuneStatus = 0;
 
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pVictim->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pVictim->pev);
 		WRITE_BYTE( pVictim->m_iRuneStatus );
 	MESSAGE_END();
 
@@ -1398,7 +1398,7 @@ int CThreeWave::IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *pKilled )
 //=========================================================
 const char *CThreeWave::GetTeamID( CBaseEntity *pEntity )
 {
-	if ( pEntity == NULL || pEntity->pev == NULL )
+	if ( pEntity == nullptr || pEntity->pev == nullptr )
 		return "";
 
 	// return their team name
@@ -1443,11 +1443,11 @@ BOOL CThreeWave::IsValidTeam( const char *pTeamName )
 void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 {
 	
-	CBaseEntity *pFlag = NULL;
+	CBaseEntity *pFlag = nullptr;
     int iFoundCount = 0;
 	int iDropped = 0;
 
-	while((pFlag = UTIL_FindEntityByClassname( pFlag, "carried_flag_team1")) != NULL)
+	while((pFlag = UTIL_FindEntityByClassname( pFlag, "carried_flag_team1")) != nullptr)
 	{
 		if ( pFlag && !FBitSet( pFlag->pev->flags, FL_KILLME) )
 			iFoundCount++;
@@ -1458,7 +1458,7 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 
 	if ( !iFoundCount )
 	{
-		while((pFlag = UTIL_FindEntityByClassname( pFlag, "item_flag_team1")) != NULL)
+		while((pFlag = UTIL_FindEntityByClassname( pFlag, "item_flag_team1")) != nullptr)
 		{
 			if ( pFlag )
 			{
@@ -1477,7 +1477,7 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 
 	iDropped = iFoundCount = 0;
 
-	while((pFlag = UTIL_FindEntityByClassname( pFlag, "carried_flag_team2")) != NULL)
+	while((pFlag = UTIL_FindEntityByClassname( pFlag, "carried_flag_team2")) != nullptr)
 	{
 		if ( pFlag && !FBitSet( pFlag->pev->flags, FL_KILLME) )
 			iFoundCount++;
@@ -1489,7 +1489,7 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 	if ( !iFoundCount )
 	{
 
-		while((pFlag = UTIL_FindEntityByClassname( pFlag, "item_flag_team2")) != NULL)
+		while((pFlag = UTIL_FindEntityByClassname( pFlag, "item_flag_team2")) != nullptr)
 		{
 			if ( pFlag )
 			{
@@ -1510,7 +1510,7 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 	{
 		if ( pPlayer->pev->team == 0 )
 		{
-			MESSAGE_BEGIN( MSG_ONE, gmsgFlagStatus, NULL, pPlayer->edict() );
+			MESSAGE_BEGIN( MSG_ONE, gmsgFlagStatus, nullptr, pPlayer->edict() );
 				WRITE_BYTE( 0 );  
 				WRITE_BYTE( iRedFlagStatus );
 				WRITE_BYTE( iBlueFlagStatus );
@@ -1520,7 +1520,7 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 		}
 		else
 		{
-			MESSAGE_BEGIN( MSG_ONE, gmsgFlagStatus, NULL, pPlayer->edict() );
+			MESSAGE_BEGIN( MSG_ONE, gmsgFlagStatus, nullptr, pPlayer->edict() );
 				WRITE_BYTE( 1 );  
 				WRITE_BYTE( iRedFlagStatus );
 				WRITE_BYTE( iBlueFlagStatus );
@@ -1533,7 +1533,7 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 	}
 	else
 	{
-		MESSAGE_BEGIN( MSG_ALL, gmsgFlagStatus, NULL );
+		MESSAGE_BEGIN( MSG_ALL, gmsgFlagStatus, nullptr );
 				WRITE_BYTE( 1 );  
 				WRITE_BYTE( iRedFlagStatus );
 				WRITE_BYTE( iBlueFlagStatus );
@@ -1551,14 +1551,14 @@ void CThreeWave::GetFlagStatus( CBasePlayer *pPlayer )
 		{
 			if ( ((CBasePlayer *)plr)->m_bHasFlag )
 			{
-				MESSAGE_BEGIN( MSG_ALL, gmsgFlagCarrier, NULL );
+				MESSAGE_BEGIN( MSG_ALL, gmsgFlagCarrier, nullptr );
 					WRITE_BYTE( plr->entindex() );
 					WRITE_BYTE( 1 );
 				MESSAGE_END();
 			}
 			else
 			{
-				MESSAGE_BEGIN( MSG_ALL, gmsgFlagCarrier, NULL );
+				MESSAGE_BEGIN( MSG_ALL, gmsgFlagCarrier, nullptr );
 					WRITE_BYTE( plr->entindex() );
 					WRITE_BYTE( 0 );
 				MESSAGE_END();
@@ -1583,14 +1583,14 @@ void CThreeWave::RecountTeams( void )
 	strcpy( teamlist, m_szTeamList );
 	pName = teamlist;
 	pName = strtok( pName, ";" );
-	while ( pName != NULL && *pName )
+	while ( pName != nullptr && *pName )
 	{
 		if ( GetTeamIndex( pName ) < 0 )
 		{
 			strcpy( team_names[num_teams], pName );
 			num_teams++;
 		}
-		pName = strtok( NULL, ";" );
+		pName = strtok( nullptr, ";" );
 	}
 
 	if ( num_teams < 2 )
@@ -1762,7 +1762,7 @@ void CItemFlag::FlagTouch ( CBaseEntity *pToucher  )
 			//Back at home!
 			ResetFlag( pev->team );
             
-			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 		
 				if ( pev->team == RED )
 					WRITE_BYTE( RED_FLAG_RETURNED_PLAYER );
@@ -1802,7 +1802,7 @@ void CItemFlag::FlagTouch ( CBaseEntity *pToucher  )
 	{
 		if ( Dropped )
 		{
-			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 			
 				if ( pev->team == RED )
 					WRITE_BYTE( RED_FLAG_STOLEN );
@@ -1815,7 +1815,7 @@ void CItemFlag::FlagTouch ( CBaseEntity *pToucher  )
 
 			pPlayer->m_bHasFlag = TRUE;
 
-			CBaseEntity *pEnt = NULL;
+			CBaseEntity *pEnt = nullptr;
 
 			if ( pev->team == RED )
 			{
@@ -1853,7 +1853,7 @@ void CItemFlag::FlagTouch ( CBaseEntity *pToucher  )
 		{
 			pev->effects |= EF_NODRAW;
 			
-			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 			
 				if ( pev->team == RED )
 					WRITE_BYTE( RED_FLAG_STOLEN );
@@ -1867,7 +1867,7 @@ void CItemFlag::FlagTouch ( CBaseEntity *pToucher  )
 			pPlayer->m_bHasFlag = TRUE;
 			pPlayer->m_flCarrierPickupTime = gpGlobals->time + TEAM_CAPTURE_CARRIER_FLAG_SINCE_TIMEOUT;
 
-			CBaseEntity *pEnt = NULL;
+			CBaseEntity *pEnt = nullptr;
 
 			if ( pev->team == RED )
 			{
@@ -1904,9 +1904,9 @@ void CItemFlag::FlagTouch ( CBaseEntity *pToucher  )
 
 void CItemFlag::Capture(CBasePlayer *pPlayer, int iTeam )
 {
-	CBaseEntity *pFlag1 = NULL; 
+	CBaseEntity *pFlag1 = nullptr; 
 
-	MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+	MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 	
 		if ( iTeam == RED )
 			WRITE_BYTE( RED_FLAG_CAPTURED );
@@ -1925,7 +1925,7 @@ void CItemFlag::Capture(CBasePlayer *pPlayer, int iTeam )
 			UTIL_ClientPrintAll( HUD_PRINTNOTIFY, " gets an assist for fragging the flag carrier!\n");
 
 			pPlayer->pFlagCarrierKiller->AddPoints( TEAM_CAPTURE_FRAG_CARRIER_ASSIST_BONUS, TRUE );
-			pPlayer->pFlagCarrierKiller = NULL;
+			pPlayer->pFlagCarrierKiller = nullptr;
 			pPlayer->m_flFlagCarrierKillTime = 0.0;
 		}
 	}
@@ -1938,7 +1938,7 @@ void CItemFlag::Capture(CBasePlayer *pPlayer, int iTeam )
 			UTIL_ClientPrintAll( HUD_PRINTNOTIFY, " gets an assist for returning his flag!\n");
 
 			pPlayer->pFlagReturner->AddPoints( TEAM_CAPTURE_RETURN_FLAG_ASSIST_BONUS, TRUE );
-			pPlayer->pFlagReturner = NULL;
+			pPlayer->pFlagReturner = nullptr;
 			pPlayer->m_flFlagReturnTime = 0.0;
 		}
 	}
@@ -1967,7 +1967,7 @@ void CItemFlag::Capture(CBasePlayer *pPlayer, int iTeam )
 	{
 		((CThreeWave *) g_pGameRules)->iBlueTeamScore++;
 
-		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "carried_flag_team1")) != NULL)
+		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "carried_flag_team1")) != nullptr)
 		{
 			if ( pFlag1 )
 				UTIL_Remove( pFlag1 );
@@ -1977,7 +1977,7 @@ void CItemFlag::Capture(CBasePlayer *pPlayer, int iTeam )
 	{
 		((CThreeWave *) g_pGameRules)->iRedTeamScore++;
 
-		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "carried_flag_team2")) != NULL)
+		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "carried_flag_team2")) != nullptr)
 		{
 			if ( pFlag1 )
 				UTIL_Remove( pFlag1 );
@@ -2023,11 +2023,11 @@ void CItemFlag::Materialize( void )
 
 void CItemFlag::ResetFlag( int iTeam )
 {
-	CBaseEntity *pFlag1 = NULL; 
+	CBaseEntity *pFlag1 = nullptr; 
 
 	if ( iTeam == BLUE )
 	{
-		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "item_flag_team2")) != NULL)
+		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "item_flag_team2")) != nullptr)
 		{
 			CItemFlag *pFlag2 = (CItemFlag *)pFlag1;
 
@@ -2041,7 +2041,7 @@ void CItemFlag::ResetFlag( int iTeam )
 	}
 	else if ( iTeam == RED )
 	{
-		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "item_flag_team1")) != NULL)
+		while((pFlag1 = UTIL_FindEntityByClassname( pFlag1, "item_flag_team1")) != nullptr)
 		{
 			CItemFlag *pFlag2 = (CItemFlag *)pFlag1;
 			
@@ -2066,7 +2066,7 @@ void CItemFlag::FlagThink( void )
 			
 			ResetFlag( pev->team );
 			
-			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, NULL );
+			MESSAGE_BEGIN ( MSG_ALL, gmsgCTFMsgs, nullptr );
 		
 				if ( pev->team == RED )
 					WRITE_BYTE( RED_FLAG_RETURNED );
@@ -2229,9 +2229,9 @@ LINK_ENTITY_TO_CLASS( carried_flag_team2, CCarriedFlagTeam2 );
 
 BOOL IsRuneSpawnPointValid( CBaseEntity *pSpot )
 {
-	CBaseEntity *ent = NULL;
+	CBaseEntity *ent = nullptr;
 	
-	while ( (ent = UTIL_FindEntityInSphere( ent, pSpot->pev->origin, 128 )) != NULL )
+	while ( (ent = UTIL_FindEntityInSphere( ent, pSpot->pev->origin, 128 )) != nullptr )
 	{
 		//Try not to spawn it near other runes.
 		if ( !strcmp( STRING( ent->pev->classname ), "item_rune1")  || 
@@ -2248,12 +2248,12 @@ edict_t *RuneSelectSpawnPoint( void )
 {
 	CBaseEntity *pSpot;
 	
-	pSpot = NULL;
+	pSpot = nullptr;
 
 	// Randomize the start spot
 	for ( int i = RANDOM_LONG(1,5); i > 0; i-- )
 		pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
-	if ( !pSpot )  // skip over the null point
+	if ( !pSpot )  // skip over the nullptr point
 		pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
 
 	CBaseEntity *pFirstSpot = pSpot;
@@ -2285,13 +2285,13 @@ edict_t *RuneSelectSpawnPoint( void )
 	// If startspot is set, (re)spawn there.
 	if ( FStringNull( gpGlobals->startspot ) || !strlen(STRING(gpGlobals->startspot)))
 	{
-		pSpot = UTIL_FindEntityByClassname(NULL, "info_player_start");
+		pSpot = UTIL_FindEntityByClassname(nullptr, "info_player_start");
 		if ( pSpot )
 			goto ReturnSpot;
 	}
 	else
 	{
-		pSpot = UTIL_FindEntityByTargetname( NULL, STRING(gpGlobals->startspot) );
+		pSpot = UTIL_FindEntityByTargetname( nullptr, STRING(gpGlobals->startspot) );
 		if ( pSpot )
 			goto ReturnSpot;
 	}
@@ -2342,7 +2342,7 @@ void DropRune ( CBasePlayer *pPlayer )
 		return;
 	}
 
-	CBaseEntity *pRune = NULL;
+	CBaseEntity *pRune = nullptr;
 	char * runeName;
 
 	if ( pPlayer->m_iRuneStatus == ITEM_RUNE1_FLAG )
@@ -2394,7 +2394,7 @@ void DropRune ( CBasePlayer *pPlayer )
 		pPlayer->m_szTeamName,
 		runeName );
 
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pPlayer->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pPlayer->pev);
 		WRITE_BYTE( pPlayer->m_iRuneStatus );
 	MESSAGE_END();
 }
@@ -2441,7 +2441,7 @@ void CResistRune::RuneTouch ( CBaseEntity *pOther )
 	EMIT_SOUND( ENT(pev), CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM );
 
 	//Update my client side rune hud thingy.
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pOther->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pOther->pev);
 		WRITE_BYTE( ((CBasePlayer *)pOther)->m_iRuneStatus );
 	MESSAGE_END();
 
@@ -2505,13 +2505,13 @@ void CResistRune::Spawn ( void )
 	
 	pev->velocity = ( forward * 400 ) + ( up * 200 );
 	
-	if ( pev->owner == NULL )
+	if ( pev->owner == nullptr )
 	{
 		pev->origin.z += 16;
 		pev->velocity.z = 300;
 	}
 	
-	pev->owner = NULL;
+	pev->owner = nullptr;
 	
 	SetTouch( &CResistRune::RuneTouch );
 	
@@ -2573,7 +2573,7 @@ void CStrengthRune::RuneTouch ( CBaseEntity *pOther )
 	EMIT_SOUND( ENT(pev), CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM );
 
 	//Update my client side rune hud thingy.
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pOther->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pOther->pev);
 		WRITE_BYTE( ((CBasePlayer *)pOther)->m_iRuneStatus );
 	MESSAGE_END();
 
@@ -2628,13 +2628,13 @@ void CStrengthRune::Spawn ( void )
 	
 	pev->velocity = ( forward * 400 ) + ( up * 200 );
 	
-	if ( pev->owner == NULL )
+	if ( pev->owner == nullptr )
 	{
 		pev->origin.z += 16;
 		pev->velocity.z = 300;
 	}
 	
-	pev->owner = NULL;
+	pev->owner = nullptr;
 	
 	SetTouch( &CStrengthRune::RuneTouch );
 
@@ -2698,7 +2698,7 @@ void CHasteRune::RuneTouch ( CBaseEntity *pOther )
 	EMIT_SOUND( ENT(pev), CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM );
 
 	//Update my client side rune hud thingy.
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pOther->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pOther->pev);
 		WRITE_BYTE( ((CBasePlayer *)pOther)->m_iRuneStatus );
 	MESSAGE_END();
 
@@ -2753,13 +2753,13 @@ void CHasteRune::Spawn ( void )
 	
 	pev->velocity = ( forward * 400 ) + ( up * 200 );
 	
-	if ( pev->owner == NULL )
+	if ( pev->owner == nullptr )
 	{
 		pev->origin.z += 16;
 		pev->velocity.z = 300;
 	}
 	
-	pev->owner = NULL;
+	pev->owner = nullptr;
 	
 	SetTouch( &CHasteRune::RuneTouch );
 
@@ -2823,7 +2823,7 @@ void CRegenRune::RuneTouch ( CBaseEntity *pOther )
 	EMIT_SOUND( ENT(pev), CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM );
 
 	//Update my client side rune hud thingy.
-	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, NULL, pOther->pev);
+	MESSAGE_BEGIN( MSG_ONE, gmsgRuneStatus, nullptr, pOther->pev);
 		WRITE_BYTE( ((CBasePlayer *)pOther)->m_iRuneStatus );
 	MESSAGE_END();
 
@@ -2879,13 +2879,13 @@ void CRegenRune::Spawn ( void )
 	
 	pev->velocity = ( forward * 400 ) + ( up * 200 );
 	
-	if ( pev->owner == NULL )
+	if ( pev->owner == nullptr )
 	{
 		pev->origin.z += 16;
 		pev->velocity.z = 300;
 	}
 	
-	pev->owner = NULL;
+	pev->owner = nullptr;
 
 	SetTouch( &CRegenRune::RuneTouch );
 
@@ -2913,16 +2913,16 @@ void SpawnRunes( void )
 	edict_t *pentSpawnSpot;
 
 	pentSpawnSpot = RuneSelectSpawnPoint();
-	CBaseEntity::Create( "item_rune1", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, NULL );
+	CBaseEntity::Create( "item_rune1", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, nullptr );
 	
 	pentSpawnSpot = RuneSelectSpawnPoint();
-	CBaseEntity::Create( "item_rune2", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, NULL );
+	CBaseEntity::Create( "item_rune2", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, nullptr );
 
 	pentSpawnSpot = RuneSelectSpawnPoint();
-	CBaseEntity::Create( "item_rune3", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, NULL );
+	CBaseEntity::Create( "item_rune3", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, nullptr );
 	
 	pentSpawnSpot = RuneSelectSpawnPoint();
-	CBaseEntity::Create( "item_rune4", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, NULL );
+	CBaseEntity::Create( "item_rune4", VARS(pentSpawnSpot)->origin, VARS(pentSpawnSpot)->angles, nullptr );
 
 	g_bSpawnedRunes = TRUE;
 }
@@ -2949,8 +2949,8 @@ void CGrapple::Reset_Grapple ( void )
 		STOP_SOUND( ((CBasePlayer *)pOwner)->edict(), CHAN_WEAPON, "weapons/grfire.wav" );
 		STOP_SOUND( ((CBasePlayer *)pOwner)->edict(), CHAN_WEAPON, "weapons/grpull.wav" );
 
-		((CBasePlayer *)pOwner)->m_ppHook = NULL;
-		pev->enemy = NULL;
+		((CBasePlayer *)pOwner)->m_ppHook = nullptr;
+		pev->enemy = nullptr;
 
         UTIL_Remove ( this );
 }
@@ -3011,7 +3011,7 @@ void CGrapple::GrappleTouch ( CBaseEntity *pOther )
 
         // conveniently clears the sound channel of the CHAIN1 sound,
         // which is a looping sample and would continue to play. Tink1 is
-        // the least offensive choice, ass NULL.WAV loops and clogs the
+        // the least offensive choice, ass nullptr.WAV loops and clogs the
         // channel with silence
       //  sound (self.owner, CHAN_NO_PHS_ADD+CHAN_WEAPON, "weapons/tink1.wav", 1, ATTN_NORM);
 
@@ -3048,7 +3048,7 @@ void CGrapple::GrappleTouch ( CBaseEntity *pOther )
         pev->nextthink = gpGlobals->time;
 		m_flNextIdleTime = gpGlobals->time + 0.1;
 		pev->solid = SOLID_NOT;
-        SetTouch ( NULL );
+        SetTouch ( nullptr );
 };
 
 bool CanSee ( CBaseEntity *pEnemy, CBaseEntity *pOwner )
@@ -3148,7 +3148,7 @@ void CBasePlayer::Service_Grapple ( void )
 			}
         }
 
-		if ( m_ppHook->pev->enemy != NULL )
+		if ( m_ppHook->pev->enemy != nullptr )
 		{
 			// If hooked to a player, track them directly!
 			if ( FClassnameIs( pEnemy->pev, "player" ) )
@@ -3238,9 +3238,9 @@ void CBasePlayer::Throw_Grapple ( void )
         if ( m_bHook_Out )
              return;
 
-		CBaseEntity *pHookCBEnt = NULL;
+		CBaseEntity *pHookCBEnt = nullptr;
 	
-		pHookCBEnt = CBaseEntity::Create( "hook", pev->origin, pev->angles, NULL );
+		pHookCBEnt = CBaseEntity::Create( "hook", pev->origin, pev->angles, nullptr );
 
 		if ( pHookCBEnt )
 		{

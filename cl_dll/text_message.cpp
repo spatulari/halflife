@@ -23,7 +23,7 @@
 #include "hud.h"
 #include "cl_util.h"
 #include <string.h>
-#include <stdio.h>
+#include <cstdio>
 #include "parsemsg.h"
 
 #include "vgui_TeamFortressViewport.h"
@@ -86,7 +86,7 @@ char *CHudTextMessage::LocaliseTextString( const char *msg, char *dst_buffer, in
 		}
 	}
 
-	dst_buffer[len-1] = 0; // ensure null termination
+	dst_buffer[len-1] = 0; // ensure nullptr termination
 	return dst_buffer;
 }
 
