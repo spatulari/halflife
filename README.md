@@ -1,67 +1,67 @@
-Half Life 1 SDK LICENSE
-======================
+# Modern Half-Life
 
-Half Life 1 SDK Copyright © Valve Corp.
+![C++23](https://img.shields.io/badge/C%2B%2B-23-blue.svg)
+![Status](https://img.shields.io/badge/status-active-success)
+![License](https://img.shields.io/badge/license-Valve_SDK-lightgrey)
 
-THIS DOCUMENT DESCRIBES A CONTRACT BETWEEN YOU AND VALVE CORPORATION (“Valve”).  PLEASE READ IT BEFORE DOWNLOADING OR USING THE HALF LIFE 1 SDK (“SDK”). BY DOWNLOADING AND/OR USING THE SOURCE ENGINE SDK YOU ACCEPT THIS LICENSE. IF YOU DO NOT AGREE TO THE TERMS OF THIS LICENSE PLEASE DON’T DOWNLOAD OR USE THE SDK.
+Modern Half-Life is an effort to bring the original Half-Life 1 SDK into the modern C++ era.
 
-You may, free of charge, download and use the SDK to develop a modified Valve game running on the Half-Life engine.  You may distribute your modified Valve game in source and object code form, but only for free. Terms of use for Valve games are found in the Steam Subscriber Agreement located here: https://store.steampowered.com/subscriber_agreement/ 
+The primary objective is to migrate the codebase to **C++23** while preserving the original behavior of the game. This is a modernization project, not a remake, rewrite, or gameplay overhaul. If a change would alter how Half-Life behaves, preserving the original implementation takes priority.
 
-You may copy, modify, and distribute the SDK and any modifications you make to the SDK in source and object code form, but only for free.  Any distribution of this SDK must include this license.txt and third_party_licenses.txt.  
- 
-Any distribution of the SDK or a substantial portion of the SDK must include the above copyright notice and the following: 
+## Why?
 
-DISCLAIMER OF WARRANTIES.  THE SOURCE SDK AND ANY OTHER MATERIAL DOWNLOADED BY LICENSEE IS PROVIDED “AS IS”.  VALVE AND ITS SUPPLIERS DISCLAIM ALL WARRANTIES WITH RESPECT TO THE SDK, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, TITLE AND FITNESS FOR A PARTICULAR PURPOSE.  
+The original Half-Life SDK was released over two decades ago and reflects the programming practices of its time. While the code remains historically significant, it can be difficult to work with using modern compilers and tooling.
 
-LIMITATION OF LIABILITY.  IN NO EVENT SHALL VALVE OR ITS SUPPLIERS BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE ENGINE AND/OR THE SDK, EVEN IF VALVE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.  
- 
- 
-If you would like to use the SDK for a commercial purpose, please contact Valve at sourceengine@valvesoftware.com.
+Modern Half-Life aims to provide a clean, modern foundation that developers can comfortably build upon without first spending days or weeks updating a late 1990s codebase.
 
+Whether you're interested in creating a mod, experimenting with engine programming, or simply studying the SDK, the goal is to let you start with modern C++ instead of legacy C/C++.
 
-Half-Life 1
-======================
+## Project Goals
 
-This is the README for the Half-Life 1 engine and its associated games.
+This project includes changes such as:
 
-Please use this repository to report bugs and feature requests for Half-Life 1 related products.
+* Migrating the project to **C++23**.
+* Replacing legacy C idioms with modern C++ equivalents where appropriate.
+* Improving type safety and const-correctness.
+* Removing obsolete language features and compiler workarounds.
+* Cleaning up warnings and improving compatibility with modern toolchains.
+* Improving readability, maintainability, and consistency.
+* Using the C++ standard library where it provides clear benefits.
 
-Reporting Issues
-----------------
+Every modernization is intended to preserve runtime behavior unless explicitly documented otherwise.
 
-If you encounter an issue while using Half-Life 1 games, first search the [issue list](https://github.com/ValveSoftware/halflife/issues) to see if it has already been reported. Include closed issues in your search.
+## What This Project Is Not
 
-If it has not been reported, create a new issue with at least the following information:
+Modern Half-Life is **not** intended to:
 
-- a short, descriptive title;
-- a detailed description of the issue, including any output from the command line;
-- steps for reproducing the issue;
-- your system information.\*; and
-- the `version` output from the in-game console.
+* Change gameplay.
+* Introduce new engine features.
+* Rebalance or redesign existing systems.
+* Turn Half-Life into a different game.
 
-Please place logs either in a code block (press `M` in your browser for a GFM cheat sheet) or a [gist](https://gist.github.com).
+Those are better suited for forks and mods built on top of this project.
 
-\* The preferred and easiest way to get this information is from Steam's Hardware Information viewer from the menu (`Help -> System Information`). Once your information appears: right-click within the dialog, choose `Select All`, right-click again, and then choose `Copy`. Paste this information into your report, preferably in a code block.
+## For Mod Developers
 
-Conduct
--------
+One of the main goals of this repository is to become a modern starting point for Half-Life development.
 
+Instead of beginning with a 1998 codebase and modernizing it yourself, you can fork this repository and focus on building your game or mod immediately.
 
-There are basic rules of conduct that should be followed at all times by everyone participating in the discussions.  While this is generally a relaxed environment, please remember the following:
+If this project succeeds, future developers should spend less time fighting outdated code and more time creating new experiences.
 
-- Do not insult, harass, or demean anyone.
-- Do not intentionally multi-post an issue.
-- Do not use ALL CAPS when creating an issue report.
-- Do not repeatedly update an open issue remarking that the issue persists.
+## Contributing
 
-Remember: Just because the issue you reported was reported here does not mean that it is an issue with Half-Life.  As well, should your issue not be resolved immediately, it does not mean that a resolution is not being researched or tested.  Patience is always appreciated.
+Contributions are welcome as long as they align with the project's philosophy:
 
+* Preserve original behavior whenever possible.
+* Prefer modern C++23 features over legacy constructs.
+* Improve readability and maintainability.
+* Keep changes well-documented and easy to review.
 
-Building the SDK code
--------
+## License
 
-[Visual Studio](https://visualstudio.microsoft.com/) 2019 is required to build mod DLLs on Windows. In the Visual Studio installer, install "**Desktop development with C++**" under "**Workloads**" and "**C++ MFC for latest v142 build tools (x86 & x64)**" under "**Individual components**". VS2019 projects can be found in the `projects\vs2019` folder.
+This repository is based on Valve's Half-Life SDK.
 
-Tools have not yet been updated for VS2019, but can be built using the VS2010 projects in the `projects\vs2010` folder. See the `readme.txt` file there.
+Ownership of the original source code remains with Valve Corporation and is distributed under the terms of the Half-Life SDK License. See `LICENSE.txt` and `third_party_licenses.txt` for the original licensing terms.
 
-Linux binaries can be built using Makefiles found in the `linux` folder. They expect to be built / run in the [Steam Runtime "scout" environment](https://gitlab.steamos.cloud/steamrt/scout/sdk). The built binaries are copied to a directory called `game` at the same level as the root directory for the git repository. You can set `CREATE_OUTPUT_DIRS=1` while building to create the output directory structure automatically.
+This repository contains modernization work on top of the original SDK and is intended to make the codebase easier to maintain and extend while respecting the original license.
