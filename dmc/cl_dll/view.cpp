@@ -24,7 +24,7 @@
 #include "event_api.h"
 #include "pmtrace.h"
 #include "hltv.h"
-
+#include "Exports.h"
 
 // QUAKECLASSIC
 extern int iMouseInUse;
@@ -36,23 +36,20 @@ extern bool	bChangeAngles;
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
 
-extern "C" 
-{
-	int CL_IsThirdPerson( void );
-	void CL_CameraOffset( float *ofs );
+//int CL_IsThirdPerson(void);
+//void CL_CameraOffset(float* ofs);
 
-	void EXPORT V_CalcRefdef( struct ref_params_s *pparams );
+extern "C" void EXPORT V_CalcRefdef(struct ref_params_s* pparams);
 
-	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
-	int PM_GetInfo( int ent );
-	void	InterpolateAngles(  float * start, float * end, float * output, float frac );
-	void	NormalizeAngles( float * angles );
-	float	Distance(const float * v1, const float * v2);
-	float	AngleBetweenVectors(  const float * v1,  const float * v2 );
+void PM_ParticleLine(float* start, float* end, int pcolor, float life, float vert);
+int PM_GetInfo(int ent);
+void InterpolateAngles(float* start, float* end, float* output, float frac);
+void NormalizeAngles(float* angles);
+float Distance(const float* v1, const float* v2);
+float AngleBetweenVectors(const float* v1, const float* v2);
 
-	float	vJumpOrigin[3];
-	float	vJumpAngles[3];
-}
+float vJumpOrigin[3];
+float vJumpAngles[3];
 
 #include "r_studioint.h"
 #include "com_model.h"

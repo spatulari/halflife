@@ -233,7 +233,7 @@ AngleBetweenVectors
 
 ===================
 */
-float AngleBetweenVectors( const vec3_t v1, const vec3_t v2 )
+float AngleBetweenVectors( const float *v1, const float *v2 )
 {
 	float angle;
 	float l1 = Length( v1 );
@@ -327,7 +327,7 @@ float Length(const vec3_t v)
 }
 #endif
 
-float Distance(const vec3_t v1, const vec3_t v2)
+float Distance(const float *v1, const float *v2)
 {
 	vec3_t d;
 	VectorSubtract(v2,v1,d);

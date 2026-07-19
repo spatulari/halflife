@@ -15,16 +15,14 @@
 #include "pmtrace.h"
 #include "screenfade.h"
 #include "shake.h"
+#include "Exports.h"
 
 // Spectator Mode
-extern "C" 
-{
-	float	vecNewViewAngles[3];
-	int		iHasNewViewAngles;
-	float	vecNewViewOrigin[3];
-	int		iHasNewViewOrigin;
-	int		iIsSpectator;
-}
+float vecNewViewAngles[3];
+int   iHasNewViewAngles;
+float vecNewViewOrigin[3];
+int   iHasNewViewOrigin;
+int   iIsSpectator;
 
 extern float g_flStartScaleTime;
 extern int iMouseInUse;
@@ -35,17 +33,10 @@ void CAM_ToFirstPerson(void);
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
 
-extern "C" 
-{
-	int CL_IsThirdPerson( void );
-	void CL_CameraOffset( float *ofs );
+void EXPORT V_CalcRefdef(struct ref_params_s* pparams);
 
-	void EXPORT V_CalcRefdef( struct ref_params_s *pparams );
-
-	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
-	int PM_GetInfo( int ent );
-
-}
+void PM_ParticleLine(float* start, float* end, int pcolor, float life, float vert);
+int PM_GetInfo(int ent);
 
 void V_DropPunchAngle ( float frametime, float *ev_punchangle );
 void VectorAngles( const float *forward, float *angles );
@@ -65,6 +56,9 @@ extern cvar_t	*cl_vsmoothing;
 vec3_t v_origin, v_angles;
 
 vec3_t ev_punchangle;
+
+float vJumpOrigin[3];
+float vJumpAngles[3];
 
 cvar_t	*scr_ofsx;
 cvar_t	*scr_ofsy;
