@@ -191,7 +191,7 @@ void CMultiSource::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	// if we didn't find it, report error and leave
 	if (i > m_iTotal)
 	{
-		ALERT(at_console, "MultiSrc:Used by non member %s.\n", STRING(pCaller->pev->classname));
+		ALERT(AlertType::Console, "MultiSrc:Used by non member %s.\n", STRING(pCaller->pev->classname));
 		return;	
 	}
 
@@ -202,7 +202,7 @@ void CMultiSource::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	// 
 	if ( IsTriggered( pActivator ) )
 	{
-		ALERT( at_aiconsole, "Multisource %s enabled (%d inputs)\n", STRING(pev->targetname), m_iTotal );
+		ALERT( AlertType::AiConsole, "Multisource %s enabled (%d inputs)\n", STRING(pev->targetname), m_iTotal );
 		USE_TYPE useType = USE_TOGGLE;
 		if ( m_globalstate )
 			useType = USE_ON;

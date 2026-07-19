@@ -120,7 +120,7 @@ void CSoundEnt :: Think ( void )
 
 	if ( m_fShowReport )
 	{
-		ALERT ( at_aiconsole, "Soundlist: %d / %d  (%d)\n", ISoundsInList( SOUNDLISTTYPE_ACTIVE ),ISoundsInList( SOUNDLISTTYPE_FREE ), ISoundsInList( SOUNDLISTTYPE_ACTIVE ) - m_cLastActiveSounds );
+		ALERT ( AlertType::AiConsole, "Soundlist: %d / %d  (%d)\n", ISoundsInList( SOUNDLISTTYPE_ACTIVE ),ISoundsInList( SOUNDLISTTYPE_FREE ), ISoundsInList( SOUNDLISTTYPE_ACTIVE ) - m_cLastActiveSounds );
 		m_cLastActiveSounds = ISoundsInList ( SOUNDLISTTYPE_ACTIVE );
 	}
 
@@ -175,7 +175,7 @@ int CSoundEnt :: IAllocSound( void )
 	if ( m_iFreeSound == SOUNDLIST_EMPTY )
 	{
 		// no free sound!
-		ALERT ( at_console, "Free Sound List is full!\n" );
+		ALERT ( AlertType::Console, "Free Sound List is full!\n" );
 		return SOUNDLIST_EMPTY;
 	}
 
@@ -211,7 +211,7 @@ void CSoundEnt :: InsertSound ( int iType, const Vector &vecOrigin, int iVolume,
 
 	if ( iThisSound == SOUNDLIST_EMPTY )
 	{
-		ALERT ( at_console, "Could not AllocSound() for InsertSound() (DLL)\n" );
+		ALERT ( AlertType::Console, "Could not AllocSound() for InsertSound() (DLL)\n" );
 		return;
 	}
 
@@ -250,7 +250,7 @@ void CSoundEnt :: Initialize ( void )
 
 		if ( iSound == SOUNDLIST_EMPTY )
 		{
-			ALERT ( at_console, "Could not AllocSound() for Client Reserve! (DLL)\n" );
+			ALERT ( AlertType::Console, "Could not AllocSound() for Client Reserve! (DLL)\n" );
 			return;
 		}
 
@@ -286,7 +286,7 @@ int CSoundEnt :: ISoundsInList ( int iListType )
 	}
 	else
 	{
-		ALERT ( at_console, "Unknown Sound List Type!\n" );
+		ALERT ( AlertType::Console, "Unknown Sound List Type!\n" );
 	}
 
 	if ( iThisSound == SOUNDLIST_EMPTY )
@@ -345,13 +345,13 @@ CSound*	CSoundEnt :: SoundPointerForIndex( int iIndex )
 
 	if ( iIndex > ( MAX_WORLD_SOUNDS - 1 ) )
 	{
-		ALERT ( at_console, "SoundPointerForIndex() - Index too large!\n" );
+		ALERT ( AlertType::Console, "SoundPointerForIndex() - Index too large!\n" );
 		return nullptr;
 	}
 
 	if ( iIndex < 0 )
 	{
-		ALERT ( at_console, "SoundPointerForIndex() - Index < 0!\n" );
+		ALERT ( AlertType::Console, "SoundPointerForIndex() - Index < 0!\n" );
 		return nullptr;
 	}
 
@@ -371,7 +371,7 @@ int CSoundEnt :: ClientSoundIndex ( edict_t *pClient )
 #ifdef _DEBUG
 	if ( iReturn < 0 || iReturn > gpGlobals->maxClients )
 	{
-		ALERT ( at_console, "** ClientSoundIndex returning a bogus value! **\n" );
+		ALERT ( AlertType::Console, "** ClientSoundIndex returning a bogus value! **\n" );
 	}
 #endif // _DEBUG
 

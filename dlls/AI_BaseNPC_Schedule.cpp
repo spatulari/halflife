@@ -86,11 +86,11 @@ void CBaseMonster :: ChangeSchedule ( Schedule_t *pNewSchedule )
 
 	if ( m_pSchedule->iInterruptMask & bits_COND_HEAR_SOUND && !(m_pSchedule->iSoundMask) )
 	{
-		ALERT ( at_aiconsole, "COND_HEAR_SOUND with no sound mask!\n" );
+		ALERT ( AlertType::AiConsole, "COND_HEAR_SOUND with no sound mask!\n" );
 	}
 	else if ( m_pSchedule->iSoundMask && !(m_pSchedule->iInterruptMask & bits_COND_HEAR_SOUND) )
 	{
-		ALERT ( at_aiconsole, "Sound mask without COND_HEAR_SOUND!\n" );
+		ALERT ( AlertType::AiConsole, "Sound mask without COND_HEAR_SOUND!\n" );
 	}
 
 #if _DEBUG
@@ -125,7 +125,7 @@ void CBaseMonster :: ChangeSchedule ( Schedule_t *pNewSchedule )
 				pName = "Unknown";
 			}
 
-			ALERT( at_aiconsole, "%s: picked schedule %s\n", STRING( pev->classname ), pName );
+			ALERT( AlertType::AiConsole, "%s: picked schedule %s\n", STRING( pev->classname ), pName );
 		}
 	}
 #endif// 0
@@ -185,7 +185,7 @@ BOOL CBaseMonster :: FScheduleValid ( void )
 		if ( HasConditions ( bits_COND_TASK_FAILED ) && m_failSchedule == SCHED_NONE )
 		{
 			// fail! Send a visual indicator.
-			ALERT ( at_aiconsole, "Schedule: %s Failed\n", m_pSchedule->pName );
+			ALERT ( AlertType::AiConsole, "Schedule: %s Failed\n", m_pSchedule->pName );
 
 			Vector tmp = pev->origin;
 			tmp.z = pev->absmax.z + 16;
@@ -251,7 +251,7 @@ void CBaseMonster :: MaintainSchedule ( void )
 				else
 					pNewSchedule = GetScheduleOfType( SCHED_FAIL );
 				// schedule was invalid because the current task failed to start or complete
-				ALERT ( at_aiconsole, "Schedule Failed at %d!\n", m_iScheduleIndex );
+				ALERT ( AlertType::AiConsole, "Schedule Failed at %d!\n", m_iScheduleIndex );
 				ChangeSchedule( pNewSchedule );
 			}
 			else
@@ -528,7 +528,7 @@ void CBaseMonster :: RunTask ( Task_t *pTask )
 				if ( m_fSequenceFinished )
 					ClearSchedule();
 				pev->framerate = 1.0;
-				//ALERT( at_aiconsole, "Script %s has begun for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
+				//ALERT( AlertType::AiConsole, "Script %s has begun for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
 			}
 			break;
 		}
@@ -849,7 +849,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 		{
 			if (FRouteClear())
 			{
-				ALERT(at_aiconsole, "No route to face!\n");
+				ALERT(AlertType::AiConsole, "No route to face!\n");
 				TaskFail();
 			}
 			else
@@ -909,7 +909,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 					if ( m_hTargetEnt == NULL || !MoveToTarget( newActivity, 2 ) )
 					{
 						TaskFail();
-						ALERT( at_aiconsole, "%s Failed to reach target!!!\n", STRING(pev->classname) );
+						ALERT( AlertType::AiConsole, "%s Failed to reach target!!!\n", STRING(pev->classname) );
 						RouteClear();
 					}
 				}
@@ -982,7 +982,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToEnemyLKP failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemyLKP failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1008,7 +1008,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToEnemy failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemy failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1022,7 +1022,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			}
 			else
 			{
-				ALERT ( at_aiconsole, "GetPathToEnemyCorpse failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemyCorpse failed!!\n" );
 				TaskFail();
 			}
 		}
@@ -1037,7 +1037,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToSpot failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToSpot failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1053,7 +1053,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToSpot failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToSpot failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1067,7 +1067,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToHintNode failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToHintNode failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1083,7 +1083,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToLastPosition failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToLastPosition failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1101,7 +1101,7 @@ void CBaseMonster :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToBestSound failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToBestSound failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -1119,7 +1119,7 @@ case TASK_GET_PATH_TO_BESTSCENT:
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToBestScent failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToBestScent failed!!\n" );
 				
 				TaskFail();
 			}
@@ -1244,7 +1244,7 @@ case TASK_GET_PATH_TO_BESTSCENT:
 	case TASK_SOUND_ANGRY:
 		{
 			// sounds are complete as soon as we get here, cause we've already played them.
-			ALERT ( at_aiconsole, "SOUND\n" );			
+			ALERT ( AlertType::AiConsole, "SOUND\n" );			
 			TaskComplete();
 			break;
 		}
@@ -1318,7 +1318,7 @@ case TASK_GET_PATH_TO_BESTSCENT:
 
 	default:
 		{
-			ALERT ( at_aiconsole, "No StartTask entry for %d\n", (SHARED_TASKS)pTask->iTask );
+			ALERT ( AlertType::AiConsole, "No StartTask entry for %d\n", (SHARED_TASKS)pTask->iTask );
 			break;
 		}
 	}
@@ -1358,7 +1358,7 @@ Schedule_t *CBaseMonster :: GetSchedule ( void )
 		}
 	case MONSTERSTATE_NONE:
 		{
-			ALERT ( at_aiconsole, "MONSTERSTATE IS NONE!\n" );
+			ALERT ( AlertType::AiConsole, "MONSTERSTATE IS NONE!\n" );
 			break;
 		}
 	case MONSTERSTATE_IDLE:
@@ -1481,7 +1481,7 @@ Schedule_t *CBaseMonster :: GetSchedule ( void )
 				}
 				else
 				{
-					ALERT ( at_aiconsole, "No suitable combat schedule!\n" );
+					ALERT ( AlertType::AiConsole, "No suitable combat schedule!\n" );
 				}
 			}
 			break;
@@ -1496,7 +1496,7 @@ Schedule_t *CBaseMonster :: GetSchedule ( void )
 			ASSERT( m_pCine != NULL );
 			if ( !m_pCine )
 			{
-				ALERT( at_aiconsole, "Script failed for %s\n", STRING(pev->classname) );
+				ALERT( AlertType::AiConsole, "Script failed for %s\n", STRING(pev->classname) );
 				CineCleanup();
 				return GetScheduleOfType( SCHED_IDLE_STAND );
 			}
@@ -1505,7 +1505,7 @@ Schedule_t *CBaseMonster :: GetSchedule ( void )
 		}
 	default:
 		{
-			ALERT ( at_aiconsole, "Invalid State for GetSchedule!\n" );
+			ALERT ( AlertType::AiConsole, "Invalid State for GetSchedule!\n" );
 			break;
 		}
 	}

@@ -296,7 +296,7 @@ public:
 	void FunctionCheck( void *pFunction, char *name ) 
 	{ 
 		if (pFunction && !NAME_FOR_FUNCTION((uint32)pFunction) )
-			ALERT( at_error, "No EXPORT: %s:%s (%08lx)\n", STRING(pev->classname), name, (uint32)pFunction );
+			ALERT( AlertType::Error, "No EXPORT: %s:%s (%08lx)\n", STRING(pev->classname), name, (uint32)pFunction );
 	}
 
 	BASEPTR	ThinkSet( BASEPTR func, char *name ) 

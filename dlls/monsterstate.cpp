@@ -34,7 +34,7 @@ void CBaseMonster :: SetState ( MONSTERSTATE State )
 /*
 	if ( State != m_MonsterState )
 	{
-		ALERT ( at_aiconsole, "State Changed to %d\n", State );
+		ALERT ( AlertType::AiConsole, "State Changed to %d\n", State );
 	}
 */
 	
@@ -47,7 +47,7 @@ void CBaseMonster :: SetState ( MONSTERSTATE State )
 		if ( m_hEnemy != nullptr )
 		{
 			m_hEnemy = nullptr;// not allowed to have an enemy anymore.
-			ALERT ( at_aiconsole, "Stripped\n" );
+			ALERT ( AlertType::AiConsole, "Stripped\n" );
 		}
 		break;
 	}
@@ -203,7 +203,7 @@ MONSTERSTATE CBaseMonster :: GetIdealState ( void )
 			{
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 				// pev->effects = EF_BRIGHTFIELD;
-				ALERT ( at_aiconsole, "***Combat state with no enemy!\n" );
+				ALERT ( AlertType::AiConsole, "***Combat state with no enemy!\n" );
 			}
 			break;
 		}

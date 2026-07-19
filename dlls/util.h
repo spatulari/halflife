@@ -115,7 +115,7 @@ inline EOFFSET OFFSET(const edict_t *pent)
 { 
 #if _DEBUG
 	if ( !pent )
-		ALERT( at_error, "Bad ent in OFFSET()\n" );
+		ALERT( AlertType::Error, "Bad ent in OFFSET()\n" );
 #endif
 	return (*g_engfuncs.pfnEntOffsetOfPEntity)(pent); 
 }
@@ -123,7 +123,7 @@ inline EOFFSET OFFSET(entvars_t *pev)
 { 
 #if _DEBUG
 	if ( !pev )
-		ALERT( at_error, "Bad pev in OFFSET()\n" );
+		ALERT( AlertType::Error, "Bad pev in OFFSET()\n" );
 #endif
 	return OFFSET(ENT(pev)); 
 }

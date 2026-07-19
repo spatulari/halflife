@@ -127,7 +127,7 @@ BOOL HLGetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon 
 			}
 			else if ( pCheck->iWeight() > iBestWeight && pCheck != pCurrentWeapon )// don't reselect the weapon we're trying to get rid of
 			{
-				//ALERT ( at_console, "Considering %s\n", STRING( pCheck->pev->classname ) );
+				//ALERT ( AlertType::Console, "Considering %s\n", STRING( pCheck->pev->classname ) );
 				// we keep updating the 'best' weapon just in case we can't find a weapon of the same weight
 				// that the player was using. This will end up leaving the player with his heaviest-weighted 
 				// weapon. 

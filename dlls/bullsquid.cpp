@@ -400,7 +400,7 @@ BOOL CBullsquid :: FValidateHintType ( short sHint )
 		}
 	}
 
-	ALERT ( at_aiconsole, "Couldn't validate hint type" );
+	ALERT ( AlertType::AiConsole, "Couldn't validate hint type" );
 	return FALSE;
 }
 
@@ -1199,7 +1199,7 @@ void CBullsquid :: StartTask ( Task_t *pTask )
 			}
 			else
 			{
-				ALERT ( at_aiconsole, "GetPathToEnemy failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemy failed!!\n" );
 				TaskFail();
 			}
 			break;

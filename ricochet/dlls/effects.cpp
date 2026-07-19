@@ -331,7 +331,7 @@ void CBeam::TriggerTouch( CBaseEntity *pOther )
 			CBaseEntity *pOwner = CBaseEntity::Instance(pev->owner);
 			pOwner->Use( pOther, this, USE_TOGGLE, 0 );
 		}
-		ALERT( at_console, "Firing targets!!!\n" );
+		ALERT( AlertType::Console, "Firing targets!!!\n" );
 	}
 }
 
@@ -659,7 +659,7 @@ void CLightning::StrikeThink( void )
 			if (pStart != nullptr)
 				RandomPoint( pStart->pev->origin );
 			else
-				ALERT( at_console, "env_beam: unknown entity \"%s\"\n", STRING(m_iszStartEntity) );
+				ALERT( AlertType::Console, "env_beam: unknown entity \"%s\"\n", STRING(m_iszStartEntity) );
 		}
 		return;
 	}
@@ -1463,7 +1463,7 @@ CGib *CGibShooter :: CreateGib ( void )
 
 	if ( pev->body <= 1 )
 	{
-		ALERT ( at_aiconsole, "GibShooter Body is <= 1!\n" );
+		ALERT ( AlertType::AiConsole, "GibShooter Body is <= 1!\n" );
 	}
 
 	pGib->pev->body = RANDOM_LONG ( 1, pev->body - 1 );// avoid throwing random amounts of the 0th gib. (skull).

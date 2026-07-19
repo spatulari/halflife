@@ -351,7 +351,7 @@ BOOL CFuncTank :: StartControl( CBasePlayer *pController )
 			return FALSE;
 	}
 
-	ALERT( at_console, "using TANK!\n");
+	ALERT( AlertType::Console, "using TANK!\n");
 
 	// Holster player's weapon
 	m_pController = pController;
@@ -379,7 +379,7 @@ void CFuncTank :: StopControl()
 	if ( m_pController->m_pActiveItem )
 		m_pController->m_pActiveItem->Deploy();
 
-	ALERT( at_console, "stopped using TANK\n");
+	ALERT( AlertType::Console, "stopped using TANK\n");
 
 	m_pController->m_iHideHUD &= ~HIDEHUD_WEAPONS;
 
@@ -790,7 +790,7 @@ void CFuncTankLaser::Activate( void )
 	if ( !GetLaser() )
 	{
 		UTIL_Remove(this);
-		ALERT( at_error, "Laser tank with no env_laser!\n" );
+		ALERT( AlertType::Error, "Laser tank with no env_laser!\n" );
 	}
 	else
 	{
@@ -1013,7 +1013,7 @@ void CFuncTankControls :: Think( void )
 
 	if ( FNullEnt( pTarget ) )
 	{
-		ALERT( at_console, "No tank %s\n", STRING(pev->target) );
+		ALERT( AlertType::Console, "No tank %s\n", STRING(pev->target) );
 		return;
 	}
 

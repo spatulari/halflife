@@ -592,7 +592,7 @@ void ServerActivate( edict_t *pEdictList, int edictCount, int clientMax )
 		}
 		else
 		{
-			ALERT( at_console, "Can't instance %s\n", STRING(pEdictList[i].v.classname) );
+			ALERT( AlertType::Console, "Can't instance %s\n", STRING(pEdictList[i].v.classname) );
 		}
 	}
 
@@ -910,13 +910,13 @@ void PlayerCustomization( edict_t *pEntity, customization_t *pCust )
 
 	if (!pPlayer)
 	{
-		ALERT(at_console, "PlayerCustomization:  Couldn't get player!\n");
+		ALERT(AlertType::Console, "PlayerCustomization:  Couldn't get player!\n");
 		return;
 	}
 
 	if (!pCust)
 	{
-		ALERT(at_console, "PlayerCustomization:  nullptr customization!\n");
+		ALERT(AlertType::Console, "PlayerCustomization:  nullptr customization!\n");
 		return;
 	}
 
@@ -931,7 +931,7 @@ void PlayerCustomization( edict_t *pEntity, customization_t *pCust )
 		// Ignore for now.
 		break;
 	default:
-		ALERT(at_console, "PlayerCustomization:  Unknown customization type!\n");
+		ALERT(AlertType::Console, "PlayerCustomization:  Unknown customization type!\n");
 		break;
 	}
 }

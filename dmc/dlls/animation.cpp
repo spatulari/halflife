@@ -145,7 +145,7 @@ void GetEyePosition ( void *pmodel, float *vecEyePosition )
 
 	if ( !pstudiohdr )
 	{
-		ALERT ( at_console, "GetEyePosition() Can't get pstudiohdr ptr!\n" );
+		ALERT ( AlertType::Console, "GetEyePosition() Can't get pstudiohdr ptr!\n" );
 		return;
 	}
 
@@ -211,7 +211,7 @@ void SequencePrecache( void *pmodel, const char *pSequenceName )
 			{
 				if ( !strlen(pevent[i].options) )
 				{
-					ALERT( at_error, "Bad sound event %d in sequence %s :: %s (sound is \"%s\")\n", pevent[i].event, pstudiohdr->name, pSequenceName, pevent[i].options );
+					ALERT( AlertType::Error, "Bad sound event %d in sequence %s :: %s (sound is \"%s\")\n", pevent[i].event, pstudiohdr->name, pSequenceName, pevent[i].options );
 				}
 
 				PRECACHE_SOUND( (char *)(gpGlobals->pStringBase + ALLOC_STRING(pevent[i].options) ) );
@@ -435,7 +435,7 @@ int FindTransition( void *pmodel, int iEndingAnim, int iGoalAnim, int *piDir )
 
 	int	iEndNode;
 
-	// ALERT( at_console, "from %d to %d: ", pEndNode->iEndNode, pGoalNode->iStartNode );
+	// ALERT( AlertType::Console, "from %d to %d: ", pEndNode->iEndNode, pGoalNode->iStartNode );
 
 	if (*piDir > 0)
 	{
@@ -479,7 +479,7 @@ int FindTransition( void *pmodel, int iEndingAnim, int iGoalAnim, int *piDir )
 		}
 	}
 
-	ALERT( at_console, "error in transition graph" );
+	ALERT( AlertType::Console, "error in transition graph" );
 	return iGoalAnim;
 }
 

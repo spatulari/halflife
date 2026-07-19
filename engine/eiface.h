@@ -44,15 +44,14 @@
 #endif
 */
 
-typedef enum
-	{
-	at_notice,
-	at_console,		// same as at_notice, but forces a ConPrintf, not a message box
-	at_aiconsole,	// same as at_console, but only shown if developer level is 2!
-	at_warning,
-	at_error,
-	at_logged		// Server print to console ( only in multiplayer games ).
-	} ALERT_TYPE;
+enum class AlertType {
+	Notice,
+	Console,		// same as AlertType::AtNotice, but forces a ConPrintf, not a message box
+	AiConsole,	// same as AlertType::Console, but only shown if developer level is 2!
+	Warning,
+	Error,
+	Logged		// Server print to console ( only in multiplayer games ).
+};
 
 // 4-22-98  JOHN: added for use in pfnClientPrintf
 typedef enum
@@ -167,7 +166,7 @@ typedef struct enginefuncs_s
 	const char*	(*pfnCVarGetString)			(const char *szVarName);
 	void		(*pfnCVarSetFloat)			(const char *szVarName, float flValue);
 	void		(*pfnCVarSetString)			(const char *szVarName, const char *szValue);
-	void		(*pfnAlertMessage)			(ALERT_TYPE atype, char *szFmt, ...);
+	void		(*pfnAlertMessage)			(AlertType atype, char *szFmt, ...);
 	void		(*pfnEngineFprintf)			(void *pfile, char *szFmt, ...);
 	void*		(*pfnPvAllocEntPrivateData)	(edict_t *pEdict, int32 cb);
 	void*		(*pfnPvEntPrivateData)		(edict_t *pEdict);

@@ -110,7 +110,7 @@ void CQuakeGun::UpdateEffect( void )
 	pentIgnore = m_pPlayer->edict();
 	Vector tmpSrc = vecSrc + gpGlobals->v_up * -8 + gpGlobals->v_right * 3;
 
-	// ALERT( at_console, "." );
+	// ALERT( AlertType::Console, "." );
 	
 	UTIL_TraceLine( vecSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr );
 

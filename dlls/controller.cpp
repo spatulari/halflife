@@ -514,7 +514,7 @@ void CController :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToEnemyLKP failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemyLKP failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -536,7 +536,7 @@ void CController :: StartTask ( Task_t *pTask )
 			else
 			{
 				// no way to get there =(
-				ALERT ( at_aiconsole, "GetPathToEnemy failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemy failed!!\n" );
 				TaskFail();
 			}
 			break;
@@ -574,7 +574,7 @@ Vector Intersect( Vector vecSrc, Vector vecDst, Vector vecMove, float flSpeed )
 			t = t1;
 	}
 
-	// ALERT( at_console, "Intersect %f\n", t );
+	// ALERT( AlertType::Console, "Intersect %f\n", t );
 
 	if (t < 0.1)
 		t = 0.1;
@@ -763,7 +763,7 @@ Schedule_t *CController :: GetSchedule ( void )
 //=========================================================
 Schedule_t* CController :: GetScheduleOfType ( int Type ) 
 {
-	// ALERT( at_console, "%d\n", m_iFrustration );
+	// ALERT( AlertType::Console, "%d\n", m_iFrustration );
 	switch	( Type )
 	{
 	case SCHED_CHASE_ENEMY:
@@ -906,7 +906,7 @@ void CController :: Move ( float flInterval )
 	// Don't move if no valid route
 	if ( FRouteClear() )
 	{
-		ALERT( at_aiconsole, "Tried to move with no route!\n" );
+		ALERT( AlertType::AiConsole, "Tried to move with no route!\n" );
 		TaskFail();
 		return;
 	}
@@ -995,7 +995,7 @@ void CController :: Move ( float flInterval )
 				{
 					// Wait for a second
 					m_flMoveWaitFinished = gpGlobals->time + m_moveWaitTime;
-	//				ALERT( at_aiconsole, "Move %s!!!\n", STRING( pBlocker->pev->classname ) );
+	//				ALERT( AlertType::AiConsole, "Move %s!!!\n", STRING( pBlocker->pev->classname ) );
 					return;
 				}
 			}
@@ -1009,7 +1009,7 @@ void CController :: Move ( float flInterval )
 				}
 				else
 				{
-	 			    ALERT ( at_aiconsole, "Couldn't Triangulate\n" );
+	 			    ALERT ( AlertType::AiConsole, "Couldn't Triangulate\n" );
 					Stop();
 					if ( m_moveWaitTime > 0 )
 					{
@@ -1019,8 +1019,8 @@ void CController :: Move ( float flInterval )
 					else
 					{
 						TaskFail();
-						ALERT( at_aiconsole, "Failed to move!\n" );
-						//ALERT( at_aiconsole, "%f, %f, %f\n", pev->origin.z, (pev->origin + (vecDir * flCheckDist)).z, m_Route[m_iRouteIndex].vecLocation.z );
+						ALERT( AlertType::AiConsole, "Failed to move!\n" );
+						//ALERT( AlertType::AiConsole, "%f, %f, %f\n", pev->origin.z, (pev->origin + (vecDir * flCheckDist)).z, m_Route[m_iRouteIndex].vecLocation.z );
 					}
 					return;
 				}
@@ -1032,7 +1032,7 @@ void CController :: Move ( float flInterval )
 		{
 			MoveExecute( pTargetEnt, vecDir, flCheckDist / m_flGroundSpeed );
 
-			// ALERT( at_console, "%.02f\n", flInterval );
+			// ALERT( AlertType::Console, "%.02f\n", flInterval );
 			AdvanceRoute( flWaypointDist );
 			flMoveDist -= flCheckDist;
 		}
@@ -1092,15 +1092,15 @@ int CController :: CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd
 
 	UTIL_TraceHull( vecStart + Vector( 0, 0, 32), vecEnd + Vector( 0, 0, 32), dont_ignore_monsters, large_hull, edict(), &tr );
 
-	// ALERT( at_console, "%.0f %.0f %.0f : ", vecStart.x, vecStart.y, vecStart.z );
-	// ALERT( at_console, "%.0f %.0f %.0f\n", vecEnd.x, vecEnd.y, vecEnd.z );
+	// ALERT( AlertType::Console, "%.0f %.0f %.0f : ", vecStart.x, vecStart.y, vecStart.z );
+	// ALERT( AlertType::Console, "%.0f %.0f %.0f\n", vecEnd.x, vecEnd.y, vecEnd.z );
 
 	if (pflDist)
 	{
 		*pflDist = ( (tr.vecEndPos - Vector( 0, 0, 32 )) - vecStart ).Length();// get the distance.
 	}
 
-	// ALERT( at_console, "check %d %d %f\n", tr.fStartSolid, tr.fAllSolid, tr.flFraction );
+	// ALERT( AlertType::Console, "check %d %d %f\n", tr.fStartSolid, tr.fAllSolid, tr.flFraction );
 	if (tr.fStartSolid || tr.flFraction < 1.0)
 	{
 		if ( pTarget && pTarget->edict() == gpGlobals->trace_ent )
@@ -1117,7 +1117,7 @@ void CController::MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, fl
 	if ( m_IdealActivity != m_movementActivity )
 		m_IdealActivity = m_movementActivity;
 
-	// ALERT( at_console, "move %.4f %.4f %.4f : %f\n", vecDir.x, vecDir.y, vecDir.z, flInterval );
+	// ALERT( AlertType::Console, "move %.4f %.4f %.4f : %f\n", vecDir.x, vecDir.y, vecDir.z, flInterval );
 
 	// float flTotal = m_flGroundSpeed * pev->framerate * flInterval;
 	// UTIL_MoveToOrigin ( ENT(pev), m_Route[ m_iRouteIndex ].vecLocation, flTotal, MOVE_STRAFE );

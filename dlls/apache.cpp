@@ -470,7 +470,7 @@ void CApache :: HuntThink( void )
 
 	if (m_hEnemy != nullptr)
 	{
-		// ALERT( at_console, "%s\n", STRING( m_hEnemy->pev->classname ) );
+		// ALERT( AlertType::Console, "%s\n", STRING( m_hEnemy->pev->classname ) );
 		if (FVisible( m_hEnemy ))
 		{
 			if (m_flLastSeen < gpGlobals->time - 5)
@@ -490,7 +490,7 @@ void CApache :: HuntThink( void )
 
 	if (m_pGoalEnt)
 	{
-		// ALERT( at_console, "%.0f\n", flLength );
+		// ALERT( AlertType::Console, "%.0f\n", flLength );
 
 		if (flLength < 128)
 		{
@@ -529,7 +529,7 @@ void CApache :: HuntThink( void )
 
 	Flight( );
 
-	// ALERT( at_console, "%.0f %.0f %.0f\n", gpGlobals->time, m_flLastSeen, m_flPrevSeen );
+	// ALERT( AlertType::Console, "%.0f %.0f %.0f\n", gpGlobals->time, m_flLastSeen, m_flPrevSeen );
 	if ((m_flLastSeen + 1 > gpGlobals->time) && (m_flPrevSeen + 2 < gpGlobals->time))
 	{
 		if (FireGun( ))
@@ -546,7 +546,7 @@ void CApache :: HuntThink( void )
 
 	UTIL_MakeAimVectors( pev->angles );
 	Vector vecEst = (gpGlobals->v_forward * 800 + pev->velocity).Normalize( );
-	// ALERT( at_console, "%d %d %d %4.2f\n", pev->angles.x < 0, DotProduct( pev->velocity, gpGlobals->v_forward ) > -100, m_flNextRocket < gpGlobals->time, DotProduct( m_vecTarget, vecEst ) );
+	// ALERT( AlertType::Console, "%d %d %d %4.2f\n", pev->angles.x < 0, DotProduct( pev->velocity, gpGlobals->v_forward ) > -100, m_flNextRocket < gpGlobals->time, DotProduct( m_vecTarget, vecEst ) );
 
 	if ((m_iRockets % 2) == 1)
 	{
@@ -678,29 +678,29 @@ void CApache :: Flight( void )
 	// pitch forward or back to get to target
 	if (flDist > 0 && flSpeed < m_flGoalSpeed /* && flSpeed < flDist */ && pev->angles.x + pev->avelocity.x > -40)
 	{
-		// ALERT( at_console, "F " );
+		// ALERT( AlertType::Console, "F " );
 		// lean forward
 		pev->avelocity.x -= 12.0;
 	}
 	else if (flDist < 0 && flSpeed > -50 && pev->angles.x + pev->avelocity.x  < 20)
 	{
-		// ALERT( at_console, "B " );
+		// ALERT( AlertType::Console, "B " );
 		// lean backward
 		pev->avelocity.x += 12.0;
 	}
 	else if (pev->angles.x + pev->avelocity.x > 0)
 	{
-		// ALERT( at_console, "f " );
+		// ALERT( AlertType::Console, "f " );
 		pev->avelocity.x -= 4.0;
 	}
 	else if (pev->angles.x + pev->avelocity.x < 0)
 	{
-		// ALERT( at_console, "b " );
+		// ALERT( AlertType::Console, "b " );
 		pev->avelocity.x += 4.0;
 	}
 
-	// ALERT( at_console, "%.0f %.0f : %.0f %.0f : %.0f %.0f : %.0f\n", pev->origin.x, pev->velocity.x, flDist, flSpeed, pev->angles.x, pev->avelocity.x, m_flForce ); 
-	// ALERT( at_console, "%.0f %.0f : %.0f %0.f : %.0f\n", pev->origin.z, pev->velocity.z, vecEst.z, m_posDesired.z, m_flForce ); 
+	// ALERT( AlertType::Console, "%.0f %.0f : %.0f %.0f : %.0f %.0f : %.0f\n", pev->origin.x, pev->velocity.x, flDist, flSpeed, pev->angles.x, pev->avelocity.x, m_flForce ); 
+	// ALERT( AlertType::Console, "%.0f %.0f : %.0f %0.f : %.0f\n", pev->origin.z, pev->velocity.z, vecEst.z, m_posDesired.z, m_flForce ); 
 
 	// make rotor, engine sounds
 	if (m_iSoundState == 0)
@@ -738,7 +738,7 @@ void CApache :: Flight( void )
 		}
 		// EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, "apache/ap_whine1.wav", flVol, 0.2, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch);
 	
-		// ALERT( at_console, "%.0f %.2f\n", pitch, flVol );
+		// ALERT( AlertType::Console, "%.0f %.2f\n", pitch, flVol );
 	}
 }
 
@@ -904,7 +904,7 @@ int CApache :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 	}
 	*/
 
-	// ALERT( at_console, "%.0f\n", flDamage );
+	// ALERT( AlertType::Console, "%.0f\n", flDamage );
 	return CBaseEntity::TakeDamage(  pevInflictor, pevAttacker, flDamage, bitsDamageType );
 }
 
@@ -912,7 +912,7 @@ int CApache :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 
 void CApache::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType)
 {
-	// ALERT( at_console, "%d %.0f\n", ptr->iHitgroup, flDamage );
+	// ALERT( AlertType::Console, "%d %.0f\n", ptr->iHitgroup, flDamage );
 
 	// ignore blades
 	if (ptr->iHitgroup == 6 && (bitsDamageType & (DMG_ENERGYBEAM|DMG_BULLET|DMG_CLUB)))
@@ -921,7 +921,7 @@ void CApache::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir
 	// hit hard, hits cockpit, hits engines
 	if (flDamage > 50 || ptr->iHitgroup == 1 || ptr->iHitgroup == 2)
 	{
-		// ALERT( at_console, "%.0f\n", flDamage );
+		// ALERT( AlertType::Console, "%.0f\n", flDamage );
 		AddMultiDamage( pevAttacker, this, flDamage, bitsDamageType );
 		m_iDoSmokePuff = 3 + (flDamage / 5.0);
 	}

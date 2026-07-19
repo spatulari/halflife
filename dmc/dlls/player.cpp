@@ -775,7 +775,7 @@ void CBasePlayer::SetAnimation( PLAYER_ANIM playerAnim )
 	if (pev->sequence == animDesired)
 		return;
 
-	//ALERT( at_console, "Set animation to %d\n", animDesired );
+	//ALERT( AlertType::Console, "Set animation to %d\n", animDesired );
 	// Reset to first frame of desired animation
 	pev->sequence		= animDesired;
 	pev->frame			= 0;
@@ -1029,7 +1029,7 @@ void CBasePlayer::PlayerDeathThink(void)
 
 	
 
-	//ALERT(at_console, "Respawn\n");
+	//ALERT(AlertType::Console, "Respawn\n");
 
 	respawn(pev, !(m_afPhysicsFlags & PFLAG_OBSERVER) );// don't copy a corpse if we're in deathcam.
 	pev->nextthink = -1;
@@ -1180,9 +1180,9 @@ void CBasePlayer::PlayerUse ( void )
 			{// only if the item is in front of the user
 				pClosest = pObject;
 				flMaxDot = flDot;
-//				ALERT( at_console, "%s : %f\n", STRING( pObject->pev->classname ), flDot );
+//				ALERT( AlertType::Console, "%s : %f\n", STRING( pObject->pev->classname ), flDot );
 			}
-//			ALERT( at_console, "%s : %f\n", STRING( pObject->pev->classname ), flDot );
+//			ALERT( AlertType::Console, "%s : %f\n", STRING( pObject->pev->classname ), flDot );
 		}
 	}
 	pObject = pClosest;
@@ -1573,7 +1573,7 @@ void CBasePlayer :: UpdateStepSound( void )
 		flduck = 0.0;
 	}
 
-	// ALERT (at_console, "vel: %f\n", vecVel.Length());
+	// ALERT (AlertType::Console, "vel: %f\n", vecVel.Length());
 	
 	// if we're on a ladder or on the ground, and we're moving fast enough,
 	// play step sound.  Also, if m_flTimeStepSound is zero, get the new
@@ -1641,7 +1641,7 @@ void CBasePlayer :: UpdateStepSound( void )
 					szbuffer[CBTEXTURENAMEMAX - 1] = 0;
 					strcpy(m_szTextureName, szbuffer);
 					
-					// ALERT ( at_aiconsole, "texture: %s\n", m_szTextureName );
+					// ALERT ( AlertType::AiConsole, "texture: %s\n", m_szTextureName );
 
 					// get texture type
 					m_chTextureType = TEXTURETYPE_Find(m_szTextureName);	
@@ -2000,7 +2000,7 @@ void CBasePlayer::PreThink(void)
 
 			if ( !pTrain || !(pTrain->ObjectCaps() & FCAP_DIRECTIONAL_USE) || !pTrain->OnControls(pev) )
 			{
-				//ALERT( at_error, "In train mode with no train!\n" );
+				//ALERT( AlertType::Error, "In train mode with no train!\n" );
 				m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
 				m_iTrain = TRAIN_NEW|TRAIN_OFF;
 				return;
@@ -2558,7 +2558,7 @@ void CBasePlayer::PostThink()
 	{
 		float fvol = 0.5;
 
-		// ALERT ( at_console, "%f\n", m_flFallVelocity );
+		// ALERT ( AlertType::Console, "%f\n", m_flFallVelocity );
 
 		if (pev->watertype == CONTENT_WATER)
 		{
@@ -2780,7 +2780,7 @@ edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer )
 ReturnSpot:
 	if ( FNullEnt( pSpot ) )
 	{
-		ALERT(at_error, "PutClientInServer: no info_player_start on level");
+		ALERT(AlertType::Error, "PutClientInServer: no info_player_start on level");
 		return INDEXENT(0);
 	}
 
@@ -2909,11 +2909,11 @@ void CBasePlayer :: Precache( void )
 	{
 		if ( !WorldGraph.FSetGraphPointers() )
 		{
-			ALERT ( at_console, "**Graph pointers were not set!\n");
+			ALERT ( AlertType::Console, "**Graph pointers were not set!\n");
 		}
 		else
 		{
-			ALERT ( at_console, "**Graph Pointers Set!\n" );
+			ALERT ( AlertType::Console, "**Graph Pointers Set!\n" );
 		} 
 	}
 
@@ -2982,7 +2982,7 @@ int CBasePlayer::Restore( CRestore &restore )
 	// landmark isn't present.
 	if ( !pSaveData->fUseLandmark )
 	{
-		ALERT( at_console, "No Landmark:%s\n", pSaveData->szLandmarkName );
+		ALERT( AlertType::Console, "No Landmark:%s\n", pSaveData->szLandmarkName );
 
 		// default to normal spawn
 		edict_t* pentSpawnSpot = EntSelectSpawnPoint( this );
@@ -3210,7 +3210,7 @@ void CSprayCan::Think( void )
 
 	playernum = ENTINDEX(pev->owner);
 	
-	// ALERT(at_console, "Spray by player %i, %i of %i\n", playernum, (int)(pev->frame + 1), nFrames);
+	// ALERT(AlertType::Console, "Spray by player %i, %i of %i\n", playernum, (int)(pev->frame + 1), nFrames);
 
 	UTIL_MakeVectors(pev->angles);
 	UTIL_TraceLine ( pev->origin, pev->origin + gpGlobals->v_forward * 128, ignore_monsters, pev->owner, & tr);
@@ -3277,7 +3277,7 @@ void CBasePlayer::GiveNamedItem( const char *pszName )
 	pent = CREATE_NAMED_ENTITY(istr);
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in GiveNamedItem!\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in GiveNamedItem!\n" );
 		return;
 	}
 	VARS( pent )->origin = pev->origin;
@@ -3490,7 +3490,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 			if (!giPrecacheGrunt)
 			{
 				giPrecacheGrunt = 1;
-				ALERT(at_console, "You must now restart to use Grunt-o-matic.\n");
+				ALERT(AlertType::Console, "You must now restart to use Grunt-o-matic.\n");
 			}
 			else
 			{
@@ -3538,12 +3538,12 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		{
 			if ( m_fNoPlayerSound )
 			{
-				ALERT ( at_console, "Player is audible\n" );
+				ALERT ( AlertType::Console, "Player is audible\n" );
 				m_fNoPlayerSound = FALSE;
 			}
 			else
 			{
-				ALERT ( at_console, "Player is silent\n" );
+				ALERT ( AlertType::Console, "Player is silent\n" );
 				m_fNoPlayerSound = TRUE;
 			}
 			break;
@@ -3554,20 +3554,20 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		pEntity = FindEntityForward( this );
 		if ( pEntity )
 		{
-			ALERT ( at_console, "Classname: %s", STRING( pEntity->pev->classname ) );
+			ALERT ( AlertType::Console, "Classname: %s", STRING( pEntity->pev->classname ) );
 			
 			if ( !FStringNull ( pEntity->pev->targetname ) )
 			{
-				ALERT ( at_console, " - Targetname: %s\n", STRING( pEntity->pev->targetname ) );
+				ALERT ( AlertType::Console, " - Targetname: %s\n", STRING( pEntity->pev->targetname ) );
 			}
 			else
 			{
-				ALERT ( at_console, " - TargetName: No Targetname\n" );
+				ALERT ( AlertType::Console, " - TargetName: No Targetname\n" );
 			}
 
-			ALERT ( at_console, "Model: %s\n", STRING( pEntity->pev->model ) );
+			ALERT ( AlertType::Console, "Model: %s\n", STRING( pEntity->pev->model ) );
 			if ( pEntity->pev->globalname )
-				ALERT ( at_console, "Globalname: %s\n", STRING( pEntity->pev->globalname ) );
+				ALERT ( AlertType::Console, "Globalname: %s\n", STRING( pEntity->pev->globalname ) );
 		}
 		break;
 
@@ -3584,7 +3584,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 				pWorld = tr.pHit;
 			const char *pTextureName = TRACE_TEXTURE( pWorld, start, end );
 			if ( pTextureName )
-				ALERT( at_console, "Texture: %s\n", pTextureName );
+				ALERT( AlertType::Console, "Texture: %s\n", pTextureName );
 		}
 		break;
 	case	195:// show shortest paths for entire level to nearest node
@@ -3604,7 +3604,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		break;
 	case	199:// show nearest node and all connections
 		{
-			ALERT ( at_console, "%d\n", WorldGraph.FindNearestNode ( pev->origin, bits_NODE_GROUP_REALM ) );
+			ALERT ( AlertType::Console, "%d\n", WorldGraph.FindNearestNode ( pev->origin, bits_NODE_GROUP_REALM ) );
 			WorldGraph.ShowNodeConnections ( WorldGraph.FindNearestNode ( pev->origin, bits_NODE_GROUP_REALM ) );
 		}
 		break;
@@ -3924,7 +3924,7 @@ void CBasePlayer :: UpdateClientData( void )
 			
 			if ( pEntity )
 			{
-				ALERT( at_console, "Map has fog!\n" );
+				ALERT( AlertType::Console, "Map has fog!\n" );
 				CClientFog *pFog = (CClientFog *)pEntity;
 
 				//Send as bytes?.
@@ -3935,7 +3935,7 @@ void CBasePlayer :: UpdateClientData( void )
 				WRITE_SHORT ( pFog->m_iEndDist );
 			}
 			else
-				ALERT( at_console, "Map doesn't have any fog!\n" );
+				ALERT( AlertType::Console, "Map doesn't have any fog!\n" );
 
 
 			MESSAGE_END();
@@ -4330,7 +4330,7 @@ Vector CBasePlayer :: GetAutoaimVector( float flDelta )
 		}
 	}
 
-	// ALERT( at_console, "%f %f\n", angles.x, angles.y );
+	// ALERT( AlertType::Console, "%f %f\n", angles.x, angles.y );
 
 	UTIL_MakeVectors( pev->v_angle + pev->punchangle + m_vecAutoAim );
 	return gpGlobals->v_forward;
@@ -4427,7 +4427,7 @@ Vector CBasePlayer :: AutoaimDeflection( Vector &vecSrc, float flDist, float flD
 		UTIL_TraceLine( vecSrc, center, dont_ignore_monsters, edict(), &tr );
 		if (tr.flFraction != 1.0 && tr.pHit != pEdict)
 		{
-			// ALERT( at_console, "hit %s, can't see %s\n", STRING( tr.pHit->v.classname ), STRING( pEdict->v.classname ) );
+			// ALERT( AlertType::Console, "hit %s, can't see %s\n", STRING( tr.pHit->v.classname ), STRING( pEdict->v.classname ) );
 			continue;
 		}
 
@@ -4435,7 +4435,7 @@ Vector CBasePlayer :: AutoaimDeflection( Vector &vecSrc, float flDist, float flD
 		if (IRelationship( pEntity ) < 0)
 		{
 			if ( !pEntity->IsPlayer() && !g_pGameRules->IsDeathmatch())
-				// ALERT( at_console, "friend\n");
+				// ALERT( AlertType::Console, "friend\n");
 				continue;
 		}
 
@@ -4713,7 +4713,7 @@ void CDeadHEV :: Spawn( void )
 
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead hevsuit with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead hevsuit with bad pose\n" );
 		pev->sequence = 0;
 		pev->effects = EF_BRIGHTFIELD;
 	}

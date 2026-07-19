@@ -531,7 +531,7 @@ void CIchthyosaur :: Precache()
 //=========================================================
 Schedule_t* CIchthyosaur::GetSchedule()
 {
-	// ALERT( at_console, "GetSchedule( )\n" );
+	// ALERT( AlertType::Console, "GetSchedule( )\n" );
 	switch(m_MonsterState)
 	{
 	case MONSTERSTATE_IDLE:
@@ -574,7 +574,7 @@ Schedule_t* CIchthyosaur::GetSchedule()
 //=========================================================
 Schedule_t* CIchthyosaur :: GetScheduleOfType ( int Type ) 
 {
-	// ALERT( at_console, "GetScheduleOfType( %d ) %d\n", Type, m_bOnAttack );
+	// ALERT( AlertType::Console, "GetScheduleOfType( %d ) %d\n", Type, m_bOnAttack );
 	switch	( Type )
 	{
 	case SCHED_IDLE_WALK:
@@ -652,7 +652,7 @@ void CIchthyosaur :: RunTask ( Task_t *pTask )
 
 			Vector vecPos = vecFrom + vecDelta * m_idealDist + vecSwim * 32;
 
-			// ALERT( at_console, "vecPos %.0f %.0f %.0f\n", vecPos.x, vecPos.y, vecPos.z );
+			// ALERT( AlertType::Console, "vecPos %.0f %.0f %.0f\n", vecPos.x, vecPos.y, vecPos.z );
 
 			TraceResult tr;
 		
@@ -663,7 +663,7 @@ void CIchthyosaur :: RunTask ( Task_t *pTask )
 
 			m_SaveVelocity = m_SaveVelocity * 0.8 + 0.2 * (vecPos - pev->origin).Normalize() * m_flightSpeed;
 
-			// ALERT( at_console, "m_SaveVelocity %.2f %.2f %.2f\n", m_SaveVelocity.x, m_SaveVelocity.y, m_SaveVelocity.z );
+			// ALERT( AlertType::Console, "m_SaveVelocity %.2f %.2f %.2f\n", m_SaveVelocity.x, m_SaveVelocity.y, m_SaveVelocity.z );
 
 			if (HasConditions( bits_COND_ENEMY_FACING_ME ) && m_hEnemy->FVisible( this ))
 			{
@@ -699,7 +699,7 @@ void CIchthyosaur :: RunTask ( Task_t *pTask )
 					m_flightSpeed += 4;
 				}
 			}
-			// ALERT( at_console, "%.0f\n", m_idealDist );
+			// ALERT( AlertType::Console, "%.0f\n", m_idealDist );
 		}
 		else
 		{
@@ -708,7 +708,7 @@ void CIchthyosaur :: RunTask ( Task_t *pTask )
 
 		if (m_flNextAlert < gpGlobals->time)
 		{
-			// ALERT( at_console, "AlertSound()\n");
+			// ALERT( AlertType::Console, "AlertSound()\n");
 			AlertSound( );
 			m_flNextAlert = gpGlobals->time + RANDOM_FLOAT( 3, 5 );
 		}
@@ -740,7 +740,7 @@ void CIchthyosaur :: RunTask ( Task_t *pTask )
 		{
 			pev->velocity.z -= 8;
 		}
-		// ALERT( at_console, "%f\n", pev->velocity.z );
+		// ALERT( AlertType::Console, "%f\n", pev->velocity.z );
 		break;
 
 	default: 
@@ -944,7 +944,7 @@ void CIchthyosaur::Swim( )
 			SetActivity( ACT_WALK );
 		if (m_IdealActivity == ACT_WALK)
 			pev->framerate = m_flightSpeed / 150.0;
-		// ALERT( at_console, "walk %.2f\n", pev->framerate );
+		// ALERT( AlertType::Console, "walk %.2f\n", pev->framerate );
 	}
 	else
 	{
@@ -952,7 +952,7 @@ void CIchthyosaur::Swim( )
 			SetActivity( ACT_RUN );
 		if (m_IdealActivity == ACT_RUN)
 			pev->framerate = m_flightSpeed / 150.0;
-		// ALERT( at_console, "run  %.2f\n", pev->framerate );
+		// ALERT( AlertType::Console, "run  %.2f\n", pev->framerate );
 	}
 
 /*
@@ -982,7 +982,7 @@ void CIchthyosaur::Swim( )
 
 	Angles = Vector( -pev->angles.x, pev->angles.y, pev->angles.z );
 	UTIL_MakeVectorsPrivate(Angles, Forward, Right, Up);
-	// ALERT( at_console, "%f : %f\n", Angles.x, Forward.z );
+	// ALERT( AlertType::Console, "%f : %f\n", Angles.x, Forward.z );
 
 	float flDot = DotProduct( Forward, m_SaveVelocity );
 	if (flDot > 0.5)
@@ -992,17 +992,17 @@ void CIchthyosaur::Swim( )
 	else
 		pev->velocity = m_SaveVelocity = m_SaveVelocity * 80;
 
-	// ALERT( at_console, "%.0f %.0f\n", m_flightSpeed, pev->velocity.Length() );
+	// ALERT( AlertType::Console, "%.0f %.0f\n", m_flightSpeed, pev->velocity.Length() );
 
 
-	// ALERT( at_console, "Steer %f %f %f\n", SteeringVector.x, SteeringVector.y, SteeringVector.z );
+	// ALERT( AlertType::Console, "Steer %f %f %f\n", SteeringVector.x, SteeringVector.y, SteeringVector.z );
 
 /*
 	m_pBeam->SetStartPos( pev->origin + pev->velocity );
 	m_pBeam->RelinkBeam( );
 */
 
-	// ALERT( at_console, "speed %f\n", m_flightSpeed );
+	// ALERT( AlertType::Console, "speed %f\n", m_flightSpeed );
 	
 	Angles = UTIL_VecToAngles( m_SaveVelocity );
 
@@ -1017,7 +1017,7 @@ void CIchthyosaur::Swim( )
 	// Smooth Yaw and generate Roll
 	//
 	float turn = 360;
-	// ALERT( at_console, "Y %.0f %.0f\n", Angles.y, pev->angles.y );
+	// ALERT( AlertType::Console, "Y %.0f %.0f\n", Angles.y, pev->angles.y );
 
 	if (fabs(Angles.y - pev->angles.y) < fabs(turn))
 	{
@@ -1034,7 +1034,7 @@ void CIchthyosaur::Swim( )
 
 	float speed = m_flightSpeed * 0.1;
 
-	// ALERT( at_console, "speed %.0f %f\n", turn, speed );
+	// ALERT( AlertType::Console, "speed %.0f %f\n", turn, speed );
 	if (fabs(turn) > speed)
 	{
 		if (turn < 0.0)
@@ -1054,7 +1054,7 @@ void CIchthyosaur::Swim( )
 
 	yaw_adj = yaw_adj * 0.8 + turn;
 
-	// ALERT( at_console, "yaw %f : %f\n", turn, yaw_adj );
+	// ALERT( AlertType::Console, "yaw %f : %f\n", turn, yaw_adj );
 
 	SetBoneController( 0, -yaw_adj / 4.0 );
 

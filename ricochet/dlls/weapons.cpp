@@ -72,7 +72,7 @@ int MaxAmmoCarry( int iszName )
 			return CBasePlayerItem::ItemInfoArray[i].iMaxAmmo2;
 	}
 
-	ALERT( at_console, "MaxAmmoCarry() doesn't recognize '%s'!\n", STRING( iszName ) );
+	ALERT( AlertType::Console, "MaxAmmoCarry() doesn't recognize '%s'!\n", STRING( iszName ) );
 	return -1;
 }
 
@@ -270,7 +270,7 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 	pent = CREATE_NAMED_ENTITY( MAKE_STRING( szClassname ) );
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in UTIL_PrecacheOtherWeapon\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in UTIL_PrecacheOtherWeapon\n" );
 		return;
 	}
 	
@@ -477,7 +477,7 @@ CBaseEntity* CBasePlayerItem::Respawn( void )
 	}
 	else
 	{
-		ALERT ( at_console, "Respawn failed to create %s!\n", STRING( pev->classname ) );
+		ALERT ( AlertType::Console, "Respawn failed to create %s!\n", STRING( pev->classname ) );
 	}
 
 	return pNewWeapon;

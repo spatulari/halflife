@@ -194,7 +194,7 @@ void CMonsterMaker::MakeMonster( void )
 
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in MonsterMaker!\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in MonsterMaker!\n" );
 		return;
 	}
 	

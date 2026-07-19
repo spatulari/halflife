@@ -154,7 +154,7 @@ BOOL CHoundeye :: FValidateHintType ( short sHint )
 		}
 	}
 
-	ALERT ( at_aiconsole, "Couldn't validate hint type" );
+	ALERT ( AlertType::AiConsole, "Couldn't validate hint type" );
 	return FALSE;
 }
 
@@ -532,7 +532,7 @@ void CHoundeye :: WriteBeamColor ( void )
 			bBlue	= 211;
 			break;
 		default:
-			ALERT ( at_aiconsole, "Unsupported Houndeye SquadSize!\n" );
+			ALERT ( AlertType::AiConsole, "Unsupported Houndeye SquadSize!\n" );
 			bRed	= 188;
 			bGreen	= 220;
 			bBlue	= 255;
@@ -656,7 +656,7 @@ void CHoundeye :: SonicAttack ( void )
 					}
 				}
 
-				//ALERT ( at_aiconsole, "Damage: %f\n", flAdjustedDamage );
+				//ALERT ( AlertType::AiConsole, "Damage: %f\n", flAdjustedDamage );
 
 				if (flAdjustedDamage > 0 )
 				{

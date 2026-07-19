@@ -118,7 +118,7 @@ void CBaseEntity :: SUB_Remove( void )
 	{
 		// this situation can screw up monsters who can't tell their entity pointers are invalid.
 		pev->health = 0;
-		ALERT( at_aiconsole, "SUB_Remove called on entity with health > 0\n");
+		ALERT( AlertType::AiConsole, "SUB_Remove called on entity with health > 0\n");
 	}
 
 	REMOVE_ENTITY(ENT(pev));
@@ -192,7 +192,7 @@ void FireTargets( const char *targetName, CBaseEntity *pActivator, CBaseEntity *
 	if ( !targetName )
 		return;
 
-	ALERT( at_aiconsole, "Firing: (%s)\n", targetName );
+	ALERT( AlertType::AiConsole, "Firing: (%s)\n", targetName );
 
 	for (;;)
 	{
@@ -203,7 +203,7 @@ void FireTargets( const char *targetName, CBaseEntity *pActivator, CBaseEntity *
 		CBaseEntity *pTarget = CBaseEntity::Instance( pentTarget );
 		if ( pTarget && !(pTarget->pev->flags & FL_KILLME) )	// Don't use dying ents
 		{
-			ALERT( at_aiconsole, "Found: %s, firing (%s)\n", STRING(pTarget->pev->classname), targetName );
+			ALERT( AlertType::AiConsole, "Found: %s, firing (%s)\n", STRING(pTarget->pev->classname), targetName );
 			pTarget->Use( pActivator, pCaller, useType, value );
 		}
 	}
@@ -263,13 +263,13 @@ void CBaseDelay :: SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, fl
 	{
 		edict_t *pentKillTarget = nullptr;
 
-		ALERT( at_aiconsole, "KillTarget: %s\n", STRING(m_iszKillTarget) );
+		ALERT( AlertType::AiConsole, "KillTarget: %s\n", STRING(m_iszKillTarget) );
 		pentKillTarget = FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_iszKillTarget) );
 		while ( !FNullEnt(pentKillTarget) )
 		{
 			UTIL_Remove( CBaseEntity::Instance(pentKillTarget) );
 
-			ALERT( at_aiconsole, "killing %s\n", STRING( pentKillTarget->v.classname ) );
+			ALERT( AlertType::AiConsole, "killing %s\n", STRING( pentKillTarget->v.classname ) );
 			pentKillTarget = FIND_ENTITY_BY_TARGETNAME( pentKillTarget, STRING(m_iszKillTarget) );
 		}
 	}

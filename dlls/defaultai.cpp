@@ -1032,7 +1032,7 @@ Schedule_t *CBaseMonster :: ScheduleInList( const char *pName, Schedule_t **pLis
 	
 	if ( !pName )
 	{
-		ALERT( at_console, "%s set to unnamed schedule!\n", STRING(pev->classname) );
+		ALERT( AlertType::Console, "%s set to unnamed schedule!\n", STRING(pev->classname) );
 		return nullptr;
 	}
 
@@ -1041,7 +1041,7 @@ Schedule_t *CBaseMonster :: ScheduleInList( const char *pName, Schedule_t **pLis
 	{
 		if ( !pList[i]->pName )
 		{
-			ALERT( at_console, "Unnamed schedule!\n" );
+			ALERT( AlertType::Console, "Unnamed schedule!\n" );
 			continue;
 		}
 		if ( stricmp( pName, pList[i]->pName ) == 0 )
@@ -1056,7 +1056,7 @@ Schedule_t *CBaseMonster :: ScheduleInList( const char *pName, Schedule_t **pLis
 //=========================================================
 Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type ) 
 {
-//	ALERT ( at_console, "Sched Type:%d\n", Type );
+//	ALERT ( AlertType::Console, "Sched Type:%d\n", Type );
 	switch	( Type )
 	{
 	// This is the schedule for scripted sequences AND scripted AI
@@ -1065,12 +1065,12 @@ Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type )
 			ASSERT( m_pCine != nullptr );
 			if ( !m_pCine )
 			{
-				ALERT( at_aiconsole, "Script failed for %s\n", STRING(pev->classname) );
+				ALERT( AlertType::AiConsole, "Script failed for %s\n", STRING(pev->classname) );
 				CineCleanup();
 				return GetScheduleOfType( SCHED_IDLE_STAND );
 			}
 //			else
-//				ALERT( at_aiconsole, "Starting script %s for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
+//				ALERT( AlertType::AiConsole, "Starting script %s for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
 
 			switch ( m_pCine->m_fMoveTo )
 			{
@@ -1221,7 +1221,7 @@ Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type )
 		}
 	default:
 		{
-			ALERT ( at_console, "GetScheduleOfType()\nNo CASE for Schedule Type %d!\n", Type );
+			ALERT ( AlertType::Console, "GetScheduleOfType()\nNo CASE for Schedule Type %d!\n", Type );
 
 			return &slIdleStand[ 0 ];
 			break;

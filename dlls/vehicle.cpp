@@ -768,7 +768,7 @@ void CFuncVehicle::DeadEnd( void )
 
 	pTrack = m_ppath;
 
-	ALERT( at_aiconsole, "TRAIN(%s): Dead end ", STRING(pev->targetname) );
+	ALERT( AlertType::AiConsole, "TRAIN(%s): Dead end ", STRING(pev->targetname) );
 	// Find the dead end path node
 	// HACKHACK -- This is bugly, but the train can actually stop moving at a different node depending on it's speed
 	// so we have to traverse the list to it's end.
@@ -798,12 +798,12 @@ void CFuncVehicle::DeadEnd( void )
 	pev->avelocity = g_vecZero;
 	if ( pTrack )
 	{
-		ALERT( at_aiconsole, "at %s\n", STRING(pTrack->pev->targetname) );
+		ALERT( AlertType::AiConsole, "at %s\n", STRING(pTrack->pev->targetname) );
 		if ( pTrack->pev->netname )
 			FireTargets( STRING(pTrack->pev->netname), this, this, USE_TOGGLE, 0 );
 	}
 	else
-		ALERT( at_aiconsole, "\n" );
+		ALERT( AlertType::AiConsole, "\n" );
 }
 
 
@@ -904,7 +904,7 @@ void CFuncVehicle :: NearestPath( void )
 		return;
 	}
 
-	ALERT( at_aiconsole, "TRAIN: %s, Nearest track is %s\n", STRING(pev->targetname), STRING(pNearest->pev->targetname) );
+	ALERT( AlertType::AiConsole, "TRAIN: %s, Nearest track is %s\n", STRING(pev->targetname), STRING(pNearest->pev->targetname) );
 	// If I'm closer to the next path_track on this path, then it's my real path
 	pTrack = ((CPathTrack *)pNearest)->GetNext();
 	if ( pTrack )

@@ -830,7 +830,7 @@ void CDeadBarney :: Spawn( )
 	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead barney with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead barney with bad pose\n" );
 	}
 	// Corpses have less health
 	pev->health			= 8;//gSkillData.barneyHealth;

@@ -141,7 +141,7 @@ void CBaseAnimating :: DispatchAnimEvents ( float flInterval )
 
 	if ( !pmodel )
 	{
-		ALERT( at_aiconsole, "Gibbed monster is thinking!\n" );
+		ALERT( AlertType::AiConsole, "Gibbed monster is thinking!\n" );
 		return;
 	}
 

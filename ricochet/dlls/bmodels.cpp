@@ -941,7 +941,7 @@ void CPendulum :: RopeTouch ( CBaseEntity *pOther )
 
 	if ( !pOther->IsPlayer() )
 	{// not a player!
-		ALERT ( at_console, "Not a client\n" );
+		ALERT ( AlertType::Console, "Not a client\n" );
 		return;
 	}
 

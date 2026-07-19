@@ -162,7 +162,7 @@ int CISlave::IRelationship( CBaseEntity *pTarget )
 
 void CISlave :: CallForHelp( char *szClassname, float flDist, EHANDLE hEnemy, Vector &vecLocation )
 {
-	// ALERT( at_aiconsole, "help " );
+	// ALERT( AlertType::AiConsole, "help " );
 
 	// skip ones not on my netname
 	if ( FStringNull( pev->netname ))
@@ -309,7 +309,7 @@ void CISlave :: SetYawSpeed ( void )
 //=========================================================
 void CISlave :: HandleAnimEvent( MonsterEvent_t *pEvent )
 {
-	// ALERT( at_console, "event %d : %f\n", pEvent->event, pev->frame );
+	// ALERT( AlertType::Console, "event %d : %f\n", pEvent->event, pev->frame );
 	switch( pEvent->event )
 	{
 		case ISLAVE_AE_CLAW:
@@ -686,7 +686,7 @@ Schedule_t *CISlave :: GetSchedule( void )
 				}
 				if ( HasConditions ( bits_COND_SEE_ENEMY ) && HasConditions ( bits_COND_ENEMY_FACING_ME ) )
 				{
-					// ALERT( at_console, "exposed\n");
+					// ALERT( AlertType::Console, "exposed\n");
 					return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
 				}
 			}

@@ -77,7 +77,7 @@ static void VoiceServerDebug( char const *pFmt, ... )
 	_vsnprintf( msg, sizeof(msg), pFmt, marker );
 	va_end( marker );
 
-	ALERT( at_console, "%s", msg );
+	ALERT( AlertType::Console, "%s", msg );
 }
 
 

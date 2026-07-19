@@ -1177,7 +1177,7 @@ void CDeadScientist :: Spawn( )
 	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead scientist with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead scientist with bad pose\n" );
 	}
 
 	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
@@ -1369,7 +1369,7 @@ void CSittingScientist :: SittingThink( void )
 				else
 					pev->sequence = m_baseSequence + SITTING_ANIM_sitlookright;
 
-				//ALERT(at_console, "sitting speak\n");
+				//ALERT(AlertType::Console, "sitting speak\n");
 			}
 		}
 		else if (i < 60)
@@ -1378,7 +1378,7 @@ void CSittingScientist :: SittingThink( void )
 			m_headTurn = RANDOM_LONG(0,8) * 10 - 40;
 			if (RANDOM_LONG(0,99) < 5)
 			{
-				//ALERT(at_console, "sitting speak2\n");
+				//ALERT(AlertType::Console, "sitting speak2\n");
 				FIdleSpeak();
 			}
 		}

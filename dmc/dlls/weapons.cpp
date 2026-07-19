@@ -72,7 +72,7 @@ int MaxAmmoCarry( int iszName )
 			return CBasePlayerItem::ItemInfoArray[i].iMaxAmmo2;
 	}
 
-	ALERT( at_console, "MaxAmmoCarry() doesn't recognize '%s'!\n", STRING( iszName ) );
+	ALERT( AlertType::Console, "MaxAmmoCarry() doesn't recognize '%s'!\n", STRING( iszName ) );
 	return -1;
 }
 
@@ -270,7 +270,7 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 	pent = CREATE_NAMED_ENTITY( MAKE_STRING( szClassname ) );
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in UTIL_PrecacheOtherWeapon\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in UTIL_PrecacheOtherWeapon\n" );
 		return;
 	}
 	
@@ -514,7 +514,7 @@ CBaseEntity* CBasePlayerItem::Respawn( void )
 	}
 	else
 	{
-		ALERT ( at_console, "Respawn failed to create %s!\n", STRING( pev->classname ) );
+		ALERT ( AlertType::Console, "Respawn failed to create %s!\n", STRING( pev->classname ) );
 	}
 
 	return pNewWeapon;
@@ -1123,7 +1123,7 @@ void CWeaponBox :: KeyValue( KeyValueData *pkvd )
 	}
 	else
 	{
-		ALERT ( at_console, "WeaponBox too full! only %d ammotypes allowed\n", MAX_AMMO_SLOTS );
+		ALERT ( AlertType::Console, "WeaponBox too full! only %d ammotypes allowed\n", MAX_AMMO_SLOTS );
 	}
 }
 
@@ -1202,7 +1202,7 @@ void CWeaponBox::Touch( CBaseEntity *pOther )
 			// there's some ammo of this type. 
 			pPlayer->GiveAmmo( m_rgAmmo[ i ], (char *)STRING( m_rgiszAmmo[ i ] ), MaxAmmoCarry( m_rgiszAmmo[ i ] ) );
 
-			//ALERT ( at_console, "Gave %d rounds of %s\n", m_rgAmmo[i], STRING(m_rgiszAmmo[i]) );
+			//ALERT ( AlertType::Console, "Gave %d rounds of %s\n", m_rgAmmo[i], STRING(m_rgiszAmmo[i]) );
 
 			// now empty the ammo from the weaponbox since we just gave it to the player
 			m_rgiszAmmo[ i ] = iStringNull;
@@ -1222,7 +1222,7 @@ void CWeaponBox::Touch( CBaseEntity *pOther )
 			// have at least one weapon in this slot
 			while ( m_rgpPlayerItems[ i ] )
 			{
-				//ALERT ( at_console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
+				//ALERT ( AlertType::Console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
 
 				pItem = m_rgpPlayerItems[ i ];
 				m_rgpPlayerItems[ i ] = m_rgpPlayerItems[ i ]->m_pNext;// unlink this weapon from the box
@@ -1286,7 +1286,7 @@ BOOL CWeaponBox::PackWeapon( CBasePlayerItem *pWeapon )
 	pWeapon->SetTouch( nullptr );
 	pWeapon->m_pPlayer = nullptr;
 
-	//ALERT ( at_console, "packed %s\n", STRING(pWeapon->pev->classname) );
+	//ALERT ( AlertType::Console, "packed %s\n", STRING(pWeapon->pev->classname) );
 
 	return TRUE;
 }
@@ -1301,7 +1301,7 @@ BOOL CWeaponBox::PackAmmo( int iszName, int iCount )
 	if ( FStringNull( iszName ) )
 	{
 		// error here
-		ALERT ( at_console, "nullptr String in PackAmmo!\n" );
+		ALERT ( AlertType::Console, "nullptr String in PackAmmo!\n" );
 		return FALSE;
 	}
 	
@@ -1309,7 +1309,7 @@ BOOL CWeaponBox::PackAmmo( int iszName, int iCount )
 
 	if ( iMaxCarry != -1 && iCount > 0 )
 	{
-		//ALERT ( at_console, "Packed %d rounds of %s\n", iCount, STRING(iszName) );
+		//ALERT ( AlertType::Console, "Packed %d rounds of %s\n", iCount, STRING(iszName) );
 		GiveAmmo( iCount, (char *)STRING( iszName ), iMaxCarry );
 		return TRUE;
 	}
@@ -1351,7 +1351,7 @@ int CWeaponBox::GiveAmmo( int iCount, char *szName, int iMax, int *pIndex/* = nu
 
 		return i;
 	}
-	ALERT( at_console, "out of named ammo slots\n");
+	ALERT( AlertType::Console, "out of named ammo slots\n");
 	return i;
 }
 

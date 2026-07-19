@@ -290,7 +290,7 @@ public:
 	{ 
 #ifdef _WIN32
 		if (pFunction && !NAME_FOR_FUNCTION((uint32)pFunction) )
-			ALERT( at_error, "No EXPORT: %s:%s (%08lx)\n", STRING(pev->classname), name, pFunction );
+			ALERT( AlertType::Error, "No EXPORT: %s:%s (%08lx)\n", STRING(pev->classname), name, pFunction );
 #endif // _WIN32
 	}
 

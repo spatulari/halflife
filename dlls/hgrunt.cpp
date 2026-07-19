@@ -1964,7 +1964,7 @@ void CHGrunt :: SetActivity ( Activity NewActivity )
 	else
 	{
 		// Not available try to get default anim
-		ALERT ( at_console, "%s has no sequence for act:%d\n", STRING(pev->classname), NewActivity );
+		ALERT ( AlertType::Console, "%s has no sequence for act:%d\n", STRING(pev->classname), NewActivity );
 		pev->sequence		= 0;	// Set to the reset anim (if it's there)
 	}
 }
@@ -2478,7 +2478,7 @@ void CDeadHGrunt :: Spawn( void )
 
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead hgrunt with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead hgrunt with bad pose\n" );
 	}
 
 	// Corpses have less health
