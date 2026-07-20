@@ -699,12 +699,12 @@ void CBaseEntity :: MakeDormant( void )
 	UTIL_SetOrigin( pev, pev->origin );
 }
 
-int CBaseEntity :: IsDormant( void )
+BOOL CBaseEntity :: IsDormant()
 {
 	return FBitSet( pev->flags, FL_DORMANT );
 }
 
-BOOL CBaseEntity :: IsInWorld( void )
+BOOL CBaseEntity :: IsInWorld()
 {
 	// position 
 	if (pev->origin.x >= 4096) return FALSE;

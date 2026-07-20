@@ -3,6 +3,8 @@
 ![C++23](https://img.shields.io/badge/C%2B%2B-23-blue.svg)
 ![Status](https://img.shields.io/badge/status-active-success)
 ![License](https://img.shields.io/badge/license-Valve_SDK-lightgrey)
+<!-- [![Documentation](https://img.shields.io/badge/docs-Doxygen-blue?logo=doxygen)](https://spatulari.github.io/modern-halflife/) -->
+<!-- coming soon :) -->
 
 Modern Half-Life is an effort to bring the original Half-Life 1 SDK into the modern C++ era.
 
@@ -27,6 +29,7 @@ This project includes changes such as:
 * Cleaning up warnings and improving compatibility with modern toolchains.
 * Improving readability, maintainability, and consistency.
 * Using the C++ standard library where it provides clear benefits.
+* Providing comprehensive API documentation so developers can understand the codebase without reverse-engineering decades-old engine code.
 
 Every modernization is intended to preserve runtime behavior unless explicitly documented otherwise.
 
@@ -47,7 +50,9 @@ One of the main goals of this repository is to become a modern starting point fo
 
 Instead of beginning with a 1998 codebase and modernizing it yourself, you can fork this repository and focus on building your game or mod immediately.
 
-If this project succeeds, future developers should spend less time fighting outdated code and more time creating new experiences.
+Beyond modernization, this project aims to thoroughly document the SDK. Classes, functions, engine behaviors, and gameplay systems are being documented with comprehensive Doxygen comments so developers can spend less time deciphering legacy code and more time building their own ideas.
+
+If this project succeeds, future developers should spend less time fighting outdated code and reverse-engineering engine internals, and more time creating new experiences.
 
 ## Contributing
 

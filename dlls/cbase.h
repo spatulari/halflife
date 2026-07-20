@@ -141,186 +141,945 @@ public:
 };
 
 
-//
-// Base Entity.  All entity types derive from this
-//
+/**
+ * @brief Base class for every game entity.
+ *
+ * CBaseEntity is the root of the gameplay object hierarchy. Every entity
+ * created by the Half-Life game DLL ultimately derives from this class,
+ * including players, NPCs, weapons, triggers, doors, and projectiles.
+ *
+ * The engine associates each CBaseEntity instance with an `entvars_t`
+ * structure, exposed through the `pev` member.
+ *
+ * @note Entity instances are allocated by the GoldSrc engine and should
+ * not be created using the standard C++ `new` operator.
+ */
 class CBaseEntity 
 {
 public:
-	// Constructor.  Set engine to use C/C++ callback functions
-	// pointers to engine data
-	entvars_t *pev;		// Don't need to save/restore this pointer, the engine resets it
+	/**
+	 * @brief Engine-managed entity state.
+	 *
+	 * Points to this entity's `entvars_t` structure, which stores the entity's
+	 * state as maintained by the GoldSrc engine (position, velocity, health,
+	 * model, flags, and more).
+	 *
+	 * @note This pointer is owned and managed by the engine. It should not be
+	 * saved or restored, as the engine reinitializes it automatically during
+	 * entity restoration.
+	 */
+	entvars_t* pev;
 
-	// path corners
-	CBaseEntity			*m_pGoalEnt;// path corner we are heading towards
-	CBaseEntity			*m_pLink;// used for temporary link-list operations. 
+	/**
+	 * @brief Current navigation goal entity.
+	 *
+	 * Points to the next path corner or navigation target that this entity is
+	 * moving toward. Primarily used by path-following entities such as monsters
+	 * and scripted movement.
+	 */
+	CBaseEntity* m_pGoalEnt;
 
-	// initialization functions
-	virtual void	Spawn( void ) { return; }
-	virtual void	Precache( void ) { return; }
-	virtual void	KeyValue( KeyValueData* pkvd) { pkvd->fHandled = FALSE; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	virtual int		ObjectCaps( void ) { return FCAP_ACROSS_TRANSITION; }
-	virtual void	Activate( void ) {}
-	
-	// Setup the object->object collision box (pev->mins / pev->maxs is the object->world collision box)
-	virtual void	SetObjectCollisionBox( void );
+	/**
+	 * @brief Temporary link pointer.
+	 *
+	 * Used internally to build temporary linked lists during engine or game
+	 * logic operations. This pointer does not represent a persistent ownership
+	 * or gameplay relationship between entities.
+	 */
+	CBaseEntity* m_pLink;
 
-// Classify - returns the type of group (i.e, "houndeye", or "human military" so that monsters with different classnames
-// still realize that they are teammates. (overridden for monsters that form groups)
-	virtual int Classify ( void ) { return CLASS_NONE; };
-	virtual void DeathNotice ( entvars_t *pevChild ) {}// monster maker children use this to tell the monster maker that they have died.
+	/**
+	 * @brief Initializes the entity.
+	 *
+	 * Called after the entity has been created and its keyvalues have been
+	 * assigned. Override this to perform initialization such as setting the
+	 * model, collision bounds, movement type, and think functions.
+	 */
+	virtual void Spawn() {}
+
+	/**
+	 * @brief Loads resources required by the entity.
+	 *
+	 * Override this to precache models, sounds, sprites, and other assets
+	 * before the entity becomes active.
+	 *
+	 * @note All resources used by the entity should be precached here.
+	 */
+	virtual void Precache() {}
+
+	/**
+	 * @brief Processes a key-value pair from the map.
+	 *
+	 * Called once for each key-value pair parsed from the map entity
+	 * definition. Override this to handle custom entity properties.
+	 *
+	 * @param pkvd The parsed key-value pair.
+	 */
+	virtual void KeyValue(KeyValueData* pkvd) { pkvd->fHandled = FALSE; }
+
+	/**
+	 * @brief Saves the entity's persistent state.
+	 *
+	 * Serializes the entity into a save game.
+	 *
+	 * @param save Save-game serializer.
+	 * @return Non-zero on success.
+	 */
+	virtual int Save(CSave& save);
+
+	/**
+	 * @brief Restores the entity's persistent state.
+	 *
+	 * Deserializes the entity from a save game.
+	 *
+	 * @param restore Save-game deserializer.
+	 * @return Non-zero on success.
+	 */
+	virtual int Restore(CRestore& restore);
+
+	/**
+	 * @brief Returns the entity's capability flags.
+	 *
+	 * Capability flags determine how the engine interacts with the entity,
+	 * such as whether it may transition between map levels.
+	 *
+	 * @return A bitmask of FCAP_* flags.
+	 */
+	virtual int ObjectCaps() { return FCAP_ACROSS_TRANSITION; }
+
+	/**
+	 * @brief Activates the entity after all entities have spawned.
+	 *
+	 * Called once the map has finished spawning, allowing entities to safely
+	 * resolve references to other entities.
+	 */
+	virtual void Activate() {}
+
+	/**
+	 * @brief Computes the entity's collision bounds.
+	 *
+	 * Updates the object-to-object collision box used for entity collision
+	 * tests. This differs from `pev->mins` and `pev->maxs`, which define the
+	 * entity's object-to-world collision bounds.
+	 */
+	virtual void SetObjectCollisionBox();
+
+	/**
+	 * @brief Returns the entity's classification.
+	 *
+	 * Classification identifies the entity's faction or relationship group,
+	 * allowing AI to determine allies, enemies, and neutral entities. Multiple
+	 * entity classes may share the same classification (for example, different
+	 * human soldiers all belong to the same military faction).
+	 *
+	 * @return One of the `CLASS_*` classification constants.
+	 */
+	virtual int Classify() { return CLASS_NONE; }
+
+	/**
+	 * @brief Notifies the entity that one of its children has died.
+	 *
+	 * Called by child entities created by this entity, such as monsters spawned
+	 * by a monster maker. Override this to update internal state or spawn
+	 * additional entities in response.
+	 *
+	 * @param pevChild The engine state of the child entity that died.
+	 */
+	virtual void DeathNotice(entvars_t* pevChild) {}
 
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	/// @brief Save/restore field description table used by the engine.
+	static TYPEDESCRIPTION m_SaveData[];
 
-	virtual void	TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	virtual int		TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	virtual int		TakeHealth( float flHealth, int bitsDamageType );
-	virtual void	Killed( entvars_t *pevAttacker, int iGib );
-	virtual int		BloodColor( void ) { return DONT_BLEED; }
-	virtual void	TraceBleed( float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
-	virtual BOOL    IsTriggered( CBaseEntity *pActivator ) {return TRUE;}
-	virtual CBaseToggle* MyTogglePointer(void) { return nullptr; }
-	virtual CBaseMonster *MyMonsterPointer( void ) { return nullptr;}
-	virtual CSquadMonster *MySquadMonsterPointer( void ) { return nullptr;}
-	virtual	int		GetToggleState( void ) { return TS_AT_TOP; }
-	virtual void	AddPoints( int score, BOOL bAllowNegativeScore ) {}
-	virtual void	AddPointsToTeam( int score, BOOL bAllowNegativeScore ) {}
-	virtual BOOL	AddPlayerItem( CBasePlayerItem *pItem ) { return 0; }
-	virtual BOOL	RemovePlayerItem( CBasePlayerItem *pItem ) { return 0; }
-	virtual int 	GiveAmmo( int iAmount, char *szName, int iMax ) { return -1; };
-	virtual float	GetDelay( void ) { return 0; }
-	virtual int		IsMoving( void ) { return pev->velocity != g_vecZero; }
-	virtual void	OverrideReset( void ) {}
-	virtual int		DamageDecal( int bitsDamageType );
-	// This is ONLY used by the node graph to test movement through a door
-	virtual void	SetToggleState( int state ) {}
-	virtual void    StartSneaking( void ) {}
-	virtual void    StopSneaking( void ) {}
-	virtual BOOL	OnControls( entvars_t *pev ) { return FALSE; }
-	virtual BOOL    IsSneaking( void ) { return FALSE; }
-	virtual BOOL	IsAlive( void ) { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
-	virtual BOOL	IsBSPModel( void ) { return pev->solid == SOLID_BSP || pev->movetype == MOVETYPE_PUSHSTEP; }
-	virtual BOOL	ReflectGauss( void ) { return ( IsBSPModel() && !pev->takedamage ); }
-	virtual BOOL	HasTarget( string_t targetname ) { return FStrEq(STRING(targetname), STRING(pev->targetname) ); }
-	virtual BOOL    IsInWorld( void );
-	virtual	BOOL	IsPlayer( void ) { return FALSE; }
-	virtual BOOL	IsNetClient( void ) { return FALSE; }
-	virtual const char *TeamID( void ) { return ""; }
+	/**
+ * @brief Applies damage from an attack trace.
+ *
+ * Called when an attack intersects the entity before damage is fully
+ * processed. Allows entities to modify or accumulate damage, spawn
+ * effects, or determine hitgroup-specific behavior.
+ *
+ * @param pevAttacker The entity responsible for the attack.
+ * @param flDamage Amount of incoming damage.
+ * @param vecDir Direction the attack traveled.
+ * @param ptr Trace result describing the impact.
+ * @param bitsDamageType Bitmask of `DMG_*` damage types.
+ */
+	virtual void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
 
+	/**
+	 * @brief Applies damage to the entity.
+	 *
+	 * Called after damage has been calculated to reduce health and perform
+	 * any gameplay logic associated with taking damage.
+	 *
+	 * @param pevInflictor Entity directly causing the damage (for example, a grenade).
+	 * @param pevAttacker Entity ultimately responsible for the attack.
+	 * @param flDamage Amount of damage to apply.
+	 * @param bitsDamageType Bitmask of `DMG_*` damage types.
+	 * @return Non-zero if the damage was accepted.
+	 */
+	virtual int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 
-//	virtual void	SetActivator( CBaseEntity *pActivator ) {}
-	virtual CBaseEntity *GetNextTarget( void );
-	
-	// fundamental callbacks
-	void (CBaseEntity ::*m_pfnThink)(void);
-	void (CBaseEntity ::*m_pfnTouch)( CBaseEntity *pOther );
-	void (CBaseEntity ::*m_pfnUse)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void (CBaseEntity ::*m_pfnBlocked)( CBaseEntity *pOther );
+	/**
+	 * @brief Restores health to the entity.
+	 *
+	 * @param flHealth Amount of health to restore.
+	 * @param bitsDamageType Damage type being healed, if applicable.
+	 * @return Non-zero if health was restored.
+	 */
+	virtual int TakeHealth(float flHealth, int bitsDamageType);
 
-	virtual void Think( void ) { if (m_pfnThink) (this->*m_pfnThink)(); };
-	virtual void Touch( CBaseEntity *pOther ) { if (m_pfnTouch) (this->*m_pfnTouch)( pOther ); };
-	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) 
-	{ 
-		if (m_pfnUse) 
-			(this->*m_pfnUse)( pActivator, pCaller, useType, value );
+	/**
+	 * @brief Handles the entity's death.
+	 *
+	 * Called when the entity has been killed after taking fatal damage.
+	 *
+	 * @param pevAttacker Entity responsible for the kill.
+	 * @param iGib Gibbing behavior (`GIB_*`).
+	 */
+	virtual void Killed(entvars_t* pevAttacker, int iGib);
+
+	/**
+	 * @brief Returns the entity's blood color.
+	 *
+	 * Used to determine which blood effects are produced when the entity
+	 * is damaged.
+	 *
+	 * @return One of the blood color constants, or `DONT_BLEED`.
+	 */
+	virtual int BloodColor() { return DONT_BLEED; }
+
+	/**
+	 * @brief Spawns blood effects from an attack.
+	 *
+	 * Called after damage has been applied to emit blood decals or particles.
+	 *
+	 * @param flDamage Damage dealt by the attack.
+	 * @param vecDir Direction of the attack.
+	 * @param ptr Trace result describing the impact.
+	 * @param bitsDamageType Bitmask of `DMG_*` damage types.
+	 */
+	virtual void TraceBleed(float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
+
+	/**
+	 * @brief Determines whether the entity is currently triggered.
+	 *
+	 * Used by trigger and logic entities to determine whether they may
+	 * activate.
+	 *
+	 * @param pActivator Entity attempting the activation.
+	 * @return `true` if the entity is triggered.
+	 */
+	virtual BOOL IsTriggered(CBaseEntity* pActivator) { return TRUE; }
+
+	/**
+	 * @brief Returns this entity as a toggle entity.
+	 *
+	 * Allows safe runtime access without requiring a C++ cast.
+	 *
+	 * @return Pointer to this entity as `CBaseToggle`, or `nullptr`.
+	 */
+	virtual CBaseToggle* MyTogglePointer() { return nullptr; }
+
+	/**
+	 * @brief Returns this entity as a monster.
+	 *
+	 * @return Pointer to this entity as `CBaseMonster`, or `nullptr`.
+	 */
+	virtual CBaseMonster* MyMonsterPointer() { return nullptr; }
+
+	/**
+	 * @brief Returns this entity as a squad monster.
+	 *
+	 * @return Pointer to this entity as `CSquadMonster`, or `nullptr`.
+	 */
+	virtual CSquadMonster* MySquadMonsterPointer() { return nullptr; }
+
+	/**
+	 * @brief Returns the current toggle state.
+	 *
+	 * @return One of the `TOGGLE_STATE` values.
+	 */
+	virtual int GetToggleState() { return TS_AT_TOP; }
+
+	/**
+	 * @brief Awards score to this entity.
+	 *
+	 * Primarily overridden by player entities.
+	 *
+	 * @param score Number of points to award.
+	 * @param bAllowNegativeScore Whether negative scores are permitted.
+	 */
+	virtual void AddPoints(int score, bool bAllowNegativeScore) {}
+
+	/**
+	 * @brief Awards score to this entity's team.
+	 *
+	 * @param score Number of points to award.
+	 * @param bAllowNegativeScore Whether negative scores are permitted.
+	 */
+	virtual void AddPointsToTeam(int score, bool bAllowNegativeScore) {}
+
+	/**
+	 * @brief Adds an item to the entity's inventory.
+	 *
+	 * @param pItem Item to add.
+	 * @return `true` if the item was accepted.
+	 */
+	virtual BOOL AddPlayerItem(CBasePlayerItem* pItem) { return FALSE; }
+
+	/**
+	 * @brief Removes an item from the entity's inventory.
+	 *
+	 * @param pItem Item to remove.
+	 * @return `true` if the item was removed.
+	 */
+	virtual BOOL RemovePlayerItem(CBasePlayerItem* pItem) { return FALSE; }
+
+	/**
+	 * @brief Gives ammunition to the entity.
+	 *
+	 * @param iAmount Amount of ammunition.
+	 * @param szName Name of the ammunition type.
+	 * @param iMax Maximum ammunition capacity.
+	 * @return Amount accepted, or `-1` if unsupported.
+	 */
+	virtual int GiveAmmo(int iAmount, char* szName, int iMax) { return -1; }
+
+	/**
+	 * @brief Returns the entity's activation delay.
+	 *
+	 * @return Delay in seconds.
+	 */
+	virtual float GetDelay() { return 0.0f; }
+
+	/**
+	 * @brief Determines whether the entity is moving.
+	 *
+	 * @return `true` if the entity currently has non-zero velocity.
+	 */
+	virtual int IsMoving() { return pev->velocity != g_vecZero; }
+
+	/**
+	 * @brief Restores entity-specific state after a reset.
+	 *
+	 * Override to restore custom runtime data.
+	 */
+	virtual void OverrideReset() {}
+
+	/**
+	 * @brief Returns the decal produced when damaged.
+	 *
+	 * @param bitsDamageType Bitmask of `DMG_*` damage types.
+	 * @return Decal index.
+	 */
+	virtual int DamageDecal(int bitsDamageType);
+
+	/**
+	 * @brief Sets the current toggle state.
+	 *
+	 * Used only by the node graph to test movement through doors.
+	 *
+	 * @param state New toggle state.
+	 */
+	virtual void SetToggleState(int state) {}
+
+	/**
+	 * @brief Places the entity into a sneaking state.
+	 */
+	virtual void StartSneaking() {}
+
+	/**
+	 * @brief Ends the entity's sneaking state.
+	 */
+	virtual void StopSneaking() {}
+
+	/**
+	 * @brief Determines whether the entity is currently using controls.
+	 *
+	 * @param pev Engine state of the controlling entity.
+	 * @return `true` if the controls are active.
+	 */
+	virtual BOOL OnControls(entvars_t* pev) { return FALSE; }
+
+	/**
+	 * @brief Determines whether the entity is sneaking.
+	 *
+	 * @return `true` if sneaking.
+	 */
+	virtual BOOL IsSneaking() { return FALSE; }
+
+	/**
+	 * @brief Determines whether the entity is alive.
+	 *
+	 * @return `true` if the entity is alive.
+	 */
+	virtual BOOL IsAlive() { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
+
+	/**
+	 * @brief Determines whether this entity uses a BSP model.
+	 *
+	 * @return `true` if the entity is represented by a BSP model.
+	 */
+	virtual BOOL IsBSPModel() { return pev->solid == SOLID_BSP || pev->movetype == MOVETYPE_PUSHSTEP; }
+
+	/**
+	 * @brief Determines whether Gauss beams should reflect from this entity.
+	 *
+	 * @return `true` if Gauss shots should reflect.
+	 */
+	virtual BOOL ReflectGauss() { return IsBSPModel() && !pev->takedamage; }
+
+	/**
+	 * @brief Determines whether the entity has the specified target name.
+	 *
+	 * @param targetname Target name to compare.
+	 * @return `true` if the names match.
+	 */
+	virtual BOOL HasTarget(string_t targetname)
+	{
+		return FStrEq(STRING(targetname), STRING(pev->targetname));
 	}
-	virtual void Blocked( CBaseEntity *pOther ) { if (m_pfnBlocked) (this->*m_pfnBlocked)( pOther ); };
 
-	// allow engine to allocate instance data
-    void *operator new( size_t stAllocateBlock, entvars_t *pev )
-	{
-		return (void *)ALLOC_PRIVATE(ENT(pev), stAllocateBlock);
-	};
+	/**
+	 * @brief Determines whether the entity is inside valid world bounds.
+	 *
+	 * @return `true` if the entity is within the world.
+	 */
+	virtual BOOL IsInWorld();
 
-	// don't use this.
-#if _MSC_VER >= 1200 // only build this code if MSVC++ 6.0 or higher
-	void operator delete(void *pMem, entvars_t *pev)
+	/**
+	 * @brief Determines whether this entity is a player.
+	 *
+	 * @return `true` if this entity is a player.
+	 */
+	virtual BOOL IsPlayer() { return FALSE; }
+
+	/**
+	 * @brief Determines whether this entity represents a network client.
+	 *
+	 * @return `true` if this entity is controlled by a connected client.
+	 */
+	virtual BOOL IsNetClient() { return FALSE; }
+
+	/**
+	 * @brief Returns the entity's team identifier.
+	 *
+	 * @return Team identifier string, or an empty string if none exists.
+	 */
+	virtual const char* TeamID() { return ""; }
+
+
+	/**
+	 * @brief Returns the entity targeted by this entity.
+	 *
+	 * Resolves and returns the next entity referenced by this entity's target.
+	 * Commonly used by scripted sequences, triggers, and path-following entities.
+	 *
+	 * @return Pointer to the targeted entity, or `nullptr` if no valid target exists.
+	 */
+	virtual CBaseEntity* GetNextTarget();
+
+	/**
+	 * @brief Function invoked when the entity thinks.
+	 *
+	 * Assigned through `SetThink()` and executed by the engine during the
+	 * entity's scheduled think cycle.
+	 */
+	void (CBaseEntity::* m_pfnThink)();
+
+	/**
+	 * @brief Function invoked when another entity touches this entity.
+	 *
+	 * Assigned through `SetTouch()` and executed by the engine whenever
+	 * a collision or touch event occurs.
+	 */
+	void (CBaseEntity::* m_pfnTouch)(CBaseEntity* pOther);
+
+	/**
+	 * @brief Function invoked when the entity is used.
+	 *
+	 * Assigned through `SetUse()` and executed when another entity activates
+	 * this entity.
+	 */
+	void (CBaseEntity::* m_pfnUse)(
+		CBaseEntity* pActivator,
+		CBaseEntity* pCaller,
+		USE_TYPE useType,
+		float value
+		);
+
+	/**
+	 * @brief Function invoked when the entity becomes blocked.
+	 *
+	 * Assigned through `SetBlocked()` and executed when movement is obstructed
+	 * by another entity.
+	 */
+	void (CBaseEntity::* m_pfnBlocked)(CBaseEntity* pOther);
+
+	/**
+	 * @brief Executes the entity's think callback.
+	 *
+	 * Calls the function previously assigned with `SetThink()`, if one exists.
+	 */
+	virtual void Think()
 	{
+		if (m_pfnThink)
+			(this->*m_pfnThink)();
+	}
+
+	/**
+	 * @brief Executes the entity's touch callback.
+	 *
+	 * Calls the function previously assigned with `SetTouch()`.
+	 *
+	 * @param pOther The entity that touched this entity.
+	 */
+	virtual void Touch(CBaseEntity* pOther)
+	{
+		if (m_pfnTouch)
+			(this->*m_pfnTouch)(pOther);
+	}
+
+	/**
+	 * @brief Executes the entity's use callback.
+	 *
+	 * Calls the function previously assigned with `SetUse()`.
+	 *
+	 * @param pActivator Entity responsible for activating this entity.
+	 * @param pCaller Entity that directly invoked the use action.
+	 * @param useType Type of use operation.
+	 * @param value Additional value associated with the use action.
+	 */
+	virtual void Use(
+		CBaseEntity* pActivator,
+		CBaseEntity* pCaller,
+		USE_TYPE useType,
+		float value)
+	{
+		if (m_pfnUse)
+			(this->*m_pfnUse)(pActivator, pCaller, useType, value);
+	}
+
+	/**
+	 * @brief Executes the entity's blocked callback.
+	 *
+	 * Calls the function previously assigned with `SetBlocked()`.
+	 *
+	 * @param pOther The entity blocking this entity.
+	 */
+	virtual void Blocked(CBaseEntity* pOther)
+	{
+		if (m_pfnBlocked)
+			(this->*m_pfnBlocked)(pOther);
+	}
+
+	/**
+	 * @brief Allocates entity memory using the GoldSrc engine.
+	 *
+	 * Entities are allocated from engine-managed private data rather than the
+	 * standard C++ heap. This overload is used internally by `GetClassPtr()`
+	 * and other engine allocation routines.
+	 *
+	 * @param stAllocateBlock Size of the allocation in bytes.
+	 * @param pev Engine entity variables associated with the allocation.
+	 * @return Pointer to the newly allocated entity memory.
+	 */
+	void* operator new(size_t stAllocateBlock, entvars_t* pev)
+	{
+		return static_cast<void*>(ALLOC_PRIVATE(ENT(pev), stAllocateBlock));
+	}
+
+	// This overload exists only to satisfy placement new semantics.
+	// Entity destruction is handled by the engine.
+#if _MSC_VER >= 1200
+	/**
+	 * @brief Placement delete corresponding to the engine allocation overload.
+	 *
+	 * This function should never be called directly. If construction fails,
+	 * the entity is marked for removal by the engine.
+	 *
+	 * @param pMem Unused pointer to the allocated memory.
+	 * @param pev Engine entity variables associated with the allocation.
+	 */
+	void operator delete(void* pMem, entvars_t* pev)
+	{
+		(void)pMem;
 		pev->flags |= FL_KILLME;
-	};
+	}
 #endif
 
-	void UpdateOnRemove( void );
+	/**
+	 * @brief Performs cleanup before the entity is removed.
+	 *
+	 * Called immediately before the entity is deleted from the world. Override
+	 * this to release references, notify other entities, or perform any final
+	 * cleanup required by derived classes.
+	 */
+	void UpdateOnRemove();
 
-	// common member functions
-	void EXPORT SUB_Remove( void );
-	void EXPORT SUB_DoNothing( void );
-	void EXPORT SUB_StartFadeOut ( void );
-	void EXPORT SUB_FadeOut ( void );
-	void EXPORT SUB_CallUseToggle( void ) { this->Use( this, this, USE_TOGGLE, 0 ); }
-	int			ShouldToggle( USE_TYPE useType, BOOL currentState );
-	void		FireBullets( ULONG	cShots, Vector  vecSrc, Vector	vecDirShooting,	Vector	vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t *pevAttacker = nullptr  );
-	Vector		FireBulletsPlayer( ULONG	cShots, Vector  vecSrc, Vector	vecDirShooting,	Vector	vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t *pevAttacker = nullptr, int shared_rand = 0 );
+	/**
+	 * @brief Removes the entity from the world.
+	 *
+	 * Standard think callback used to safely delete an entity on the next
+	 * engine update.
+	 */
+	void EXPORT SUB_Remove();
 
-	virtual CBaseEntity *Respawn( void ) { return nullptr; }
+	/**
+	 * @brief Empty think callback.
+	 *
+	 * Performs no action and is commonly used to clear an entity's think
+	 * function.
+	 */
+	void EXPORT SUB_DoNothing();
 
-	void SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, float value );
-	// Do the bounding boxes of these two intersect?
-	int		Intersects( CBaseEntity *pOther );
-	void	MakeDormant( void );
-	int		IsDormant( void );
-	BOOL    IsLockedByMaster( void ) { return FALSE; }
+	/**
+	 * @brief Begins fading the entity out.
+	 *
+	 * Initializes the fade-out process before repeatedly calling
+	 * `SUB_FadeOut()`.
+	 */
+	void EXPORT SUB_StartFadeOut();
 
-	static CBaseEntity *Instance( edict_t *pent )
-	{ 
-		if ( !pent )
-			pent = ENT(0);
-		CBaseEntity *pEnt = (CBaseEntity *)GET_PRIVATE(pent); 
-		return pEnt; 
+	/**
+	 * @brief Continues fading the entity out.
+	 *
+	 * Gradually decreases the entity's render opacity until it is removed.
+	 */
+	void EXPORT SUB_FadeOut();
+
+	/**
+	 * @brief Invokes this entity's use callback with `USE_TOGGLE`.
+	 *
+	 * Acts as though the entity activated itself using the toggle use type.
+	 */
+	void EXPORT SUB_CallUseToggle()
+	{
+		this->Use(this, this, USE_TOGGLE, 0);
 	}
 
-	static CBaseEntity *Instance( entvars_t *pev ) { return Instance( ENT( pev ) ); }
-	static CBaseEntity *Instance( int eoffset) { return Instance( ENT( eoffset) ); }
+	/**
+	 * @brief Determines whether a toggle operation should occur.
+	 *
+	 * Compares the requested use type against the entity's current state to
+	 * determine whether a state change is appropriate.
+	 *
+	 * @param useType Requested use operation.
+	 * @param currentState Current toggle state.
+	 * @return Non-zero if the toggle should occur.
+	 */
+	int ShouldToggle(USE_TYPE useType, BOOL currentState);
 
-	CBaseMonster *GetMonsterPointer( entvars_t *pevMonster ) 
-	{ 
-		CBaseEntity *pEntity = Instance( pevMonster );
-		if ( pEntity )
+	/**
+	 * @brief Fires one or more bullets from this entity.
+	 *
+	 * Performs hit detection, applies damage, and optionally generates tracer
+	 * effects.
+	 *
+	 * @param cShots Number of bullets to fire.
+	 * @param vecSrc Bullet origin.
+	 * @param vecDirShooting Forward shooting direction.
+	 * @param vecSpread Random spread applied to each shot.
+	 * @param flDistance Maximum trace distance.
+	 * @param iBulletType Bullet type identifier.
+	 * @param iTracerFreq Frequency at which tracers are generated.
+	 * @param iDamage Override damage value. A value of `0` uses the default.
+	 * @param pevAttacker Entity credited with the attack.
+	 */
+	void FireBullets(
+		ULONG cShots,
+		Vector vecSrc,
+		Vector vecDirShooting,
+		Vector vecSpread,
+		float flDistance,
+		int iBulletType,
+		int iTracerFreq = 4,
+		int iDamage = 0,
+		entvars_t* pevAttacker = nullptr
+	);
+
+	/**
+	 * @brief Fires bullets using player-specific spread calculations.
+	 *
+	 * Similar to `FireBullets()`, but incorporates deterministic randomization
+	 * for multiplayer prediction.
+	 *
+	 * @param cShots Number of bullets to fire.
+	 * @param vecSrc Bullet origin.
+	 * @param vecDirShooting Forward shooting direction.
+	 * @param vecSpread Random spread applied to each shot.
+	 * @param flDistance Maximum trace distance.
+	 * @param iBulletType Bullet type identifier.
+	 * @param iTracerFreq Frequency at which tracers are generated.
+	 * @param iDamage Override damage value. A value of `0` uses the default.
+	 * @param pevAttacker Entity credited with the attack.
+	 * @param shared_rand Shared random seed used for prediction.
+	 * @return Final shooting direction after spread has been applied.
+	 */
+	Vector FireBulletsPlayer(
+		ULONG cShots,
+		Vector vecSrc,
+		Vector vecDirShooting,
+		Vector vecSpread,
+		float flDistance,
+		int iBulletType,
+		int iTracerFreq = 4,
+		int iDamage = 0,
+		entvars_t* pevAttacker = nullptr,
+		int shared_rand = 0
+	);
+
+	/**
+	 * @brief Creates a replacement instance after this entity respawns.
+	 *
+	 * Override to implement custom respawn behavior for items, weapons, or
+	 * other respawnable entities.
+	 *
+	 * @return Pointer to the respawned entity, or `nullptr` if respawning is
+	 * not supported.
+	 */
+	virtual CBaseEntity* Respawn() { return nullptr; }
+
+	/**
+	 * @brief Fires this entity's targets.
+	 *
+	 * Activates all entities referenced by this entity's target field using the
+	 * specified use type and value.
+	 *
+	 * @param pActivator Entity responsible for the activation.
+	 * @param useType Type of use operation to perform.
+	 * @param value Additional value associated with the activation.
+	 */
+	void SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value);
+
+	/**
+	 * @brief Determines whether this entity intersects another.
+	 *
+	 * Performs an axis-aligned bounding box (AABB) intersection test using the
+	 * entities' collision bounds.
+	 *
+	 * @param pOther Entity to test against.
+	 * @return `true` if the entities' bounding boxes overlap.
+	 */
+	BOOL Intersects(CBaseEntity* pOther);
+
+	/**
+	 * @brief Places the entity into a dormant state.
+	 *
+	 * Dormant entities remain allocated but are temporarily inactive and ignored
+	 * by most gameplay logic until reactivated.
+	 */
+	void MakeDormant();
+
+	/**
+	 * @brief Determines whether the entity is dormant.
+	 *
+	 * @return `true` if the entity is currently dormant.
+	 */
+	BOOL IsDormant();
+
+	/**
+	 * @brief Determines whether this entity is locked by a master entity.
+	 *
+	 * Entities such as doors and buttons override this to prevent activation
+	 * until their associated multisource or master entity has been triggered.
+	 *
+	 * @return `true` if the entity is currently locked.
+	 */
+	BOOL IsLockedByMaster() { return FALSE; }
+
+	/**
+	 * @brief Retrieves the C++ object associated with an engine entity.
+	 *
+	 * Converts an engine `edict_t` into its corresponding `CBaseEntity`
+	 * instance.
+	 *
+	 * @param pent Engine entity to resolve. If `nullptr`, the world entity is
+	 * used.
+	 * @return Pointer to the associated entity, or `nullptr` if none exists.
+	 */
+	static CBaseEntity* Instance(edict_t* pent)
+	{
+		if (!pent)
+			pent = ENT(0);
+
+		CBaseEntity* pEnt = static_cast<CBaseEntity*>(GET_PRIVATE(pent));
+		return pEnt;
+	}
+
+	/**
+	 * @brief Retrieves the C++ object associated with an engine entity.
+	 *
+	 * Convenience overload accepting an `entvars_t` pointer.
+	 *
+	 * @param pev Engine entity variables.
+	 * @return Pointer to the associated entity, or `nullptr` if none exists.
+	 */
+	static CBaseEntity* Instance(entvars_t* pev)
+	{
+		return Instance(ENT(pev));
+	}
+
+	/**
+	 * @brief Retrieves the C++ object associated with an entity offset.
+	 *
+	 * Convenience overload accepting an engine entity offset.
+	 *
+	 * @param eoffset Engine entity offset.
+	 * @return Pointer to the associated entity, or `nullptr` if none exists.
+	 */
+	static CBaseEntity* Instance(int eoffset)
+	{
+		return Instance(ENT(eoffset));
+	}
+
+	/**
+	 * @brief Retrieves a monster object from an engine entity.
+	 *
+	 * Resolves the specified engine entity and returns its monster interface if
+	 * it represents a `CBaseMonster`.
+	 *
+	 * @param pevMonster Engine variables of the monster entity.
+	 * @return Pointer to the monster, or `nullptr` if the entity does not exist
+	 * or is not a monster.
+	 */
+	CBaseMonster* GetMonsterPointer(entvars_t* pevMonster)
+	{
+		CBaseEntity* pEntity = Instance(pevMonster);
+
+		if (pEntity)
 			return pEntity->MyMonsterPointer();
+
 		return nullptr;
 	}
-	CBaseMonster *GetMonsterPointer( edict_t *pentMonster ) 
-	{ 
-		CBaseEntity *pEntity = Instance( pentMonster );
-		if ( pEntity )
+
+	/**
+	 * @brief Retrieves a monster object from an engine entity.
+	 *
+	 * Resolves the specified engine entity and returns its monster interface if
+	 * it represents a `CBaseMonster`.
+	 *
+	 * @param pentMonster Engine entity to resolve.
+	 * @return Pointer to the monster, or `nullptr` if the entity does not exist
+	 * or is not a monster.
+	 */
+	CBaseMonster* GetMonsterPointer(edict_t* pentMonster)
+	{
+		CBaseEntity* pEntity = Instance(pentMonster);
+
+		if (pEntity)
 			return pEntity->MyMonsterPointer();
+
 		return nullptr;
 	}
 
 
 	// Ugly code to lookup all functions to make sure they are exported when set.
 #ifdef _DEBUG
-	void FunctionCheck( void *pFunction, char *name ) 
-	{ 
-		if (pFunction && !NAME_FOR_FUNCTION((uint32)pFunction) )
-			ALERT( AlertType::Error, "No EXPORT: %s:%s (%08lx)\n", STRING(pev->classname), name, (uint32)pFunction );
+
+	/**
+	 * @brief Verifies that a callback function is exported.
+	 *
+	 * Debug helper used by the callback assignment functions to ensure the
+	 * specified function is exported and can be resolved by the GoldSrc engine.
+	 *
+	 * @param pFunction Function pointer to validate.
+	 * @param name Name of the callback function.
+	 */
+	void FunctionCheck(void* pFunction, char* name)
+	{
+		if (pFunction && !NAME_FOR_FUNCTION((uint32)pFunction))
+			ALERT(
+				AlertType::Error,
+				"No EXPORT: %s:%s (%08lx)\n",
+				STRING(pev->classname),
+				name,
+				(uint32)pFunction
+			);
 	}
 
-	BASEPTR	ThinkSet( BASEPTR func, char *name ) 
-	{ 
-		m_pfnThink = func; 
-		FunctionCheck( (void *)*((int *)((char *)this + ( offsetof(CBaseEntity,m_pfnThink)))), name ); 
+	/**
+	 * @brief Assigns the entity's think callback.
+	 *
+	 * Stores the callback and verifies that it is exported in debug builds.
+	 *
+	 * @param func Callback function to assign.
+	 * @param name Name of the callback function.
+	 * @return The assigned callback.
+	 */
+	BASEPTR ThinkSet(BASEPTR func, char* name)
+	{
+		m_pfnThink = func;
+
+		FunctionCheck(
+			(void*)*((int*)((char*)this + offsetof(CBaseEntity, m_pfnThink))),
+			name
+		);
+
 		return func;
 	}
-	ENTITYFUNCPTR TouchSet( ENTITYFUNCPTR func, char *name ) 
-	{ 
-		m_pfnTouch = func; 
-		FunctionCheck( (void *)*((int *)((char *)this + ( offsetof(CBaseEntity,m_pfnTouch)))), name ); 
+
+	/**
+	 * @brief Assigns the entity's touch callback.
+	 *
+	 * Stores the callback and verifies that it is exported in debug builds.
+	 *
+	 * @param func Callback function to assign.
+	 * @param name Name of the callback function.
+	 * @return The assigned callback.
+	 */
+	ENTITYFUNCPTR TouchSet(ENTITYFUNCPTR func, char* name)
+	{
+		m_pfnTouch = func;
+
+		FunctionCheck(
+			(void*)*((int*)((char*)this + offsetof(CBaseEntity, m_pfnTouch))),
+			name
+		);
+
 		return func;
 	}
-	USEPTR	UseSet( USEPTR func, char *name ) 
-	{ 
-		m_pfnUse = func; 
-		FunctionCheck( (void *)*((int *)((char *)this + ( offsetof(CBaseEntity,m_pfnUse)))), name ); 
+
+	/**
+	 * @brief Assigns the entity's use callback.
+	 *
+	 * Stores the callback and verifies that it is exported in debug builds.
+	 *
+	 * @param func Callback function to assign.
+	 * @param name Name of the callback function.
+	 * @return The assigned callback.
+	 */
+	USEPTR UseSet(USEPTR func, char* name)
+	{
+		m_pfnUse = func;
+
+		FunctionCheck(
+			(void*)*((int*)((char*)this + offsetof(CBaseEntity, m_pfnUse))),
+			name
+		);
+
 		return func;
 	}
-	ENTITYFUNCPTR	BlockedSet( ENTITYFUNCPTR func, char *name ) 
-	{ 
-		m_pfnBlocked = func; 
-		FunctionCheck( (void *)*((int *)((char *)this + ( offsetof(CBaseEntity,m_pfnBlocked)))), name ); 
+
+	/**
+	 * @brief Assigns the entity's blocked callback.
+	 *
+	 * Stores the callback and verifies that it is exported in debug builds.
+	 *
+	 * @param func Callback function to assign.
+	 * @param name Name of the callback function.
+	 * @return The assigned callback.
+	 */
+	ENTITYFUNCPTR BlockedSet(ENTITYFUNCPTR func, char* name)
+	{
+		m_pfnBlocked = func;
+
+		FunctionCheck(
+			(void*)*((int*)((char*)this + offsetof(CBaseEntity, m_pfnBlocked))),
+			name
+		);
+
 		return func;
 	}
 
@@ -328,46 +1087,222 @@ public:
 
 
 	// virtual functions used by a few classes
-	
-	// used by monsters that are created by the MonsterMaker
-	virtual	void UpdateOwner( void ) { return; };
 
+	/**
+	 * @brief Updates the entity's owner.
+	 *
+	 * Used by monsters created by a MonsterMaker to update their owning entity.
+	 * The default implementation performs no action.
+	 */
+	virtual void UpdateOwner() {}
 
 	//
-	static CBaseEntity *Create( char *szName, const Vector &vecOrigin, const Vector &vecAngles, edict_t *pentOwner = nullptr );
 
-	virtual BOOL FBecomeProne( void ) {return FALSE;};
-	edict_t *edict() { return ENT( pev ); };
-	EOFFSET eoffset( ) { return OFFSET( pev ); };
-	int	  entindex( ) { return ENTINDEX( edict() ); };
+	/**
+	 * @brief Creates a new game entity.
+	 *
+	 * Creates an entity of the specified classname, places it at the given
+	 * position and orientation, and optionally assigns an owner.
+	 *
+	 * @param szName Classname of the entity to create.
+	 * @param vecOrigin World position of the new entity.
+	 * @param vecAngles Initial orientation of the new entity.
+	 * @param pentOwner Optional owning engine entity.
+	 * @return Pointer to the newly created entity, or `nullptr` if creation
+	 * failed.
+	 *
+	 * @note This is the preferred way to create game entities. Do not allocate
+	 * entities using the standard C++ `new` operator.
+	 */
+	static CBaseEntity* Create(
+		char* szName,
+		const Vector& vecOrigin,
+		const Vector& vecAngles,
+		edict_t* pentOwner = nullptr
+	);
 
-	virtual Vector Center( ) { return (pev->absmax + pev->absmin) * 0.5; }; // center point of entity
-	virtual Vector EyePosition( ) { return pev->origin + pev->view_ofs; };			// position of eyes
-	virtual Vector EarPosition( ) { return pev->origin + pev->view_ofs; };			// position of ears
-	virtual Vector BodyTarget( const Vector &posSrc ) { return Center( ); };		// position to shoot at
+	/**
+	 * @brief Attempts to place the entity into a prone state.
+	 *
+	 * Overridden by entities that support becoming prone.
+	 *
+	 * @return `true` if the entity successfully became prone.
+	 */
+	virtual BOOL FBecomeProne() { return FALSE; }
 
-	virtual int Illumination( ) { return GETENTITYILLUM( ENT( pev ) ); };
+	/**
+	 * @brief Returns the engine entity associated with this object.
+	 *
+	 * @return Pointer to this entity's `edict_t`.
+	 */
+	edict_t* edict() { return ENT(pev); }
 
-	virtual	BOOL FVisible ( CBaseEntity *pEntity );
-	virtual	BOOL FVisible ( const Vector &vecOrigin );
+	/**
+	 * @brief Returns this entity's engine offset.
+	 *
+	 * @return Engine offset (`EOFFSET`) identifying this entity.
+	 */
+	EOFFSET eoffset() { return OFFSET(pev); }
 
-	//We use this variables to store each ammo count.
+	/**
+	 * @brief Returns this entity's index.
+	 *
+	 * The entity index uniquely identifies this entity within the current map.
+	 *
+	 * @return Engine entity index.
+	 */
+	int entindex() { return ENTINDEX(edict()); }
+
+	/**
+	 * @brief Returns the center point of the entity.
+	 *
+	 * Computes the geometric center of the entity using its absolute bounding
+	 * box.
+	 *
+	 * @return World-space center of the entity.
+	 */
+	virtual Vector Center() { return (pev->absmax + pev->absmin) * 0.5; }
+
+	/**
+	 * @brief Returns the entity's eye position.
+	 *
+	 * This position is typically used as the origin for line-of-sight checks
+	 * and ranged attacks.
+	 *
+	 * @return World-space position of the entity's eyes.
+	 */
+	virtual Vector EyePosition() { return pev->origin + pev->view_ofs; }
+
+	/**
+	 * @brief Returns the entity's ear position.
+	 *
+	 * Used by the AI sound system when determining whether the entity can hear
+	 * nearby sounds. By default, this is the same as the eye position.
+	 *
+	 * @return World-space position of the entity's ears.
+	 */
+	virtual Vector EarPosition() { return pev->origin + pev->view_ofs; }
+
+	/**
+	 * @brief Returns the preferred point to aim at when attacking this entity.
+	 *
+	 * Override this to provide a more suitable target location for entities
+	 * with unusual shapes or animations.
+	 *
+	 * @param posSrc Position from which the attack originates.
+	 * @return World-space position that attackers should aim toward.
+	 */
+	virtual Vector BodyTarget(const Vector& posSrc) { return Center(); }
+
+	/**
+	 * @brief Returns the amount of light affecting this entity.
+	 *
+	 * Queries the engine for the current illumination level at the entity's
+	 * position. This is commonly used by AI to determine visibility.
+	 *
+	 * @return Illumination value reported by the engine.
+	 */
+	virtual int Illumination() { return GETENTITYILLUM(ENT(pev)); }
+
+	/**
+	 * @brief Determines whether another entity is visible.
+	 *
+	 * Performs a line-of-sight check between this entity and the specified
+	 * target entity.
+	 *
+	 * @param pEntity Entity to test visibility against.
+	 * @return `true` if the target entity is visible.
+	 */
+	virtual BOOL FVisible(CBaseEntity* pEntity);
+
+	/**
+	 * @brief Determines whether a world position is visible.
+	 *
+	 * Performs a line-of-sight check between this entity and the specified
+	 * position in world space.
+	 *
+	 * @param vecOrigin World-space position to test.
+	 * @return `true` if the position is visible.
+	 */
+	virtual BOOL FVisible(const Vector& vecOrigin);
+
+	// We use these variables to store each ammo count.
+
+	/// @brief Amount of 9mm ammunition currently held.
 	int ammo_9mm;
+
+	/// @brief Amount of .357 Magnum ammunition currently held.
 	int ammo_357;
+
+	/// @brief Amount of crossbow bolts currently held.
 	int ammo_bolts;
+
+	/// @brief Amount of buckshot ammunition currently held.
 	int ammo_buckshot;
+
+	/// @brief Amount of RPG rockets currently held.
 	int ammo_rockets;
+
+	/// @brief Amount of uranium ammunition used by the Gauss Gun and Egon.
 	int ammo_uranium;
+
+	/// @brief Amount of Hornet ammunition currently held.
 	int ammo_hornets;
+
+	/// @brief Amount of M203 grenade ammunition currently held.
 	int ammo_argrens;
-	//Special stuff for grenades and satchels.
+
+	// Special stuff for grenades and satchels.
+
+	/**
+	 * @brief Time at which a grenade throw was initiated.
+	 *
+	 * Used while preparing grenade throw animations.
+	 */
 	float m_flStartThrow;
+
+	/**
+	 * @brief Time at which a grenade should be released.
+	 *
+	 * Determines when the thrown grenade leaves the player's hand.
+	 */
 	float m_flReleaseThrow;
+
+	/**
+	 * @brief Indicates whether a charged explosive is ready.
+	 *
+	 * Used by weapons such as satchel charges.
+	 */
 	int m_chargeReady;
+
+	/**
+	 * @brief Indicates whether the primary attack is currently active.
+	 *
+	 * Used internally by several weapon implementations.
+	 */
 	int m_fInAttack;
 
-	enum EGON_FIRESTATE { FIRE_OFF, FIRE_CHARGE };
-	int m_fireState;
+	/**
+	 * @brief Firing states for the Egon weapon.
+	 */
+	enum class EgonFirestate
+	{
+		/// @brief The weapon is not firing.
+		Off,
+
+		/// @brief The weapon is charging or actively firing.
+		Charge
+	};
+
+	/**
+	 * @brief Current firing state of the Egon weapon.
+	 *
+	 * Stores one of the `EgonFirestate` values.
+	 * 
+	 * @note this is an `int` for compatibility with the original codebase, but it should be an `EgonFirestate` enum for type safety and clarity. This will be addressed in a future refactor.
+	 */
+	int m_fireState{ static_cast<int>(EgonFirestate::Off) };
+	// TODO-001: EgonFirestate m_fireState{ EgonFirestate::Off };
 };
 
 
@@ -485,7 +1420,7 @@ public:
 	int  LookupSequence ( const char *label );
 	void ResetSequenceInfo ( );
 	void DispatchAnimEvents ( float flFutureInterval = 0.1 ); // Handle events that have happend since last time called up until X seconds into the future
-	virtual void HandleAnimEvent( MonsterEvent_t *pEvent ) { return; };
+	virtual void HandleAnimEvent( MonsterEvent_t *pEvent ) {};
 	float SetBoneController ( int iController, float flValue );
 	void InitBoneControllers ( void );
 	float SetBlending ( int iBlender, float flValue );
