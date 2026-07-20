@@ -12,13 +12,21 @@
 *   without written permission from Valve LLC.
 *
 ****/
-/*
 
-===== util.cpp ========================================================
+/**
+ * @file util.cpp
+ * @brief General utility functions used throughout the game DLL.
+ *
+ * Despite its name, this file contains many core helper functions used
+ * across the game. It provides shared functionality for gameplay,
+ * entities, debugging, and other common systems.
+ *
+ * @note This file is part of the Modern Half-Life project, which
+ * modernizes the original Half-Life source code while preserving
+ * gameplay behavior.
+ */
 
-  Utility code.  Really not optional after all.
-
-*/
+// Utility code. Really not optional after all.
 
 #include "extdll.h"
 #include "util.h"
@@ -316,7 +324,7 @@ TYPEDESCRIPTION	gEntvarsDescription[] =
 
 
 #ifdef	DEBUG
-edict_t *DBG_EntOfVars( const entvars_t *pev )
+edict_t *debug::EntOfVars( const entvars_t *pev )
 {
 	if (pev->pContainingEntity != nullptr)
 		return pev->pContainingEntity;
@@ -330,25 +338,49 @@ edict_t *DBG_EntOfVars( const entvars_t *pev )
 #endif //DEBUG
 
 
-#ifdef	DEBUG
-	void
-DBG_AssertFunction(
-	BOOL		fExpr,
-	const char*	szExpr,
-	const char*	szFile,
-	int			szLine,
-	const char*	szMessage)
-	{
-	if (fExpr)
+#ifdef DEBUG
+
+#include <cstdio>
+#include <string_view>
+
+void debug::AssertFunction(
+	bool expr,
+	std::string_view expression,
+	std::string_view file,
+	int line,
+	std::string_view message)
+{
+	if (expr)
 		return;
-	char szOut[512];
-	if (szMessage != nullptr)
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)\n%s", szExpr, szFile, szLine, szMessage);
-	else
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)", szExpr, szFile, szLine);
-//	ALERT(AlertType::Console, szOut);
+
+	char output[512];
+
+	if (!message.empty())
+	{
+		std::snprintf(
+			output,
+			sizeof(output),
+			"ASSERT FAILED:\n %.*s \n(%.*s@%d)\n%.*s",
+			static_cast<int>(expression.size()), expression.data(),
+			static_cast<int>(file.size()), file.data(),
+			line,
+			static_cast<int>(message.size()), message.data());
 	}
-#endif	// DEBUG
+	else
+	{
+		std::snprintf(
+			output,
+			sizeof(output),
+			"ASSERT FAILED:\n %.*s \n(%.*s@%d)",
+			static_cast<int>(expression.size()), expression.data(),
+			static_cast<int>(file.size()), file.data(),
+			line);
+	}
+
+	ALERT(AlertType::Console, output);
+}
+
+#endif // DEBUG
 
 BOOL UTIL_GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon )
 {
@@ -1628,7 +1660,7 @@ void UTIL_LogPrintf( char *fmt, ... )
 	va_end   ( argptr );
 
 	// Print to server console
-	ALERT( AlertType::Logged, "%s", string );
+	ALERT( AlertType::Logged	, "%s", string );
 }
 
 //=========================================================

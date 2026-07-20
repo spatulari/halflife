@@ -13,7 +13,8 @@
 *
 ****/
 #include "archtypes.h"     // DAL
-
+#include <string_view>
+#include <source_location>
 //
 // Misc utility code
 //
@@ -103,8 +104,11 @@ typedef int BOOL;
 // Conversion among the three types of "entity", including identity-conversions.
 //
 #ifdef DEBUG
-	extern edict_t *DBG_EntOfVars(const entvars_t *pev);
-	inline edict_t *ENT(const entvars_t *pev)	{ return DBG_EntOfVars(pev); }
+	namespace debug
+	{
+		extern edict_t* EntOfVars(const entvars_t* pev);  // CHECKME
+	}
+	inline edict_t *ENT(const entvars_t *pev)	{ return debug::EntOfVars(pev); }
 #else
 	inline edict_t *ENT(const entvars_t *pev)	{ return pev->pContainingEntity; }
 #endif
@@ -352,9 +356,12 @@ extern int BuildChangeList( LEVELLIST *pLevelList, int maxList );
 // How did I ever live without ASSERT?
 //
 #ifdef	DEBUG
-void DBG_AssertFunction(BOOL fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage);
-#define ASSERT(f)		DBG_AssertFunction(f, #f, __FILE__, __LINE__, nullptr)
-#define ASSERTSZ(f, sz)	DBG_AssertFunction(f, #f, __FILE__, __LINE__, sz)
+
+namespace debug {
+	void AssertFunction(bool expr, std::string_view condition, std::string_view file, int line, std::string_view message);
+}
+#define ASSERT(f) debug::AssertFunction(f, #f, __FILE__, __LINE__, "")
+#define ASSERTSZ(f, sz)	debug::AssertFunction(f, #f, __FILE__, __LINE__, sz)
 #else	// !DEBUG
 #define ASSERT(f)
 #define ASSERTSZ(f, sz)

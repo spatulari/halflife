@@ -312,7 +312,7 @@ TYPEDESCRIPTION	gEntvarsDescription[] =
 
 
 #ifdef	DEBUG
-edict_t *DBG_EntOfVars( const entvars_t *pev )
+edict_t *debug::EntOfVars( const entvars_t *pev )
 {
 	if (pev->pContainingEntity != nullptr)
 		return pev->pContainingEntity;
@@ -326,25 +326,49 @@ edict_t *DBG_EntOfVars( const entvars_t *pev )
 #endif //DEBUG
 
 
-#ifdef	DEBUG
-	void
-DBG_AssertFunction(
-	BOOL		fExpr,
-	const char*	szExpr,
-	const char*	szFile,
-	int			szLine,
-	const char*	szMessage)
-	{
-	if (fExpr)
+#ifdef DEBUG
+
+#include <cstdio>
+#include <string_view>
+
+void debug::AssertFunction(
+	bool expr,
+	std::string_view expression,
+	std::string_view file,
+	int line,
+	std::string_view message)
+{
+	if (expr)
 		return;
-	char szOut[512];
-	if (szMessage != nullptr)
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)\n%s", szExpr, szFile, szLine, szMessage);
-	else
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)", szExpr, szFile, szLine);
-	ALERT(AlertType::Console, szOut);
+
+	char output[512];
+
+	if (!message.empty())
+	{
+		std::snprintf(
+			output,
+			sizeof(output),
+			"ASSERT FAILED:\n %.*s \n(%.*s@%d)\n%.*s",
+			static_cast<int>(expression.size()), expression.data(),
+			static_cast<int>(file.size()), file.data(),
+			line,
+			static_cast<int>(message.size()), message.data());
 	}
-#endif	// DEBUG
+	else
+	{
+		std::snprintf(
+			output,
+			sizeof(output),
+			"ASSERT FAILED:\n %.*s \n(%.*s@%d)",
+			static_cast<int>(expression.size()), expression.data(),
+			static_cast<int>(file.size()), file.data(),
+			line);
+	}
+
+	ALERT(AlertType::Console, output);
+}
+
+#endif // DEBUG
 
 BOOL UTIL_GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon )
 {
