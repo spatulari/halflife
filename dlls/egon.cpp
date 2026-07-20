@@ -202,7 +202,7 @@ void CEgon::Attack( void )
 
 	switch( m_fireState )
 	{
-		case EgonFirestate::Off:
+		case static_cast<int>(EgonFirestate::Off): // TODO-001
 		{
 			if ( !HasAmmo() )
 			{
@@ -510,7 +510,7 @@ void CEgon::WeaponIdle( void )
 	if ( m_flTimeWeaponIdle > gpGlobals->time )
 		return;
 
-	if ( m_fireState != EgonFirestate::Off )
+	if ( m_fireState != static_cast<int>(EgonFirestate::Off) ) // TODO-001
 		 EndAttack();
 	
 	int iAnim;
@@ -548,7 +548,7 @@ void CEgon::EndAttack( void )
 {
 	bool bMakeNoise = false;
 		
-	if ( m_fireState != EgonFirestate::Off ) //Checking the button just in case!.
+	if ( m_fireState != static_cast<int>(EgonFirestate::Off) ) // Checking the button just in case!. TODO-001
 		 bMakeNoise = true;
 
 	PLAYBACK_EVENT_FULL( FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, (float *)&m_pPlayer->pev->origin, (float *)&m_pPlayer->pev->angles, 0.0, 0.0, bMakeNoise, 0, 0, 0 );
@@ -556,7 +556,7 @@ void CEgon::EndAttack( void )
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;
 
-	m_fireState = EgonFirestate::Off;
+	m_fireState = static_cast<int>(EgonFirestate::Off); // TODO-001
 
 	DestroyEffect();
 }

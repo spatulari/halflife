@@ -1298,9 +1298,11 @@ public:
 	 * @brief Current firing state of the Egon weapon.
 	 *
 	 * Stores one of the `EgonFirestate` values.
+	 * 
+	 * @note this is an `int` for compatibility with the original codebase, but it should be an `EgonFirestate` enum for type safety and clarity. This will be addressed in a future refactor.
 	 */
-	// TODO: EgonFirestate m_fireState{ EgonFirestate::Off };
 	int m_fireState{ static_cast<int>(EgonFirestate::Off) };
+	// TODO-001: EgonFirestate m_fireState{ EgonFirestate::Off };
 };
 
 
