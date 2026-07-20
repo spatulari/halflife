@@ -699,12 +699,12 @@ void CBaseEntity :: MakeDormant( void )
 	UTIL_SetOrigin( pev, pev->origin );
 }
 
-int CBaseEntity :: IsDormant( void )
+bool CBaseEntity :: IsDormant()
 {
 	return FBitSet( pev->flags, FL_DORMANT );
 }
 
-BOOL CBaseEntity :: IsInWorld( void )
+bool CBaseEntity :: IsInWorld()
 {
 	// position 
 	if (pev->origin.x >= 4096) return FALSE;
@@ -724,7 +724,7 @@ BOOL CBaseEntity :: IsInWorld( void )
 	return TRUE;
 }
 
-int CBaseEntity::ShouldToggle( USE_TYPE useType, BOOL currentState )
+int CBaseEntity::ShouldToggle( USE_TYPE useType, bool currentState )
 {
 	if ( useType != USE_TOGGLE && useType != USE_SET )
 	{

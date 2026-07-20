@@ -93,7 +93,7 @@ void CEgon::Precache( void )
 BOOL CEgon::Deploy( void )
 {
 	m_deployed = FALSE;
-	m_fireState = FIRE_OFF;
+	m_fireState = static_cast<int>(EgonFirestate::Off); // TODO-001
 	return DefaultDeploy( "models/v_egon.mdl", "models/p_egon.mdl", EGON_DRAW, "egon" );
 }
 
@@ -178,7 +178,7 @@ void CEgon::Attack( void )
 	if ( m_pPlayer->pev->waterlevel == 3 )
 	{
 		
-		if ( m_fireState != FIRE_OFF || m_pBeam )
+		if ( m_fireState != static_cast<int>(EgonFirestate::Off) || m_pBeam ) // TODO-001
 		{
 			EndAttack();
 		}
@@ -202,7 +202,7 @@ void CEgon::Attack( void )
 
 	switch( m_fireState )
 	{
-		case FIRE_OFF:
+		case EgonFirestate::Off:
 		{
 			if ( !HasAmmo() )
 			{
@@ -222,11 +222,11 @@ void CEgon::Attack( void )
 			pev->fuser1	= UTIL_WeaponTimeBase() + 2;
 
 			pev->dmgtime = gpGlobals->time + GetPulseInterval();
-			m_fireState = FIRE_CHARGE;
+			m_fireState = static_cast<int>(EgonFirestate::Charge); // TODO-001
 		}
 		break;
 
-		case FIRE_CHARGE:
+		case static_cast<int>(EgonFirestate::Charge): // TODO-001
 		{
 			Fire( vecSrc, vecAiming );
 			m_pPlayer->m_iWeaponVolume = EGON_PRIMARY_VOLUME;
@@ -510,7 +510,7 @@ void CEgon::WeaponIdle( void )
 	if ( m_flTimeWeaponIdle > gpGlobals->time )
 		return;
 
-	if ( m_fireState != FIRE_OFF )
+	if ( m_fireState != EgonFirestate::Off )
 		 EndAttack();
 	
 	int iAnim;
@@ -548,7 +548,7 @@ void CEgon::EndAttack( void )
 {
 	bool bMakeNoise = false;
 		
-	if ( m_fireState != FIRE_OFF ) //Checking the button just in case!.
+	if ( m_fireState != EgonFirestate::Off ) //Checking the button just in case!.
 		 bMakeNoise = true;
 
 	PLAYBACK_EVENT_FULL( FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, (float *)&m_pPlayer->pev->origin, (float *)&m_pPlayer->pev->angles, 0.0, 0.0, bMakeNoise, 0, 0, 0 );
@@ -556,7 +556,7 @@ void CEgon::EndAttack( void )
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;
 
-	m_fireState = FIRE_OFF;
+	m_fireState = EgonFirestate::Off;
 
 	DestroyEffect();
 }
