@@ -44,6 +44,7 @@
 #endif
 */
 
+/// @todo doc comments
 enum class AlertType {
 	Notice,
 	Console,		// same as AlertType::AtNotice, but forces a ConPrintf, not a message box
@@ -54,6 +55,7 @@ enum class AlertType {
 };
 
 // 4-22-98  JOHN: added for use in pfnClientPrintf
+/// @todo doc comments
 enum class PrintType
 {
 	Console,
@@ -62,13 +64,14 @@ enum class PrintType
 };
 
 // For integrity checking of content on clients
-typedef enum
+/// @todo doc comments
+enum class ForceType
 {
-	force_exactfile,					// File on client must exactly match server's file
-	force_model_samebounds,				// For model files only, the geometry must fit in the same bbox
-	force_model_specifybounds,			// For model files only, the geometry must fit in the specified bbox
-	force_model_specifybounds_if_avail,	// For Steam model files only, the geometry must fit in the specified bbox (if the file is available)
-} FORCE_TYPE;
+	ExactFile,					    // File on client must exactly match server's file
+	ModelSameBounds,				// For model files only, the geometry must fit in the same bbox
+	ModelSpecifyBounds,			    // For model files only, the geometry must fit in the specified bbox
+	ModelSpecifyBoundsIfAvailable,	// For Steam model files only, the geometry must fit in the specified bbox (if the file is available)
+};
 
 // Returned by TraceLine
 typedef struct
@@ -254,7 +257,7 @@ typedef struct enginefuncs_s
 	// Forces the client and server to be running with the same version of the specified file
 	//  ( e.g., a player model ).
 	// Calling this has no effect in single player
-	void		(*pfnForceUnmodified)		( FORCE_TYPE type, float *mins, float *maxs, const char *filename );
+	void		(*pfnForceUnmodified)		( ForceType type, float *mins, float *maxs, const char *filename );
 
 	void		(*pfnGetPlayerStats)		( const edict_t *pClient, int *ping, int *packet_loss );
 
