@@ -112,7 +112,7 @@ const char *CZombie::pPainSounds[] =
 //=========================================================
 int	CZombie :: Classify ( void )
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 //=========================================================

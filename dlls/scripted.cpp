@@ -1275,7 +1275,7 @@ void CFurniture :: Spawn( )
 //=========================================================
 int CFurniture::Classify ( void )
 {
-	return	CLASS_NONE;
+	return	EntityClass::None;
 }
 
 

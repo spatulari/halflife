@@ -156,7 +156,7 @@ int CHornet::Classify ( void )
 
 	if ( pev->owner && pev->owner->v.flags & FL_CLIENT)
 	{
-		return CLASS_PLAYER_BIOWEAPON;
+		return EntityClass::Player_BIOWEAPON;
 	}
 
 	return	CLASS_ALIEN_BIOWEAPON;

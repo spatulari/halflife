@@ -97,7 +97,7 @@ int CSqueakGrenade :: Classify ( void )
 		m_iMyClass = CLASS_INSECT; // no one cares about it
 		switch( m_hEnemy->Classify( ) )
 		{
-			case CLASS_PLAYER:
+			case EntityClass::Player:
 			case CLASS_HUMAN_PASSIVE:
 			case CLASS_HUMAN_MILITARY:
 				m_iMyClass = 0;
@@ -179,9 +179,9 @@ void CSqueakGrenade :: Killed( entvars_t *pevAttacker, int iGib )
 	UTIL_BloodDrips( pev->origin, g_vecZero, BloodColor(), 80 );
 
 	if (m_hOwner != nullptr)
-		RadiusDamage ( pev, m_hOwner->pev, pev->dmg, CLASS_NONE, DMG_BLAST );
+		RadiusDamage ( pev, m_hOwner->pev, pev->dmg, EntityClass::None, DMG_BLAST );
 	else
-		RadiusDamage ( pev, pev, pev->dmg, CLASS_NONE, DMG_BLAST );
+		RadiusDamage ( pev, pev, pev->dmg, EntityClass::None, DMG_BLAST );
 
 	// reset owner so death message happens
 	if (m_hOwner != nullptr)

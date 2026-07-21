@@ -261,7 +261,7 @@ int CBarney :: ISoundMask ( void)
 //=========================================================
 int	CBarney :: Classify ( void )
 {
-	return	CLASS_PLAYER_ALLY;
+	return	static_cast<int>(EntityClass::PlayerAlly);
 }
 
 //=========================================================
@@ -791,7 +791,7 @@ class CDeadBarney : public CBaseMonster
 {
 public:
 	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_PLAYER_ALLY; } 
+	int	Classify ( void ) { return	EntityClass::Player_ALLY; } 
 
 	void KeyValue( KeyValueData *pkvd );
 

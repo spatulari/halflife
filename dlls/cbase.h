@@ -103,24 +103,70 @@ typedef void (CBaseEntity::* BASEPTR)(void);
 typedef void (CBaseEntity::* ENTITYFUNCPTR)(CBaseEntity* pOther);
 typedef void (CBaseEntity::* USEPTR)(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
-// For CLASSIFY
-#define	CLASS_NONE				0
-#define CLASS_MACHINE			1
-#define CLASS_PLAYER			2
-#define	CLASS_HUMAN_PASSIVE		3
-#define CLASS_HUMAN_MILITARY	4
-#define CLASS_ALIEN_MILITARY	5
-#define CLASS_ALIEN_PASSIVE		6
-#define CLASS_ALIEN_MONSTER		7
-#define CLASS_ALIEN_PREY		8
-#define CLASS_ALIEN_PREDATOR	9
-#define CLASS_INSECT			10
-#define CLASS_PLAYER_ALLY		11
-#define CLASS_PLAYER_BIOWEAPON	12 // hornets and snarks.launched by players
-#define CLASS_ALIEN_BIOWEAPON	13 // hornets and snarks.launched by the alien menace
-#define	CLASS_BARNACLE			99 // special because no one pays attention to it, and it eats a wide cross-section of creatures.
+/**
+ * @brief Entity relationship classification.
+ *
+ * Used by the AI relationship system to determine how entities perceive and
+ * react to one another. These values are returned by `Classify()` and are
+ * used when resolving friend-or-foe interactions.
+ */
+enum class EntityClass : std::uint8_t
+{
+	/** No classification. */
+	None = 0,
 
-#define CLASS_VEHICLE			14
+	/** Mechanical entities such as turrets and other machines. */
+	Machine,
+
+	/** The player. */
+	Player,
+
+	/** Passive human NPCs that are generally non-hostile. */
+	HumanPassive,
+
+	/** Human military forces. */
+	HumanMilitary,
+
+	/** Military aliens. */
+	AlienMilitary,
+
+	/** Passive alien lifeforms. */
+	AlienPassive,
+
+	/** Hostile alien monsters. */
+	AlienMonster,
+
+	/** Alien creatures typically considered prey. */
+	AlienPrey,
+
+	/** Alien predators. */
+	AlienPredator,
+
+	/** Insects and insect-like creatures. */
+	Insect,
+
+	/** Friendly NPCs allied with the player. */
+	PlayerAlly,
+
+	/** Bioweapons launched or created by the player (e.g. hornets and snarks). */
+	PlayerBioweapon,
+
+	/** Bioweapons launched or created by alien enemies. */
+	AlienBioweapon,
+
+	/** Vehicles. */
+	Vehicle = 14,
+
+	/**
+	 * @brief Barnacle.
+	 *
+	 * Special because no one pays attention to it, and it eats a wide
+	 * cross-section of creatures.
+	 *
+	 * (Original Valve comment preserved.)
+	 */
+	Barnacle = 99,
+};
 
 class CBaseEntity;
 class CBaseToggle;
@@ -285,7 +331,7 @@ public:
 	 *
 	 * @return One of the `CLASS_*` classification constants.
 	 */
-	virtual int Classify() { return CLASS_NONE; }
+	virtual int Classify() { return static_cast<int>(EntityClass::None); } // TODO-003
 
 	/**
 	 * @brief Notifies the entity that one of its children has died.

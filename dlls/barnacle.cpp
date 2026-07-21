@@ -75,7 +75,7 @@ IMPLEMENT_SAVERESTORE( CBarnacle, CBaseMonster );
 //=========================================================
 int	CBarnacle :: Classify ( void )
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	static_cast<int>(EntityClass::AlienMonster);
 }
 
 //=========================================================

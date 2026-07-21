@@ -268,7 +268,7 @@ public:
 	int			TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) { Attack(); return 0; }
 	void		HandleAnimEvent( MonsterEvent_t *pEvent );
 	void		Attack( void );	
-	int			Classify( void ) { return CLASS_BARNACLE; }
+	int			Classify( void ) { return EntityClass::Barnacle; }
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
@@ -461,7 +461,7 @@ class CXenHull : public CPointEntity
 {
 public:
 	static CXenHull	*CreateHull( CBaseEntity *source, const Vector &mins, const Vector &maxs, const Vector &offset );
-	int			Classify( void ) { return CLASS_BARNACLE; }
+	int			Classify( void ) { return EntityClass::Barnacle; }
 };
 
 CXenHull *CXenHull :: CreateHull( CBaseEntity *source, const Vector &mins, const Vector &maxs, const Vector &offset )

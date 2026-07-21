@@ -1784,7 +1784,7 @@ void CBasePlayer::Duck( )
 //
 int  CBasePlayer::Classify ( void )
 {
-	return CLASS_PLAYER;
+	return EntityClass::Player;
 }
 
 
@@ -1865,7 +1865,7 @@ void CBasePlayer::UpdateStatusBar()
 		{
 			CBaseEntity *pEntity = CBaseEntity::Instance( tr.pHit );
 
-			if (pEntity->Classify() == CLASS_PLAYER )
+			if (pEntity->Classify() == EntityClass::Player )
 			{
 				newSBarState[ SBAR_ID_TARGETNAME ] = ENTINDEX( pEntity->edict() );
 				strcpy( sbuf1, "1 %p1\n2 Health: %i2%%\n3 Armor: %i3%%" );

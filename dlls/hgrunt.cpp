@@ -426,7 +426,7 @@ BOOL CHGrunt :: CheckMeleeAttack1 ( float flDot, float flDist )
 
 	if ( flDist <= 64 && flDot >= 0.7	&& 
 		 pEnemy->Classify() != CLASS_ALIEN_BIOWEAPON &&
-		 pEnemy->Classify() != CLASS_PLAYER_BIOWEAPON )
+		 pEnemy->Classify() != EntityClass::Player_BIOWEAPON )
 	{
 		return TRUE;
 	}
@@ -2069,7 +2069,7 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 								// player
 								SENTENCEG_PlayRndSz( ENT(pev), "HG_ALERT", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 							else if ((m_hEnemy != nullptr) &&
-									(m_hEnemy->Classify() != CLASS_PLAYER_ALLY) && 
+									(m_hEnemy->Classify() != EntityClass::Player_ALLY) && 
 									(m_hEnemy->Classify() != CLASS_HUMAN_PASSIVE) && 
 									(m_hEnemy->Classify() != CLASS_MACHINE))
 								// monster

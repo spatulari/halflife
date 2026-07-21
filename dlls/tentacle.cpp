@@ -241,7 +241,7 @@ typedef enum
 //=========================================================
 int	CTentacle :: Classify ( void )
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 //

@@ -128,7 +128,7 @@ IMPLEMENT_SAVERESTORE( CHoundeye, CSquadMonster );
 //=========================================================
 int	CHoundeye :: Classify ( void )
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 //=========================================================

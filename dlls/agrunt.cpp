@@ -385,7 +385,7 @@ void CAGrunt :: PainSound ( void )
 //=========================================================
 int	CAGrunt :: Classify ( void )
 {
-	return	CLASS_ALIEN_MILITARY;
+	return	static_cast<int>(EntityClass::AlienMilitary);
 }
 
 //=========================================================

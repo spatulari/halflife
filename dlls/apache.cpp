@@ -35,7 +35,7 @@ class CApache : public CBaseMonster
 
 	void Spawn( void );
 	void Precache( void );
-	int  Classify( void ) { return CLASS_HUMAN_MILITARY; };
+	int  Classify( void ) { return static_cast<int>(EntityClass::HumanMilitary); };
 	int  BloodColor( void ) { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib );
 	void GibMonster( void );
@@ -352,7 +352,7 @@ void CApache :: DyingThink( void )
 
 		EMIT_SOUND(ENT(pev), CHAN_STATIC, "weapons/mortarhit.wav", 1.0, 0.3);
 
-		RadiusDamage( pev->origin, pev, pev, 300, CLASS_NONE, DMG_BLAST );
+		RadiusDamage( pev->origin, pev, pev, 300, EntityClass::None, DMG_BLAST );
 
 		if (/*!(pev->spawnflags & SF_NOWRECKAGE) && */(pev->flags & FL_ONGROUND))
 		{

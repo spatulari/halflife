@@ -406,7 +406,7 @@ void CBigMomma :: KeyValue( KeyValueData *pkvd )
 //=========================================================
 int	CBigMomma :: Classify ( void )
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	static_cast<int>(EntityClass::AlienMonster);
 }
 
 //=========================================================
@@ -1244,7 +1244,7 @@ void CBMortar::Touch( CBaseEntity *pOther )
 	if ( pev->owner )
 		pevOwner = VARS(pev->owner);
 
-	RadiusDamage( pev->origin, pev, pevOwner, gSkillData.bigmommaDmgBlast, gSkillData.bigmommaRadiusBlast, CLASS_NONE, DMG_ACID );
+	RadiusDamage( pev->origin, pev, pevOwner, gSkillData.bigmommaDmgBlast, gSkillData.bigmommaRadiusBlast, static_cast<int>(EntityClass::None), DMG_ACID ); // TODO-003
 	UTIL_Remove( this );
 }
 

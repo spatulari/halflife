@@ -258,9 +258,9 @@ BOOL CBaseMonster :: HasHumanGibs( void )
 	int myClass = Classify();
 
 	if ( myClass == CLASS_HUMAN_MILITARY ||
-		 myClass == CLASS_PLAYER_ALLY	||
+		 myClass == EntityClass::Player_ALLY	||
 		 myClass == CLASS_HUMAN_PASSIVE  ||
-		 myClass == CLASS_PLAYER )
+		 myClass == EntityClass::Player )
 
 		 return TRUE;
 
@@ -273,7 +273,7 @@ BOOL CBaseMonster :: HasAlienGibs( void )
 	int myClass = Classify();
 
 	if ( myClass == CLASS_ALIEN_MILITARY ||
-		 myClass == CLASS_ALIEN_MONSTER	||
+		 myClass == EntityClass::AlienMonster	||
 		 myClass == CLASS_ALIEN_PASSIVE  ||
 		 myClass == CLASS_INSECT  ||
 		 myClass == CLASS_ALIEN_PREDATOR  ||
@@ -1060,7 +1060,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
 			// UNDONE: this should check a damage mask, not an ignore
-			if ( iClassIgnore != CLASS_NONE && pEntity->Classify() == iClassIgnore )
+			if ( iClassIgnore != EntityClass::None && pEntity->Classify() == iClassIgnore )
 			{// houndeyes don't hurt other houndeyes with their attack
 				continue;
 			}

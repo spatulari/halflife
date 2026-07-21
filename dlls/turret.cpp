@@ -1133,7 +1133,7 @@ int	CBaseTurret::Classify ( void )
 {
 	if (m_iOn || m_iAutoStart)
 		return	CLASS_MACHINE;
-	return CLASS_NONE;
+	return EntityClass::None;
 }
 
 
