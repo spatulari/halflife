@@ -32,14 +32,14 @@ class CAirtank : public CGrenade
 	virtual int		Save( CSave &save ); 
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int	 m_state;
 };
 
 
 LINK_ENTITY_TO_CLASS( item_airtank, CAirtank );
-TYPEDESCRIPTION	CAirtank::m_SaveData[] = 
+TypeDescription	CAirtank::m_SaveData[] = 
 {
 	DEFINE_FIELD( CAirtank, m_state, FIELD_INTEGER ),
 };

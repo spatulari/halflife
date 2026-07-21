@@ -75,7 +75,7 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	BOOL	m_fGunDrawn;
 	float	m_painTime;
@@ -90,7 +90,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_barney, CBarney );
 
-TYPEDESCRIPTION	CBarney::m_SaveData[] = 
+TypeDescription	CBarney::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBarney, m_fGunDrawn, FIELD_BOOLEAN ),
 	DEFINE_FIELD( CBarney, m_painTime, FIELD_TIME ),
@@ -830,7 +830,7 @@ void CDeadBarney :: Spawn( )
 	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead barney with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead barney with bad pose\n" );
 	}
 	// Corpses have less health
 	pev->health			= 8;//gSkillData.barneyHealth;

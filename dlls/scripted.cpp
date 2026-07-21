@@ -98,7 +98,7 @@ void CCineMonster :: KeyValue( KeyValueData *pkvd )
 	}
 }
 
-TYPEDESCRIPTION	CCineMonster::m_SaveData[] = 
+TypeDescription	CCineMonster::m_SaveData[] = 
 {
 	DEFINE_FIELD( CCineMonster, m_iszIdle, FIELD_STRING ),
 	DEFINE_FIELD( CCineMonster, m_iszPlay, FIELD_STRING ),
@@ -213,7 +213,7 @@ void CCineMonster :: Blocked( CBaseEntity *pOther )
 void CCineMonster :: Touch( CBaseEntity *pOther )
 {
 /*
-	ALERT( at_aiconsole, "Cine Touch\n" );
+	ALERT( AlertType::AiConsole, "Cine Touch\n" );
 	if (m_pentTarget && OFFSET(pOther->pev) == OFFSET(m_pentTarget))
 	{
 		CBaseMonster *pTarget = GetClassPtr((CBaseMonster *)VARS(m_pentTarget));
@@ -287,7 +287,7 @@ int CCineMonster :: FindEntity( void )
 				m_hTargetEnt = pTarget;
 				return TRUE;
 			}
-			ALERT( at_console, "Found %s, but can't play!\n", STRING(m_iszEntity) );
+			ALERT( AlertType::Console, "Found %s, but can't play!\n", STRING(m_iszEntity) );
 		}
 		pentTarget = FIND_ENTITY_BY_TARGETNAME(pentTarget, STRING(m_iszEntity));
 		pTarget = nullptr;
@@ -332,7 +332,7 @@ void CCineMonster :: PossessEntity( void )
 #if 0
 		if ( !pTarget->CanPlaySequence(  FCanOverrideState() ) )
 		{
-			ALERT( at_aiconsole, "Can't possess entity %s\n", STRING(pTarget->pev->classname) );
+			ALERT( AlertType::AiConsole, "Can't possess entity %s\n", STRING(pTarget->pev->classname) );
 			return;
 		}
 #endif
@@ -375,7 +375,7 @@ void CCineMonster :: PossessEntity( void )
 			//			pTarget->pev->flags &= ~FL_ONGROUND;
 			break;
 		}
-//		ALERT( at_aiconsole, "\"%s\" found and used (INT: %s)\n", STRING( pTarget->pev->targetname ), FBitSet(pev->spawnflags, SF_SCRIPT_NOINTERRUPT)?"No":"Yes" );
+//		ALERT( AlertType::AiConsole, "\"%s\" found and used (INT: %s)\n", STRING( pTarget->pev->targetname ), FBitSet(pev->spawnflags, SF_SCRIPT_NOINTERRUPT)?"No":"Yes" );
 
 		pTarget->m_IdealMonsterState = MONSTERSTATE_SCRIPT;
 		if (m_iszIdle)
@@ -404,7 +404,7 @@ void CCineAI :: PossessEntity( void )
 	{
 		if ( !pTarget->CanPlaySequence( FCanOverrideState(), SS_INTERRUPT_AI ) )
 		{
-			ALERT( at_aiconsole, "(AI)Can't possess entity %s\n", STRING(pTarget->pev->classname) );
+			ALERT( AlertType::AiConsole, "(AI)Can't possess entity %s\n", STRING(pTarget->pev->classname) );
 			return;
 		}
 
@@ -446,11 +446,11 @@ void CCineAI :: PossessEntity( void )
 			pTarget->pev->flags &= ~FL_ONGROUND;
 			break;
 		default:
-			ALERT ( at_aiconsole, "aiscript:  invalid Move To Position value!" );
+			ALERT ( AlertType::AiConsole, "aiscript:  invalid Move To Position value!" );
 			break;
 		}
 		
-		ALERT( at_aiconsole, "\"%s\" found and used\n", STRING( pTarget->pev->targetname ) );
+		ALERT( AlertType::AiConsole, "\"%s\" found and used\n", STRING( pTarget->pev->targetname ) );
 
 		pTarget->m_IdealMonsterState = MONSTERSTATE_SCRIPT;
 
@@ -478,12 +478,12 @@ void CCineMonster :: CineThink( void )
 	if (FindEntity())
 	{
 		PossessEntity( );
-		ALERT( at_aiconsole, "script \"%s\" using monster \"%s\"\n", STRING( pev->targetname ), STRING( m_iszEntity ) );
+		ALERT( AlertType::AiConsole, "script \"%s\" using monster \"%s\"\n", STRING( pev->targetname ), STRING( m_iszEntity ) );
 	}
 	else
 	{
 		CancelScript( );
-		ALERT( at_aiconsole, "script \"%s\" can't find monster \"%s\"\n", STRING( pev->targetname ), STRING( m_iszEntity ) );
+		ALERT( AlertType::AiConsole, "script \"%s\" can't find monster \"%s\"\n", STRING( pev->targetname ), STRING( m_iszEntity ) );
 		pev->nextthink = gpGlobals->time + 1.0;
 	}
 }
@@ -501,7 +501,7 @@ BOOL CCineMonster :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL comp
 	pTarget->pev->sequence = pTarget->LookupSequence( STRING( iszSeq ) );
 	if (pTarget->pev->sequence == -1)
 	{
-		ALERT( at_error, "%s: unknown scripted sequence \"%s\"\n", STRING( pTarget->pev->targetname ), STRING( iszSeq) );
+		ALERT( AlertType::Error, "%s: unknown scripted sequence \"%s\"\n", STRING( pTarget->pev->targetname ), STRING( iszSeq) );
 		pTarget->pev->sequence = 0;
 		// return FALSE;
 	}
@@ -513,7 +513,7 @@ BOOL CCineMonster :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL comp
 	else
 		s = "Yes";
 
-	ALERT( at_console, "%s (%s): started \"%s\":INT:%s\n", STRING( pTarget->pev->targetname ), STRING( pTarget->pev->classname ), STRING( iszSeq), s );
+	ALERT( AlertType::Console, "%s (%s): started \"%s\":INT:%s\n", STRING( pTarget->pev->targetname ), STRING( pTarget->pev->classname ), STRING( iszSeq), s );
 #endif
 
 	pTarget->pev->frame = 0;
@@ -541,7 +541,7 @@ BOOL CCineAI :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL completeO
 
 	if (pTarget->pev->sequence == -1)
 	{
-		ALERT( at_error, "%s: unknown aiscripted sequence \"%s\"\n", STRING( pTarget->pev->targetname ), STRING( iszSeq) );
+		ALERT( AlertType::Error, "%s: unknown aiscripted sequence \"%s\"\n", STRING( pTarget->pev->targetname ), STRING( iszSeq) );
 		pTarget->pev->sequence = 0;
 		// return FALSE;
 	}
@@ -560,7 +560,7 @@ BOOL CCineAI :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL completeO
 //=========================================================
 void CCineMonster :: SequenceDone ( CBaseMonster *pMonster )
 {
-	//ALERT( at_aiconsole, "Sequence %s finished\n", STRING( m_pCine->m_iszPlay ) );
+	//ALERT( AlertType::AiConsole, "Sequence %s finished\n", STRING( m_pCine->m_iszPlay ) );
 
 	if ( !( pev->spawnflags & SF_SCRIPT_REPEATABLE ) )
 	{
@@ -618,7 +618,7 @@ void CCineAI :: FixScriptMonsterSchedule( CBaseMonster *pMonster )
 			pMonster->ChangeSchedule( pMonster->GetScheduleOfType( SCHED_AMBUSH ) );
 			break;
 		default:
-			ALERT ( at_aiconsole, "FixScriptMonsterSchedule - no case!\n" );
+			ALERT ( AlertType::AiConsole, "FixScriptMonsterSchedule - no case!\n" );
 			pMonster->ClearSchedule();
 			break;
 	}
@@ -703,7 +703,7 @@ void ScriptEntityCancel( edict_t *pentCine )
 // find all the cinematic entities with my targetname and stop them from playing
 void CCineMonster :: CancelScript( void )
 {
-	ALERT( at_aiconsole, "Cancelling script: %s\n", STRING(m_iszPlay) );
+	ALERT( AlertType::AiConsole, "Cancelling script: %s\n", STRING(m_iszPlay) );
 	
 	if ( !pev->targetname )
 	{
@@ -932,7 +932,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	CBaseToggle *FindEntity( void );
 	BOOL AcceptableSpeaker( CBaseToggle *pTarget );
@@ -956,7 +956,7 @@ private:
 #define SF_SENTENCE_INTERRUPT	0x0004	// force talking except when dead
 #define SF_SENTENCE_CONCURRENT	0x0008	// allow other people to keep talking
 
-TYPEDESCRIPTION	CScriptedSentence::m_SaveData[] = 
+TypeDescription	CScriptedSentence::m_SaveData[] = 
 {
 	DEFINE_FIELD( CScriptedSentence, m_iszSentence, FIELD_STRING ),
 	DEFINE_FIELD( CScriptedSentence, m_iszEntity, FIELD_STRING ),
@@ -1025,7 +1025,7 @@ void CScriptedSentence :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 {
 	if ( !m_active )
 		return;
-//	ALERT( at_console, "Firing sentence: %s\n", STRING(m_iszSentence) );
+//	ALERT( AlertType::Console, "Firing sentence: %s\n", STRING(m_iszSentence) );
 	SetThink( &CScriptedSentence::FindThink );
 	pev->nextthink = gpGlobals->time;
 }
@@ -1081,11 +1081,11 @@ void CScriptedSentence :: FindThink( void )
 		SetThink( &CScriptedSentence::DelayThink );
 		pev->nextthink = gpGlobals->time + m_flDuration + m_flRepeat;
 		m_active = FALSE;
-//		ALERT( at_console, "%s: found monster %s\n", STRING(m_iszSentence), STRING(m_iszEntity) );
+//		ALERT( AlertType::Console, "%s: found monster %s\n", STRING(m_iszSentence), STRING(m_iszEntity) );
 	}
 	else
 	{
-//		ALERT( at_console, "%s: can't find monster %s\n", STRING(m_iszSentence), STRING(m_iszEntity) );
+//		ALERT( AlertType::Console, "%s: can't find monster %s\n", STRING(m_iszSentence), STRING(m_iszEntity) );
 		pev->nextthink = gpGlobals->time + m_flRepeat + 0.5;
 	}
 }
@@ -1155,10 +1155,10 @@ CBaseToggle *CScriptedSentence :: FindEntity( void )
 		{
 			if (AcceptableSpeaker(pSpeakingEnt))
 			{
-				//ALERT(at_console, "acceptable speaker\n");
+				//ALERT(AlertType::Console, "acceptable speaker\n");
 				return pSpeakingEnt;
 			}
-			//ALERT(at_console, "found unacceptable speaker\n");
+			//ALERT(AlertType::Console, "found unacceptable speaker\n");
 		}
 		pentTarget = FIND_ENTITY_BY_TARGETNAME(pentTarget, STRING(m_iszEntity));
 	}
@@ -1185,7 +1185,7 @@ BOOL CScriptedSentence :: StartSentence( CBaseToggle *pTarget )
 {
 	if ( !pTarget )
 	{
-		ALERT( at_aiconsole, "Not Playing sentence %s\n", STRING(m_iszSentence) );
+		ALERT( AlertType::AiConsole, "Not Playing sentence %s\n", STRING(m_iszSentence) );
 		return FALSE;
 	}
 
@@ -1205,7 +1205,7 @@ BOOL CScriptedSentence :: StartSentence( CBaseToggle *pTarget )
 	}
 
 	pTarget->PlayScriptedSentence( STRING(m_iszSentence), m_flDuration,  m_flVolume, m_flAttenuation, bConcurrent, pListener );
-	ALERT( at_aiconsole, "Playing sentence %s (%.1f)\n", STRING(m_iszSentence), m_flDuration );
+	ALERT( AlertType::AiConsole, "Playing sentence %s (%.1f)\n", STRING(m_iszSentence), m_flDuration );
 	SUB_UseTargets( nullptr, USE_TOGGLE, 0 );
 	return TRUE;
 }

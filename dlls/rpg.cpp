@@ -153,7 +153,7 @@ void CRpgRocket :: Spawn( void )
 //=========================================================
 void CRpgRocket :: RocketTouch ( CBaseEntity *pOther )
 {
-	//ALERT( at_console, "RpgRocket RocketTouch, m_pLauncher: %u\n", GetLauncher() );
+	//ALERT( AlertType::Console, "RpgRocket RocketTouch, m_pLauncher: %u\n", GetLauncher() );
 
 	if ( GetLauncher() )
 	{
@@ -169,7 +169,7 @@ void CRpgRocket :: RocketTouch ( CBaseEntity *pOther )
 //=========================================================
 void CRpgRocket::Explode( TraceResult *pTrace, int bitsDamageType )
 {
-	//ALERT( at_console, "RpgRocket Explode, m_pLauncher: %u\n", GetLauncher() );
+	//ALERT( AlertType::Console, "RpgRocket Explode, m_pLauncher: %u\n", GetLauncher() );
 
 	STOP_SOUND( edict(), CHAN_VOICE, "weapons/rocket1.wav");
 
@@ -254,12 +254,12 @@ void CRpgRocket :: FollowThink( void  )
 
 		if( UTIL_PointContents( vSpotLocation ) == CONTENTS_SKY )
 		{
-			//ALERT( at_console, "laser spot is in the sky...\n");
+			//ALERT( AlertType::Console, "laser spot is in the sky...\n");
 		}
 
 		UTIL_TraceLine ( pev->origin, vSpotLocation, dont_ignore_monsters, ENT(pev), &tr );
 
-		//ALERT( at_console, "fraction: %f\n", tr.flFraction );
+		//ALERT( AlertType::Console, "fraction: %f\n", tr.flFraction );
 
 		if (tr.flFraction >= 0.90)
 		{
@@ -320,17 +320,17 @@ void CRpgRocket :: FollowThink( void  )
 		// if we've travelled more than max distance the player can send a spot, stop tracking the original launcher (allow it to reload)		
 		if( flDistance > 8192.0f || gpGlobals->time - m_flIgniteTime > 6.0f )
 		{
-			//ALERT( at_console, "RPG too far (%f)!\n", flDistance );
+			//ALERT( AlertType::Console, "RPG too far (%f)!\n", flDistance );
 			GetLauncher()->m_cActiveRockets--;
 			m_hLauncher = nullptr;
 		}
 
-		//ALERT( at_console, "%.0f, m_pLauncher: %u, flDistance: %f\n", flSpeed, GetLauncher(), flDistance );
+		//ALERT( AlertType::Console, "%.0f, m_pLauncher: %u, flDistance: %f\n", flSpeed, GetLauncher(), flDistance );
 	}
 
 	if( (UTIL_PointContents(pev->origin) == CONTENTS_SKY ) )
 	{
-		//ALERT( at_console, "Rocket is in the sky, detonating...\n");
+		//ALERT( AlertType::Console, "Rocket is in the sky, detonating...\n");
 		Detonate();
 	}
 
@@ -342,7 +342,7 @@ void CRpgRocket :: FollowThink( void  )
 
 void CRpg::Reload( void )
 {
-	//ALERT( at_console, "RPG Reload, m_cActiveRockets: %d, m_fSpotActive: %d\n", m_cActiveRockets, m_fSpotActive );
+	//ALERT( AlertType::Console, "RPG Reload, m_cActiveRockets: %d, m_fSpotActive: %d\n", m_cActiveRockets, m_fSpotActive );
 
 	int iResult;
 
@@ -369,7 +369,7 @@ void CRpg::Reload( void )
 
 	if ( m_cActiveRockets && m_fSpotActive )
 	{
-		//ALERT( at_console, "RPG reload failed, m_cActiveRockets: %d, m_fSpotActive: %d\n", m_cActiveRockets, m_fSpotActive );
+		//ALERT( AlertType::Console, "RPG reload failed, m_cActiveRockets: %d, m_fSpotActive: %d\n", m_cActiveRockets, m_fSpotActive );
 
 		// no reloading when there are active missiles tracking the designator.
 		// ward off future autoreload attempts by setting next attack time into the future for a bit. 

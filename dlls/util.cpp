@@ -197,7 +197,7 @@ UTIL_GroupTrace::~UTIL_GroupTrace( void )
 	ENGINE_SETGROUPMASK( g_groupmask, g_groupop );
 }
 
-TYPEDESCRIPTION	gEntvarsDescription[] = 
+TypeDescription	gEntvarsDescription[] = 
 {
 	DEFINE_ENTITY_FIELD( classname, FIELD_STRING ),
 	DEFINE_ENTITY_GLOBAL_FIELD( globalname, FIELD_STRING ),
@@ -312,39 +312,63 @@ TYPEDESCRIPTION	gEntvarsDescription[] =
 
 
 #ifdef	DEBUG
-edict_t *DBG_EntOfVars( const entvars_t *pev )
+edict_t *debug::EntOfVars( const entvars_t *pev )
 {
 	if (pev->pContainingEntity != nullptr)
 		return pev->pContainingEntity;
-	ALERT(at_console, "entvars_t pContainingEntity is nullptr, calling into engine");
+	ALERT(AlertType::Console, "entvars_t pContainingEntity is nullptr, calling into engine");
 	edict_t* pent = (*g_engfuncs.pfnFindEntityByVars)((entvars_t*)pev);
 	if (pent == nullptr)
-		ALERT(at_console, "DAMN!  Even the engine couldn't FindEntityByVars!");
+		ALERT(AlertType::Console, "DAMN!  Even the engine couldn't FindEntityByVars!");
 	((entvars_t *)pev)->pContainingEntity = pent;
 	return pent;
 }
 #endif //DEBUG
 
 
-#ifdef	DEBUG
-	void
-DBG_AssertFunction(
-	BOOL		fExpr,
-	const char*	szExpr,
-	const char*	szFile,
-	int			szLine,
-	const char*	szMessage)
-	{
-	if (fExpr)
+#ifdef DEBUG
+
+#include <cstdio>
+#include <string_view>
+
+void debug::AssertFunction(
+	bool expr,
+	std::string_view expression,
+	std::string_view file,
+	int line,
+	std::string_view message)
+{
+	if (expr)
 		return;
-	char szOut[512];
-	if (szMessage != nullptr)
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)\n%s", szExpr, szFile, szLine, szMessage);
-	else
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)", szExpr, szFile, szLine);
-	ALERT(at_console, szOut);
+
+	char output[512];
+
+	if (!message.empty())
+	{
+		std::snprintf(
+			output,
+			sizeof(output),
+			"ASSERT FAILED:\n %.*s \n(%.*s@%d)\n%.*s",
+			static_cast<int>(expression.size()), expression.data(),
+			static_cast<int>(file.size()), file.data(),
+			line,
+			static_cast<int>(message.size()), message.data());
 	}
-#endif	// DEBUG
+	else
+	{
+		std::snprintf(
+			output,
+			sizeof(output),
+			"ASSERT FAILED:\n %.*s \n(%.*s@%d)",
+			static_cast<int>(expression.size()), expression.data(),
+			static_cast<int>(file.size()), file.data(),
+			line);
+	}
+
+	ALERT(AlertType::Console, output);
+}
+
+#endif // DEBUG
 
 BOOL UTIL_GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon )
 {
@@ -1111,7 +1135,7 @@ int UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity *pActivator)
 				return pMaster->IsTriggered( pActivator );
 		}
 
-		ALERT(at_console, "Master was nullptr or not a master!\n");
+		ALERT(AlertType::Console, "Master was nullptr or not a master!\n");
 	}
 
 	// if this isn't a master entity, just say yes.
@@ -1402,7 +1426,7 @@ void UTIL_StringToVector( float *pVector, const char *pString )
 	if (j < 2)
 	{
 		/*
-		ALERT( at_error, "Bad field in entity!! %s:%s == \"%s\"\n",
+		ALERT( AlertType::Error, "Bad field in entity!! %s:%s == \"%s\"\n",
 			pkvd->szClassName, pkvd->szKeyName, pkvd->szValue );
 		*/
 		for (j = j+1;j < 3; j++)
@@ -1583,7 +1607,7 @@ void UTIL_PrecacheOther( const char *szClassname )
 	pent = CREATE_NAMED_ENTITY( MAKE_STRING( szClassname ) );
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in UTIL_PrecacheOther\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in UTIL_PrecacheOther\n" );
 		return;
 	}
 	
@@ -1607,7 +1631,7 @@ void UTIL_LogPrintf( char *fmt, ... )
 	va_end   ( argptr );
 
 	// Print to server console
-	ALERT( at_logged, "%s", string );
+	ALERT( AlertType::Logged, "%s", string );
 }
 
 //=========================================================
@@ -1812,7 +1836,7 @@ unsigned short CSaveRestoreBuffer :: TokenHash( const char *pszToken )
 	static int tokensparsed = 0;
 	tokensparsed++;
 	if ( !m_pdata->tokenCount || !m_pdata->pTokens )
-		ALERT( at_error, "No token table array in TokenHash()!" );
+		ALERT( AlertType::Error, "No token table array in TokenHash()!" );
 #endif
 
 	for ( int i=0; i<m_pdata->tokenCount; i++ )
@@ -1822,7 +1846,7 @@ unsigned short CSaveRestoreBuffer :: TokenHash( const char *pszToken )
 		if ( i > 50 && !beentheredonethat )
 		{
 			beentheredonethat = TRUE;
-			ALERT( at_error, "CSaveRestoreBuffer :: TokenHash() is getting too full!" );
+			ALERT( AlertType::Error, "CSaveRestoreBuffer :: TokenHash() is getting too full!" );
 		}
 #endif
 
@@ -1839,7 +1863,7 @@ unsigned short CSaveRestoreBuffer :: TokenHash( const char *pszToken )
 		
 	// Token hash table full!!! 
 	// [Consider doing overflow table(s) after the main table & limiting linear hash table search]
-	ALERT( at_error, "CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!" );
+	ALERT( AlertType::Error, "CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!" );
 	return 0;
 }
 
@@ -1909,7 +1933,7 @@ void CSave :: WriteString( const char *pname, const int *stringId, int count )
 #else
 #if 0
 	if ( count != 1 )
-		ALERT( at_error, "No string arrays!\n" );
+		ALERT( AlertType::Error, "No string arrays!\n" );
 	WriteString( pname, (char *)STRING(*stringId) );
 #endif
 
@@ -1981,14 +2005,14 @@ void CSave :: WriteFunction( const char *pname, void **data, int count )
 	if ( functionName )
 		BufferField( pname, strlen(functionName) + 1, functionName );
 	else
-		ALERT( at_error, "Invalid function pointer in entity!" );
+		ALERT( AlertType::Error, "Invalid function pointer in entity!" );
 }
 
 
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd )
 {
 	int i;
-	TYPEDESCRIPTION		*pField;
+	TypeDescription		*pField;
 
 	for ( i = 0; i < ENTVARS_COUNT; i++ )
 	{
@@ -2024,7 +2048,7 @@ void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd )
 			case FIELD_EDICT:
 			case FIELD_ENTITY:
 			case FIELD_POINTER:
-				ALERT( at_error, "Bad field in entity!!\n" );
+				ALERT( AlertType::Error, "Bad field in entity!!\n" );
 				break;
 			}
 			pkvd->fHandled = TRUE;
@@ -2042,10 +2066,10 @@ int CSave :: WriteEntVars( const char *pname, entvars_t *pev )
 
 
 
-int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+int CSave :: WriteFields( const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	int				i, j, actualCount, emptyCount;
-	TYPEDESCRIPTION	*pTest;
+	TypeDescription	*pTest;
 	int				entityArray[MAX_ENTITYARRAY];
 
 	// Precalculate the number of empty fields
@@ -2091,7 +2115,7 @@ int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 		case FIELD_ENTITY:
 		case FIELD_EHANDLE:
 			if ( pTest->fieldSize > MAX_ENTITYARRAY )
-				ALERT( at_error, "Can't save more than %d entities in an array!!!\n", MAX_ENTITYARRAY );
+				ALERT( AlertType::Error, "Can't save more than %d entities in an array!!!\n", MAX_ENTITYARRAY );
 			for ( j = 0; j < pTest->fieldSize; j++ )
 			{
 				switch( pTest->fieldType )
@@ -2144,7 +2168,7 @@ int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 			WriteFunction( pTest->fieldName, (void **)pOutputData, pTest->fieldSize );
 		break;
 		default:
-			ALERT( at_error, "Bad field type\n" );
+			ALERT( AlertType::Error, "Bad field type\n" );
 		}
 	}
 
@@ -2183,7 +2207,7 @@ void CSave :: BufferHeader( const char *pname, int size )
 {
 	short	hashvalue = TokenHash( pname );
 	if ( size > 1<<(sizeof(short)*8) )
-		ALERT( at_error, "CSave :: BufferHeader() size parameter exceeds 'short'!" );
+		ALERT( AlertType::Error, "CSave :: BufferHeader() size parameter exceeds 'short'!" );
 	BufferData( (const char *)&size, sizeof(short) );
 	BufferData( (const char *)&hashvalue, sizeof(short) );
 }
@@ -2196,7 +2220,7 @@ void CSave :: BufferData( const char *pdata, int size )
 
 	if ( m_pdata->size + size > m_pdata->bufferSize )
 	{
-		ALERT( at_error, "Save/Restore overflow!" );
+		ALERT( AlertType::Error, "Save/Restore overflow!" );
 		m_pdata->size = m_pdata->bufferSize;
 		return;
 	}
@@ -2214,10 +2238,10 @@ void CSave :: BufferData( const char *pdata, int size )
 //
 // --------------------------------------------------------------
 
-int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount, int startField, int size, char *pName, void *pData )
+int CRestore::ReadField( void *pBaseData, TypeDescription *pFields, int fieldCount, int startField, int size, char *pName, void *pData )
 {
 	int i, j, stringCount, fieldNumber, entityIndex;
-	TYPEDESCRIPTION *pTest;
+	TypeDescription *pTest;
 	float	time, timeData;
 	Vector	position;
 	edict_t	*pent;
@@ -2362,14 +2386,14 @@ int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCou
 					break;
 
 					default:
-						ALERT( at_error, "Bad field type\n" );
+						ALERT( AlertType::Error, "Bad field type\n" );
 					}
 				}
 			}
 #if 0
 			else
 			{
-				ALERT( at_console, "Skipping global field %s\n", pName );
+				ALERT( AlertType::Console, "Skipping global field %s\n", pName );
 			}
 #endif
 			return fieldNumber;
@@ -2386,7 +2410,7 @@ int CRestore::ReadEntVars( const char *pname, entvars_t *pev )
 }
 
 
-int CRestore::ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+int CRestore::ReadFields( const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	unsigned short	i, token;
 	int		lastField, fileCount;
@@ -2400,7 +2424,7 @@ int CRestore::ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 	// Check the struct name
 	if ( token != TokenHash(pname) )			// Field Set marker
 	{
-//		ALERT( at_error, "Expected %s found %s!\n", pname, BufferPointer() );
+//		ALERT( AlertType::Error, "Expected %s found %s!\n", pname, BufferPointer() );
 		BufferRewind( 2*sizeof(short) );
 		return 0;
 	}
@@ -2495,7 +2519,7 @@ void CRestore::BufferReadBytes( char *pOutput, int size )
 
 	if ( (m_pdata->size + size) > m_pdata->bufferSize )
 	{
-		ALERT( at_error, "Restore overflow!" );
+		ALERT( AlertType::Error, "Restore overflow!" );
 		m_pdata->size = m_pdata->bufferSize;
 		return;
 	}

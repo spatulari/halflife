@@ -83,7 +83,7 @@ void CBaseSpectator::SpectatorImpulseCommand(void)
 			// Looped around, failure
 			if (pCurrentGoal == pPreviousGoal)
 			{
-				ALERT(at_console, "Could not find a spawn spot.\n");
+				ALERT(AlertType::Console, "Could not find a spawn spot.\n");
 				break;
 			}
 			// Found a non-world entity, set success, otherwise, look for the next one.
@@ -103,7 +103,7 @@ void CBaseSpectator::SpectatorImpulseCommand(void)
 		pev->fixangle = FALSE;
 		break;
 	default:
-		ALERT(at_console, "Unknown spectator impulse\n");
+		ALERT(AlertType::Console, "Unknown spectator impulse\n");
 		break;
 	}
 

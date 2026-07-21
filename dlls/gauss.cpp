@@ -269,10 +269,10 @@ void CGauss::SecondaryAttack()
 		if ( pitch > 250 ) 
 			 pitch = 250;
 		
-		// ALERT( at_console, "%d %d %d\n", m_fInAttack, m_iSoundState, pitch );
+		// ALERT( AlertType::Console, "%d %d %d\n", m_fInAttack, m_iSoundState, pitch );
 
 		if ( m_iSoundState == 0 )
-			ALERT( at_console, "sound state %d\n", m_iSoundState );
+			ALERT( AlertType::Console, "sound state %d\n", m_iSoundState );
 
 		PLAYBACK_EVENT_FULL( FEV_NOTHOST, m_pPlayer->edict(), m_usGaussSpin, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, pitch, 0, ( m_iSoundState == SND_CHANGE_PITCH ) ? 1 : 0, 0 );
 
@@ -342,7 +342,7 @@ void CGauss::StartFire( void )
 
 	if (m_fInAttack != 3)
 	{
-		//ALERT ( at_console, "Time:%f Damage:%f\n", gpGlobals->time - m_pPlayer->m_flStartCharge, flDamage );
+		//ALERT ( AlertType::Console, "Time:%f Damage:%f\n", gpGlobals->time - m_pPlayer->m_flStartCharge, flDamage );
 
 #ifndef CLIENT_DLL
 		float flZVel = m_pPlayer->pev->velocity.z;
@@ -400,19 +400,19 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 	PLAYBACK_EVENT_FULL( FEV_NOTHOST | FEV_RELIABLE, m_pPlayer->edict(), m_usGaussFire, 0.01, (float *)&m_pPlayer->pev->origin, (float *)&m_pPlayer->pev->angles, 0.0, 0.0, 0, 0, 0, 1 );
 
 	
-	/*ALERT( at_console, "%f %f %f\n%f %f %f\n", 
+	/*ALERT( AlertType::Console, "%f %f %f\n%f %f %f\n", 
 		vecSrc.x, vecSrc.y, vecSrc.z, 
 		vecDest.x, vecDest.y, vecDest.z );*/
 	
 
-//	ALERT( at_console, "%f %f\n", tr.flFraction, flMaxFrac );
+//	ALERT( AlertType::Console, "%f %f\n", tr.flFraction, flMaxFrac );
 
 #ifndef CLIENT_DLL
 	while (flDamage > 10 && nMaxHits > 0)
 	{
 		nMaxHits--;
 
-		// ALERT( at_console, "." );
+		// ALERT( AlertType::Console, "." );
 		UTIL_TraceLine(vecSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr);
 
 		if (tr.fAllSolid)
@@ -455,7 +455,7 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 
 			if (n < 0.5) // 60 degrees
 			{
-				// ALERT( at_console, "reflect %f\n", n );
+				// ALERT( AlertType::Console, "reflect %f\n", n );
 				// reflect
 				Vector r;
 			
@@ -499,7 +499,7 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 							if (n == 0) n = 1;
 							flDamage -= n;
 
-							// ALERT( at_console, "punch %f\n", n );
+							// ALERT( AlertType::Console, "punch %f\n", n );
 							nTotal += 21;
 
 							// exit blast damage
@@ -527,13 +527,13 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 					}
 					else
 					{
-						 //ALERT( at_console, "blocked %f\n", n );
+						 //ALERT( AlertType::Console, "blocked %f\n", n );
 						flDamage = 0;
 					}
 				}
 				else
 				{
-					//ALERT( at_console, "blocked solid\n" );
+					//ALERT( AlertType::Console, "blocked solid\n" );
 					
 					flDamage = 0;
 				}
@@ -547,7 +547,7 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 		}
 	}
 #endif
-	// ALERT( at_console, "%d bytes\n", nTotal );
+	// ALERT( AlertType::Console, "%d bytes\n", nTotal );
 }
 
 

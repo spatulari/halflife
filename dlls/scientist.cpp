@@ -105,7 +105,7 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	CUSTOM_SCHEDULES;
 
@@ -117,7 +117,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( monster_scientist, CScientist );
 
-TYPEDESCRIPTION	CScientist::m_SaveData[] = 
+TypeDescription	CScientist::m_SaveData[] = 
 {
 	DEFINE_FIELD( CScientist, m_painTime, FIELD_TIME ),
 	DEFINE_FIELD( CScientist, m_healTime, FIELD_TIME ),
@@ -1177,7 +1177,7 @@ void CDeadScientist :: Spawn( )
 	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead scientist with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead scientist with bad pose\n" );
 	}
 
 	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
@@ -1199,7 +1199,7 @@ public:
 	int	Classify ( void );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	virtual void SetAnswerQuestion( CTalkMonster *pSpeaker );
 	int FriendNumber( int arrayNumber );
@@ -1211,7 +1211,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( monster_sitting_scientist, CSittingScientist );
-TYPEDESCRIPTION	CSittingScientist::m_SaveData[] = 
+TypeDescription	CSittingScientist::m_SaveData[] = 
 {
 	// Don't need to save/restore m_baseSequence (recalced)
 	DEFINE_FIELD( CSittingScientist, m_headTurn, FIELD_INTEGER ),
@@ -1369,7 +1369,7 @@ void CSittingScientist :: SittingThink( void )
 				else
 					pev->sequence = m_baseSequence + SITTING_ANIM_sitlookright;
 
-				//ALERT(at_console, "sitting speak\n");
+				//ALERT(AlertType::Console, "sitting speak\n");
 			}
 		}
 		else if (i < 60)
@@ -1378,7 +1378,7 @@ void CSittingScientist :: SittingThink( void )
 			m_headTurn = RANDOM_LONG(0,8) * 10 - 40;
 			if (RANDOM_LONG(0,99) < 5)
 			{
-				//ALERT(at_console, "sitting speak2\n");
+				//ALERT(AlertType::Console, "sitting speak2\n");
 				FIdleSpeak();
 			}
 		}

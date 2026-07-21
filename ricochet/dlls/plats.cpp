@@ -42,14 +42,14 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	BYTE	m_bMoveSnd;			// sound a plat makes while moving
 	BYTE	m_bStopSnd;			// sound a plat makes when it stops
 	float	m_volume;			// Sound volume
 };
 
-TYPEDESCRIPTION	CBasePlatTrain::m_SaveData[] = 
+TypeDescription	CBasePlatTrain::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBasePlatTrain, m_bMoveSnd, FIELD_CHARACTER ),
 	DEFINE_FIELD( CBasePlatTrain, m_bStopSnd, FIELD_CHARACTER ),
@@ -496,7 +496,7 @@ void CFuncPlat :: HitTop( void )
 
 void CFuncPlat :: Blocked( CBaseEntity *pOther )
 {
-	ALERT( at_aiconsole, "%s Blocked by %s\n", STRING(pev->classname), STRING(pOther->pev->classname) );
+	ALERT( AlertType::AiConsole, "%s Blocked by %s\n", STRING(pev->classname), STRING(pOther->pev->classname) );
 	// Hurt the blocker a little
 	pOther->TakeDamage(pev, pev, 1, DMG_CRUSH);
 
@@ -526,12 +526,12 @@ public:
 	void			RotMove( Vector &destAngle, float time );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	Vector	m_end, m_start;
 };
 LINK_ENTITY_TO_CLASS( func_platrot, CFuncPlatRot );
-TYPEDESCRIPTION	CFuncPlatRot::m_SaveData[] = 
+TypeDescription	CFuncPlatRot::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncPlatRot, m_end, FIELD_VECTOR ),
 	DEFINE_FIELD( CFuncPlatRot, m_start, FIELD_VECTOR ),
@@ -642,7 +642,7 @@ public:
 	void EXPORT Next( void );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	entvars_t	*m_pevCurrentTarget;
 	int			m_sounds;
@@ -650,7 +650,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( func_train, CFuncTrain );
-TYPEDESCRIPTION	CFuncTrain::m_SaveData[] = 
+TypeDescription	CFuncTrain::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTrain, m_sounds, FIELD_INTEGER ),
 	DEFINE_FIELD( CFuncTrain, m_pevCurrentTarget, FIELD_EVARS ),
@@ -729,7 +729,7 @@ void CFuncTrain :: Wait( void )
         return;
     }
     
-    // ALERT ( at_console, "%f\n", m_flWait );
+    // ALERT ( AlertType::Console, "%f\n", m_flWait );
 
 	if (m_flWait != 0)
 	{// -1 wait will wait forever!		
@@ -777,7 +777,7 @@ void CFuncTrain :: Next( void )
 	if ( m_pevCurrentTarget && m_pevCurrentTarget->speed != 0 )
 	{// don't copy speed from target if it is 0 (uninitialized)
         pev->speed = m_pevCurrentTarget->speed;
-		ALERT( at_aiconsole, "Train %s speed to %4.2f\n", STRING(pev->targetname), pev->speed );
+		ALERT( AlertType::AiConsole, "Train %s speed to %4.2f\n", STRING(pev->targetname), pev->speed );
 	}
 	m_pevCurrentTarget = pTarg->pev;// keep track of this since path corners change our target for us.
 
@@ -849,7 +849,7 @@ void CFuncTrain :: Spawn( void )
 		pev->speed = 100;
 	
 	if ( FStringNull(pev->target) )
-		ALERT(at_console, "FuncTrain with no target");
+		ALERT(AlertType::Console, "FuncTrain with no target");
 	
 	if (pev->dmg == 0)
 		pev->dmg = 2;
@@ -935,7 +935,7 @@ void CFuncTrain::OverrideReset( void )
 //
 // ---------------------------------------------------------------------
 
-TYPEDESCRIPTION	CFuncTrackTrain::m_SaveData[] = 
+TypeDescription	CFuncTrackTrain::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTrackTrain, m_ppath, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CFuncTrackTrain, m_length, FIELD_FLOAT ),
@@ -1020,7 +1020,7 @@ void CFuncTrackTrain :: Blocked( CBaseEntity *pOther )
 	else
 		pevOther->velocity = (pevOther->origin - pev->origin ).Normalize() * pev->dmg;
 
-	ALERT( at_aiconsole, "TRAIN(%s): Blocked by %s (dmg:%.2f)\n", STRING(pev->targetname), STRING(pOther->pev->classname), pev->dmg );
+	ALERT( AlertType::AiConsole, "TRAIN(%s): Blocked by %s (dmg:%.2f)\n", STRING(pev->targetname), STRING(pOther->pev->classname), pev->dmg );
 	if ( pev->dmg <= 0 )
 		return;
 	// we can't hurt this thing, so we're not concerned with it
@@ -1066,7 +1066,7 @@ void CFuncTrackTrain :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 		}
 		pev->speed = m_speed * delta;
 		Next();	
-		ALERT( at_aiconsole, "TRAIN(%s), speed to %.2f\n", STRING(pev->targetname), pev->speed );
+		ALERT( AlertType::AiConsole, "TRAIN(%s), speed to %.2f\n", STRING(pev->targetname), pev->speed );
 	}
 }
 
@@ -1165,7 +1165,7 @@ void CFuncTrackTrain :: Next( void )
 
 	if ( !pev->speed )
 	{
-		ALERT( at_aiconsole, "TRAIN(%s): Speed is 0\n", STRING(pev->targetname) );
+		ALERT( AlertType::AiConsole, "TRAIN(%s): Speed is 0\n", STRING(pev->targetname) );
 		StopSound();
 		return;
 	}
@@ -1174,7 +1174,7 @@ void CFuncTrackTrain :: Next( void )
 //		m_ppath = CPathTrack::Instance(FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(pev->target) ));
 	if ( !m_ppath )
 	{	
-		ALERT( at_aiconsole, "TRAIN(%s): Lost path\n", STRING(pev->targetname) );
+		ALERT( AlertType::AiConsole, "TRAIN(%s): Lost path\n", STRING(pev->targetname) );
 		StopSound();
 		return;
 	}
@@ -1257,7 +1257,7 @@ void CFuncTrackTrain :: Next( void )
 				if ( pFire->pev->speed != 0 )
 				{// don't copy speed from target if it is 0 (uninitialized)
 					pev->speed = pFire->pev->speed;
-					ALERT( at_aiconsole, "TrackTrain %s speed to %4.2f\n", STRING(pev->targetname), pev->speed );
+					ALERT( AlertType::AiConsole, "TrackTrain %s speed to %4.2f\n", STRING(pev->targetname), pev->speed );
 				}
 			}
 
@@ -1302,7 +1302,7 @@ void CFuncTrackTrain::DeadEnd( void )
 
 	pTrack = m_ppath;
 
-	ALERT( at_aiconsole, "TRAIN(%s): Dead end ", STRING(pev->targetname) );
+	ALERT( AlertType::AiConsole, "TRAIN(%s): Dead end ", STRING(pev->targetname) );
 	// Find the dead end path node
 	// HACKHACK -- This is bugly, but the train can actually stop moving at a different node depending on it's speed
 	// so we have to traverse the list to it's end.
@@ -1332,12 +1332,12 @@ void CFuncTrackTrain::DeadEnd( void )
 	pev->avelocity = g_vecZero;
 	if ( pTrack )
 	{
-		ALERT( at_aiconsole, "at %s\n", STRING(pTrack->pev->targetname) );
+		ALERT( AlertType::AiConsole, "at %s\n", STRING(pTrack->pev->targetname) );
 		if ( pTrack->pev->netname )
 			FireTargets( STRING(pTrack->pev->netname), this, this, USE_TOGGLE, 0 );
 	}
 	else
-		ALERT( at_aiconsole, "\n" );
+		ALERT( AlertType::AiConsole, "\n" );
 }
 
 
@@ -1381,7 +1381,7 @@ void CFuncTrackTrain :: Find( void )
 	entvars_t *pevTarget = m_ppath->pev;
 	if ( !FClassnameIs( pevTarget, "path_track" ) )
 	{
-		ALERT( at_error, "func_track_train must be on a path of path_track\n" );
+		ALERT( AlertType::Error, "func_track_train must be on a path of path_track\n" );
 		m_ppath = nullptr;
 		return;
 	}
@@ -1433,12 +1433,12 @@ void CFuncTrackTrain :: NearestPath( void )
 
 	if ( !pNearest )
 	{
-		ALERT( at_console, "Can't find a nearby track !!!\n" );
+		ALERT( AlertType::Console, "Can't find a nearby track !!!\n" );
 		SetThink(nullptr);
 		return;
 	}
 
-	ALERT( at_aiconsole, "TRAIN: %s, Nearest track is %s\n", STRING(pev->targetname), STRING(pNearest->pev->targetname) );
+	ALERT( AlertType::AiConsole, "TRAIN: %s, Nearest track is %s\n", STRING(pev->targetname), STRING(pNearest->pev->targetname) );
 	// If I'm closer to the next path_track on this path, then it's my real path
 	pTrack = ((CPathTrack *)pNearest)->GetNext();
 	if ( pTrack )
@@ -1497,7 +1497,7 @@ void CFuncTrackTrain :: Spawn( void )
 	m_dir = 1;
 
 	if ( FStringNull(pev->target) )
-		ALERT( at_console, "FuncTrain with no target" );
+		ALERT( AlertType::Console, "FuncTrain with no target" );
 
 	if ( pev->spawnflags & SF_TRACKTRAIN_PASSABLE )
 		pev->solid = SOLID_NOT;
@@ -1570,7 +1570,7 @@ void CFuncTrainControls :: Find( void )
 
 	if ( FNullEnt( pTarget ) )
 	{
-		ALERT( at_console, "No train %s\n", STRING(pev->target) );
+		ALERT( AlertType::Console, "No train %s\n", STRING(pev->target) );
 		return;
 	}
 
@@ -1642,7 +1642,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	virtual void	OverrideReset( void );
 
@@ -1661,7 +1661,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( func_trackchange, CFuncTrackChange );
 
-TYPEDESCRIPTION	CFuncTrackChange::m_SaveData[] = 
+TypeDescription	CFuncTrackChange::m_SaveData[] = 
 {
 	DEFINE_GLOBAL_FIELD( CFuncTrackChange, m_trackTop, FIELD_CLASSPTR ),
 	DEFINE_GLOBAL_FIELD( CFuncTrackChange, m_trackBottom, FIELD_CLASSPTR ),
@@ -1774,7 +1774,7 @@ void CFuncTrackChange :: Find( void )
 				m_train = CFuncTrackTrain::Instance( FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trainName) ) );
 				if ( !m_train )
 				{
-					ALERT( at_error, "Can't find train for track change! %s\n", STRING(m_trainName) );
+					ALERT( AlertType::Error, "Can't find train for track change! %s\n", STRING(m_trainName) );
 					return;
 				}
 				Vector center = (pev->absmin + pev->absmax) * 0.5;
@@ -1786,15 +1786,15 @@ void CFuncTrackChange :: Find( void )
 			}
 			else
 			{
-				ALERT( at_error, "Can't find train for track change! %s\n", STRING(m_trainName) );
+				ALERT( AlertType::Error, "Can't find train for track change! %s\n", STRING(m_trainName) );
 				target = FIND_ENTITY_BY_TARGETNAME( nullptr, STRING(m_trainName) );
 			}
 		}
 		else
-			ALERT( at_error, "Can't find bottom track for track change! %s\n", STRING(m_trackBottomName) );
+			ALERT( AlertType::Error, "Can't find bottom track for track change! %s\n", STRING(m_trackBottomName) );
 	}
 	else
-		ALERT( at_error, "Can't find top track for track change! %s\n", STRING(m_trackTopName) );
+		ALERT( AlertType::Error, "Can't find top track for track change! %s\n", STRING(m_trackTopName) );
 }
 
 
@@ -2123,7 +2123,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	BOOL			m_on;
@@ -2132,7 +2132,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( func_guntarget, CGunTarget );
 
-TYPEDESCRIPTION	CGunTarget::m_SaveData[] = 
+TypeDescription	CGunTarget::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGunTarget, m_on, FIELD_BOOLEAN ),
 };

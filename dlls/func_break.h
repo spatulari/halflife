@@ -61,7 +61,7 @@ public:
 	static const char *pSoundsConcrete[];
 	static const char *pSpawnObjects[];
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	Materials	m_Material;
 	Explosions	m_Explosion;

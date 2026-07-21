@@ -34,7 +34,7 @@ class CHealthKit : public CItem
 	virtual int		Save( CSave &save ); 
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 */
 
 };
@@ -43,7 +43,7 @@ class CHealthKit : public CItem
 LINK_ENTITY_TO_CLASS( item_healthkit, CHealthKit );
 
 /*
-TYPEDESCRIPTION	CHealthKit::m_SaveData[] = 
+TypeDescription	CHealthKit::m_SaveData[] = 
 {
 
 };
@@ -114,7 +114,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float m_flNextCharge; 
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
@@ -123,7 +123,7 @@ public:
 	float   m_flSoundTime;
 };
 
-TYPEDESCRIPTION CWallHealth::m_SaveData[] =
+TypeDescription CWallHealth::m_SaveData[] =
 {
 	DEFINE_FIELD( CWallHealth, m_flNextCharge, FIELD_TIME),
 	DEFINE_FIELD( CWallHealth, m_iReactivate, FIELD_INTEGER),

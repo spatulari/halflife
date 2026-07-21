@@ -2180,7 +2180,7 @@ void PM_LadderMove( physent_t *pLadder )
 				vec3_t velocity, perp, cross, lateral, tmp;
 				float normal;
 
-				//ALERT(at_console, "pev %.2f %.2f %.2f - ",
+				//ALERT(AlertType::Console, "pev %.2f %.2f %.2f - ",
 				//	pev->velocity.x, pev->velocity.y, pev->velocity.z);
 				// Calculate player's intended velocity
 				//Vector velocity = (forward * gpGlobals->v_forward) + (right * gpGlobals->v_right);

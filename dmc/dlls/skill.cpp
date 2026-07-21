@@ -39,7 +39,7 @@ float GetSkillCvar( char *pName )
 
 	if ( flValue <= 0 )
 	{
-		ALERT ( at_console, "\n\n** GetSkillCVar Got a zero for %s **\n\n", szBuffer );
+		ALERT ( AlertType::Console, "\n\n** GetSkillCVar Got a zero for %s **\n\n", szBuffer );
 	}
 
 	return flValue;

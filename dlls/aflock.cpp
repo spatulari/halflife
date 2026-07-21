@@ -42,7 +42,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	// Sounds are shared by the flock
 	static  void PrecacheFlockSounds( void );
@@ -51,7 +51,7 @@ public:
 	float	m_flFlockRadius;
 };
 
-TYPEDESCRIPTION	CFlockingFlyerFlock::m_SaveData[] = 
+TypeDescription	CFlockingFlyerFlock::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFlockingFlyerFlock, m_cFlockSize, FIELD_INTEGER ),
 	DEFINE_FIELD( CFlockingFlyerFlock, m_flFlockRadius, FIELD_FLOAT ),
@@ -85,7 +85,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int IsLeader( void ) { return m_pSquadLeader == this; }
 	int	InSquad( void ) { return m_pSquadLeader != nullptr; }
@@ -112,7 +112,7 @@ LINK_ENTITY_TO_CLASS( monster_flyer, CFlockingFlyer );
 LINK_ENTITY_TO_CLASS( monster_flyer_flock, CFlockingFlyerFlock );
 
 
-TYPEDESCRIPTION	CFlockingFlyer::m_SaveData[] = 
+TypeDescription	CFlockingFlyer::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFlockingFlyer, m_pSquadLeader, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CFlockingFlyer, m_pSquadNext, FIELD_CLASSPTR ),

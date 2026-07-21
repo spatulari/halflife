@@ -992,7 +992,7 @@ void EV_FireGauss( event_args_t *args )
 
 			if (n < 0.5) // 60 degrees	
 			{
-				// ALERT( at_console, "reflect %f\n", n );
+				// ALERT( AlertType::Console, "reflect %f\n", n );
 				// reflect
 				vec3_t r;
 			

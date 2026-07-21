@@ -35,7 +35,7 @@ static char *memfgets( byte *pMemFile, int fileSize, int &filePos, char *pBuffer
 // runtime pitch shift and volume fadein/out structure
 
 // NOTE: IF YOU CHANGE THIS STRUCT YOU MUST CHANGE THE SAVE/RESTORE VERSION NUMBER
-// SEE BELOW (in the typedescription for the class)
+// SEE BELOW (in the TypeDescription for the class)
 typedef struct dynpitchvol
 {
 	// NOTE: do not change the order of these parameters 
@@ -128,7 +128,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 	float m_flAttenuation;		// attenuation value
@@ -139,7 +139,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( ambient_generic, CAmbientGeneric );
-TYPEDESCRIPTION	CAmbientGeneric::m_SaveData[] = 
+TypeDescription	CAmbientGeneric::m_SaveData[] = 
 {
 	DEFINE_FIELD( CAmbientGeneric, m_flAttenuation, FIELD_FLOAT ),
 	DEFINE_FIELD( CAmbientGeneric, m_fActive, FIELD_BOOLEAN ),
@@ -193,7 +193,7 @@ void CAmbientGeneric :: Spawn( void )
 
 	if ( FStringNull( pev->message ) || strlen( szSoundFile ) < 1 )
 	{
-		ALERT( at_error, "EMPTY AMBIENT AT: %f, %f, %f\n", pev->origin.x, pev->origin.y, pev->origin.z );
+		ALERT( AlertType::Error, "EMPTY AMBIENT AT: %f, %f, %f\n", pev->origin.x, pev->origin.y, pev->origin.z );
 		pev->nextthink = gpGlobals->time + 0.1;
 		SetThink( &CAmbientGeneric::SUB_Remove );
 		return;
@@ -811,14 +811,14 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float m_flRadius;
 	float m_flRoomtype;
 };
 
 LINK_ENTITY_TO_CLASS( env_sound, CEnvSound );
-TYPEDESCRIPTION	CEnvSound::m_SaveData[] = 
+TypeDescription	CEnvSound::m_SaveData[] = 
 {
 	DEFINE_FIELD( CEnvSound, m_flRadius, FIELD_FLOAT ),
 	DEFINE_FIELD( CEnvSound, m_flRoomtype, FIELD_FLOAT ),
@@ -1200,7 +1200,7 @@ int SENTENCEG_PlayRndSz(edict_t *entity, const char *szgroupname,
 	isentenceg = SENTENCEG_GetIndex(szgroupname);
 	if (isentenceg < 0)
 	{
-		ALERT( at_console, "No such sentence group %s\n", szgroupname );
+		ALERT( AlertType::Console, "No such sentence group %s\n", szgroupname );
 		return -1;
 	}
 
@@ -1310,7 +1310,7 @@ void SENTENCEG_Init()
 
 		if (gcallsentences > CVOXFILESENTENCEMAX)
 		{
-			ALERT (at_error, "Too many sentences in sentences.txt!\n");
+			ALERT (AlertType::Error, "Too many sentences in sentences.txt!\n");
 			break;
 		}
 
@@ -1319,7 +1319,7 @@ void SENTENCEG_Init()
 		const char *pString = buffer + i;
 
 		if ( strlen( pString ) >= CBSENTENCENAME_MAX )
-			ALERT( at_warning, "Sentence %s longer than %d letters\n", pString, CBSENTENCENAME_MAX-1 );
+			ALERT( AlertType::Warning, "Sentence %s longer than %d letters\n", pString, CBSENTENCENAME_MAX-1 );
 
 		strcpy( gszallsentencenames[gcallsentences++], pString );
 
@@ -1348,7 +1348,7 @@ void SENTENCEG_Init()
 			isentencegs++;
 			if (isentencegs >= CSENTENCEG_MAX)
 			{
-				ALERT (at_error, "Too many sentence groups in sentences.txt!\n");
+				ALERT (AlertType::Error, "Too many sentence groups in sentences.txt!\n");
 				break;
 			}
 
@@ -1416,7 +1416,7 @@ void EMIT_SOUND_DYN(edict_t *entity, int channel, const char *sample, float volu
 		if (SENTENCEG_Lookup(sample, name) >= 0)
 				EMIT_SOUND_DYN2(entity, channel, name, volume, attenuation, flags, pitch);
 		else
-			ALERT( at_aiconsole, "Unable to find %s in sentences.txt\n", sample );
+			ALERT( AlertType::AiConsole, "Unable to find %s in sentences.txt\n", sample );
 	}
 	else
 		EMIT_SOUND_DYN2(entity, channel, sample, volume, attenuation, flags, pitch);
@@ -1676,7 +1676,7 @@ float TEXTURETYPE_PlaySound(TraceResult *ptr,  Vector vecSrc, Vector vecEnd, int
 			strcpy(szbuffer, pTextureName);
 			szbuffer[CBTEXTURENAMEMAX - 1] = 0;
 				
-			// ALERT ( at_console, "texture hit: %s\n", szbuffer);
+			// ALERT ( AlertType::Console, "texture hit: %s\n", szbuffer);
 
 			// get texture type
 			chTextureType = TEXTURETYPE_Find(szbuffer);	
@@ -1801,7 +1801,7 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	
@@ -1809,7 +1809,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( speaker, CSpeaker );
-TYPEDESCRIPTION	CSpeaker::m_SaveData[] = 
+TypeDescription	CSpeaker::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSpeaker, m_preset, FIELD_INTEGER ),
 };
@@ -1825,7 +1825,7 @@ void CSpeaker :: Spawn( void )
 
 	if ( !m_preset && (FStringNull( pev->message ) || strlen( szSoundFile ) < 1 ))
 	{
-		ALERT( at_error, "SPEAKER with no Level/Sentence! at: %f, %f, %f\n", pev->origin.x, pev->origin.y, pev->origin.z );
+		ALERT( AlertType::Error, "SPEAKER with no Level/Sentence! at: %f, %f, %f\n", pev->origin.x, pev->origin.y, pev->origin.z );
 		pev->nextthink = gpGlobals->time + 0.1;
 		SetThink( &CSpeaker::SUB_Remove );
 		return;
@@ -1896,7 +1896,7 @@ void CSpeaker :: SpeakerThink( void )
 		// make random announcement from sentence group
 
 		if (SENTENCEG_PlayRndSz(ENT(pev), szSoundFile, flvolume, flattenuation, flags, pitch) < 0)
-			ALERT(at_console, "Level Design Error!\nSPEAKER has bad sentence group name: %s\n",szSoundFile); 
+			ALERT(AlertType::Console, "Level Design Error!\nSPEAKER has bad sentence group name: %s\n",szSoundFile); 
 
 		// set next announcement time for random 5 to 10 minute delay
 		pev->nextthink = gpGlobals->time + 

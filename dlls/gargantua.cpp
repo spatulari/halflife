@@ -241,7 +241,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	CUSTOM_SCHEDULES;
 
@@ -274,7 +274,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( monster_gargantua, CGargantua );
 
-TYPEDESCRIPTION	CGargantua::m_SaveData[] = 
+TypeDescription	CGargantua::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGargantua, m_pEyeGlow, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CGargantua, m_eyeBrightness, FIELD_INTEGER ),
@@ -657,7 +657,7 @@ void CGargantua :: FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevIn
 					flAdjustedDamage = flDamage;
 				}
 
-				// ALERT( at_console, "hit %s\n", STRING( pEntity->pev->classname ) );
+				// ALERT( AlertType::Console, "hit %s\n", STRING( pEntity->pev->classname ) );
 				if (tr.flFraction != 1.0)
 				{
 					ClearMultiDamage( );
@@ -825,7 +825,7 @@ void CGargantua :: Precache()
 
 void CGargantua::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType )
 {
-	ALERT( at_aiconsole, "CGargantua::TraceAttack\n");
+	ALERT( AlertType::AiConsole, "CGargantua::TraceAttack\n");
 
 	if ( !IsAlive() )
 	{
@@ -865,7 +865,7 @@ void CGargantua::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vec
 
 int CGargantua::TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
 {
-	ALERT( at_aiconsole, "CGargantua::TakeDamage\n");
+	ALERT( AlertType::AiConsole, "CGargantua::TakeDamage\n");
 
 	if ( IsAlive() )
 	{
@@ -919,7 +919,7 @@ void CGargantua::Killed( entvars_t *pevAttacker, int iGib )
 //=========================================================
 BOOL CGargantua::CheckMeleeAttack1( float flDot, float flDist )
 {
-//	ALERT(at_aiconsole, "CheckMelee(%f, %f)\n", flDot, flDist);
+//	ALERT(AlertType::AiConsole, "CheckMelee(%f, %f)\n", flDot, flDist);
 
 	if (flDot >= 0.7)
 	{
@@ -933,7 +933,7 @@ BOOL CGargantua::CheckMeleeAttack1( float flDot, float flDist )
 // Flame thrower madness!
 BOOL CGargantua::CheckMeleeAttack2( float flDot, float flDist )
 {
-//	ALERT(at_aiconsole, "CheckMelee(%f, %f)\n", flDot, flDist);
+//	ALERT(AlertType::AiConsole, "CheckMelee(%f, %f)\n", flDot, flDist);
 
 	if ( gpGlobals->time > m_flameTime )
 	{

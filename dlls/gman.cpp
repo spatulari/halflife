@@ -38,7 +38,7 @@ public:
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	void StartTask( Task_t *pTask );
 	void RunTask( Task_t *pTask );
@@ -54,7 +54,7 @@ public:
 LINK_ENTITY_TO_CLASS( monster_gman, CGMan );
 
 
-TYPEDESCRIPTION	CGMan::m_SaveData[] = 
+TypeDescription	CGMan::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGMan, m_hTalkTarget, FIELD_EHANDLE ),
 	DEFINE_FIELD( CGMan, m_flTalkTime, FIELD_TIME ),

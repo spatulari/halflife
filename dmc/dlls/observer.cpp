@@ -52,11 +52,11 @@ void CBasePlayer::Observer_FindNextPlayer()
 		// Move to the target
 		UTIL_SetOrigin( pev, m_hObserverTarget->pev->origin );
 
-		ALERT( at_console, "Now Tracking %s\n", STRING( m_hObserverTarget->pev->classname ) );
+		ALERT( AlertType::Console, "Now Tracking %s\n", STRING( m_hObserverTarget->pev->classname ) );
 	}
 	else
 	{
-		ALERT( at_console, "No observer targets.\n" );
+		ALERT( AlertType::Console, "No observer targets.\n" );
 	}
 }
 

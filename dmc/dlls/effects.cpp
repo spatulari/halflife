@@ -45,7 +45,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	virtual int		ObjectCaps( void ) { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int		m_density;
 	int		m_frequency;
@@ -55,7 +55,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( env_bubbles, CBubbling );
 
-TYPEDESCRIPTION	CBubbling::m_SaveData[] = 
+TypeDescription	CBubbling::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBubbling, m_density, FIELD_INTEGER ),
 	DEFINE_FIELD( CBubbling, m_frequency, FIELD_INTEGER ),
@@ -331,7 +331,7 @@ void CBeam::TriggerTouch( CBaseEntity *pOther )
 			CBaseEntity *pOwner = CBaseEntity::Instance(pev->owner);
 			pOwner->Use( pOther, this, USE_TOGGLE, 0 );
 		}
-		ALERT( at_console, "Firing targets!!!\n" );
+		ALERT( AlertType::Console, "Firing targets!!!\n" );
 	}
 }
 
@@ -393,7 +393,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void	BeamUpdateVars( void );
 
@@ -435,7 +435,7 @@ void CTripBeam::Spawn( void )
 
 
 
-TYPEDESCRIPTION	CLightning::m_SaveData[] = 
+TypeDescription	CLightning::m_SaveData[] = 
 {
 	DEFINE_FIELD( CLightning, m_active, FIELD_INTEGER ),
 	DEFINE_FIELD( CLightning, m_iszStartEntity, FIELD_STRING ),
@@ -659,7 +659,7 @@ void CLightning::StrikeThink( void )
 			if (pStart != nullptr)
 				RandomPoint( pStart->pev->origin );
 			else
-				ALERT( at_console, "env_beam: unknown entity \"%s\"\n", STRING(m_iszStartEntity) );
+				ALERT( AlertType::Console, "env_beam: unknown entity \"%s\"\n", STRING(m_iszStartEntity) );
 		}
 		return;
 	}
@@ -948,7 +948,7 @@ void CLightning::BeamUpdateVars( void )
 
 LINK_ENTITY_TO_CLASS( env_laser, CLaser );
 
-TYPEDESCRIPTION	CLaser::m_SaveData[] = 
+TypeDescription	CLaser::m_SaveData[] = 
 {
 	DEFINE_FIELD( CLaser, m_pSprite, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CLaser, m_iszSpriteName, FIELD_STRING ),
@@ -1119,7 +1119,7 @@ public:
 	void Animate( float frames );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float		m_lastTime;
 	float		m_maxFrame;
@@ -1127,7 +1127,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( env_glow, CGlow );
 
-TYPEDESCRIPTION	CGlow::m_SaveData[] = 
+TypeDescription	CGlow::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGlow, m_lastTime, FIELD_TIME ),
 	DEFINE_FIELD( CGlow, m_maxFrame, FIELD_FLOAT ),
@@ -1171,7 +1171,7 @@ void CGlow::Animate( float frames )
 
 LINK_ENTITY_TO_CLASS( env_sprite, CSprite );
 
-TYPEDESCRIPTION	CSprite::m_SaveData[] = 
+TypeDescription	CSprite::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSprite, m_lastTime, FIELD_TIME ),
 	DEFINE_FIELD( CSprite, m_maxFrame, FIELD_FLOAT ),
@@ -1357,7 +1357,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int	m_iGibs;
 	int m_iGibCapacity;
@@ -1368,7 +1368,7 @@ public:
 	float m_flGibLife;
 };
 
-TYPEDESCRIPTION CGibShooter::m_SaveData[] =
+TypeDescription CGibShooter::m_SaveData[] =
 {
 	DEFINE_FIELD( CGibShooter, m_iGibs, FIELD_INTEGER ),
 	DEFINE_FIELD( CGibShooter, m_iGibCapacity, FIELD_INTEGER ),
@@ -1463,7 +1463,7 @@ CGib *CGibShooter :: CreateGib ( void )
 
 	if ( pev->body <= 1 )
 	{
-		ALERT ( at_aiconsole, "GibShooter Body is <= 1!\n" );
+		ALERT ( AlertType::AiConsole, "GibShooter Body is <= 1!\n" );
 	}
 
 	pGib->pev->body = RANDOM_LONG ( 1, pev->body - 1 );// avoid throwing random amounts of the 0th gib. (skull).

@@ -31,7 +31,7 @@ float	CTalkMonster::g_talkWaitTime = 0;		// time delay until it's ok to speak: u
 
 // NOTE: m_voicePitch & m_szGrp should be fixed up by precache each save/restore
 
-TYPEDESCRIPTION	CTalkMonster::m_SaveData[] = 
+TypeDescription	CTalkMonster::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTalkMonster, m_bitsSaid, FIELD_INTEGER ),
 	DEFINE_FIELD( CTalkMonster, m_nSpeak, FIELD_INTEGER ),
@@ -569,7 +569,7 @@ void CTalkMonster :: RunTask( Task_t *pTask )
 	case TASK_TLK_EYECONTACT:
 		if (!IsMoving() && IsTalking() && m_hTalkTarget != nullptr)
 		{
-			// ALERT( at_console, "waiting %f\n", m_flStopTalkTime - gpGlobals->time );
+			// ALERT( AlertType::Console, "waiting %f\n", m_flStopTalkTime - gpGlobals->time );
 			IdleHeadTurn( m_hTalkTarget->pev->origin );
 		}
 		else
@@ -595,7 +595,7 @@ void CTalkMonster :: RunTask( Task_t *pTask )
 	case TASK_WAIT_FOR_MOVEMENT:
 		if (IsTalking() && m_hTalkTarget != nullptr)
 		{
-			// ALERT(at_console, "walking, talking\n");
+			// ALERT(AlertType::Console, "walking, talking\n");
 			IdleHeadTurn( m_hTalkTarget->pev->origin );
 		}
 		else
@@ -774,7 +774,7 @@ void CTalkMonster :: HandleAnimEvent( MonsterEvent_t *pEvent )
 	case SCRIPT_EVENT_SENTENCE:				// Play a named sentence group
 		ShutUpFriends();
 		PlaySentence( pEvent->options, RANDOM_FLOAT(2.8, 3.4), VOL_NORM, ATTN_IDLE );
-		//ALERT(at_console, "script event speak\n");
+		//ALERT(AlertType::Console, "script event speak\n");
 		break;
 
 	default:
@@ -1227,7 +1227,7 @@ Schedule_t* CTalkMonster :: GetScheduleOfType ( int Type )
 	case SCHED_TARGET_FACE:
 		// speak during 'use'
 		if (RANDOM_LONG(0,99) < 2)
-			//ALERT ( at_console, "target chase speak\n" );
+			//ALERT ( AlertType::Console, "target chase speak\n" );
 			return slIdleSpeakWait;
 		else
 			return slIdleStand;
@@ -1262,7 +1262,7 @@ Schedule_t* CTalkMonster :: GetScheduleOfType ( int Type )
 			// talk about world
 			if (FOkToSpeak() && RANDOM_LONG(0,m_nSpeak * 2) == 0)
 			{
-				//ALERT ( at_console, "standing idle speak\n" );
+				//ALERT ( AlertType::Console, "standing idle speak\n" );
 				return slIdleSpeak;
 			}
 			
@@ -1338,7 +1338,7 @@ void CTalkMonster :: TrySmellTalk( void )
 	// clear smell bits periodically
 	if ( gpGlobals->time > m_flLastSaidSmelled  )
 	{
-//		ALERT ( at_aiconsole, "Clear smell bits\n" );
+//		ALERT ( AlertType::AiConsole, "Clear smell bits\n" );
 		ClearBits(m_bitsSaid, bit_saidSmelled);
 	}
 	// smelled something?
@@ -1431,7 +1431,7 @@ void CTalkMonster :: FollowerUse( CBaseEntity *pActivator, CBaseEntity *pCaller,
 			LimitFollowers( pCaller , 1 );
 
 			if ( m_afMemory & bits_MEMORY_PROVOKED )
-				ALERT( at_console, "I'm not following you, you evil person!\n" );
+				ALERT( AlertType::Console, "I'm not following you, you evil person!\n" );
 			else
 			{
 				StartFollowing( pCaller );

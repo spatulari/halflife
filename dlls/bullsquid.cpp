@@ -67,14 +67,14 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int  m_maxFrame;
 };
 
 LINK_ENTITY_TO_CLASS( squidspit, CSquidSpit );
 
-TYPEDESCRIPTION	CSquidSpit::m_SaveData[] = 
+TypeDescription	CSquidSpit::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSquidSpit, m_maxFrame, FIELD_INTEGER ),
 };
@@ -218,7 +218,7 @@ public:
 	int Restore( CRestore &restore );
 
 	CUSTOM_SCHEDULES;
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	BOOL m_fCanThreatDisplay;// this is so the squid only does the "I see a headcrab!" dance one time. 
 
@@ -227,7 +227,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( monster_bullchicken, CBullsquid );
 
-TYPEDESCRIPTION	CBullsquid::m_SaveData[] = 
+TypeDescription	CBullsquid::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBullsquid, m_fCanThreatDisplay, FIELD_BOOLEAN ),
 	DEFINE_FIELD( CBullsquid, m_flLastHurtTime, FIELD_TIME ),
@@ -400,7 +400,7 @@ BOOL CBullsquid :: FValidateHintType ( short sHint )
 		}
 	}
 
-	ALERT ( at_aiconsole, "Couldn't validate hint type" );
+	ALERT ( AlertType::AiConsole, "Couldn't validate hint type" );
 	return FALSE;
 }
 
@@ -1199,7 +1199,7 @@ void CBullsquid :: StartTask ( Task_t *pTask )
 			}
 			else
 			{
-				ALERT ( at_aiconsole, "GetPathToEnemy failed!!\n" );
+				ALERT ( AlertType::AiConsole, "GetPathToEnemy failed!!\n" );
 				TaskFail();
 			}
 			break;

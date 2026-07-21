@@ -115,7 +115,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static const char *pAttackSounds[];
 	static const char *pAlertSounds[];
@@ -145,7 +145,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( monster_leech, CLeech );
 
-TYPEDESCRIPTION	CLeech::m_SaveData[] = 
+TypeDescription	CLeech::m_SaveData[] = 
 {
 	DEFINE_FIELD( CLeech, m_flTurning, FIELD_FLOAT ),
 	DEFINE_FIELD( CLeech, m_fPathBlocked, FIELD_BOOLEAN ),
@@ -383,7 +383,7 @@ float CLeech::ObstacleDistance( CBaseEntity *pTarget )
 	if ( tr.fStartSolid )
 	{
 		pev->speed = -LEECH_SWIM_SPEED * 0.5;
-//		ALERT( at_console, "Stuck from (%f %f %f) to (%f %f %f)\n", pev->oldorigin.x, pev->oldorigin.y, pev->oldorigin.z, pev->origin.x, pev->origin.y, pev->origin.z );
+//		ALERT( AlertType::Console, "Stuck from (%f %f %f) to (%f %f %f)\n", pev->oldorigin.x, pev->oldorigin.y, pev->oldorigin.z, pev->origin.x, pev->origin.y, pev->origin.z );
 //		UTIL_SetOrigin( pev, pev->oldorigin );
 	}
 
@@ -692,7 +692,7 @@ void CLeech::Killed(entvars_t *pevAttacker, int iGib)
 	Vector			vecSplatDir;
 	TraceResult		tr;
 
-	//ALERT(at_aiconsole, "Leech: killed\n");
+	//ALERT(AlertType::AiConsole, "Leech: killed\n");
 	// tell owner ( if any ) that we're dead.This is mostly for MonsterMaker functionality.
 	CBaseEntity *pOwner = CBaseEntity::Instance(pev->owner);
 	if (pOwner)

@@ -928,7 +928,7 @@ void AddClientToArena( CBasePlayer *pPlayer )
 				}
 			}
 
-			//ALERT( at_console, "ADDED %s to Arena %d\n", STRING(pPlayer->pev->netname), iArenaNumber );
+			//ALERT( AlertType::Console, "ADDED %s to Arena %d\n", STRING(pPlayer->pev->netname), iArenaNumber );
 			return;
 		}
 	}

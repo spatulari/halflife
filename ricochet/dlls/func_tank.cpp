@@ -87,7 +87,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	BOOL OnControls( entvars_t *pevTest );
 	BOOL StartControl( CBasePlayer* pController );
@@ -131,7 +131,7 @@ protected:
 };
 
 
-TYPEDESCRIPTION	CFuncTank::m_SaveData[] = 
+TypeDescription	CFuncTank::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTank, m_yawCenter, FIELD_FLOAT ),
 	DEFINE_FIELD( CFuncTank, m_yawRate, FIELD_FLOAT ),
@@ -351,7 +351,7 @@ BOOL CFuncTank :: StartControl( CBasePlayer *pController )
 			return FALSE;
 	}
 
-	ALERT( at_console, "using TANK!\n");
+	ALERT( AlertType::Console, "using TANK!\n");
 
 	// Holster player's weapon
 	m_pController = pController;
@@ -379,7 +379,7 @@ void CFuncTank :: StopControl()
 	if ( m_pController->m_pActiveItem )
 		m_pController->m_pActiveItem->Deploy();
 
-	ALERT( at_console, "stopped using TANK\n");
+	ALERT( AlertType::Console, "stopped using TANK\n");
 
 	m_pController->m_iHideHUD &= ~HIDEHUD_WEAPONS;
 
@@ -769,7 +769,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	CLaser	*m_pLaser;
@@ -777,7 +777,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( func_tanklaser, CFuncTankLaser );
 
-TYPEDESCRIPTION	CFuncTankLaser::m_SaveData[] = 
+TypeDescription	CFuncTankLaser::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTankLaser, m_pLaser, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CFuncTankLaser, m_laserTime, FIELD_TIME ),
@@ -790,7 +790,7 @@ void CFuncTankLaser::Activate( void )
 	if ( !GetLaser() )
 	{
 		UTIL_Remove(this);
-		ALERT( at_error, "Laser tank with no env_laser!\n" );
+		ALERT( AlertType::Error, "Laser tank with no env_laser!\n" );
 	}
 	else
 	{
@@ -974,13 +974,13 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	CFuncTank *m_pTank;
 };
 LINK_ENTITY_TO_CLASS( func_tankcontrols, CFuncTankControls );
 
-TYPEDESCRIPTION	CFuncTankControls::m_SaveData[] = 
+TypeDescription	CFuncTankControls::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTankControls, m_pTank, FIELD_CLASSPTR ),
 };
@@ -1013,7 +1013,7 @@ void CFuncTankControls :: Think( void )
 
 	if ( FNullEnt( pTarget ) )
 	{
-		ALERT( at_console, "No tank %s\n", STRING(pev->target) );
+		ALERT( AlertType::Console, "No tank %s\n", STRING(pev->target) );
 		return;
 	}
 

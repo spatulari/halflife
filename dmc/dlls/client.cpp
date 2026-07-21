@@ -592,7 +592,7 @@ void ServerActivate( edict_t *pEdictList, int edictCount, int clientMax )
 		}
 		else
 		{
-			ALERT( at_console, "Can't instance %s\n", STRING(pEdictList[i].v.classname) );
+			ALERT( AlertType::Console, "Can't instance %s\n", STRING(pEdictList[i].v.classname) );
 		}
 	}
 
@@ -818,44 +818,44 @@ void ClientPrecache( void )
 
 #endif
 
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_crowbar.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_light.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_nail.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_nail2.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_rock.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_rock2.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_shot.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_shot2.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/spike.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/rocket.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/grenade.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/backpack.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/backpack.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_g.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_r.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_y.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_y.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/b_nail0.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/b_nail1.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_light.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_nail.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_nail2.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_rock.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_rock2.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_shot2.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/pow_invis.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/pow_quad.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/pow_invuln.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/suit.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_battery.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_batteryl.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_medkit.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_medkitl.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_medkits.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_rpgammo.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_rpgammo_big.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_shotbox.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_shotbox_big.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_crowbar.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_light.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_nail.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_nail2.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_rock.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_rock2.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_shot.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/p_shot2.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/spike.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/rocket.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/grenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/backpack.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/backpack.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_g.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_r.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_y.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/armor_y.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/b_nail0.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/b_nail1.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_light.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_nail.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_nail2.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_rock.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_rock2.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/g_shot2.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/pow_invis.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/pow_quad.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/pow_invuln.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/suit.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_battery.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_batteryl.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_medkit.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_medkitl.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_medkits.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_rpgammo.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_rpgammo_big.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_shotbox.mdl");
+	ENGINE_FORCE_UNMODIFIED(ForceType::ExactFile, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ),"models/w_shotbox_big.mdl");
 
 	g_sGibbed = PRECACHE_EVENT( 1, "events/gibs.sc" );
 	g_sTeleport = PRECACHE_EVENT( 1, "events/teleport.sc" );
@@ -910,13 +910,13 @@ void PlayerCustomization( edict_t *pEntity, customization_t *pCust )
 
 	if (!pPlayer)
 	{
-		ALERT(at_console, "PlayerCustomization:  Couldn't get player!\n");
+		ALERT(AlertType::Console, "PlayerCustomization:  Couldn't get player!\n");
 		return;
 	}
 
 	if (!pCust)
 	{
-		ALERT(at_console, "PlayerCustomization:  nullptr customization!\n");
+		ALERT(AlertType::Console, "PlayerCustomization:  nullptr customization!\n");
 		return;
 	}
 
@@ -931,7 +931,7 @@ void PlayerCustomization( edict_t *pEntity, customization_t *pCust )
 		// Ignore for now.
 		break;
 	default:
-		ALERT(at_console, "PlayerCustomization:  Unknown customization type!\n");
+		ALERT(AlertType::Console, "PlayerCustomization:  Unknown customization type!\n");
 		break;
 	}
 }

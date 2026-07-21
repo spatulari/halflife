@@ -36,7 +36,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	int		m_iStyle;
@@ -44,7 +44,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( light, CLight );
 
-TYPEDESCRIPTION	CLight::m_SaveData[] = 
+TypeDescription	CLight::m_SaveData[] = 
 {
 	DEFINE_FIELD( CLight, m_iStyle, FIELD_INTEGER ),
 	DEFINE_FIELD( CLight, m_iszPattern, FIELD_STRING ),

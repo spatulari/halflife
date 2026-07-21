@@ -28,7 +28,7 @@
 //=========================================================
 // Save/Restore
 //=========================================================
-TYPEDESCRIPTION	CSquadMonster::m_SaveData[] = 
+TypeDescription	CSquadMonster::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSquadMonster, m_hSquadLeader, FIELD_EHANDLE ),
 	DEFINE_ARRAY( CSquadMonster, m_hSquadMember, FIELD_EHANDLE, MAX_SQUAD_MEMBERS - 1 ),
@@ -89,7 +89,7 @@ BOOL CSquadMonster :: OccupySlot( int iDesiredSlots )
 				// No, use this bit
 				pSquadLeader->m_afSquadSlots |= iMask;
 				m_iMySlot = iMask;
-//				ALERT ( at_aiconsole, "Took slot %d - %d\n", i, m_hSquadLeader->m_afSquadSlots );
+//				ALERT ( AlertType::AiConsole, "Took slot %d - %d\n", i, m_hSquadLeader->m_afSquadSlots );
 				return TRUE;
 			}
 		}
@@ -105,7 +105,7 @@ void CSquadMonster :: VacateSlot()
 {
 	if ( m_iMySlot != bits_NO_SLOT && InSquad() )
 	{
-//		ALERT ( at_aiconsole, "Vacated Slot %d - %d\n", m_iMySlot, m_hSquadLeader->m_afSquadSlots );
+//		ALERT ( AlertType::AiConsole, "Vacated Slot %d - %d\n", m_iMySlot, m_hSquadLeader->m_afSquadSlots );
 		MySquadLeader()->m_afSquadSlots &= ~m_iMySlot;
 		m_iMySlot = bits_NO_SLOT;
 	}
@@ -248,7 +248,7 @@ void CSquadMonster :: SquadMakeEnemy ( CBaseEntity *pEnemy )
 
 	if ( !pEnemy )
 	{
-		ALERT ( at_console, "ERROR: SquadMakeEnemy() - pEnemy is nullptr!\n" );
+		ALERT ( AlertType::Console, "ERROR: SquadMakeEnemy() - pEnemy is nullptr!\n" );
 		return;
 	}
 
@@ -432,7 +432,7 @@ void CSquadMonster :: StartMonster( void )
 
 		if ( iSquadSize )
 		{
-		  ALERT ( at_aiconsole, "Squad of %d %s formed\n", iSquadSize, STRING( pev->classname ) );
+		  ALERT ( AlertType::AiConsole, "Squad of %d %s formed\n", iSquadSize, STRING( pev->classname ) );
 		}
 
 		if ( IsLeader() && FClassnameIs ( pev, "monster_human_grunt" ) )
@@ -488,9 +488,9 @@ BOOL CSquadMonster :: NoFriendlyFire( void )
 	backPlane.InitializePlane ( gpGlobals->v_forward, pev->origin );
 
 /*
-	ALERT ( at_console, "LeftPlane: %f %f %f : %f\n", leftPlane.m_vecNormal.x, leftPlane.m_vecNormal.y, leftPlane.m_vecNormal.z, leftPlane.m_flDist );
-	ALERT ( at_console, "RightPlane: %f %f %f : %f\n", rightPlane.m_vecNormal.x, rightPlane.m_vecNormal.y, rightPlane.m_vecNormal.z, rightPlane.m_flDist );
-	ALERT ( at_console, "BackPlane: %f %f %f : %f\n", backPlane.m_vecNormal.x, backPlane.m_vecNormal.y, backPlane.m_vecNormal.z, backPlane.m_flDist );
+	ALERT ( AlertType::Console, "LeftPlane: %f %f %f : %f\n", leftPlane.m_vecNormal.x, leftPlane.m_vecNormal.y, leftPlane.m_vecNormal.z, leftPlane.m_flDist );
+	ALERT ( AlertType::Console, "RightPlane: %f %f %f : %f\n", rightPlane.m_vecNormal.x, rightPlane.m_vecNormal.y, rightPlane.m_vecNormal.z, rightPlane.m_flDist );
+	ALERT ( AlertType::Console, "BackPlane: %f %f %f : %f\n", backPlane.m_vecNormal.x, backPlane.m_vecNormal.y, backPlane.m_vecNormal.z, backPlane.m_flDist );
 */
 
 	CSquadMonster *pSquadLeader = MySquadLeader();

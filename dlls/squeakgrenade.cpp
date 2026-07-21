@@ -56,7 +56,7 @@ class CSqueakGrenade : public CGrenade
 	virtual int		Save( CSave &save ); 
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static float m_flNextBounceSoundTime;
 
@@ -73,7 +73,7 @@ class CSqueakGrenade : public CGrenade
 float CSqueakGrenade::m_flNextBounceSoundTime = 0;
 
 LINK_ENTITY_TO_CLASS( monster_snark, CSqueakGrenade );
-TYPEDESCRIPTION	CSqueakGrenade::m_SaveData[] = 
+TypeDescription	CSqueakGrenade::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSqueakGrenade, m_flDie, FIELD_TIME ),
 	DEFINE_FIELD( CSqueakGrenade, m_vecTarget, FIELD_VECTOR ),
@@ -199,7 +199,7 @@ void CSqueakGrenade :: GibMonster( void )
 
 void CSqueakGrenade::HuntThink( void )
 {
-	// ALERT( at_console, "think\n" );
+	// ALERT( AlertType::Console, "think\n" );
 
 	if (!IsInWorld())
 	{
@@ -284,9 +284,9 @@ void CSqueakGrenade::HuntThink( void )
 		if (flAdj > 1.2)
 			flAdj = 1.2;
 		
-		// ALERT( at_console, "think : enemy\n");
+		// ALERT( AlertType::Console, "think : enemy\n");
 
-		// ALERT( at_console, "%.0f %.2f %.2f %.2f\n", flVel, m_vecTarget.x, m_vecTarget.y, m_vecTarget.z );
+		// ALERT( AlertType::Console, "%.0f %.2f %.2f %.2f\n", flVel, m_vecTarget.x, m_vecTarget.y, m_vecTarget.z );
 
 		pev->velocity = pev->velocity * flAdj + m_vecTarget * 300;
 	}
@@ -350,7 +350,7 @@ void CSqueakGrenade::SuperBounceTouch( CBaseEntity *pOther )
 			// and it's not another squeakgrenade
 			if (tr.pHit->v.modelindex != pev->modelindex)
 			{
-				// ALERT( at_console, "hit enemy\n");
+				// ALERT( AlertType::Console, "hit enemy\n");
 				ClearMultiDamage( );
 				pOther->TraceAttack(pev, gSkillData.snarkDmgBite, gpGlobals->v_forward, &tr, DMG_SLASH ); 
 				if (m_hOwner != nullptr)
@@ -368,7 +368,7 @@ void CSqueakGrenade::SuperBounceTouch( CBaseEntity *pOther )
 		}
 		else
 		{
-			// ALERT( at_console, "been hit\n");
+			// ALERT( AlertType::Console, "been hit\n");
 		}
 	}
 

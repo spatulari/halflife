@@ -289,7 +289,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float m_flFanFriction;
 	float m_flAttenuation;
@@ -298,7 +298,7 @@ public:
 	int	  m_sounds;
 };
 
-TYPEDESCRIPTION	CFuncRotating::m_SaveData[] = 
+TypeDescription	CFuncRotating::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncRotating, m_flFanFriction, FIELD_FLOAT ),
 	DEFINE_FIELD( CFuncRotating, m_flAttenuation, FIELD_FLOAT ),
@@ -739,7 +739,7 @@ public:
 	virtual int		Restore( CRestore &restore );
 	void	Blocked( CBaseEntity *pOther );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	
 	float	m_accel;			// Acceleration
 	float	m_distance;			// 
@@ -753,7 +753,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_pendulum, CPendulum );
 
-TYPEDESCRIPTION	CPendulum::m_SaveData[] = 
+TypeDescription	CPendulum::m_SaveData[] = 
 {
 	DEFINE_FIELD( CPendulum, m_accel, FIELD_FLOAT ),
 	DEFINE_FIELD( CPendulum, m_distance, FIELD_FLOAT ),
@@ -941,7 +941,7 @@ void CPendulum :: RopeTouch ( CBaseEntity *pOther )
 
 	if ( !pOther->IsPlayer() )
 	{// not a player!
-		ALERT ( at_console, "Not a client\n" );
+		ALERT ( AlertType::Console, "Not a client\n" );
 		return;
 	}
 

@@ -195,7 +195,7 @@ void CBaseMonster :: Look ( int iDistance )
 				case    R_AL:
 					break;
 				default:
-					ALERT ( at_aiconsole, "%s can't assess %s\n", STRING(pev->classname), STRING(pSightEnt->pev->classname ) );
+					ALERT ( AlertType::AiConsole, "%s can't assess %s\n", STRING(pev->classname), STRING(pSightEnt->pev->classname ) );
 					break;
 				}
 			}

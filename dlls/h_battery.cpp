@@ -40,7 +40,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float m_flNextCharge; 
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
@@ -49,7 +49,7 @@ public:
 	float   m_flSoundTime;
 };
 
-TYPEDESCRIPTION CRecharge::m_SaveData[] =
+TypeDescription CRecharge::m_SaveData[] =
 {
 	DEFINE_FIELD( CRecharge, m_flNextCharge, FIELD_TIME ),
 	DEFINE_FIELD( CRecharge, m_iReactivate, FIELD_INTEGER),

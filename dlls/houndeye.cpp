@@ -103,7 +103,7 @@ public:
 	int Restore( CRestore &restore );
 
 	CUSTOM_SCHEDULES;
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	int m_iSpriteTexture;
 	BOOL m_fAsleep;// some houndeyes sleep in idle mode if this is set, the houndeye is lying down
@@ -112,7 +112,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( monster_houndeye, CHoundeye );
 
-TYPEDESCRIPTION	CHoundeye::m_SaveData[] = 
+TypeDescription	CHoundeye::m_SaveData[] = 
 {
 	DEFINE_FIELD( CHoundeye, m_iSpriteTexture, FIELD_INTEGER ),
 	DEFINE_FIELD( CHoundeye, m_fAsleep, FIELD_BOOLEAN ),
@@ -154,7 +154,7 @@ BOOL CHoundeye :: FValidateHintType ( short sHint )
 		}
 	}
 
-	ALERT ( at_aiconsole, "Couldn't validate hint type" );
+	ALERT ( AlertType::AiConsole, "Couldn't validate hint type" );
 	return FALSE;
 }
 
@@ -532,7 +532,7 @@ void CHoundeye :: WriteBeamColor ( void )
 			bBlue	= 211;
 			break;
 		default:
-			ALERT ( at_aiconsole, "Unsupported Houndeye SquadSize!\n" );
+			ALERT ( AlertType::AiConsole, "Unsupported Houndeye SquadSize!\n" );
 			bRed	= 188;
 			bGreen	= 220;
 			bBlue	= 255;
@@ -656,7 +656,7 @@ void CHoundeye :: SonicAttack ( void )
 					}
 				}
 
-				//ALERT ( at_aiconsole, "Damage: %f\n", flAdjustedDamage );
+				//ALERT ( AlertType::AiConsole, "Damage: %f\n", flAdjustedDamage );
 
 				if (flAdjustedDamage > 0 )
 				{

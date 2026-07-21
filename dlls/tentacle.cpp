@@ -44,7 +44,7 @@ public:
 
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	// Don't allow the tentacle to go across transitions!!!
 	virtual int	ObjectCaps( void ) { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -144,7 +144,7 @@ const char *CTentacle::pHitWater[] =
 };
 
 
-TYPEDESCRIPTION	CTentacle::m_SaveData[] = 
+TypeDescription	CTentacle::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTentacle, m_flInitialYaw, FIELD_FLOAT ),
 	DEFINE_FIELD( CTentacle, m_iGoalAnim, FIELD_INTEGER ),
@@ -458,10 +458,10 @@ void CTentacle :: Test( void )
 //
 void CTentacle :: Cycle( void )
 {
-	// ALERT( at_console, "%s %.2f %d %d\n", STRING( pev->targetname ), pev->origin.z, m_MonsterState, m_IdealMonsterState );
+	// ALERT( AlertType::Console, "%s %.2f %d %d\n", STRING( pev->targetname ), pev->origin.z, m_MonsterState, m_IdealMonsterState );
 	pev->nextthink = gpGlobals-> time + 0.1;
 
-	// ALERT( at_console, "%s %d %d %d %f %f\n", STRING( pev->targetname ), pev->sequence, m_iGoalAnim, m_iDir, pev->framerate, pev->health );
+	// ALERT( AlertType::Console, "%s %d %d %d %f %f\n", STRING( pev->targetname ), pev->sequence, m_iGoalAnim, m_iDir, pev->framerate, pev->health );
 
 	if (m_MonsterState == MONSTERSTATE_SCRIPT || m_IdealMonsterState == MONSTERSTATE_SCRIPT)
 	{
@@ -511,7 +511,7 @@ void CTentacle :: Cycle( void )
 		if (m_flSoundYaw > 180)
 			m_flSoundYaw -= 360;
 
-		// ALERT( at_console, "sound %d %.0f\n", m_iSoundLevel, m_flSoundYaw );
+		// ALERT( AlertType::Console, "sound %d %.0f\n", m_iSoundLevel, m_flSoundYaw );
 		if (m_flSoundTime < gpGlobals->time)
 		{
 			// play "I hear new something" sound
@@ -555,7 +555,7 @@ void CTentacle :: Cycle( void )
 
 	if (m_fSequenceFinished)
 	{
-		// ALERT( at_console, "%s done %d %d\n", STRING( pev->targetname ), pev->sequence, m_iGoalAnim );
+		// ALERT( AlertType::Console, "%s done %d %d\n", STRING( pev->targetname ), pev->sequence, m_iGoalAnim );
 		if (pev->health <= 1)
 		{
 			m_iGoalAnim = TENTACLE_ANIM_Pit_Idle;
@@ -680,7 +680,7 @@ void CTentacle :: Cycle( void )
 				vecSrc = pev->origin + Vector( 0, 0, MyHeight() + 8);
 				UTIL_TraceLine( vecSrc, vecSrc + gpGlobals->v_forward * 512, ignore_monsters, ENT( pev ), &tr2 );
 
-				// ALERT( at_console, "%f %f\n", tr1.flFraction * 512, tr2.flFraction * 512 );
+				// ALERT( AlertType::Console, "%f %f\n", tr1.flFraction * 512, tr2.flFraction * 512 );
 
 				m_flTapRadius = SetBlending( 0, RANDOM_FLOAT( tr1.flFraction * 512, tr2.flFraction * 512 ) );
 			}
@@ -690,7 +690,7 @@ void CTentacle :: Cycle( void )
 			break;
 		}
 		pev->view_ofs.z = MyHeight( );
-		// ALERT( at_console, "seq %d\n", pev->sequence );
+		// ALERT( AlertType::Console, "seq %d\n", pev->sequence );
 	}
 
 	if (m_flPrevSoundTime + 2.0 > gpGlobals->time)
@@ -709,7 +709,7 @@ void CTentacle :: Cycle( void )
 
 void CTentacle::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
-	// ALERT( at_console, "%s triggered %d\n", STRING( pev->targetname ), useType ); 
+	// ALERT( AlertType::Console, "%s triggered %d\n", STRING( pev->targetname ), useType ); 
 	switch( useType )
 	{
 	case USE_OFF:
@@ -720,7 +720,7 @@ void CTentacle::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 	case USE_ON:
 		if (pActivator)
 		{
-			// ALERT( at_console, "insert sound\n");
+			// ALERT( AlertType::Console, "insert sound\n");
 			CSoundEnt::InsertSound ( bits_SOUND_WORLD, pActivator->pev->origin, 1024, 1.0 );
 		}
 		break;
@@ -766,9 +766,9 @@ void CTentacle :: DieThink( void )
 			}
 		}
 
-		// ALERT( at_console, "%d : %d => ", pev->sequence, m_iGoalAnim );
+		// ALERT( AlertType::Console, "%d : %d => ", pev->sequence, m_iGoalAnim );
 		pev->sequence = FindTransition( pev->sequence, m_iGoalAnim, &m_iDir );
-		// ALERT( at_console, "%d\n", pev->sequence );
+		// ALERT( AlertType::Console, "%d\n", pev->sequence );
 
 		if (m_iDir > 0)
 		{
@@ -963,12 +963,12 @@ void CTentacle :: HitTouch( CBaseEntity *pOther )
 	if (tr.iHitgroup >= 3)
 	{
 		pOther->TakeDamage( pev, pev, m_iHitDmg, DMG_CRUSH );
-		// ALERT( at_console, "wack %3d : ", m_iHitDmg );
+		// ALERT( AlertType::Console, "wack %3d : ", m_iHitDmg );
 	}
 	else if (tr.iHitgroup != 0)
 	{
 		pOther->TakeDamage( pev, pev, 20, DMG_CRUSH );
-		// ALERT( at_console, "tap  %3d : ", 20 );
+		// ALERT( AlertType::Console, "tap  %3d : ", 20 );
 	}
 	else
 	{
@@ -977,9 +977,9 @@ void CTentacle :: HitTouch( CBaseEntity *pOther )
 
 	m_flHitTime = gpGlobals->time + 0.5;
 
-	// ALERT( at_console, "%s : ", STRING( tr.pHit->v.classname ) );
+	// ALERT( AlertType::Console, "%s : ", STRING( tr.pHit->v.classname ) );
 
-	// ALERT( at_console, "%.0f : %s : %d\n", pev->angles.y, STRING( pOther->pev->classname ), tr.iHitgroup );
+	// ALERT( AlertType::Console, "%.0f : %s : %d\n", pev->angles.y, STRING( pOther->pev->classname ), tr.iHitgroup );
 }
 
 

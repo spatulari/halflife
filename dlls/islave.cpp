@@ -69,7 +69,7 @@ public:
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	void ClearBeams( );
 	void ArmBeam( int side );
@@ -97,7 +97,7 @@ LINK_ENTITY_TO_CLASS( monster_alien_slave, CISlave );
 LINK_ENTITY_TO_CLASS( monster_vortigaunt, CISlave );
 
 
-TYPEDESCRIPTION	CISlave::m_SaveData[] = 
+TypeDescription	CISlave::m_SaveData[] = 
 {
 	DEFINE_FIELD( CISlave, m_iBravery, FIELD_INTEGER ),
 
@@ -162,7 +162,7 @@ int CISlave::IRelationship( CBaseEntity *pTarget )
 
 void CISlave :: CallForHelp( char *szClassname, float flDist, EHANDLE hEnemy, Vector &vecLocation )
 {
-	// ALERT( at_aiconsole, "help " );
+	// ALERT( AlertType::AiConsole, "help " );
 
 	// skip ones not on my netname
 	if ( FStringNull( pev->netname ))
@@ -309,7 +309,7 @@ void CISlave :: SetYawSpeed ( void )
 //=========================================================
 void CISlave :: HandleAnimEvent( MonsterEvent_t *pEvent )
 {
-	// ALERT( at_console, "event %d : %f\n", pEvent->event, pev->frame );
+	// ALERT( AlertType::Console, "event %d : %f\n", pEvent->event, pev->frame );
 	switch( pEvent->event )
 	{
 		case ISLAVE_AE_CLAW:
@@ -686,7 +686,7 @@ Schedule_t *CISlave :: GetSchedule( void )
 				}
 				if ( HasConditions ( bits_COND_SEE_ENEMY ) && HasConditions ( bits_COND_ENEMY_FACING_ME ) )
 				{
-					// ALERT( at_console, "exposed\n");
+					// ALERT( AlertType::Console, "exposed\n");
 					return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
 				}
 			}

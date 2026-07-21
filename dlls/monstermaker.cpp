@@ -46,7 +46,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	
 	string_t m_iszMonsterClassname;// classname of the monster(s) that will be created.
 	
@@ -64,7 +64,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monstermaker, CMonsterMaker );
 
-TYPEDESCRIPTION	CMonsterMaker::m_SaveData[] = 
+TypeDescription	CMonsterMaker::m_SaveData[] = 
 {
 	DEFINE_FIELD( CMonsterMaker, m_iszMonsterClassname, FIELD_STRING ),
 	DEFINE_FIELD( CMonsterMaker, m_cNumMonsters, FIELD_INTEGER ),
@@ -194,7 +194,7 @@ void CMonsterMaker::MakeMonster( void )
 
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in MonsterMaker!\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in MonsterMaker!\n" );
 		return;
 	}
 	

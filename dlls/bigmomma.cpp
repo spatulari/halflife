@@ -46,14 +46,14 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int		m_preSequence;
 };
 
 LINK_ENTITY_TO_CLASS( info_bigmomma, CInfoBM );
 
-TYPEDESCRIPTION	CInfoBM::m_SaveData[] = 
+TypeDescription	CInfoBM::m_SaveData[] = 
 {
 	DEFINE_FIELD( CInfoBM, m_preSequence, FIELD_STRING ),
 };
@@ -110,14 +110,14 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int  m_maxFrame;
 };
 
 LINK_ENTITY_TO_CLASS( bmortar, CBMortar );
 
-TYPEDESCRIPTION	CBMortar::m_SaveData[] = 
+TypeDescription	CBMortar::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBMortar, m_maxFrame, FIELD_INTEGER ),
 };
@@ -291,7 +291,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static const char *pChildDieSounds[];
 	static const char *pSackSounds[];
@@ -314,7 +314,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( monster_bigmomma, CBigMomma );
 
-TYPEDESCRIPTION	CBigMomma::m_SaveData[] = 
+TypeDescription	CBigMomma::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBigMomma, m_nodeTime, FIELD_TIME ),
 	DEFINE_FIELD( CBigMomma, m_crabTime, FIELD_TIME ),
@@ -592,7 +592,7 @@ int CBigMomma :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, fl
 		{
 			pev->health = flDamage + 1;
 			Remember( bits_MEMORY_ADVANCE_NODE | bits_MEMORY_COMPLETED_NODE );
-			ALERT( at_aiconsole, "BM: Finished node health!!!\n" );
+			ALERT( AlertType::AiConsole, "BM: Finished node health!!!\n" );
 		}
 	}
 
@@ -727,7 +727,7 @@ void CBigMomma::NodeStart( int iszNextNode )
 
 	if ( !pTarget )
 	{
-		ALERT( at_aiconsole, "BM: Finished the path!!\n" );
+		ALERT( AlertType::AiConsole, "BM: Finished the path!!\n" );
 		Remember( bits_MEMORY_PATH_FINISHED );
 		return;
 	}
@@ -932,18 +932,18 @@ void CBigMomma::StartTask( Task_t *pTask )
 			}
 			NodeStart( pev->netname );
 			TaskComplete();
-			ALERT( at_aiconsole, "BM: Found node %s\n", STRING(pev->netname) );
+			ALERT( AlertType::AiConsole, "BM: Found node %s\n", STRING(pev->netname) );
 		}
 		break;
 
 	case TASK_NODE_DELAY:
 		m_nodeTime = gpGlobals->time + pTask->flData;
 		TaskComplete();
-		ALERT( at_aiconsole, "BM: FAIL! Delay %.2f\n", pTask->flData );
+		ALERT( AlertType::AiConsole, "BM: FAIL! Delay %.2f\n", pTask->flData );
 		break;
 
 	case TASK_PROCESS_NODE:
-		ALERT( at_aiconsole, "BM: Reached node %s\n", STRING(pev->netname) );
+		ALERT( AlertType::AiConsole, "BM: Reached node %s\n", STRING(pev->netname) );
 		NodeReach();
 		TaskComplete();
 		break;
@@ -957,7 +957,7 @@ void CBigMomma::StartTask( Task_t *pTask )
 			else
 				sequence = GetNodePresequence();
 
-			ALERT( at_aiconsole, "BM: Playing node sequence %s\n", STRING(sequence) );
+			ALERT( AlertType::AiConsole, "BM: Playing node sequence %s\n", STRING(sequence) );
 			if ( sequence )
 			{
 				sequence = LookupSequence( STRING( sequence ) );
@@ -966,7 +966,7 @@ void CBigMomma::StartTask( Task_t *pTask )
 					pev->sequence = sequence;
 					pev->frame = 0;
 					ResetSequenceInfo( );
-					ALERT( at_aiconsole, "BM: Sequence %s\n", STRING(GetNodeSequence()) );
+					ALERT( AlertType::AiConsole, "BM: Sequence %s\n", STRING(GetNodeSequence()) );
 					return;
 				}
 			}
@@ -982,9 +982,9 @@ void CBigMomma::StartTask( Task_t *pTask )
 	case TASK_WAIT_NODE:
 		m_flWait = gpGlobals->time + GetNodeDelay();
 		if ( m_hTargetEnt->pev->spawnflags & SF_INFOBM_WAIT )
-			ALERT( at_aiconsole, "BM: Wait at node %s forever\n", STRING(pev->netname) );
+			ALERT( AlertType::AiConsole, "BM: Wait at node %s forever\n", STRING(pev->netname) );
 		else
-			ALERT( at_aiconsole, "BM: Wait at node %s for %.2f\n", STRING(pev->netname), GetNodeDelay() );
+			ALERT( AlertType::AiConsole, "BM: Wait at node %s for %.2f\n", STRING(pev->netname), GetNodeDelay() );
 		break;
 
 
@@ -1011,7 +1011,7 @@ void CBigMomma::StartTask( Task_t *pTask )
 				}
 			}
 		}
-		ALERT( at_aiconsole, "BM: Moving to node %s\n", STRING(pev->netname) );
+		ALERT( AlertType::AiConsole, "BM: Moving to node %s\n", STRING(pev->netname) );
 
 		break;
 
@@ -1047,7 +1047,7 @@ void CBigMomma::RunTask( Task_t *pTask )
 				// overlap the range to prevent oscillation
 				if ( (distance < GetNodeRange()) || MovementIsComplete() )
 				{
-					ALERT( at_aiconsole, "BM: Reached node!\n" );
+					ALERT( AlertType::AiConsole, "BM: Reached node!\n" );
 					TaskComplete();
 					RouteClear();		// Stop moving
 				}
@@ -1062,7 +1062,7 @@ void CBigMomma::RunTask( Task_t *pTask )
 
 		if ( gpGlobals->time > m_flWaitFinished )
 			TaskComplete();
-		ALERT( at_aiconsole, "BM: The WAIT is over!\n" );
+		ALERT( AlertType::AiConsole, "BM: The WAIT is over!\n" );
 		break;
 
 	case TASK_PLAY_NODE_PRESEQUENCE:

@@ -2299,7 +2299,7 @@ edict_t *RuneSelectSpawnPoint( void )
 ReturnSpot:
 	if ( !pSpot )
 	{
-		ALERT(at_error, "PutClientInServer: no info_player_start on level");
+		ALERT(AlertType::Error, "PutClientInServer: no info_player_start on level");
 		return INDEXENT(0);
 	}
 	return pSpot->edict();

@@ -107,7 +107,7 @@ public:
 
 	virtual CSquadMonster *MySquadMonsterPointer( void ) { return this; }
 
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );

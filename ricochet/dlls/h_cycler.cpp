@@ -48,12 +48,12 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int			m_animate;
 };
 
-TYPEDESCRIPTION	CCycler::m_SaveData[] = 
+TypeDescription	CCycler::m_SaveData[] = 
 {
 	DEFINE_FIELD( CCycler, m_animate, FIELD_INTEGER ),
 };
@@ -97,7 +97,7 @@ void CCycler :: GenericCyclerSpawn(char *szModel, Vector vecMin, Vector vecMax)
 {
 	if (!szModel || !*szModel)
 	{
-		ALERT(at_error, "cycler at %.0f %.0f %0.f missing modelname", pev->origin.x, pev->origin.y, pev->origin.z );
+		ALERT(AlertType::Error, "cycler at %.0f %.0f %0.f missing modelname", pev->origin.x, pev->origin.y, pev->origin.z );
 		REMOVE_ENTITY(ENT(pev));
 		return;
 	}
@@ -206,7 +206,7 @@ int CCycler :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 		pev->framerate = 1.0;
 		StudioFrameAdvance ( 0.1 );
 		pev->framerate = 0;
-		ALERT( at_console, "sequence: %d, frame %.0f\n", pev->sequence, pev->frame );
+		ALERT( AlertType::Console, "sequence: %d, frame %.0f\n", pev->sequence, pev->frame );
 	}
 
 	return 0;
@@ -227,7 +227,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	inline int		ShouldAnimate( void ) { return m_animate && m_maxFrame > 1.0; }
 	int			m_animate;
@@ -237,7 +237,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( cycler_sprite, CCyclerSprite );
 
-TYPEDESCRIPTION	CCyclerSprite::m_SaveData[] = 
+TypeDescription	CCyclerSprite::m_SaveData[] = 
 {
 	DEFINE_FIELD( CCyclerSprite, m_animate, FIELD_INTEGER ),
 	DEFINE_FIELD( CCyclerSprite, m_lastTime, FIELD_TIME ),
@@ -279,7 +279,7 @@ void CCyclerSprite::Think( void )
 void CCyclerSprite::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	m_animate = !m_animate;
-	ALERT( at_console, "Sprite: %s\n", STRING(pev->model) );
+	ALERT( AlertType::Console, "Sprite: %s\n", STRING(pev->model) );
 }
 
 
@@ -392,7 +392,7 @@ class CWreckage : public CBaseMonster
 {
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
@@ -400,7 +400,7 @@ class CWreckage : public CBaseMonster
 
 	int m_flStartTime;
 };
-TYPEDESCRIPTION	CWreckage::m_SaveData[] = 
+TypeDescription	CWreckage::m_SaveData[] = 
 {
 	DEFINE_FIELD( CWreckage, m_flStartTime, FIELD_TIME ),
 };

@@ -35,7 +35,7 @@ extern Vector VecBModelOrigin( entvars_t* pevBModel );
 extern DLL_GLOBAL Vector		g_vecAttackDir;
 extern DLL_GLOBAL int			g_iSkillLevel;
 
-static DLL_FUNCTIONS gFunctionTable = 
+static DLLFunctions gFunctionTable = 
 {
 	GameDLLInit,				//pfnGameInit
 	DispatchSpawn,				//pfnSpawn
@@ -99,7 +99,7 @@ static DLL_FUNCTIONS gFunctionTable =
 	AllowLagCompensation,		//pfnAllowLagCompensation
 };
 
-NEW_DLL_FUNCTIONS gNewDLLFunctions =
+NewDLLFunctions gNewDLLFunctions =
 {
 	OnFreeEntPrivateData,		//pfnOnFreeEntPrivateData
 	GameDLLShutdown,			//pfnGameShutdown
@@ -109,18 +109,18 @@ NEW_DLL_FUNCTIONS gNewDLLFunctions =
 
 static void SetObjectCollisionBox( entvars_t *pev );
 
-int GetEntityAPI( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion )
+int GetEntityAPI( DLLFunctions *pFunctionTable, int interfaceVersion )
 {
 	if ( !pFunctionTable || interfaceVersion != INTERFACE_VERSION )
 	{
 		return FALSE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLLFunctions ) );
 	return TRUE;
 }
 
-int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
+int GetEntityAPI2( DLLFunctions *pFunctionTable, int *interfaceVersion )
 {
 	if ( !pFunctionTable || *interfaceVersion != INTERFACE_VERSION )
 	{
@@ -129,11 +129,11 @@ int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
 		return FALSE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLLFunctions ) );
 	return TRUE;
 }
 
-int GetNewDLLFunctions(NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion)
+int GetNewDLLFunctions(NewDLLFunctions *pFunctionTable, int *interfaceVersion)
 {
 	if(!pFunctionTable || *interfaceVersion != NEW_DLL_FUNCTIONS_VERSION)
 	{
@@ -188,7 +188,7 @@ int DispatchSpawn( edict_t *pent )
 			{
 				// Spawned entities default to 'On'
 				gGlobalState.EntityAdd( pEntity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
-//				ALERT( at_console, "Added global entity %s (%s)\n", STRING(pEntity->pev->classname), STRING(pEntity->pev->globalname) );
+//				ALERT( AlertType::Console, "Added global entity %s (%s)\n", STRING(pEntity->pev->classname), STRING(pEntity->pev->globalname) );
 			}
 		}
 
@@ -250,7 +250,7 @@ void DispatchThink( edict_t *pent )
 	if (pEntity)
 	{
 		if ( FBitSet( pEntity->pev->flags, FL_DORMANT ) )
-			ALERT( at_error, "Dormant entity %s is thinking!!\n", STRING(pEntity->pev->classname) );
+			ALERT( AlertType::Error, "Dormant entity %s is thinking!!\n", STRING(pEntity->pev->classname) );
 				
 		pEntity->Think();
 	}
@@ -274,7 +274,7 @@ void DispatchSave( edict_t *pent, SAVERESTOREDATA *pSaveData )
 		ENTITYTABLE *pTable = &pSaveData->pTable[ pSaveData->currentIndex ];
 
 		if ( pTable->pent != pent )
-			ALERT( at_error, "ENTITY TABLE OR INDEX IS WRONG!!!!\n" );
+			ALERT( AlertType::Error, "ENTITY TABLE OR INDEX IS WRONG!!!!\n" );
 
 		if ( pEntity->ObjectCaps() & FCAP_DONT_SAVE )
 			return;
@@ -315,7 +315,7 @@ CBaseEntity *FindGlobalEntity( string_t classname, string_t globalname )
 	{
 		if ( !FClassnameIs( pReturn->pev, STRING(classname) ) )
 		{
-			ALERT( at_console, "Global entity found %s, wrong class %s\n", STRING(globalname), STRING(pReturn->pev->classname) );
+			ALERT( AlertType::Console, "Global entity found %s, wrong class %s\n", STRING(globalname), STRING(pReturn->pev->classname) );
 			pReturn = nullptr;
 		}
 	}
@@ -360,7 +360,7 @@ int DispatchRestore( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity
 			CBaseEntity *pNewEntity = FindGlobalEntity( tmpVars.classname, tmpVars.globalname );
 			if ( pNewEntity )
 			{
-//				ALERT( at_console, "Overlay %s with %s\n", STRING(pNewEntity->pev->classname), STRING(tmpVars.classname) );
+//				ALERT( AlertType::Console, "Overlay %s with %s\n", STRING(pNewEntity->pev->classname), STRING(tmpVars.classname) );
 				// Tell the restore code we're overlaying a global entity from another level
 				restoreHelper.SetGlobalMode( 1 );	// Don't overwrite global fields
 				pSaveData->vecLandmarkOffset = (pSaveData->vecLandmarkOffset - pNewEntity->pev->mins) + tmpVars.mins;
@@ -395,14 +395,14 @@ int DispatchRestore( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity
 #if 0
 		if ( pEntity && pEntity->pev->globalname && globalEntity ) 
 		{
-			ALERT( at_console, "Global %s is %s\n", STRING(pEntity->pev->globalname), STRING(pEntity->pev->model) );
+			ALERT( AlertType::Console, "Global %s is %s\n", STRING(pEntity->pev->globalname), STRING(pEntity->pev->model) );
 		}
 #endif
 
 		// Is this an overriding global entity (coming over the transition), or one restoring in a level
 		if ( globalEntity )
 		{
-//			ALERT( at_console, "After: %f %f %f %s\n", pEntity->pev->origin.x, pEntity->pev->origin.y, pEntity->pev->origin.z, STRING(pEntity->pev->model) );
+//			ALERT( AlertType::Console, "After: %f %f %f %s\n", pEntity->pev->origin.x, pEntity->pev->origin.y, pEntity->pev->origin.z, STRING(pEntity->pev->model) );
 			pSaveData->vecLandmarkOffset = oldOffset;
 			if ( pEntity )
 			{
@@ -426,7 +426,7 @@ int DispatchRestore( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity
 			}
 			else
 			{
-				ALERT( at_error, "Global Entity %s (%s) not in table!!!\n", STRING(pEntity->pev->globalname), STRING(pEntity->pev->classname) );
+				ALERT( AlertType::Error, "Global Entity %s (%s) not in table!!!\n", STRING(pEntity->pev->globalname), STRING(pEntity->pev->classname) );
 				// Spawned entities default to 'On'
 				gGlobalState.EntityAdd( pEntity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
 			}
@@ -448,14 +448,14 @@ void DispatchObjectCollsionBox( edict_t *pent )
 }
 
 
-void SaveWriteFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+void SaveWriteFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	CSave saveHelper( pSaveData );
 	saveHelper.WriteFields( pname, pBaseData, pFields, fieldCount );
 }
 
 
-void SaveReadFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+void SaveReadFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	CRestore restoreHelper( pSaveData );
 	restoreHelper.ReadFields( pname, pBaseData, pFields, fieldCount );
@@ -607,7 +607,7 @@ CBaseEntity *CBaseEntity::GetNextTarget( void )
 }
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	CBaseEntity::m_SaveData[] = 
+TypeDescription	CBaseEntity::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseEntity, m_pGoalEnt, FIELD_CLASSPTR ),
 
@@ -783,7 +783,7 @@ CBaseEntity * CBaseEntity::Create( char *szName, const Vector &vecOrigin, const 
 	pent = CREATE_NAMED_ENTITY( MAKE_STRING( szName ));
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in Create!\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in Create!\n" );
 		return nullptr;
 	}
 	pEntity = Instance( pent );

@@ -193,7 +193,7 @@ void CDecal :: KeyValue( KeyValueData *pkvd )
 		// Found
 		if ( pev->skin >= 0 )
 			return;
-		ALERT( at_console, "Can't find decal %s\n", pkvd->szValue );
+		ALERT( AlertType::Console, "Can't find decal %s\n", pkvd->szValue );
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
@@ -307,11 +307,11 @@ void CGlobalState :: DumpGlobals( void )
 	static char *estates[] = { "Off", "On", "Dead" };
 	globalentity_t *pTest;
 
-	ALERT( at_console, "-- Globals --\n" );
+	ALERT( AlertType::Console, "-- Globals --\n" );
 	pTest = m_pList;
 	while ( pTest )
 	{
-		ALERT( at_console, "%s: %s (%s)\n", pTest->name, pTest->levelName, estates[pTest->state] );
+		ALERT( AlertType::Console, "%s: %s (%s)\n", pTest->name, pTest->levelName, estates[pTest->state] );
 		pTest = pTest->pNext;
 	}
 }
@@ -361,13 +361,13 @@ GLOBALESTATE CGlobalState :: EntityGetState( string_t globalname )
 
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	CGlobalState::m_SaveData[] = 
+TypeDescription	CGlobalState::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGlobalState, m_listCount, FIELD_INTEGER ),
 };
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	gGlobalEntitySaveData[] = 
+TypeDescription	gGlobalEntitySaveData[] = 
 {
 	DEFINE_ARRAY( globalentity_t, name, FIELD_CHARACTER, 64 ),
 	DEFINE_ARRAY( globalentity_t, levelName, FIELD_CHARACTER, 32 ),
@@ -519,7 +519,7 @@ void CWorld :: Precache( void )
 
 	if ( !pSoundEnt )
 	{
-		ALERT ( at_console, "**COULD NOT CREATE SOUNDENT**\n" );
+		ALERT ( AlertType::Console, "**COULD NOT CREATE SOUNDENT**\n" );
 	}
 
 	InitBodyQue();
@@ -639,12 +639,12 @@ void CWorld :: Precache( void )
 	{// Load the node graph for this level
 		if ( !WorldGraph.FLoadGraph ( (char *)STRING( gpGlobals->mapname ) ) )
 		{// couldn't load, so alloc and prepare to build a graph.
-			ALERT ( at_console, "*Error opening .NOD file\n" );
+			ALERT ( AlertType::Console, "*Error opening .NOD file\n" );
 			WorldGraph.AllocNodes ();
 		}
 		else
 		{
-			ALERT ( at_console, "\n*Graph Loaded!\n" );
+			ALERT ( AlertType::Console, "\n*Graph Loaded!\n" );
 		}
 	}
 
@@ -655,7 +655,7 @@ void CWorld :: Precache( void )
 
 	if ( pev->netname )
 	{
-		ALERT( at_aiconsole, "Chapter title: %s\n", STRING(pev->netname) );
+		ALERT( AlertType::AiConsole, "Chapter title: %s\n", STRING(pev->netname) );
 		CBaseEntity *pEntity = CBaseEntity::Create( "env_message", g_vecZero, g_vecZero, nullptr );
 		if ( pEntity )
 		{

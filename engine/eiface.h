@@ -44,36 +44,39 @@
 #endif
 */
 
-typedef enum
-	{
-	at_notice,
-	at_console,		// same as at_notice, but forces a ConPrintf, not a message box
-	at_aiconsole,	// same as at_console, but only shown if developer level is 2!
-	at_warning,
-	at_error,
-	at_logged		// Server print to console ( only in multiplayer games ).
-	} ALERT_TYPE;
+/// @todo doc comments
+enum class AlertType {
+	Notice,
+	Console,		// same as AlertType::AtNotice, but forces a ConPrintf, not a message box
+	AiConsole,	// same as AlertType::Console, but only shown if developer level is 2!
+	Warning,
+	Error,
+	Logged		// Server print to console ( only in multiplayer games ).
+};
 
 // 4-22-98  JOHN: added for use in pfnClientPrintf
-typedef enum
-	{
-	print_console,
-	print_center,
-	print_chat,
-	} PRINT_TYPE;
+/// @todo doc comments
+enum class PrintType
+{
+	Console,
+	Center,
+	Chat,
+};
 
 // For integrity checking of content on clients
-typedef enum
+/// @todo doc comments
+enum class ForceType
 {
-	force_exactfile,					// File on client must exactly match server's file
-	force_model_samebounds,				// For model files only, the geometry must fit in the same bbox
-	force_model_specifybounds,			// For model files only, the geometry must fit in the specified bbox
-	force_model_specifybounds_if_avail,	// For Steam model files only, the geometry must fit in the specified bbox (if the file is available)
-} FORCE_TYPE;
+	ExactFile,					    // File on client must exactly match server's file
+	ModelSameBounds,				// For model files only, the geometry must fit in the same bbox
+	ModelSpecifyBounds,			    // For model files only, the geometry must fit in the specified bbox
+	ModelSpecifyBoundsIfAvailable,	// For Steam model files only, the geometry must fit in the specified bbox (if the file is available)
+};
 
-// Returned by TraceLine
-typedef struct
-	{
+/// Returned by TraceLine
+/// @todo doc comments & get rid of hungarian notation
+struct TraceResult
+{
 	int		fAllSolid;			// if true, plane is not valid
 	int		fStartSolid;		// if true, the initial point was in a solid area
 	int		fInOpen;
@@ -82,15 +85,16 @@ typedef struct
 	vec3_t	vecEndPos;			// final position
 	float	flPlaneDist;
 	vec3_t	vecPlaneNormal;		// surface normal at impact
-	edict_t	*pHit;				// entity the surface is on
+	edict_t* pHit;				// entity the surface is on
 	int		iHitgroup;			// 0 == generic, non zero is specific body part
-	} TraceResult;
+};
 
-// CD audio status
-typedef struct 
+/// @brief CD audio status
+/// @todo doc comments & get rid of hungarian notation
+struct CDStatus
 {
-	int	fPlaying;// is sound playing right now?
-	int	fWasPlaying;// if not, CD is paused if WasPlaying is true.
+	int	fPlaying;      // is sound playing right now?
+	int	fWasPlaying;   // if not, CD is paused if WasPlaying is true.
 	int	fInitialized;
 	int	fEnabled;
 	int	fPlayLooping;
@@ -98,13 +102,14 @@ typedef struct
 	//BYTE 	remap[100];
 	int	fCDRom;
 	int	fPlayTrack;
-} CDStatus;
+};
 
 #include "../common/crc.h"
 
 
-// Engine hands this to DLLs for functionality callbacks
-typedef struct enginefuncs_s
+/// @brief Engine hands this to DLLs for functionality callbacks
+/// @todo doc comments & get rid of hungarian notation
+struct enginefuncs_s
 {
 	int			(*pfnPrecacheModel)			(char* s);
 	int			(*pfnPrecacheSound)			(char* s);
@@ -167,7 +172,7 @@ typedef struct enginefuncs_s
 	const char*	(*pfnCVarGetString)			(const char *szVarName);
 	void		(*pfnCVarSetFloat)			(const char *szVarName, float flValue);
 	void		(*pfnCVarSetString)			(const char *szVarName, const char *szValue);
-	void		(*pfnAlertMessage)			(ALERT_TYPE atype, char *szFmt, ...);
+	void		(*pfnAlertMessage)			(AlertType atype, char *szFmt, ...);
 	void		(*pfnEngineFprintf)			(void *pfile, char *szFmt, ...);
 	void*		(*pfnPvAllocEntPrivateData)	(edict_t *pEdict, int32 cb);
 	void*		(*pfnPvEntPrivateData)		(edict_t *pEdict);
@@ -186,7 +191,7 @@ typedef struct enginefuncs_s
 	void		(*pfnGetBonePosition)		(const edict_t* pEdict, int iBone, float *rgflOrigin, float *rgflAngles );
 	uint32 (*pfnFunctionFromName)	( const char *pName );
 	const char *(*pfnNameForFunction)		( uint32 function );
-	void		(*pfnClientPrintf)			( edict_t* pEdict, PRINT_TYPE ptype, const char *szMsg ); // JOHN: engine callbacks so game DLL can print messages to individual clients
+	void		(*pfnClientPrintf)			( edict_t* pEdict, PrintType ptype, const char *szMsg ); // JOHN: engine callbacks so game DLL can print messages to individual clients
 	void		(*pfnServerPrint)			( const char *szMsg );
 	const char *(*pfnCmd_Args)				( void );		// these 3 added 
 	const char *(*pfnCmd_Argv)				( int argc );	// so game DLL can easily 
@@ -255,7 +260,7 @@ typedef struct enginefuncs_s
 	// Forces the client and server to be running with the same version of the specified file
 	//  ( e.g., a player model ).
 	// Calling this has no effect in single player
-	void		(*pfnForceUnmodified)		( FORCE_TYPE type, float *mins, float *maxs, const char *filename );
+	void		(*pfnForceUnmodified)		( ForceType type, float *mins, float *maxs, const char *filename );
 
 	void		(*pfnGetPlayerStats)		( const edict_t *pClient, int *ping, int *packet_loss );
 
@@ -298,7 +303,9 @@ typedef struct enginefuncs_s
 	int (*pfnCheckParm)( const char *pchCmdLineToken, char **ppnext );
 
 	edict_t*	(*pfnPEntityOfEntIndexAllEntities)		(int iEntIndex);
-} enginefuncs_t;
+};
+
+using enginefuncs_t = struct enginefuncs_s;
 
 
 // ONLY ADD NEW FUNCTIONS TO THE END OF THIS STRUCT.  INTERFACE VERSION IS FROZEN AT 138
@@ -372,6 +379,7 @@ SAVERESTOREDATA
 #endif
 ;
 
+// IMPORTANT: Don't refactor. Except if you have hours to waste
 typedef enum _fieldtypes
 {
 	FIELD_FLOAT = 0,		// Any floating point value
@@ -410,21 +418,23 @@ typedef enum _fieldtypes
 
 #define FTYPEDESC_GLOBAL			0x0001		// This field is masked for global entity save/restore
 
-typedef struct 
+/// @todo doc comments & get rid of hungarian notation
+struct TypeDescription
 {
 	FIELDTYPE		fieldType;
 	char			*fieldName;
 	int				fieldOffset;
 	short			fieldSize;
 	short			flags;
-} TYPEDESCRIPTION;
+};
 
 #ifndef ARRAYSIZE
 #define ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
 #endif // ARRAYSIZE
 
 
-typedef struct 
+/// @todo doc comments & get rid of hungarian notation
+struct DLLFunctions
 {
 	// Initialize/shutdown the game (one-time call after loading of game .dll )
 	void			(*pfnGameInit)			( void );				
@@ -438,12 +448,12 @@ typedef struct
 	int 			(*pfnRestore)			( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity );
 	void			(*pfnSetAbsBox)			( edict_t *pent );
 
-	void			(*pfnSaveWriteFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
-	void			(*pfnSaveReadFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
+	void			(*pfnSaveWriteFields)	( SAVERESTOREDATA *, const char *, void *, TypeDescription *, int );
+	void			(*pfnSaveReadFields)	( SAVERESTOREDATA *, const char *, void *, TypeDescription *, int );
 
 	void			(*pfnSaveGlobalState)		( SAVERESTOREDATA * );
 	void			(*pfnRestoreGlobalState)	( SAVERESTOREDATA * );
-	void			(*pfnResetGlobalState)		( void );
+	void			(*pfnResetGlobalState)		();
 
 	qboolean		(*pfnClientConnect)		( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] );
 	
@@ -454,14 +464,14 @@ typedef struct
 	void			(*pfnClientUserInfoChanged)( edict_t *pEntity, char *infobuffer );
 
 	void			(*pfnServerActivate)	( edict_t *pEdictList, int edictCount, int clientMax );
-	void			(*pfnServerDeactivate)	( void );
+	void			(*pfnServerDeactivate)	();
 
 	void			(*pfnPlayerPreThink)	( edict_t *pEntity );
 	void			(*pfnPlayerPostThink)	( edict_t *pEntity );
 
-	void			(*pfnStartFrame)		( void );
-	void			(*pfnParmsNewLevel)		( void );
-	void			(*pfnParmsChangeLevel)	( void );
+	void			(*pfnStartFrame)		();
+	void			(*pfnParmsNewLevel)		();
+	void			(*pfnParmsChangeLevel)	();
 
 	 // Returns string describing current .dll.  E.g., TeamFotrress 2, Half-Life
 	const char     *(*pfnGetGameDescription)( void );     
@@ -509,14 +519,14 @@ typedef struct
 	// Most games right now should return 0, until client-side weapon prediction code is written
 	//  and tested for them.
 	int				(*pfnAllowLagCompensation)( void );
-} DLL_FUNCTIONS;
+};
 
-extern DLL_FUNCTIONS		gEntityInterface;
+extern DLLFunctions		gEntityInterface;
 
 // Current version.
 #define NEW_DLL_FUNCTIONS_VERSION	1
 
-typedef struct
+struct NewDLLFunctions
 {
 	// Called right before the object's memory is freed. 
 	// Calls its destructor.
@@ -525,13 +535,13 @@ typedef struct
 	int				(*pfnShouldCollide)( edict_t *pentTouched, edict_t *pentOther );
 	void			(*pfnCvarValue)( const edict_t *pEnt, const char *value );
 	void			(*pfnCvarValue2)( const edict_t *pEnt, int requestID, const char *cvarName, const char *value );
-} NEW_DLL_FUNCTIONS;
-typedef int	(*NEW_DLL_FUNCTIONS_FN)( NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+};
+typedef int	(*NEW_DLL_FUNCTIONS_FN)( NewDLLFunctions *pFunctionTable, int *interfaceVersion );
 
 // Pointers will be nullptr if the game DLL doesn't support this API.
-extern NEW_DLL_FUNCTIONS	gNewDLLFunctions;
+extern NewDLLFunctions	gNewDLLFunctions;
 
-typedef int	(*APIFUNCTION)( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
-typedef int	(*APIFUNCTION2)( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+typedef int	(*APIFUNCTION)( DLLFunctions *pFunctionTable, int interfaceVersion );
+typedef int	(*APIFUNCTION2)( DLLFunctions *pFunctionTable, int *interfaceVersion );
 
 #endif EIFACE_H

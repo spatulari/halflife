@@ -49,7 +49,7 @@ class CTripmineGrenade : public CGrenade
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 	
@@ -76,7 +76,7 @@ class CTripmineGrenade : public CGrenade
 
 LINK_ENTITY_TO_CLASS( monster_tripmine, CTripmineGrenade );
 
-TYPEDESCRIPTION	CTripmineGrenade::m_SaveData[] = 
+TypeDescription	CTripmineGrenade::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTripmineGrenade, m_flPowerUp, FIELD_TIME ),
 	DEFINE_FIELD( CTripmineGrenade, m_vecDir, FIELD_VECTOR ),
@@ -193,7 +193,7 @@ void CTripmineGrenade :: PowerupThink( void  )
 			STOP_SOUND( ENT(pev), CHAN_BODY, "weapons/mine_charge.wav" );
 			SetThink(&CTripmineGrenade::SUB_Remove );
 			pev->nextthink = gpGlobals->time + 0.1;
-			ALERT( at_console, "WARNING:Tripmine at %.0f, %.0f, %.0f removed\n", pev->origin.x, pev->origin.y, pev->origin.z );
+			ALERT( AlertType::Console, "WARNING:Tripmine at %.0f, %.0f, %.0f removed\n", pev->origin.x, pev->origin.y, pev->origin.z );
 			KillBeam();
 			return;
 		}
@@ -211,7 +211,7 @@ void CTripmineGrenade :: PowerupThink( void  )
 		pev->nextthink = gpGlobals->time + 0.1;
 		return;
 	}
-	// ALERT( at_console, "%d %.0f %.0f %0.f\n", pev->owner, m_pOwner->pev->origin.x, m_pOwner->pev->origin.y, m_pOwner->pev->origin.z );
+	// ALERT( AlertType::Console, "%d %.0f %.0f %0.f\n", pev->owner, m_pOwner->pev->origin.x, m_pOwner->pev->origin.y, m_pOwner->pev->origin.z );
  
 	if (gpGlobals->time > m_flPowerUp)
 	{
@@ -242,7 +242,7 @@ void CTripmineGrenade :: MakeBeam( void )
 {
 	TraceResult tr;
 
-	// ALERT( at_console, "serverflags %f\n", gpGlobals->serverflags );
+	// ALERT( AlertType::Console, "serverflags %f\n", gpGlobals->serverflags );
 
 	UTIL_TraceLine( pev->origin, m_vecEnd, dont_ignore_monsters, ENT( pev ), &tr );
 
@@ -272,7 +272,7 @@ void CTripmineGrenade :: BeamBreakThink( void  )
 	gpGlobals->trace_flags = FTRACE_SIMPLEBOX;
 	UTIL_TraceLine( pev->origin, m_vecEnd, dont_ignore_monsters, ENT( pev ), &tr );
 
-	// ALERT( at_console, "%f : %f\n", tr.flFraction, m_flBeamLength );
+	// ALERT( AlertType::Console, "%f : %f\n", tr.flFraction, m_flBeamLength );
 
 	// respawn detect. 
 	if ( !m_pBeam )
@@ -473,7 +473,7 @@ void CTripmine::PrimaryAttack( void )
 		}
 		else
 		{
-			// ALERT( at_console, "no deploy\n" );
+			// ALERT( AlertType::Console, "no deploy\n" );
 		}
 	}
 	else

@@ -62,7 +62,7 @@ public:
 	void	WritePositionVector( const char *pname, const float *value, int count );	// array of pos vectors
 	void	WriteFunction( const char *pname, void **value, int count );		// Save a function pointer
 	int		WriteEntVars( const char *pname, entvars_t *pev );		// Save entvars_t (entvars_t)
-	int		WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
+	int		WriteFields( const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount );
 
 private:
 	int		DataEmpty( const char *pdata, int size );
@@ -84,8 +84,8 @@ class CRestore : public CSaveRestoreBuffer
 public:
 	CRestore( SAVERESTOREDATA *pdata ) : CSaveRestoreBuffer( pdata ) { m_global = 0; m_precache = TRUE; }
 	int		ReadEntVars( const char *pname, entvars_t *pev );		// entvars_t
-	int		ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
-	int		ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount, int startField, int size, char *pName, void *pData );
+	int		ReadFields( const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount );
+	int		ReadField( void *pBaseData, TypeDescription *pFields, int fieldCount, int startField, int size, char *pName, void *pData );
 	int		ReadInt( void );
 	short	ReadShort( void );
 	int		ReadNamedInt( const char *pName );
@@ -152,7 +152,7 @@ public:
 	int				EntityInTable( string_t globalname ) { return (Find( globalname ) != nullptr) ? 1 : 0; }
 	int				Save( CSave &save );
 	int				Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 //#ifdef _DEBUG
 	void			DumpGlobals( void );

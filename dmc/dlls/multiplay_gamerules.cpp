@@ -99,7 +99,7 @@ CHalfLifeMultiplay :: CHalfLifeMultiplay()
 		{
 			char szCommand[256];
 			
-			ALERT( at_console, "Executing dedicated server config file\n" );
+			ALERT( AlertType::Console, "Executing dedicated server config file\n" );
 			sprintf( szCommand, "exec %s\n", servercfgfile );
 			SERVER_COMMAND( szCommand );
 		}
@@ -113,7 +113,7 @@ CHalfLifeMultiplay :: CHalfLifeMultiplay()
 		{
 			char szCommand[256];
 			
-			ALERT( at_console, "Executing listen server config file\n" );
+			ALERT( AlertType::Console, "Executing listen server config file\n" );
 			sprintf( szCommand, "exec %s\n", lservercfgfile );
 			SERVER_COMMAND( szCommand );
 		}
@@ -374,7 +374,7 @@ BOOL CHalfLifeMultiplay :: GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerI
 			}
 			else if ( pCheck->iWeight() > iBestWeight && pCheck != pCurrentWeapon )// don't reselect the weapon we're trying to get rid of
 			{
-				//ALERT ( at_console, "Considering %s\n", STRING( pCheck->pev->classname ) );
+				//ALERT ( AlertType::Console, "Considering %s\n", STRING( pCheck->pev->classname ) );
 				// we keep updating the 'best' weapon just in case we can't find a weapon of the same weight
 				// that the player was using. This will end up leaving the player with his heaviest-weighted 
 				// weapon. 
@@ -1373,7 +1373,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 			}
 			else
 			{
-				ALERT( at_console, "Skipping %s from mapcycle, not a valid map\n", szMap );
+				ALERT( AlertType::Console, "Skipping %s from mapcycle, not a valid map\n", szMap );
 			}
 
 
@@ -1532,7 +1532,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 
 		if ( !ReloadMapCycleFile( mapcfile, &mapcycle ) || ( !mapcycle.items ) )
 		{
-			ALERT( at_console, "Unable to load map cycle file %s\n", mapcfile );
+			ALERT( AlertType::Console, "Unable to load map cycle file %s\n", mapcfile );
 			do_cycle = FALSE;
 		}
 	}
@@ -1609,14 +1609,14 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 
 	g_fGameOver = TRUE;
 
-	ALERT( at_console, "CHANGE LEVEL: %s\n", szNextMap );
+	ALERT( AlertType::Console, "CHANGE LEVEL: %s\n", szNextMap );
 	if ( minplayers || maxplayers )
 	{
-		ALERT( at_console, "PLAYER COUNT:  min %i max %i current %i\n", minplayers, maxplayers, curplayers );
+		ALERT( AlertType::Console, "PLAYER COUNT:  min %i max %i current %i\n", minplayers, maxplayers, curplayers );
 	}
 	if ( strlen( szRules ) > 0 )
 	{
-		ALERT( at_console, "RULES:  %s\n", szRules );
+		ALERT( AlertType::Console, "RULES:  %s\n", szRules );
 	}
 	
 	CHANGE_LEVEL( szNextMap, nullptr );

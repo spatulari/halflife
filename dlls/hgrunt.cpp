@@ -162,7 +162,7 @@ public:
 	void JustSpoke( void );
 
 	CUSTOM_SCHEDULES;
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	// checking the feasibility of a grenade toss is kind of costly, so we do it every couple of seconds,
 	// not every server frame.
@@ -189,7 +189,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_human_grunt, CHGrunt );
 
-TYPEDESCRIPTION	CHGrunt::m_SaveData[] = 
+TypeDescription	CHGrunt::m_SaveData[] = 
 {
 	DEFINE_FIELD( CHGrunt, m_flNextGrenadeCheck, FIELD_TIME ),
 	DEFINE_FIELD( CHGrunt, m_flNextPainTime, FIELD_TIME ),
@@ -1964,7 +1964,7 @@ void CHGrunt :: SetActivity ( Activity NewActivity )
 	else
 	{
 		// Not available try to get default anim
-		ALERT ( at_console, "%s has no sequence for act:%d\n", STRING(pev->classname), NewActivity );
+		ALERT ( AlertType::Console, "%s has no sequence for act:%d\n", STRING(pev->classname), NewActivity );
 		pev->sequence		= 0;	// Set to the reset anim (if it's there)
 	}
 }
@@ -2478,7 +2478,7 @@ void CDeadHGrunt :: Spawn( void )
 
 	if (pev->sequence == -1)
 	{
-		ALERT ( at_console, "Dead hgrunt with bad pose\n" );
+		ALERT ( AlertType::Console, "Dead hgrunt with bad pose\n" );
 	}
 
 	// Corpses have less health

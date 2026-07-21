@@ -74,7 +74,7 @@ int MaxAmmoCarry( int iszName )
 			return CBasePlayerItem::ItemInfoArray[i].iMaxAmmo2;
 	}
 
-	ALERT( at_console, "MaxAmmoCarry() doesn't recognize '%s'!\n", STRING( iszName ) );
+	ALERT( AlertType::Console, "MaxAmmoCarry() doesn't recognize '%s'!\n", STRING( iszName ) );
 	return -1;
 }
 
@@ -272,7 +272,7 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 	pent = CREATE_NAMED_ENTITY( MAKE_STRING( szClassname ) );
 	if ( FNullEnt( pent ) )
 	{
-		ALERT ( at_console, "nullptr Ent in UTIL_PrecacheOtherWeapon\n" );
+		ALERT ( AlertType::Console, "nullptr Ent in UTIL_PrecacheOtherWeapon\n" );
 		return;
 	}
 	
@@ -427,7 +427,7 @@ void W_Precache(void)
 
  
 
-TYPEDESCRIPTION	CBasePlayerItem::m_SaveData[] = 
+TypeDescription	CBasePlayerItem::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBasePlayerItem, m_pPlayer, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CBasePlayerItem, m_pNext, FIELD_CLASSPTR ),
@@ -439,7 +439,7 @@ TYPEDESCRIPTION	CBasePlayerItem::m_SaveData[] =
 IMPLEMENT_SAVERESTORE( CBasePlayerItem, CBaseAnimating );
 
 
-TYPEDESCRIPTION	CBasePlayerWeapon::m_SaveData[] = 
+TypeDescription	CBasePlayerWeapon::m_SaveData[] = 
 {
 #if defined( CLIENT_WEAPONS )
 	DEFINE_FIELD( CBasePlayerWeapon, m_flNextPrimaryAttack, FIELD_FLOAT ),
@@ -606,7 +606,7 @@ CBaseEntity* CBasePlayerItem::Respawn( void )
 	}
 	else
 	{
-		ALERT ( at_console, "Respawn failed to create %s!\n", STRING( pev->classname ) );
+		ALERT ( AlertType::Console, "Respawn failed to create %s!\n", STRING( pev->classname ) );
 	}
 
 	return pNewWeapon;
@@ -1245,7 +1245,7 @@ float CBasePlayerWeapon::GetNextAttackDelay( float delay )
 
 LINK_ENTITY_TO_CLASS( weaponbox, CWeaponBox );
 
-TYPEDESCRIPTION	CWeaponBox::m_SaveData[] = 
+TypeDescription	CWeaponBox::m_SaveData[] = 
 {
 	DEFINE_ARRAY( CWeaponBox, m_rgAmmo, FIELD_INTEGER, MAX_AMMO_SLOTS ),
 	DEFINE_ARRAY( CWeaponBox, m_rgiszAmmo, FIELD_STRING, MAX_AMMO_SLOTS ),
@@ -1276,7 +1276,7 @@ void CWeaponBox :: KeyValue( KeyValueData *pkvd )
 	}
 	else
 	{
-		ALERT ( at_console, "WeaponBox too full! only %d ammotypes allowed\n", MAX_AMMO_SLOTS );
+		ALERT ( AlertType::Console, "WeaponBox too full! only %d ammotypes allowed\n", MAX_AMMO_SLOTS );
 	}
 }
 
@@ -1355,7 +1355,7 @@ void CWeaponBox::Touch( CBaseEntity *pOther )
 			// there's some ammo of this type. 
 			pPlayer->GiveAmmo( m_rgAmmo[ i ], (char *)STRING( m_rgiszAmmo[ i ] ), MaxAmmoCarry( m_rgiszAmmo[ i ] ) );
 
-			//ALERT ( at_console, "Gave %d rounds of %s\n", m_rgAmmo[i], STRING(m_rgiszAmmo[i]) );
+			//ALERT ( AlertType::Console, "Gave %d rounds of %s\n", m_rgAmmo[i], STRING(m_rgiszAmmo[i]) );
 
 			// now empty the ammo from the weaponbox since we just gave it to the player
 			m_rgiszAmmo[ i ] = iStringNull;
@@ -1375,7 +1375,7 @@ void CWeaponBox::Touch( CBaseEntity *pOther )
 			// have at least one weapon in this slot
 			while ( m_rgpPlayerItems[ i ] )
 			{
-				//ALERT ( at_console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
+				//ALERT ( AlertType::Console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
 
 				pItem = m_rgpPlayerItems[ i ];
 				m_rgpPlayerItems[ i ] = m_rgpPlayerItems[ i ]->m_pNext;// unlink this weapon from the box
@@ -1439,7 +1439,7 @@ BOOL CWeaponBox::PackWeapon( CBasePlayerItem *pWeapon )
 	pWeapon->SetTouch( nullptr );
 	pWeapon->m_pPlayer = nullptr;
 
-	//ALERT ( at_console, "packed %s\n", STRING(pWeapon->pev->classname) );
+	//ALERT ( AlertType::Console, "packed %s\n", STRING(pWeapon->pev->classname) );
 
 	return TRUE;
 }
@@ -1454,7 +1454,7 @@ BOOL CWeaponBox::PackAmmo( int iszName, int iCount )
 	if ( FStringNull( iszName ) )
 	{
 		// error here
-		ALERT ( at_console, "nullptr String in PackAmmo!\n" );
+		ALERT ( AlertType::Console, "nullptr String in PackAmmo!\n" );
 		return FALSE;
 	}
 	
@@ -1462,7 +1462,7 @@ BOOL CWeaponBox::PackAmmo( int iszName, int iCount )
 
 	if ( iMaxCarry != -1 && iCount > 0 )
 	{
-		//ALERT ( at_console, "Packed %d rounds of %s\n", iCount, STRING(iszName) );
+		//ALERT ( AlertType::Console, "Packed %d rounds of %s\n", iCount, STRING(iszName) );
 		GiveAmmo( iCount, (char *)STRING( iszName ), iMaxCarry );
 		return TRUE;
 	}
@@ -1504,7 +1504,7 @@ int CWeaponBox::GiveAmmo( int iCount, char *szName, int iMax, int *pIndex/* = nu
 
 		return i;
 	}
-	ALERT( at_console, "out of named ammo slots\n");
+	ALERT( AlertType::Console, "out of named ammo slots\n");
 	return i;
 }
 
@@ -1566,28 +1566,28 @@ void CWeaponBox::SetObjectCollisionBox( void )
 
 void CBasePlayerWeapon::PrintState( void )
 {
-	ALERT( at_console, "primary:  %f\n", m_flNextPrimaryAttack );
-	ALERT( at_console, "idle   :  %f\n", m_flTimeWeaponIdle );
+	ALERT( AlertType::Console, "primary:  %f\n", m_flNextPrimaryAttack );
+	ALERT( AlertType::Console, "idle   :  %f\n", m_flTimeWeaponIdle );
 
-//	ALERT( at_console, "nextrl :  %f\n", m_flNextReload );
-//	ALERT( at_console, "nextpum:  %f\n", m_flPumpTime );
+//	ALERT( AlertType::Console, "nextrl :  %f\n", m_flNextReload );
+//	ALERT( AlertType::Console, "nextpum:  %f\n", m_flPumpTime );
 
-//	ALERT( at_console, "m_frt  :  %f\n", m_fReloadTime );
-	ALERT( at_console, "m_finre:  %i\n", m_fInReload );
-//	ALERT( at_console, "m_finsr:  %i\n", m_fInSpecialReload );
+//	ALERT( AlertType::Console, "m_frt  :  %f\n", m_fReloadTime );
+	ALERT( AlertType::Console, "m_finre:  %i\n", m_fInReload );
+//	ALERT( AlertType::Console, "m_finsr:  %i\n", m_fInSpecialReload );
 
-	ALERT( at_console, "m_iclip:  %i\n", m_iClip );
+	ALERT( AlertType::Console, "m_iclip:  %i\n", m_iClip );
 }
 
 
-TYPEDESCRIPTION	CRpg::m_SaveData[] = 
+TypeDescription	CRpg::m_SaveData[] = 
 {
 	DEFINE_FIELD( CRpg, m_fSpotActive, FIELD_INTEGER ),
 	DEFINE_FIELD( CRpg, m_cActiveRockets, FIELD_INTEGER ),
 };
 IMPLEMENT_SAVERESTORE( CRpg, CBasePlayerWeapon );
 
-TYPEDESCRIPTION	CRpgRocket::m_SaveData[] = 
+TypeDescription	CRpgRocket::m_SaveData[] = 
 {
 	DEFINE_FIELD( CRpgRocket, m_flIgniteTime, FIELD_TIME ),
 	DEFINE_FIELD( CRpgRocket, m_hLauncher, FIELD_EHANDLE ),
@@ -1596,7 +1596,7 @@ TYPEDESCRIPTION	CRpgRocket::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CRpgRocket, CGrenade );
 
-TYPEDESCRIPTION	CShotgun::m_SaveData[] = 
+TypeDescription	CShotgun::m_SaveData[] = 
 {
 	DEFINE_FIELD( CShotgun, m_flNextReload, FIELD_TIME ),
 	DEFINE_FIELD( CShotgun, m_fInSpecialReload, FIELD_INTEGER ),
@@ -1606,7 +1606,7 @@ TYPEDESCRIPTION	CShotgun::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE( CShotgun, CBasePlayerWeapon );
 
-TYPEDESCRIPTION	CGauss::m_SaveData[] = 
+TypeDescription	CGauss::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGauss, m_fInAttack, FIELD_INTEGER ),
 //	DEFINE_FIELD( CGauss, m_flStartCharge, FIELD_TIME ),
@@ -1616,7 +1616,7 @@ TYPEDESCRIPTION	CGauss::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE( CGauss, CBasePlayerWeapon );
 
-TYPEDESCRIPTION	CEgon::m_SaveData[] = 
+TypeDescription	CEgon::m_SaveData[] = 
 {
 //	DEFINE_FIELD( CEgon, m_pBeam, FIELD_CLASSPTR ),
 //	DEFINE_FIELD( CEgon, m_pNoise, FIELD_CLASSPTR ),
@@ -1629,7 +1629,7 @@ TYPEDESCRIPTION	CEgon::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE( CEgon, CBasePlayerWeapon );
 
-TYPEDESCRIPTION	CSatchel::m_SaveData[] = 
+TypeDescription	CSatchel::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSatchel, m_chargeReady, FIELD_INTEGER ),
 };

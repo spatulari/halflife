@@ -41,7 +41,7 @@ public:
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void EXPORT FieldUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
@@ -55,7 +55,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_mortar_field, CFuncMortarField );
 
-TYPEDESCRIPTION	CFuncMortarField::m_SaveData[] = 
+TypeDescription	CFuncMortarField::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncMortarField, m_iszXController, FIELD_STRING ),
 	DEFINE_FIELD( CFuncMortarField, m_iszYController, FIELD_STRING ),

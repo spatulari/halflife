@@ -193,7 +193,7 @@ void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		case ZOMBIE_AE_ATTACK_RIGHT:
 		{
 			// do stuff for this event.
-	//		ALERT( at_console, "Slash right!\n" );
+	//		ALERT( AlertType::Console, "Slash right!\n" );
 			CBaseEntity *pHurt = CheckTraceHullAttack( 70, gSkillData.zombieDmgOneSlash, DMG_SLASH );
 			if ( pHurt )
 			{
@@ -217,7 +217,7 @@ void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		case ZOMBIE_AE_ATTACK_LEFT:
 		{
 			// do stuff for this event.
-	//		ALERT( at_console, "Slash left!\n" );
+	//		ALERT( AlertType::Console, "Slash left!\n" );
 			CBaseEntity *pHurt = CheckTraceHullAttack( 70, gSkillData.zombieDmgOneSlash, DMG_SLASH );
 			if ( pHurt )
 			{

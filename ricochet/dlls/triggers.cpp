@@ -56,7 +56,7 @@ public:
 
 	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float		m_frictionFraction;		// Sorry, couldn't resist this name :)
 };
@@ -64,7 +64,7 @@ public:
 LINK_ENTITY_TO_CLASS( func_friction, CFrictionModifier );
 
 // Global Savedata for changelevel friction modifier
-TYPEDESCRIPTION	CFrictionModifier::m_SaveData[] = 
+TypeDescription	CFrictionModifier::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFrictionModifier, m_frictionFraction, FIELD_FLOAT ),
 };
@@ -121,7 +121,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	int			m_globalstate;
@@ -129,7 +129,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( trigger_auto, CAutoTrigger );
 
-TYPEDESCRIPTION	CAutoTrigger::m_SaveData[] = 
+TypeDescription	CAutoTrigger::m_SaveData[] = 
 {
 	DEFINE_FIELD( CAutoTrigger, m_globalstate, FIELD_STRING ),
 	DEFINE_FIELD( CAutoTrigger, triggerType, FIELD_INTEGER ),
@@ -203,14 +203,14 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	USE_TYPE	triggerType;
 };
 LINK_ENTITY_TO_CLASS( trigger_relay, CTriggerRelay );
 
-TYPEDESCRIPTION	CTriggerRelay::m_SaveData[] = 
+TypeDescription	CTriggerRelay::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTriggerRelay, triggerType, FIELD_INTEGER ),
 };
@@ -284,7 +284,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int		m_cTargets;	// the total number of targets in this manager's fire list.
 	int		m_index;	// Current target
@@ -306,7 +306,7 @@ private:
 LINK_ENTITY_TO_CLASS( multi_manager, CMultiManager );
 
 // Global Savedata for multi_manager
-TYPEDESCRIPTION	CMultiManager::m_SaveData[] = 
+TypeDescription	CMultiManager::m_SaveData[] = 
 {
 	DEFINE_FIELD( CMultiManager, m_cTargets, FIELD_INTEGER ),
 	DEFINE_FIELD( CMultiManager, m_index, FIELD_INTEGER ),
@@ -460,7 +460,7 @@ void CMultiManager :: ManagerReport ( void )
 
 	for ( cIndex = 0 ; cIndex < m_cTargets ; cIndex++ )
 	{
-		ALERT ( at_console, "%s %f\n", STRING(m_iTargetName[cIndex]), m_flTargetDelay[cIndex] );
+		ALERT ( AlertType::Console, "%s %f\n", STRING(m_iTargetName[cIndex]), m_flTargetDelay[cIndex] );
 	}
 }
 #endif
@@ -694,7 +694,7 @@ void PlayCDTrack( int iTrack )
 
 	if ( iTrack < -1 || iTrack > 30 )
 	{
-		ALERT ( at_console, "TriggerCDAudio - Track %d out of range\n" );
+		ALERT ( AlertType::Console, "TriggerCDAudio - Track %d out of range\n" );
 		return;
 	}
 
@@ -1058,7 +1058,7 @@ void CTriggerMultiple :: Spawn( void )
 //	if (pev->health > 0)
 //		{
 //		if (FBitSet(pev->spawnflags, SPAWNFLAG_NOTOUCH))
-//			ALERT(at_error, "trigger_multiple spawn: health and notouch don't make sense");
+//			ALERT(AlertType::Error, "trigger_multiple spawn: health and notouch don't make sense");
 //		pev->max_health = pev->health;
 //UNDONE: where to get pfnDie from?
 //		pev->pfnDie = multi_killed;
@@ -1160,7 +1160,7 @@ void CBaseTrigger :: ActivateMultiTrigger( CBaseEntity *pActivator )
 	if ( pev->message && pActivator->IsPlayer() )
 	{
 		UTIL_ShowMessage( STRING(pev->message), pActivator );
-//		CLIENT_PRINTF( ENT( pActivator->pev ), print_center, STRING(pev->message) );
+//		CLIENT_PRINTF( ENT( pActivator->pev ), PrintType::Center, STRING(pev->message) );
 	}
 
 	if (m_flWait > 0)
@@ -1216,10 +1216,10 @@ void CBaseTrigger::CounterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 			// UNDONE: I don't think we want these Quakesque messages
 			switch (m_cTriggersLeft)
 			{
-			case 1:		ALERT(at_console, "Only 1 more to go...");		break;
-			case 2:		ALERT(at_console, "Only 2 more to go...");		break;
-			case 3:		ALERT(at_console, "Only 3 more to go...");		break;
-			default:	ALERT(at_console, "There are more to go...");	break;
+			case 1:		ALERT(AlertType::Console, "Only 1 more to go...");		break;
+			case 2:		ALERT(AlertType::Console, "Only 2 more to go...");		break;
+			case 3:		ALERT(AlertType::Console, "Only 3 more to go...");		break;
+			default:	ALERT(AlertType::Console, "There are more to go...");	break;
 			}
 		}
 		return;
@@ -1227,7 +1227,7 @@ void CBaseTrigger::CounterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 
 	// !!!UNDONE: I don't think we want these Quakesque messages
 	if (fTellActivator)
-		ALERT(at_console, "Sequence completed!");
+		ALERT(AlertType::Console, "Sequence completed!");
 	
 	ActivateMultiTrigger( m_hActivator );
 }
@@ -1330,7 +1330,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	char m_szMapName[cchMapNameMost];		// trigger_changelevel only:  next map
 	char m_szLandmarkName[cchMapNameMost];		// trigger_changelevel only:  landmark on next map
@@ -1340,7 +1340,7 @@ public:
 LINK_ENTITY_TO_CLASS( trigger_changelevel, CChangeLevel );
 
 // Global Savedata for changelevel trigger
-TYPEDESCRIPTION	CChangeLevel::m_SaveData[] = 
+TypeDescription	CChangeLevel::m_SaveData[] = 
 {
 	DEFINE_ARRAY( CChangeLevel, m_szMapName, FIELD_CHARACTER, cchMapNameMost ),
 	DEFINE_ARRAY( CChangeLevel, m_szLandmarkName, FIELD_CHARACTER, cchMapNameMost ),
@@ -1359,14 +1359,14 @@ void CChangeLevel :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "map"))
 	{
 		if (strlen(pkvd->szValue) >= cchMapNameMost)
-			ALERT( at_error, "Map name '%s' too long (32 chars)\n", pkvd->szValue );
+			ALERT( AlertType::Error, "Map name '%s' too long (32 chars)\n", pkvd->szValue );
 		strcpy(m_szMapName, pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "landmark"))
 	{
 		if (strlen(pkvd->szValue) >= cchMapNameMost)
-			ALERT( at_error, "Landmark name '%s' too long (32 chars)\n", pkvd->szValue );
+			ALERT( AlertType::Error, "Landmark name '%s' too long (32 chars)\n", pkvd->szValue );
 		strcpy(m_szLandmarkName, pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
@@ -1392,10 +1392,10 @@ When the player touches this, he gets sent to the map listed in the "map" variab
 void CChangeLevel :: Spawn( void )
 {
 	if ( FStrEq( m_szMapName, "" ) )
-		ALERT( at_console, "a trigger_changelevel doesn't have a map" );
+		ALERT( AlertType::Console, "a trigger_changelevel doesn't have a map" );
 
 	if ( FStrEq( m_szLandmarkName, "" ) )
-		ALERT( at_console, "trigger_changelevel to %s doesn't have a landmark", m_szMapName );
+		ALERT( AlertType::Console, "trigger_changelevel to %s doesn't have a landmark", m_szMapName );
 
 	if (!FStringNull ( pev->targetname ) )
 	{
@@ -1404,7 +1404,7 @@ void CChangeLevel :: Spawn( void )
 	InitTrigger();
 	if ( !(pev->spawnflags & SF_CHANGELEVEL_USEONLY) )
 		SetTouch( &CChangeLevel::TouchChangeLevel );
-//	ALERT( at_console, "TRANSITION: %s (%s)\n", m_szMapName, m_szLandmarkName );
+//	ALERT( AlertType::Console, "TRANSITION: %s (%s)\n", m_szMapName, m_szLandmarkName );
 }
 
 
@@ -1436,7 +1436,7 @@ edict_t *CChangeLevel :: FindLandmark( const char *pLandmarkName )
 		else
 			pentLandmark = FIND_ENTITY_BY_STRING( pentLandmark, "targetname", pLandmarkName );
 	}
-	ALERT( at_error, "Can't find landmark %s\n", pLandmarkName );
+	ALERT( AlertType::Error, "Can't find landmark %s\n", pLandmarkName );
 	return nullptr;
 }
 
@@ -1472,7 +1472,7 @@ void CChangeLevel :: ChangeLevelNow( CBaseEntity *pActivator )
 	CBaseEntity *pPlayer = CBaseEntity::Instance( g_engfuncs.pfnPEntityOfEntIndex( 1 ) );
 	if ( !InTransitionVolume( pPlayer, m_szLandmarkName ) )
 	{
-		ALERT( at_aiconsole, "Player isn't in the transition volume %s, aborting\n", m_szLandmarkName );
+		ALERT( AlertType::AiConsole, "Player isn't in the transition volume %s, aborting\n", m_szLandmarkName );
 		return;
 	}
 
@@ -1504,8 +1504,8 @@ void CChangeLevel :: ChangeLevelNow( CBaseEntity *pActivator )
 		strcpy(st_szNextSpot, m_szLandmarkName);
 		gpGlobals->vecLandmarkOffset = VARS(pentLandmark)->origin;
 	}
-//	ALERT( at_console, "Level touches %d levels\n", ChangeList( levels, 16 ) );
-	ALERT( at_console, "CHANGE LEVEL: %s %s\n", st_szNextMap, st_szNextSpot );
+//	ALERT( AlertType::Console, "Level touches %d levels\n", ChangeList( levels, 16 ) );
+	ALERT( AlertType::Console, "CHANGE LEVEL: %s %s\n", st_szNextMap, st_szNextSpot );
 	CHANGE_LEVEL( st_szNextMap, st_szNextSpot );
 }
 
@@ -1645,7 +1645,7 @@ int CChangeLevel::ChangeList( LEVELLIST *pLevelList, int maxList )
 				CBaseEntity *pEntity = CBaseEntity::Instance(pent);
 				if ( pEntity )
 				{
-//					ALERT( at_console, "Trying %s\n", STRING(pEntity->pev->classname) );
+//					ALERT( AlertType::Console, "Trying %s\n", STRING(pEntity->pev->classname) );
 					int caps = pEntity->ObjectCaps();
 					if ( !(caps & FCAP_DONT_SAVE) )
 					{
@@ -1662,13 +1662,13 @@ int CChangeLevel::ChangeList( LEVELLIST *pLevelList, int maxList )
 							entityFlags[ entityCount ] = flags;
 							entityCount++;
 							if ( entityCount > MAX_ENTITY )
-								ALERT( at_error, "Too many entities across a transition!" );
+								ALERT( AlertType::Error, "Too many entities across a transition!" );
 						}
 //						else
-//							ALERT( at_console, "Failed %s\n", STRING(pEntity->pev->classname) );
+//							ALERT( AlertType::Console, "Failed %s\n", STRING(pEntity->pev->classname) );
 					}
 //					else
-//						ALERT( at_console, "DON'T SAVE %s\n", STRING(pEntity->pev->classname) );
+//						ALERT( AlertType::Console, "DON'T SAVE %s\n", STRING(pEntity->pev->classname) );
 				}
 				pent = pent->v.chain;
 			}
@@ -1684,7 +1684,7 @@ int CChangeLevel::ChangeList( LEVELLIST *pLevelList, int maxList )
 					saveHelper.EntityFlagsSet( index, entityFlags[j] | (1<<i) );
 				}
 //				else
-//					ALERT( at_console, "Screened out %s\n", STRING(pEntList[j]->pev->classname) );
+//					ALERT( AlertType::Console, "Screened out %s\n", STRING(pEntList[j]->pev->classname) );
 
 			}
 		}
@@ -1846,7 +1846,7 @@ void CTriggerPush :: Touch( CBaseEntity *pOther )
 			pevToucher->basevelocity = vecPush;
 
 			pevToucher->flags |= FL_BASEVELOCITY;
-//			ALERT( at_console, "Vel %f, base %f\n", pevToucher->velocity.z, pevToucher->basevelocity.z );
+//			ALERT( AlertType::Console, "Vel %f, base %f\n", pevToucher->velocity.z, pevToucher->basevelocity.z );
 		}
 	}
 }
@@ -2106,14 +2106,14 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	int		m_iszNewTarget;
 };
 LINK_ENTITY_TO_CLASS( trigger_changetarget, CTriggerChangeTarget );
 
-TYPEDESCRIPTION	CTriggerChangeTarget::m_SaveData[] = 
+TypeDescription	CTriggerChangeTarget::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTriggerChangeTarget, m_iszNewTarget, FIELD_STRING ),
 };
@@ -2170,7 +2170,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	EHANDLE m_hPlayer;
 	EHANDLE m_hTarget;
@@ -2190,7 +2190,7 @@ public:
 LINK_ENTITY_TO_CLASS( trigger_camera, CTriggerCamera );
 
 // Global Savedata for changelevel friction modifier
-TYPEDESCRIPTION	CTriggerCamera::m_SaveData[] = 
+TypeDescription	CTriggerCamera::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTriggerCamera, m_hPlayer, FIELD_EHANDLE ),
 	DEFINE_FIELD( CTriggerCamera, m_hTarget, FIELD_EHANDLE ),
@@ -2654,7 +2654,7 @@ void CTriggerJump::Activate( void )
 		pentTarget = FIND_ENTITY_BY_TARGETNAME(pentTarget, STRING(pev->target));
 		if (FNullEnt(pentTarget))
 		{
-			ALERT ( at_console, "trigger_jump - Could not find target %s\n", STRING(pev->target) );
+			ALERT ( AlertType::Console, "trigger_jump - Could not find target %s\n", STRING(pev->target) );
 			pev->flags |= FL_KILLME;
 		}
 		else
