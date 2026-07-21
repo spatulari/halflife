@@ -68,7 +68,7 @@ CBaseEntity
 
 extern "C" CBASE_DLLEXPORT int GetEntityAPI( DLLFunctions *pFunctionTable, int interfaceVersion );
 extern "C" CBASE_DLLEXPORT int GetEntityAPI2( DLLFunctions *pFunctionTable, int *interfaceVersion );
-extern "C" CBASE_DLLEXPORT int GetNewDLLFunctions( NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+extern "C" CBASE_DLLEXPORT int GetNewDLLFunctions( NewDLLFunctions *pFunctionTable, int *interfaceVersion );
 
 extern int DispatchSpawn( edict_t *pent );
 extern void DispatchKeyValue( edict_t *pentKeyvalue, KeyValueData *pkvd );

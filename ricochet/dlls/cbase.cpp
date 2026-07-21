@@ -99,7 +99,7 @@ static DLLFunctions gFunctionTable =
 	AllowLagCompensation,		//pfnAllowLagCompensation
 };
 
-NEW_DLL_FUNCTIONS gNewDLLFunctions =
+NewDLLFunctions gNewDLLFunctions =
 {
 	OnFreeEntPrivateData,		//pfnOnFreeEntPrivateData
 	GameDLLShutdown,			//pfnGameShutdown
@@ -133,7 +133,7 @@ int GetEntityAPI2( DLLFunctions *pFunctionTable, int *interfaceVersion )
 	return TRUE;
 }
 
-int GetNewDLLFunctions(NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion)
+int GetNewDLLFunctions(NewDLLFunctions *pFunctionTable, int *interfaceVersion)
 {
 	if(!pFunctionTable || *interfaceVersion != NEW_DLL_FUNCTIONS_VERSION)
 	{

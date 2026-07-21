@@ -453,7 +453,7 @@ struct DLLFunctions
 
 	void			(*pfnSaveGlobalState)		( SAVERESTOREDATA * );
 	void			(*pfnRestoreGlobalState)	( SAVERESTOREDATA * );
-	void			(*pfnResetGlobalState)		( void );
+	void			(*pfnResetGlobalState)		();
 
 	qboolean		(*pfnClientConnect)		( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] );
 	
@@ -526,7 +526,7 @@ extern DLLFunctions		gEntityInterface;
 // Current version.
 #define NEW_DLL_FUNCTIONS_VERSION	1
 
-typedef struct
+struct NewDLLFunctions
 {
 	// Called right before the object's memory is freed. 
 	// Calls its destructor.
@@ -535,11 +535,11 @@ typedef struct
 	int				(*pfnShouldCollide)( edict_t *pentTouched, edict_t *pentOther );
 	void			(*pfnCvarValue)( const edict_t *pEnt, const char *value );
 	void			(*pfnCvarValue2)( const edict_t *pEnt, int requestID, const char *cvarName, const char *value );
-} NEW_DLL_FUNCTIONS;
-typedef int	(*NEW_DLL_FUNCTIONS_FN)( NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+};
+typedef int	(*NEW_DLL_FUNCTIONS_FN)( NewDLLFunctions *pFunctionTable, int *interfaceVersion );
 
 // Pointers will be nullptr if the game DLL doesn't support this API.
-extern NEW_DLL_FUNCTIONS	gNewDLLFunctions;
+extern NewDLLFunctions	gNewDLLFunctions;
 
 typedef int	(*APIFUNCTION)( DLLFunctions *pFunctionTable, int interfaceVersion );
 typedef int	(*APIFUNCTION2)( DLLFunctions *pFunctionTable, int *interfaceVersion );
