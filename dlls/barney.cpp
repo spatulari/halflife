@@ -791,7 +791,7 @@ class CDeadBarney : public CBaseMonster
 {
 public:
 	void Spawn( void );
-	int	Classify ( void ) { return static_cast<int>(EntityClass::PlayerAlly); } // TODO-003 
+	EntityClass	Classify ( void ) { return EntityClass::PlayerAlly; }
 
 	void KeyValue( KeyValueData *pkvd );
 

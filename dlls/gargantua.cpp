@@ -237,7 +237,7 @@ public:
 	void FlameDestroy( void );
 	inline BOOL FlameIsOn( void ) { return m_pFlame[0] != nullptr; }
 
-	void FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType );
+	void FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, EntityClass iClassIgnore, int bitsDamageType );
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
@@ -605,7 +605,7 @@ void CGargantua :: FlameUpdate( void )
 
 
 
-void CGargantua :: FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType )
+void CGargantua :: FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, EntityClass iClassIgnore, int bitsDamageType )
 {
 	CBaseEntity *pEntity = nullptr;
 	TraceResult	tr;

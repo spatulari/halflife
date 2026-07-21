@@ -39,7 +39,7 @@
 
 #define		MAX_PATH_SIZE	10 // max number of nodes available for a path.
 
-// These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
+ // These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
 #define		FCAP_CUSTOMSAVE				0x00000001
 #define		FCAP_ACROSS_TRANSITION		0x00000002		// should transfer between transitions
 #define		FCAP_MUST_SPAWN				0x00000004		// Spawn after restore
@@ -322,17 +322,17 @@ public:
 	virtual void SetObjectCollisionBox();
 
 	/**
-	 * @brief Returns the entity's classification.
+	 * @brief Returns the entity's relationship classification.
 	 *
-	 * Classification identifies the entity's faction or relationship group,
-	 * allowing AI to determine allies, enemies, and neutral entities. Multiple
-	 * entity classes may share the same classification (for example, different
-	 * human soldiers all belong to the same military faction).
+	 * The classification identifies the entity's faction or relationship group,
+	 * allowing the AI relationship system to determine allies, enemies, and
+	 * neutral entities. Multiple entity types may share the same classification
+	 * (for example, different human soldiers all return
+	 * `EntityClass::HumanMilitary`). 
 	 *
-	 * @return One of the `CLASS_*` classification constants.
+	 * @return The entity's relationship classification as an `EntityClass` value.
 	 */
-	virtual int Classify() { return static_cast<int>(EntityClass::None); } // TODO-003
-
+	virtual EntityClass Classify() { return EntityClass::None; }
 	/**
 	 * @brief Notifies the entity that one of its children has died.
 	 *
@@ -349,18 +349,18 @@ public:
 	static TypeDescription m_SaveData[];
 
 	/**
- * @brief Applies damage from an attack trace.
- *
- * Called when an attack intersects the entity before damage is fully
- * processed. Allows entities to modify or accumulate damage, spawn
- * effects, or determine hitgroup-specific behavior.
- *
- * @param pevAttacker The entity responsible for the attack.
- * @param flDamage Amount of incoming damage.
- * @param vecDir Direction the attack traveled.
- * @param ptr Trace result describing the impact.
- * @param bitsDamageType Bitmask of `DMG_*` damage types.
- */
+	 * @brief Applies damage from an attack trace.
+	 *
+	 * Called when an attack intersects the entity before damage is fully
+	 * processed. Allows entities to modify or accumulate damage, spawn
+	 * effects, or determine hitgroup-specific behavior.
+	 *
+	 * @param pevAttacker The entity responsible for the attack.
+	 * @param flDamage Amount of incoming damage.
+	 * @param vecDir Direction the attack traveled.
+	 * @param ptr Trace result describing the impact.
+	 * @param bitsDamageType Bitmask of `DMG_*` damage types.
+	 */
 	virtual void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
 
 	/**

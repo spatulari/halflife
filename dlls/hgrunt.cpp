@@ -2069,9 +2069,9 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 								// player
 								SENTENCEG_PlayRndSz( ENT(pev), "HG_ALERT", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 							else if ((m_hEnemy != nullptr) &&
-									(m_hEnemy->Classify() != EntityClass::Player_ALLY) && 
-									(m_hEnemy->Classify() != CLASS_HUMAN_PASSIVE) && 
-									(m_hEnemy->Classify() != CLASS_MACHINE))
+									(m_hEnemy->Classify() != EntityClass::PlayerAlly) && 
+									(m_hEnemy->Classify() != EntityClass::HumanPassive) && 
+									(m_hEnemy->Classify() != EntityClass::Machine))
 								// monster
 								SENTENCEG_PlayRndSz( ENT(pev), "HG_MONST", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 

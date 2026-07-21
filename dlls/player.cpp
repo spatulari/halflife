@@ -1597,7 +1597,7 @@ void CBasePlayer::PlayerUse ( void )
 				m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
 				m_iTrain = TRAIN_NEW|TRAIN_OFF;
 				CBaseEntity *pTrain = CBaseEntity::Instance( pev->groundentity );
-				if (pTrain && (pTrain->Classify() == CLASS_VEHICLE))
+				if (pTrain && (pTrain->Classify() == EntityClass::Vehicle))
 					((CFuncVehicle*)pTrain)->m_pDriver = nullptr;
 				return;
 			}
@@ -1610,7 +1610,7 @@ void CBasePlayer::PlayerUse ( void )
 					m_afPhysicsFlags |= PFLAG_ONTRAIN;
 					m_iTrain = TrainSpeed(pTrain->pev->speed, pTrain->pev->impulse);
 					m_iTrain |= TRAIN_NEW;
-					if (pTrain->Classify() == CLASS_VEHICLE)
+					if (pTrain->Classify() == EntityClass::Vehicle)
 					{
 						EMIT_SOUND( ENT(pev), CHAN_ITEM, "plats/vehicle_ignition.wav", 0.8, ATTN_NORM);
 						((CFuncVehicle*)pTrain)->m_pDriver = this;
@@ -2023,25 +2023,25 @@ void CBasePlayer::PreThink(void)
 				//ALERT( AlertType::Error, "In train mode with no train!\n" );
 				m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
 				m_iTrain = TRAIN_NEW|TRAIN_OFF;
-				if (pTrain->Classify() == CLASS_VEHICLE)
+				if (pTrain->Classify() == EntityClass::Vehicle)
 					((CFuncVehicle*)pTrain)->m_pDriver = nullptr;
 				return;
 			}
 		}
-		else if ( !FBitSet( pev->flags, FL_ONGROUND ) || FBitSet( pTrain->pev->spawnflags, SF_TRACKTRAIN_NOCONTROL ) || ((pev->button & (IN_MOVELEFT|IN_MOVERIGHT) ) && pTrain->Classify() != CLASS_VEHICLE) )
+		else if ( !FBitSet( pev->flags, FL_ONGROUND ) || FBitSet( pTrain->pev->spawnflags, SF_TRACKTRAIN_NOCONTROL ) || ((pev->button & (IN_MOVELEFT|IN_MOVERIGHT) ) && pTrain->Classify() != EntityClass::Vehicle) )
 		{
 			// Turn off the train if you jump, strafe, or the train controls go dead
 			// and it isn't a func_vehicle.
 			m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
 			m_iTrain = TRAIN_NEW|TRAIN_OFF;
-			if (pTrain->Classify() == CLASS_VEHICLE)
+			if (pTrain->Classify() == EntityClass::Vehicle)
 				((CFuncVehicle*)pTrain)->m_pDriver = nullptr;
 			return;
 		}
 
 		pev->velocity = g_vecZero;
 		vel = 0;
-		if (pTrain->Classify() == CLASS_VEHICLE)
+		if (pTrain->Classify() == EntityClass::Vehicle)
 		{
 			if ( pev->button & IN_FORWARD )
 			{

@@ -883,7 +883,7 @@ float CBaseMonster :: DamageForce( float damage )
 // only damage ents that can clearly be seen by the explosion!
 
 	
-void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType )
+void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, EntityClass iClassIgnore, int bitsDamageType )
 {
 	CBaseEntity *pEntity = nullptr;
 	TraceResult	tr;

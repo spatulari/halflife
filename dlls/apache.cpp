@@ -35,7 +35,7 @@ class CApache : public CBaseMonster
 
 	void Spawn( void );
 	void Precache( void );
-	int  Classify( void ) { return static_cast<int>(EntityClass::HumanMilitary); };
+	EntityClass Classify() override { return EntityClass::HumanMilitary; };
 	int  BloodColor( void ) { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib );
 	void GibMonster( void );

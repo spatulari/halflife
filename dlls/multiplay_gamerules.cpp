@@ -569,7 +569,7 @@ void CHalfLifeMultiplay :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKille
 	CBaseEntity* ktmp = CBaseEntity::Instance( pKiller );
 	if ( ktmp && ( ktmp->Classify() == EntityClass::Player ) )
 		peKiller = (CBasePlayer*)ktmp;
-	else if ( ktmp && ( ktmp->Classify() == CLASS_VEHICLE ) )
+	else if ( ktmp && ( ktmp->Classify() == EntityClass::Vehicle ) )
 	{
 		CBasePlayer* pDriver = ( (CFuncVehicle*)ktmp )->m_pDriver;
 		if ( pDriver != nullptr )
@@ -1751,7 +1751,7 @@ void CMultiplayBusters::PlayerKilled( CBasePlayer* pVictim, entvars_t* pKiller, 
 		{
 			peKiller = (CBasePlayer*)ktmp;
 		}
-		else if ( ktmp && ( ktmp->Classify() == CLASS_VEHICLE ) )
+		else if ( ktmp && ( ktmp->Classify() == EntityClass::Vehicle ) )
 		{
 			CBasePlayer *pDriver = ( (CFuncVehicle*)ktmp )->m_pDriver;
 

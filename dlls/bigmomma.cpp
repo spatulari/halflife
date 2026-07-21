@@ -1244,7 +1244,8 @@ void CBMortar::Touch( CBaseEntity *pOther )
 	if ( pev->owner )
 		pevOwner = VARS(pev->owner);
 
-	RadiusDamage( pev->origin, pev, pevOwner, gSkillData.bigmommaDmgBlast, gSkillData.bigmommaRadiusBlast, static_cast<int>(EntityClass::None), DMG_ACID ); // TODO-003
+	RadiusDamage( pev->origin, pev, pevOwner, gSkillData.bigmommaDmgBlast, gSkillData.bigmommaRadiusBlast, static_cast<int>(EntityClass::None), DMG_ACID ); 
+																										// NOTE: has to be casted to an int, because ricochetdll's cbase.h hasn't been modernized yet
 	UTIL_Remove( this );
 }
 

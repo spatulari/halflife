@@ -12,6 +12,9 @@
 *   use or distribution of this code by or to any unlicensed person is illegal.
 *
 ****/
+
+/// @todo modernize
+
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
 //=========================================================
@@ -48,7 +51,7 @@ public:
 	void Spawn( void );
 	void Precache( void );
 	void SetYawSpeed( void );
-	int  Classify ( void );
+	EntityClass Classify() override;
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 
 	void RunAI( void );
@@ -155,9 +158,9 @@ const char *CController::pDeathSounds[] =
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CController :: Classify ( void )
+EntityClass	CController :: Classify ()
 {
-	return static_cast<int>(EntityClass::AlienMilitary);
+	return EntityClass::AlienMilitary;
 }
 
 //=========================================================

@@ -55,7 +55,7 @@ public:
 	void  Spawn( void );
 	void  Precache( void );
 	void  SetYawSpeed( void );
-	int   Classify( void );
+	EntityClass Classify();
 	void  HandleAnimEvent( MonsterEvent_t *pEvent );
 	CUSTOM_SCHEDULES;
 
