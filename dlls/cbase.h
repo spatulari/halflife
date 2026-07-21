@@ -1,30 +1,41 @@
-/***
-*
-*	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
-*	
-*	This product contains software technology licensed from Id 
-*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
-*	All Rights Reserved.
-*
-*   Use, distribution, and modification of this source code and/or resulting
-*   object code is restricted to non-commercial enhancements to products from
-*   Valve LLC.  All other use, distribution, or modification is prohibited
-*   without written permission from Valve LLC.
-*
-****/
-/*
-
-Class Hierachy
-
-CBaseEntity
-	CBaseDelay
-		CBaseToggle
-			CBaseItem
-			CBaseMonster
-				CBaseCycler
-				CBasePlayer
-				CBaseGroup
-*/
+/**
+ * @file cbase.h
+ * @brief Core entity declarations for the Half-Life game DLL.
+ *
+ * This header defines the fundamental entity hierarchy used by the Half-Life
+ * server-side game code. Most gameplay entities ultimately derive from
+ * `CBaseEntity`, which provides common functionality such as spawning,
+ * thinking, touch and use callbacks, save/restore support, and networking.
+ *
+ * The classes declared here form the foundation for players, monsters,
+ * weapons, items, triggers, and many other gameplay systems.
+ *
+ * @section hierarchy Entity Hierarchy
+ *
+ * @code
+ * CBaseEntity
+ * ├── CBaseDelay
+ * │   └── CBaseToggle
+ * │       ├── CBaseItem
+ * │       └── CBaseMonster
+ * │           ├── CBaseCycler
+ * │           ├── CBasePlayer
+ * │           └── CBaseGroup
+ * @endcode
+ *
+ * @note
+ * This hierarchy is not exhaustive. Additional entity classes are declared
+ * throughout the game DLL and derive from these base classes.
+ *
+ * @copyright
+ * Copyright (c) 1996–2001 Valve LLC.
+ *
+ * This product contains software technology licensed from Id Software, Inc.
+ * ("Id Technology"). Id Technology (c) 1996 Id Software, Inc.
+ *
+ * The original Half-Life SDK license restricts use, distribution, and
+ * modification to non-commercial enhancements of Valve products.
+ */
 
 #define		MAX_PATH_SIZE	10 // max number of nodes available for a path.
 
@@ -66,31 +77,31 @@ CBaseEntity
 
 #define EXPORT CBASE_DLLEXPORT
 
-extern "C" CBASE_DLLEXPORT int GetEntityAPI( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
-extern "C" CBASE_DLLEXPORT int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+extern "C" CBASE_DLLEXPORT int GetEntityAPI(DLL_FUNCTIONS* pFunctionTable, int interfaceVersion);
+extern "C" CBASE_DLLEXPORT int GetEntityAPI2(DLL_FUNCTIONS* pFunctionTable, int* interfaceVersion);
 
-extern int DispatchSpawn( edict_t *pent );
-extern void DispatchKeyValue( edict_t *pentKeyvalue, KeyValueData *pkvd );
-extern void DispatchTouch( edict_t *pentTouched, edict_t *pentOther );
-extern void DispatchUse( edict_t *pentUsed, edict_t *pentOther );
-extern void DispatchThink( edict_t *pent );
-extern void DispatchBlocked( edict_t *pentBlocked, edict_t *pentOther );
-extern void DispatchSave( edict_t *pent, SAVERESTOREDATA *pSaveData );
-extern int  DispatchRestore( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity );
-extern void	DispatchObjectCollsionBox( edict_t *pent );
-extern void SaveWriteFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
-extern void SaveReadFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
-extern void SaveGlobalState( SAVERESTOREDATA *pSaveData );
-extern void RestoreGlobalState( SAVERESTOREDATA *pSaveData );
-extern void ResetGlobalState( void );
+extern int DispatchSpawn(edict_t* pent);
+extern void DispatchKeyValue(edict_t* pentKeyvalue, KeyValueData* pkvd);
+extern void DispatchTouch(edict_t* pentTouched, edict_t* pentOther);
+extern void DispatchUse(edict_t* pentUsed, edict_t* pentOther);
+extern void DispatchThink(edict_t* pent);
+extern void DispatchBlocked(edict_t* pentBlocked, edict_t* pentOther);
+extern void DispatchSave(edict_t* pent, SAVERESTOREDATA* pSaveData);
+extern int  DispatchRestore(edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity);
+extern void	DispatchObjectCollsionBox(edict_t* pent);
+extern void SaveWriteFields(SAVERESTOREDATA* pSaveData, const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount);
+extern void SaveReadFields(SAVERESTOREDATA* pSaveData, const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount);
+extern void SaveGlobalState(SAVERESTOREDATA* pSaveData);
+extern void RestoreGlobalState(SAVERESTOREDATA* pSaveData);
+extern void ResetGlobalState(void);
 
 typedef enum { USE_OFF = 0, USE_ON = 1, USE_SET = 2, USE_TOGGLE = 3 } USE_TYPE;
 
-extern void FireTargets( const char *targetName, CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+extern void FireTargets(const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
-typedef void (CBaseEntity::*BASEPTR)(void);
-typedef void (CBaseEntity::*ENTITYFUNCPTR)(CBaseEntity *pOther );
-typedef void (CBaseEntity::*USEPTR)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+typedef void (CBaseEntity::* BASEPTR)(void);
+typedef void (CBaseEntity::* ENTITYFUNCPTR)(CBaseEntity* pOther);
+typedef void (CBaseEntity::* USEPTR)(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 // For CLASSIFY
 #define	CLASS_NONE				0
@@ -126,18 +137,18 @@ class CSquadMonster;
 class EHANDLE
 {
 private:
-	edict_t *m_pent;
+	edict_t* m_pent;
 	int		m_serialnumber;
 public:
-	edict_t *Get( void );
-	edict_t *Set( edict_t *pent );
+	edict_t* Get(void);
+	edict_t* Set(edict_t* pent);
 
-	operator int ();
+	operator int();
 
-	operator CBaseEntity *();
+	operator CBaseEntity* ();
 
-	CBaseEntity * operator = (CBaseEntity *pEntity);
-	CBaseEntity * operator ->();
+	CBaseEntity* operator = (CBaseEntity* pEntity);
+	CBaseEntity* operator ->();
 };
 
 
@@ -154,7 +165,7 @@ public:
  * @note Entity instances are allocated by the GoldSrc engine and should
  * not be created using the standard C++ `new` operator.
  */
-class CBaseEntity 
+class CBaseEntity
 {
 public:
 	/**
@@ -1298,140 +1309,444 @@ public:
 	 * @brief Current firing state of the Egon weapon.
 	 *
 	 * Stores one of the `EgonFirestate` values.
-	 * 
+	 *
 	 * @note this is an `int` for compatibility with the original codebase, but it should be an `EgonFirestate` enum for type safety and clarity. This will be addressed in a future refactor.
+	 * @todo TODO-001: Change `m_fireState` to be of type `EgonFirestate` instead of `int` for better type safety and clarity.
 	 */
 	int m_fireState{ static_cast<int>(EgonFirestate::Off) };
 	// TODO-001: EgonFirestate m_fireState{ EgonFirestate::Off };
 };
 
-
-
-// Ugly technique to override base member functions
-// Normally it's illegal to cast a pointer to a member function of a derived class to a pointer to a 
-// member function of a base class.  static_cast is a sleezy way around that problem.
-
+/**
+ * @brief Entity callback registration macros.
+ *
+ * These macros assign callback member functions for an entity's Think, Touch,
+ * Use, and Blocked handlers.
+ *
+ * @details
+ * Callback member functions are explicitly cast to the corresponding
+ * `CBaseEntity` member function pointer type. This is a legacy workaround
+ * because pointer-to-member function types of derived classes are not
+ * implicitly convertible to those of their base class.
+ *
+ * In debug builds, callbacks are assigned through helper functions that also
+ * record the callback name for debugging and export validation. In release
+ * builds, the callback pointers are assigned directly for minimal overhead.
+ */
 #ifdef _DEBUG
 
-#define SetThink( a ) ThinkSet( static_cast <void (CBaseEntity::*)(void)> (a), #a )
-#define SetTouch( a ) TouchSet( static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a), #a )
-#define SetUse( a ) UseSet( static_cast <void (CBaseEntity::*)(	CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (a), #a )
-#define SetBlocked( a ) BlockedSet( static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a), #a )
+ /**
+  * @brief Registers the Think callback.
+  *
+  * @param a Pointer to the Think member function.
+  */
+#define SetThink( a ) \
+    ThinkSet( static_cast<void (CBaseEntity::*)(void)>(a), #a )
+
+  /**
+   * @brief Registers the Touch callback.
+   *
+   * @param a Pointer to the Touch member function.
+   */
+#define SetTouch( a ) \
+    TouchSet( static_cast<void (CBaseEntity::*)(CBaseEntity*)>(a), #a )
+
+   /**
+	* @brief Registers the Use callback.
+	*
+	* @param a Pointer to the Use member function.
+	*/
+#define SetUse( a ) \
+    UseSet( static_cast<void (CBaseEntity::*)(CBaseEntity*, CBaseEntity*, USE_TYPE, float)>(a), #a )
+
+	/**
+	 * @brief Registers the Blocked callback.
+	 *
+	 * @param a Pointer to the Blocked member function.
+	 */
+#define SetBlocked( a ) \
+    BlockedSet( static_cast<void (CBaseEntity::*)(CBaseEntity*)>(a), #a )
 
 #else
 
-#define SetThink( a ) m_pfnThink = static_cast <void (CBaseEntity::*)(void)> (a)
-#define SetTouch( a ) m_pfnTouch = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a)
-#define SetUse( a ) m_pfnUse = static_cast <void (CBaseEntity::*)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (a)
-#define SetBlocked( a ) m_pfnBlocked = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a)
+ /**
+  * @brief Assigns the Think callback.
+  *
+  * @param a Pointer to the Think member function.
+  */
+#define SetThink( a ) \
+    m_pfnThink = static_cast<void (CBaseEntity::*)(void)>(a)
+
+  /**
+   * @brief Assigns the Touch callback.
+   *
+   * @param a Pointer to the Touch member function.
+   */
+#define SetTouch( a ) \
+    m_pfnTouch = static_cast<void (CBaseEntity::*)(CBaseEntity*)>(a)
+
+   /**
+	* @brief Assigns the Use callback.
+	*
+	* @param a Pointer to the Use member function.
+	*/
+#define SetUse( a ) \
+    m_pfnUse = static_cast<void (CBaseEntity::*)(CBaseEntity*, CBaseEntity*, USE_TYPE, float)>(a)
+
+	/**
+	 * @brief Assigns the Blocked callback.
+	 *
+	 * @param a Pointer to the Blocked member function.
+	 */
+#define SetBlocked( a ) \
+    m_pfnBlocked = static_cast<void (CBaseEntity::*)(CBaseEntity*)>(a)
 
 #endif
 
-
+	 /**
+	  * @brief Base class for non-solid point entities.
+	  *
+	  * A point entity has an origin in the world but typically has no model,
+	  * collision bounds, or physical presence. It serves as the base class for
+	  * many utility and logic entities, such as targets, triggers, and spawn
+	  * points.
+	  */
 class CPointEntity : public CBaseEntity
 {
 public:
-	void	Spawn( void );
-	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-private:
+
+	/**
+	 * @brief Spawns the point entity.
+	 *
+	 * Performs any initialization required when the entity is created.
+	 */
+	void Spawn();
+
+	/**
+	 * @brief Returns the entity's capability flags.
+	 *
+	 * @details
+	 * Point entities do not persist across level transitions. This override
+	 * clears the `FCAP_ACROSS_TRANSITION` capability inherited from
+	 * `CBaseEntity`.
+	 *
+	 * @return The entity capability flags with `FCAP_ACROSS_TRANSITION`
+	 * removed.
+	 */
+	int ObjectCaps() override
+	{
+		return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
+	}
 };
 
 
-typedef struct locksounds			// sounds that doors and buttons make when locked/unlocked
+/**
+ * @brief Stores the sounds and sentence groups used by locked entities.
+ *
+ * Used by entities such as doors and buttons to manage the audio played when
+ * a player attempts to interact with them while they are locked or unlocked.
+ *
+ * @details
+ * This structure also tracks sentence playback state and cooldown timers to
+ * prevent sounds and spoken lines from repeating too frequently.
+ *
+ * @todo Replace this legacy C-style typedef with a modern C++ struct.
+ */
+typedef struct locksounds
 {
-	string_t	sLockedSound;		// sound a door makes when it's locked
-	string_t	sLockedSentence;	// sentence group played when door is locked
-	string_t	sUnlockedSound;		// sound a door makes when it's unlocked
-	string_t	sUnlockedSentence;	// sentence group played when door is unlocked
+	/**
+	 * @brief Sound played when the entity is locked.
+	 */
+	string_t sLockedSound;
 
-	int		iLockedSentence;		// which sentence in sentence group to play next
-	int		iUnlockedSentence;		// which sentence in sentence group to play next
+	/**
+	 * @brief Sentence group played when the entity is locked.
+	 */
+	string_t sLockedSentence;
 
-	float	flwaitSound;			// time delay between playing consecutive 'locked/unlocked' sounds
-	float	flwaitSentence;			// time delay between playing consecutive sentences
-	BYTE	bEOFLocked;				// true if hit end of list of locked sentences
-	BYTE	bEOFUnlocked;			// true if hit end of list of unlocked sentences
+	/**
+	 * @brief Sound played when the entity is unlocked.
+	 */
+	string_t sUnlockedSound;
+
+	/**
+	 * @brief Sentence group played when the entity is unlocked.
+	 */
+	string_t sUnlockedSentence;
+
+	/**
+	 * @brief Index of the next locked sentence to play.
+	 */
+	int iLockedSentence;
+
+	/**
+	 * @brief Index of the next unlocked sentence to play.
+	 */
+	int iUnlockedSentence;
+
+	/**
+	 * @brief Minimum delay between consecutive locked or unlocked sounds.
+	 */
+	float flwaitSound;
+
+	/**
+	 * @brief Minimum delay between consecutive sentence playback.
+	 */
+	float flwaitSentence;
+
+	/**
+	 * @brief Indicates that all locked sentences have been played.
+	 */
+	BYTE bEOFLocked;
+
+	/**
+	 * @brief Indicates that all unlocked sentences have been played.
+	 */
+	BYTE bEOFUnlocked;
+
 } locksound_t;
 
-void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton);
+/**
+ * @brief Plays the appropriate lock or unlock sound for an entity.
+ *
+ * Determines which sound effect or sentence group should be played based on
+ * the entity's lock state and updates the associated playback timers and
+ * sentence indices.
+ *
+ * @param pev Pointer to the entity's variables.
+ * @param pls Pointer to the lock sound configuration and playback state.
+ * @param flocked Non-zero if the entity is currently locked; otherwise zero.
+ * @param fbutton Non-zero if the entity is a button; otherwise it is treated
+ * as a door.
+ */
+void PlayLockSounds(entvars_t* pev, locksound_t* pls, int flocked, int fbutton);
 
-//
-// MultiSouce
-//
+/**
+ * @brief Maximum number of target entities supported by a single multi_manager.
+ *
+ * A `multi_manager` may trigger up to this many target entities in sequence.
+ *
+ * @note
+ * This is the original limit used by the Half-Life SDK.
+ */
+#define MAX_MULTI_TARGETS 16
 
-#define MAX_MULTI_TARGETS	16 // maximum number of targets a single multi_manager entity may be assigned.
+ /**
+  * @brief Maximum number of targets supported by a multi_source.
+  *
+  * A `multi_source` can monitor up to this many input entities before it
+  * activates its target.
+ */
 #define MS_MAX_TARGETS 32
 
+ /**
+  * @brief Logical AND gate for multiple entity inputs.
+  *
+  * A `multi_source` monitors a collection of entities and only becomes
+  * triggered once all registered inputs have been activated. It is commonly
+  * used to implement puzzles or mechanisms that require multiple switches,
+  * buttons, or other entities to be activated before an action occurs.
+  */
 class CMultiSource : public CPointEntity
 {
 public:
-	void Spawn( );
-	void KeyValue( KeyValueData *pkvd );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	int	ObjectCaps( void ) { return (CPointEntity::ObjectCaps() | FCAP_MASTER); }
-	BOOL IsTriggered( CBaseEntity *pActivator );
-	void EXPORT Register( void );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	/**
+	 * @brief Spawns the multi-source entity.
+	 */
+	void Spawn();
 
-	EHANDLE		m_rgEntities[MS_MAX_TARGETS];
-	int			m_rgTriggered[MS_MAX_TARGETS];
+	/**
+	 * @brief Processes a key-value pair from the map.
+	 *
+	 * @param pkvd Pointer to the key-value data.
+	 */
+	void KeyValue(KeyValueData* pkvd);
 
-	int			m_iTotal;
-	string_t	m_globalstate;
+	/**
+	 * @brief Handles activation of one of the multi-source's inputs.
+	 *
+	 * Updates the activation state of the calling entity and triggers the
+	 * multi-source if all registered inputs have been activated.
+	 *
+	 * @param pActivator Entity responsible for the activation.
+	 * @param pCaller Entity invoking this callback.
+	 * @param useType Type of use interaction.
+	 * @param value Additional use value.
+	 */
+	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+
+	/**
+	 * @brief Returns the entity's capability flags.
+	 *
+	 * @return The capabilities inherited from `CPointEntity` with
+	 * `FCAP_MASTER` added.
+	 */
+	int ObjectCaps(void)
+	{
+		return CPointEntity::ObjectCaps() | FCAP_MASTER;
+	}
+
+	/**
+	 * @brief Determines whether the multi-source is currently triggered.
+	 *
+	 * @param pActivator Entity requesting the trigger state.
+	 * @return `TRUE` if all required inputs have been activated; otherwise `FALSE`.
+	 */
+	BOOL IsTriggered(CBaseEntity* pActivator);
+
+	/**
+	 * @brief Registers the entity with its input targets.
+	 *
+	 * Called after all entities have spawned to resolve entity references.
+	 */
+	void EXPORT Register(void);
+
+	/**
+	 * @brief Saves the entity's persistent state.
+	 *
+	 * @param save Save-game writer.
+	 * @return Non-zero on success.
+	 */
+	virtual int Save(CSave& save);
+
+	/**
+	 * @brief Restores the entity's persistent state.
+	 *
+	 * @param restore Save-game reader.
+	 * @return Non-zero on success.
+	 */
+	virtual int Restore(CRestore& restore);
+
+	/**
+	 * @brief Save/restore field descriptions.
+	 */
+	static TYPEDESCRIPTION m_SaveData[];
+
+	/**
+	 * @brief Registered input entities.
+	 */
+	EHANDLE m_rgEntities[MS_MAX_TARGETS];
+
+	/**
+	 * @brief Activation state for each registered input.
+	 */
+	int m_rgTriggered[MS_MAX_TARGETS];
+
+	/**
+	 * @brief Number of registered input entities.
+	 */
+	int m_iTotal;
+
+	/**
+	 * @brief Name of the associated global state.
+	 *
+	 * If specified, the multi-source is only considered active when the
+	 * referenced global state allows it.
+	 */
+	string_t m_globalstate;
 };
 
 
-//
-// generic Delay entity.
-//
+/**
+ * @brief Base class for entities that support delayed actions.
+ *
+ * Extends `CBaseEntity` with support for delayed target activation and
+ * optional kill targets. Many trigger and logic entities inherit from this
+ * class to gain common delay functionality.
+ */
 class CBaseDelay : public CBaseEntity
 {
 public:
-	float		m_flDelay;
-	int			m_iszKillTarget;
 
-	virtual void	KeyValue( KeyValueData* pkvd);
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	
-	static	TYPEDESCRIPTION m_SaveData[];
-	// common member functions
-	void SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, float value );
-	void EXPORT DelayThink( void );
+	/**
+	 * @brief Delay, in seconds, before targets are activated.
+	 */
+	float m_flDelay;
+
+	/**
+	 * @brief Target name of entities to remove when activated.
+	 */
+	int m_iszKillTarget;
+
+	/**
+	 * @brief Processes key-value pairs from the map.
+	 *
+	 * @param pkvd Pointer to the key-value data.
+	 */
+	virtual void KeyValue(KeyValueData* pkvd);
+
+	/**
+	 * @brief Saves the entity's persistent state.
+	 *
+	 * @param save Save-game writer.
+	 * @return Non-zero on success.
+	 */
+	virtual int Save(CSave& save);
+
+	/**
+	 * @brief Restores the entity's persistent state.
+	 *
+	 * @param restore Save-game reader.
+	 * @return Non-zero on success.
+	 */
+	virtual int Restore(CRestore& restore);
+
+	/**
+	 * @brief Save/restore field descriptions.
+	 */
+	static TYPEDESCRIPTION m_SaveData[];
+
+	/**
+	 * @brief Activates this entity's targets.
+	 *
+	 * If a delay has been specified, activation is deferred until
+	 * `DelayThink()` is executed. Any configured kill target is processed
+	 * before the target entities are fired.
+	 *
+	 * @param pActivator Entity responsible for the activation.
+	 * @param useType Type of use interaction.
+	 * @param value Additional use value.
+	 */
+	void SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value);
+
+	/**
+	 * @brief Executes delayed target activation.
+	 *
+	 * Called after `m_flDelay` has elapsed to activate the entity's targets.
+	 */
+	void EXPORT DelayThink(void);
 };
 
 
 class CBaseAnimating : public CBaseDelay
 {
 public:
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	virtual int		Save(CSave& save);
+	virtual int		Restore(CRestore& restore);
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	// Basic Monster Animation functions
-	float StudioFrameAdvance( float flInterval = 0.0 ); // accumulate animation frame time from last time called until now
-	int	 GetSequenceFlags( void );
-	int  LookupActivity ( int activity );
-	int  LookupActivityHeaviest ( int activity );
-	int  LookupSequence ( const char *label );
-	void ResetSequenceInfo ( );
-	void DispatchAnimEvents ( float flFutureInterval = 0.1 ); // Handle events that have happend since last time called up until X seconds into the future
-	virtual void HandleAnimEvent( MonsterEvent_t *pEvent ) {};
-	float SetBoneController ( int iController, float flValue );
-	void InitBoneControllers ( void );
-	float SetBlending ( int iBlender, float flValue );
-	void GetBonePosition ( int iBone, Vector &origin, Vector &angles );
-	void GetAutomovement( Vector &origin, Vector &angles, float flInterval = 0.1 );
-	int  FindTransition( int iEndingSequence, int iGoalSequence, int *piDir );
-	void GetAttachment ( int iAttachment, Vector &origin, Vector &angles );
-	void SetBodygroup( int iGroup, int iValue );
-	int GetBodygroup( int iGroup );
-	int ExtractBbox( int sequence, float *mins, float *maxs );
-	void SetSequenceBox( void );
+	float StudioFrameAdvance(float flInterval = 0.0); // accumulate animation frame time from last time called until now
+	int	 GetSequenceFlags(void);
+	int  LookupActivity(int activity);
+	int  LookupActivityHeaviest(int activity);
+	int  LookupSequence(const char* label);
+	void ResetSequenceInfo();
+	void DispatchAnimEvents(float flFutureInterval = 0.1); // Handle events that have happend since last time called up until X seconds into the future
+	virtual void HandleAnimEvent(MonsterEvent_t* pEvent) {};
+	float SetBoneController(int iController, float flValue);
+	void InitBoneControllers(void);
+	float SetBlending(int iBlender, float flValue);
+	void GetBonePosition(int iBone, Vector& origin, Vector& angles);
+	void GetAutomovement(Vector& origin, Vector& angles, float flInterval = 0.1);
+	int  FindTransition(int iEndingSequence, int iGoalSequence, int* piDir);
+	void GetAttachment(int iAttachment, Vector& origin, Vector& angles);
+	void SetBodygroup(int iGroup, int iValue);
+	int GetBodygroup(int iGroup);
+	int ExtractBbox(int sequence, float* mins, float* maxs);
+	void SetSequenceBox(void);
 
 	// animation needs
 	float				m_flFrameRate;		// computed FPS for current sequence
@@ -1450,7 +1765,7 @@ public:
 class CBaseToggle : public CBaseAnimating
 {
 public:
-	void				KeyValue( KeyValueData *pkvd );
+	void				KeyValue(KeyValueData* pkvd);
 
 	TOGGLE_STATE		m_toggle_state;
 	float				m_flActivateFinished;//like attack_finished, but for doors
@@ -1468,26 +1783,26 @@ public:
 	int					m_cTriggersLeft;		// trigger_counter only, # of activations remaining
 	float				m_flHeight;
 	EHANDLE				m_hActivator;
-	void (CBaseToggle::*m_pfnCallWhenMoveDone)(void);
+	void (CBaseToggle::* m_pfnCallWhenMoveDone)(void);
 	Vector				m_vecFinalDest;
 	Vector				m_vecFinalAngle;
 
 	int					m_bitsDamageInflict;	// DMG_ damage type that the door or tigger does
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	virtual int		Save(CSave& save);
+	virtual int		Restore(CRestore& restore);
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	virtual int		GetToggleState( void ) { return m_toggle_state; }
-	virtual float	GetDelay( void ) { return m_flWait; }
+	virtual int		GetToggleState(void) { return m_toggle_state; }
+	virtual float	GetDelay(void) { return m_flWait; }
 
 	// common member functions
-	void LinearMove( Vector	vecDest, float flSpeed );
-	void EXPORT LinearMoveDone( void );
-	void AngularMove( Vector vecDestAngle, float flSpeed );
-	void EXPORT AngularMoveDone( void );
-	BOOL IsLockedByMaster( void );
+	void LinearMove(Vector	vecDest, float flSpeed);
+	void EXPORT LinearMoveDone(void);
+	void AngularMove(Vector vecDestAngle, float flSpeed);
+	void EXPORT AngularMoveDone(void);
+	BOOL IsLockedByMaster(void);
 
 	virtual CBaseToggle* MyTogglePointer(void) { return this; }
 
@@ -1497,15 +1812,15 @@ public:
 	virtual void SentenceStop(void);
 	virtual BOOL IsAllowedToSpeak() { return FALSE; }
 
-	static float		AxisValue( int flags, const Vector &angles );
-	static void			AxisDir( entvars_t *pev );
-	static float		AxisDelta( int flags, const Vector &angle1, const Vector &angle2 );
+	static float		AxisValue(int flags, const Vector& angles);
+	static void			AxisDir(entvars_t* pev);
+	static float		AxisDelta(int flags, const Vector& angle1, const Vector& angle2);
 
 	string_t m_sMaster;		// If this button has a master switch, this is the targetname.
-							// A master switch must be of the multisource type. If all 
-							// of the switches in the multisource have been triggered, then
-							// the button will be allowed to operate. Otherwise, it will be
-							// deactivated.
+	// A master switch must be of the multisource type. If all 
+	// of the switches in the multisource have been triggered, then
+	// the button will be allowed to operate. Otherwise, it will be
+	// deactivated.
 };
 #define SetMoveDone( a ) m_pfnCallWhenMoveDone = static_cast <void (CBaseToggle::*)(void)> (a)
 
@@ -1622,7 +1937,7 @@ class CSound;
 #include "basemonster.h"
 
 
-char *ButtonSound( int sound );				// get string of button sound number
+char* ButtonSound(int sound);				// get string of button sound number
 
 
 //
@@ -1631,45 +1946,45 @@ char *ButtonSound( int sound );				// get string of button sound number
 class CBaseButton : public CBaseToggle
 {
 public:
-	void Spawn( void );
-	virtual void Precache( void );
-	void RotSpawn( void );
-	virtual void KeyValue( KeyValueData* pkvd);
+	void Spawn(void);
+	virtual void Precache(void);
+	void RotSpawn(void);
+	virtual void KeyValue(KeyValueData* pkvd);
 
-	void ButtonActivate( );
-	void SparkSoundCache( void );
+	void ButtonActivate();
+	void SparkSoundCache(void);
 
-	void EXPORT ButtonShot( void );
-	void EXPORT ButtonTouch( CBaseEntity *pOther );
-	void EXPORT ButtonSpark ( void );
-	void EXPORT TriggerAndWait( void );
-	void EXPORT ButtonReturn( void );
-	void EXPORT ButtonBackHome( void );
-	void EXPORT ButtonUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	virtual int		TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	void EXPORT ButtonShot(void);
+	void EXPORT ButtonTouch(CBaseEntity* pOther);
+	void EXPORT ButtonSpark(void);
+	void EXPORT TriggerAndWait(void);
+	void EXPORT ButtonReturn(void);
+	void EXPORT ButtonBackHome(void);
+	void EXPORT ButtonUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	virtual int		TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
+	virtual int		Save(CSave& save);
+	virtual int		Restore(CRestore& restore);
 
 	enum BUTTON_CODE { BUTTON_NOTHING, BUTTON_ACTIVATE, BUTTON_RETURN };
-	BUTTON_CODE	ButtonResponseToTouch( void );
-	
+	BUTTON_CODE	ButtonResponseToTouch(void);
+
 	static	TYPEDESCRIPTION m_SaveData[];
 	// Buttons that don't take damage can be IMPULSE used
-	virtual int	ObjectCaps( void ) { return (CBaseToggle:: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | (pev->takedamage?0:FCAP_IMPULSE_USE); }
+	virtual int	ObjectCaps(void) { return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | (pev->takedamage ? 0 : FCAP_IMPULSE_USE); }
 	virtual BOOL IsAllowedToSpeak() { return TRUE; }
 
 	BOOL	m_fStayPushed;	// button stays pushed in until touched again?
 	BOOL	m_fRotating;		// a rotating button?  default is a sliding button.
 
 	string_t m_strChangeTarget;	// if this field is not nullptr, this is an index into the engine string array.
-							// when this button is touched, it's target entity's TARGET field will be set
-							// to the button's ChangeTarget. This allows you to make a func_train switch paths, etc.
+	// when this button is touched, it's target entity's TARGET field will be set
+	// to the button's ChangeTarget. This allows you to make a func_train switch paths, etc.
 
 	locksound_t m_ls;			// door lock sounds
-	
+
 	BYTE	m_bLockedSound;		// ordinals from entity selection
-	BYTE	m_bLockedSentence;	
-	BYTE	m_bUnlockedSound;	
+	BYTE	m_bLockedSentence;
+	BYTE	m_bUnlockedSound;
 	BYTE	m_bUnlockedSentence;
 	int		m_sounds;
 };
@@ -1684,18 +1999,18 @@ public:
 // Converts a entvars_t * to a class pointer
 // It will allocate the class and entity if necessary
 //
-template <class T> T * GetClassPtr( T *a )
+template <class T> T* GetClassPtr(T* a)
 {
-	entvars_t *pev = (entvars_t *)a;
+	entvars_t* pev = (entvars_t*)a;
 
 	// allocate entity if necessary
 	if (pev == nullptr)
 		pev = VARS(CREATE_ENTITY());
 
 	// get the private data
-	a = (T *)GET_PRIVATE(ENT(pev));
+	a = (T*)GET_PRIVATE(ENT(pev));
 
-	if (a == nullptr) 
+	if (a == nullptr)
 	{
 		// allocate private data 
 		a = new(pev) T;
@@ -1748,7 +2063,7 @@ typedef struct _SelAmmo
 class CWorld : public CBaseEntity
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void KeyValue( KeyValueData *pkvd );
+	void Spawn(void);
+	void Precache(void);
+	void KeyValue(KeyValueData* pkvd);
 };
