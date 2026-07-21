@@ -73,9 +73,10 @@ enum class ForceType
 	ModelSpecifyBoundsIfAvailable,	// For Steam model files only, the geometry must fit in the specified bbox (if the file is available)
 };
 
-// Returned by TraceLine
-typedef struct
-	{
+/// Returned by TraceLine
+/// @todo doc comments & get rid of hungarian notation
+struct TraceResult
+{
 	int		fAllSolid;			// if true, plane is not valid
 	int		fStartSolid;		// if true, the initial point was in a solid area
 	int		fInOpen;
@@ -84,15 +85,16 @@ typedef struct
 	vec3_t	vecEndPos;			// final position
 	float	flPlaneDist;
 	vec3_t	vecPlaneNormal;		// surface normal at impact
-	edict_t	*pHit;				// entity the surface is on
+	edict_t* pHit;				// entity the surface is on
 	int		iHitgroup;			// 0 == generic, non zero is specific body part
-	} TraceResult;
+};
 
-// CD audio status
-typedef struct 
+/// @brief CD audio status
+/// @todo doc comments & get rid of hungarian notation
+struct CDStatus
 {
-	int	fPlaying;// is sound playing right now?
-	int	fWasPlaying;// if not, CD is paused if WasPlaying is true.
+	int	fPlaying;      // is sound playing right now?
+	int	fWasPlaying;   // if not, CD is paused if WasPlaying is true.
 	int	fInitialized;
 	int	fEnabled;
 	int	fPlayLooping;
@@ -100,13 +102,14 @@ typedef struct
 	//BYTE 	remap[100];
 	int	fCDRom;
 	int	fPlayTrack;
-} CDStatus;
+};
 
 #include "../common/crc.h"
 
 
-// Engine hands this to DLLs for functionality callbacks
-typedef struct enginefuncs_s
+/// @brief Engine hands this to DLLs for functionality callbacks
+/// @todo doc comments & get rid of hungarian notation
+struct enginefuncs_s
 {
 	int			(*pfnPrecacheModel)			(char* s);
 	int			(*pfnPrecacheSound)			(char* s);
@@ -300,7 +303,9 @@ typedef struct enginefuncs_s
 	int (*pfnCheckParm)( const char *pchCmdLineToken, char **ppnext );
 
 	edict_t*	(*pfnPEntityOfEntIndexAllEntities)		(int iEntIndex);
-} enginefuncs_t;
+};
+
+using enginefuncs_t = struct enginefuncs_s;
 
 
 // ONLY ADD NEW FUNCTIONS TO THE END OF THIS STRUCT.  INTERFACE VERSION IS FROZEN AT 138
