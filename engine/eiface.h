@@ -54,12 +54,12 @@ enum class AlertType {
 };
 
 // 4-22-98  JOHN: added for use in pfnClientPrintf
-typedef enum
-	{
-	print_console,
-	print_center,
-	print_chat,
-	} PRINT_TYPE;
+enum class PrintType
+{
+	Console,
+	Center,
+	Chat,
+};
 
 // For integrity checking of content on clients
 typedef enum
@@ -185,7 +185,7 @@ typedef struct enginefuncs_s
 	void		(*pfnGetBonePosition)		(const edict_t* pEdict, int iBone, float *rgflOrigin, float *rgflAngles );
 	uint32 (*pfnFunctionFromName)	( const char *pName );
 	const char *(*pfnNameForFunction)		( uint32 function );
-	void		(*pfnClientPrintf)			( edict_t* pEdict, PRINT_TYPE ptype, const char *szMsg ); // JOHN: engine callbacks so game DLL can print messages to individual clients
+	void		(*pfnClientPrintf)			( edict_t* pEdict, PrintType ptype, const char *szMsg ); // JOHN: engine callbacks so game DLL can print messages to individual clients
 	void		(*pfnServerPrint)			( const char *szMsg );
 	const char *(*pfnCmd_Args)				( void );		// these 3 added 
 	const char *(*pfnCmd_Argv)				( int argc );	// so game DLL can easily 
