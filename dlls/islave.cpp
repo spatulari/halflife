@@ -69,7 +69,7 @@ public:
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	void ClearBeams( );
 	void ArmBeam( int side );
@@ -97,7 +97,7 @@ LINK_ENTITY_TO_CLASS( monster_alien_slave, CISlave );
 LINK_ENTITY_TO_CLASS( monster_vortigaunt, CISlave );
 
 
-TYPEDESCRIPTION	CISlave::m_SaveData[] = 
+TypeDescription	CISlave::m_SaveData[] = 
 {
 	DEFINE_FIELD( CISlave, m_iBravery, FIELD_INTEGER ),
 

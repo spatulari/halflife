@@ -94,7 +94,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	// other functions
 	void SetTurretAnim(TURRET_ANIM anim);
@@ -135,7 +135,7 @@ public:
 };
 
 
-TYPEDESCRIPTION	CBaseTurret::m_SaveData[] = 
+TypeDescription	CBaseTurret::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseTurret, m_flMaxSpin, FIELD_FLOAT ),
 	DEFINE_FIELD( CBaseTurret, m_iSpin, FIELD_INTEGER ),
@@ -181,7 +181,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	// other functions
 	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy);
@@ -190,7 +190,7 @@ private:
 	int m_iStartSpin;
 
 };
-TYPEDESCRIPTION	CTurret::m_SaveData[] = 
+TypeDescription	CTurret::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTurret, m_iStartSpin, FIELD_INTEGER ),
 };

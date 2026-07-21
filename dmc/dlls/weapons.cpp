@@ -352,7 +352,7 @@ void W_Precache(void)
 
  
 
-TYPEDESCRIPTION	CBasePlayerItem::m_SaveData[] = 
+TypeDescription	CBasePlayerItem::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBasePlayerItem, m_pPlayer, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CBasePlayerItem, m_pNext, FIELD_CLASSPTR ),
@@ -364,7 +364,7 @@ TYPEDESCRIPTION	CBasePlayerItem::m_SaveData[] =
 IMPLEMENT_SAVERESTORE( CBasePlayerItem, CBaseAnimating );
 
 
-TYPEDESCRIPTION	CBasePlayerWeapon::m_SaveData[] = 
+TypeDescription	CBasePlayerWeapon::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBasePlayerWeapon, m_flNextPrimaryAttack, FIELD_TIME ),
 	DEFINE_FIELD( CBasePlayerWeapon, m_flNextSecondaryAttack, FIELD_TIME ),
@@ -1092,7 +1092,7 @@ void CBasePlayerWeapon::RetireWeapon( void )
 
 LINK_ENTITY_TO_CLASS( weaponbox, CWeaponBox );
 
-TYPEDESCRIPTION	CWeaponBox::m_SaveData[] = 
+TypeDescription	CWeaponBox::m_SaveData[] = 
 {
 	DEFINE_ARRAY( CWeaponBox, m_rgAmmo, FIELD_INTEGER, MAX_AMMO_SLOTS ),
 	DEFINE_ARRAY( CWeaponBox, m_rgiszAmmo, FIELD_STRING, MAX_AMMO_SLOTS ),

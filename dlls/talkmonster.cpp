@@ -31,7 +31,7 @@ float	CTalkMonster::g_talkWaitTime = 0;		// time delay until it's ok to speak: u
 
 // NOTE: m_voicePitch & m_szGrp should be fixed up by precache each save/restore
 
-TYPEDESCRIPTION	CTalkMonster::m_SaveData[] = 
+TypeDescription	CTalkMonster::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTalkMonster, m_bitsSaid, FIELD_INTEGER ),
 	DEFINE_FIELD( CTalkMonster, m_nSpeak, FIELD_INTEGER ),

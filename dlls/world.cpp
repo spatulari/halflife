@@ -355,13 +355,13 @@ GLOBALESTATE CGlobalState :: EntityGetState( string_t globalname )
 
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	CGlobalState::m_SaveData[] = 
+TypeDescription	CGlobalState::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGlobalState, m_listCount, FIELD_INTEGER ),
 };
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	gGlobalEntitySaveData[] = 
+TypeDescription	gGlobalEntitySaveData[] = 
 {
 	DEFINE_ARRAY( globalentity_t, name, FIELD_CHARACTER, 64 ),
 	DEFINE_ARRAY( globalentity_t, levelName, FIELD_CHARACTER, 32 ),

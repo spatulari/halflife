@@ -49,12 +49,12 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int			m_animate;
 };
 
-TYPEDESCRIPTION	CCycler::m_SaveData[] = 
+TypeDescription	CCycler::m_SaveData[] = 
 {
 	DEFINE_FIELD( CCycler, m_animate, FIELD_INTEGER ),
 };
@@ -228,7 +228,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	inline int		ShouldAnimate( void ) { return m_animate && m_maxFrame > 1.0; }
 	int			m_animate;
@@ -238,7 +238,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( cycler_sprite, CCyclerSprite );
 
-TYPEDESCRIPTION	CCyclerSprite::m_SaveData[] = 
+TypeDescription	CCyclerSprite::m_SaveData[] = 
 {
 	DEFINE_FIELD( CCyclerSprite, m_animate, FIELD_INTEGER ),
 	DEFINE_FIELD( CCyclerSprite, m_lastTime, FIELD_TIME ),
@@ -393,7 +393,7 @@ class CWreckage : public CBaseMonster
 {
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
@@ -401,7 +401,7 @@ class CWreckage : public CBaseMonster
 
 	int m_flStartTime;
 };
-TYPEDESCRIPTION	CWreckage::m_SaveData[] = 
+TypeDescription	CWreckage::m_SaveData[] = 
 {
 	DEFINE_FIELD( CWreckage, m_flStartTime, FIELD_TIME ),
 };

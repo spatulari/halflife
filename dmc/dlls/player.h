@@ -222,7 +222,7 @@ public:
 	// JOHN:  sends custom messages if player HUD data has changed  (eg health, ammo)
 	virtual void UpdateClientData( void );
 	
-	static	TYPEDESCRIPTION m_playerSaveData[];
+	static	TypeDescription m_playerSaveData[];
 
 	// Player is moved across the transition by other means
 	virtual int		ObjectCaps( void ) { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }

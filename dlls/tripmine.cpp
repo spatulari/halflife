@@ -49,7 +49,7 @@ class CTripmineGrenade : public CGrenade
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 	
@@ -76,7 +76,7 @@ class CTripmineGrenade : public CGrenade
 
 LINK_ENTITY_TO_CLASS( monster_tripmine, CTripmineGrenade );
 
-TYPEDESCRIPTION	CTripmineGrenade::m_SaveData[] = 
+TypeDescription	CTripmineGrenade::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTripmineGrenade, m_flPowerUp, FIELD_TIME ),
 	DEFINE_FIELD( CTripmineGrenade, m_vecDir, FIELD_VECTOR ),

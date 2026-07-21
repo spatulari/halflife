@@ -113,7 +113,7 @@ public:
 	virtual int		Save( CSave &save ); 
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void KeyValue( KeyValueData *pkvd );
 

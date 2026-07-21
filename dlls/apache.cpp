@@ -31,7 +31,7 @@ class CApache : public CBaseMonster
 {
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
@@ -90,7 +90,7 @@ class CApache : public CBaseMonster
 };
 LINK_ENTITY_TO_CLASS( monster_apache, CApache );
 
-TYPEDESCRIPTION	CApache::m_SaveData[] = 
+TypeDescription	CApache::m_SaveData[] = 
 {
 	DEFINE_FIELD( CApache, m_iRockets, FIELD_INTEGER ),
 	DEFINE_FIELD( CApache, m_flForce, FIELD_FLOAT ),
@@ -946,14 +946,14 @@ class CApacheHVR : public CGrenade
 
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int m_iTrail;
 	Vector m_vecForward;
 };
 LINK_ENTITY_TO_CLASS( hvr_rocket, CApacheHVR );
 
-TYPEDESCRIPTION	CApacheHVR::m_SaveData[] = 
+TypeDescription	CApacheHVR::m_SaveData[] = 
 {
 //	DEFINE_FIELD( CApacheHVR, m_iTrail, FIELD_INTEGER ),	// Dont' save, precache
 	DEFINE_FIELD( CApacheHVR, m_vecForward, FIELD_VECTOR ),

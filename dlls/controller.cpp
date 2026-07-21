@@ -43,7 +43,7 @@ class CController : public CSquadMonster
 public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
@@ -103,7 +103,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_alien_controller, CController );
 
-TYPEDESCRIPTION	CController::m_SaveData[] = 
+TypeDescription	CController::m_SaveData[] = 
 {
 	DEFINE_ARRAY( CController, m_pBall, FIELD_CLASSPTR, 2 ),
 	DEFINE_ARRAY( CController, m_iBall, FIELD_INTEGER, 2 ),

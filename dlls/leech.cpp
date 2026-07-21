@@ -115,7 +115,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static const char *pAttackSounds[];
 	static const char *pAlertSounds[];
@@ -145,7 +145,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( monster_leech, CLeech );
 
-TYPEDESCRIPTION	CLeech::m_SaveData[] = 
+TypeDescription	CLeech::m_SaveData[] = 
 {
 	DEFINE_FIELD( CLeech, m_flTurning, FIELD_FLOAT ),
 	DEFINE_FIELD( CLeech, m_fPathBlocked, FIELD_BOOLEAN ),

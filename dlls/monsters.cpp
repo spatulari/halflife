@@ -52,7 +52,7 @@ extern CGraph WorldGraph;// the world node graph
 // lose our enemy pointer or other data (goal ent, target, etc)
 // that make the current schedule invalid, perhaps it's best
 // to just pick a new one when we start up again.
-TYPEDESCRIPTION	CBaseMonster::m_SaveData[] = 
+TypeDescription	CBaseMonster::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseMonster, m_hEnemy, FIELD_EHANDLE ),
 	DEFINE_FIELD( CBaseMonster, m_hTargetEnt, FIELD_EHANDLE ),

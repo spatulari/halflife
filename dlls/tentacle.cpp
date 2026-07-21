@@ -44,7 +44,7 @@ public:
 
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	// Don't allow the tentacle to go across transitions!!!
 	virtual int	ObjectCaps( void ) { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -144,7 +144,7 @@ const char *CTentacle::pHitWater[] =
 };
 
 
-TYPEDESCRIPTION	CTentacle::m_SaveData[] = 
+TypeDescription	CTentacle::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTentacle, m_flInitialYaw, FIELD_FLOAT ),
 	DEFINE_FIELD( CTentacle, m_iGoalAnim, FIELD_INTEGER ),

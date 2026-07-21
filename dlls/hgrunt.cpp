@@ -162,7 +162,7 @@ public:
 	void JustSpoke( void );
 
 	CUSTOM_SCHEDULES;
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	// checking the feasibility of a grenade toss is kind of costly, so we do it every couple of seconds,
 	// not every server frame.
@@ -189,7 +189,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_human_grunt, CHGrunt );
 
-TYPEDESCRIPTION	CHGrunt::m_SaveData[] = 
+TypeDescription	CHGrunt::m_SaveData[] = 
 {
 	DEFINE_FIELD( CHGrunt, m_flNextGrenadeCheck, FIELD_TIME ),
 	DEFINE_FIELD( CHGrunt, m_flNextPainTime, FIELD_TIME ),

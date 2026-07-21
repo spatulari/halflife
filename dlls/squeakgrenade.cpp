@@ -56,7 +56,7 @@ class CSqueakGrenade : public CGrenade
 	virtual int		Save( CSave &save ); 
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static float m_flNextBounceSoundTime;
 
@@ -73,7 +73,7 @@ class CSqueakGrenade : public CGrenade
 float CSqueakGrenade::m_flNextBounceSoundTime = 0;
 
 LINK_ENTITY_TO_CLASS( monster_snark, CSqueakGrenade );
-TYPEDESCRIPTION	CSqueakGrenade::m_SaveData[] = 
+TypeDescription	CSqueakGrenade::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSqueakGrenade, m_flDie, FIELD_TIME ),
 	DEFINE_FIELD( CSqueakGrenade, m_vecTarget, FIELD_VECTOR ),

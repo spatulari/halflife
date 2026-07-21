@@ -89,7 +89,7 @@ extern CGraph	WorldGraph;
 //#define MAX_SAFE_FALL_UNITS			( PLAYER_MAX_SAFE_FALL_DIST * 12 )
 
 // Global Savedata for player
-TYPEDESCRIPTION	CBasePlayer::m_playerSaveData[] = 
+TypeDescription	CBasePlayer::m_playerSaveData[] = 
 {
 	DEFINE_FIELD( CBasePlayer, m_flFlashLightTime, FIELD_TIME ),
 	DEFINE_FIELD( CBasePlayer, m_iFlashBattery, FIELD_INTEGER ),
@@ -4763,7 +4763,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	inline	float	Duration( void ) { return pev->dmg_take; }
 	inline	float	HoldTime( void ) { return pev->dmg_save; }
@@ -4782,7 +4782,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( player_loadsaved, CRevertSaved );
 
-TYPEDESCRIPTION	CRevertSaved::m_SaveData[] = 
+TypeDescription	CRevertSaved::m_SaveData[] = 
 {
 	DEFINE_FIELD( CRevertSaved, m_messageTime, FIELD_FLOAT ),	// These are not actual times, but durations, so save as floats
 	DEFINE_FIELD( CRevertSaved, m_loadTime, FIELD_FLOAT ),

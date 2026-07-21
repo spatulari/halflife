@@ -51,7 +51,7 @@ public:
 
 	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float		m_frictionFraction;		// Sorry, couldn't resist this name :)
 };
@@ -59,7 +59,7 @@ public:
 LINK_ENTITY_TO_CLASS( func_friction, CFrictionModifier );
 
 // Global Savedata for changelevel friction modifier
-TYPEDESCRIPTION	CFrictionModifier::m_SaveData[] = 
+TypeDescription	CFrictionModifier::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFrictionModifier, m_frictionFraction, FIELD_FLOAT ),
 };
@@ -116,7 +116,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	int			m_globalstate;
@@ -124,7 +124,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( trigger_auto, CAutoTrigger );
 
-TYPEDESCRIPTION	CAutoTrigger::m_SaveData[] = 
+TypeDescription	CAutoTrigger::m_SaveData[] = 
 {
 	DEFINE_FIELD( CAutoTrigger, m_globalstate, FIELD_STRING ),
 	DEFINE_FIELD( CAutoTrigger, triggerType, FIELD_INTEGER ),
@@ -198,14 +198,14 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	USE_TYPE	triggerType;
 };
 LINK_ENTITY_TO_CLASS( trigger_relay, CTriggerRelay );
 
-TYPEDESCRIPTION	CTriggerRelay::m_SaveData[] = 
+TypeDescription	CTriggerRelay::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTriggerRelay, triggerType, FIELD_INTEGER ),
 };
@@ -279,7 +279,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int		m_cTargets;	// the total number of targets in this manager's fire list.
 	int		m_index;	// Current target
@@ -301,7 +301,7 @@ private:
 LINK_ENTITY_TO_CLASS( multi_manager, CMultiManager );
 
 // Global Savedata for multi_manager
-TYPEDESCRIPTION	CMultiManager::m_SaveData[] = 
+TypeDescription	CMultiManager::m_SaveData[] = 
 {
 	DEFINE_FIELD( CMultiManager, m_cTargets, FIELD_INTEGER ),
 	DEFINE_FIELD( CMultiManager, m_index, FIELD_INTEGER ),
@@ -1354,7 +1354,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	char m_szMapName[cchMapNameMost];		// trigger_changelevel only:  next map
 	char m_szLandmarkName[cchMapNameMost];		// trigger_changelevel only:  landmark on next map
@@ -1364,7 +1364,7 @@ public:
 LINK_ENTITY_TO_CLASS( trigger_changelevel, CChangeLevel );
 
 // Global Savedata for changelevel trigger
-TYPEDESCRIPTION	CChangeLevel::m_SaveData[] = 
+TypeDescription	CChangeLevel::m_SaveData[] = 
 {
 	DEFINE_ARRAY( CChangeLevel, m_szMapName, FIELD_CHARACTER, cchMapNameMost ),
 	DEFINE_ARRAY( CChangeLevel, m_szLandmarkName, FIELD_CHARACTER, cchMapNameMost ),
@@ -2102,14 +2102,14 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	int		m_iszNewTarget;
 };
 LINK_ENTITY_TO_CLASS( trigger_changetarget, CTriggerChangeTarget );
 
-TYPEDESCRIPTION	CTriggerChangeTarget::m_SaveData[] = 
+TypeDescription	CTriggerChangeTarget::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTriggerChangeTarget, m_iszNewTarget, FIELD_STRING ),
 };
@@ -2166,7 +2166,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	EHANDLE m_hPlayer;
 	EHANDLE m_hTarget;
@@ -2186,7 +2186,7 @@ public:
 LINK_ENTITY_TO_CLASS( trigger_camera, CTriggerCamera );
 
 // Global Savedata for changelevel friction modifier
-TYPEDESCRIPTION	CTriggerCamera::m_SaveData[] = 
+TypeDescription	CTriggerCamera::m_SaveData[] = 
 {
 	DEFINE_FIELD( CTriggerCamera, m_hPlayer, FIELD_EHANDLE ),
 	DEFINE_FIELD( CTriggerCamera, m_hTarget, FIELD_EHANDLE ),

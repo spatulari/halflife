@@ -32,7 +32,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	float	m_flWait;
@@ -41,7 +41,7 @@ private:
 LINK_ENTITY_TO_CLASS( path_corner, CPathCorner );
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	CPathCorner::m_SaveData[] = 
+TypeDescription	CPathCorner::m_SaveData[] = 
 {
 	DEFINE_FIELD( CPathCorner, m_flWait, FIELD_FLOAT ),
 };
@@ -118,7 +118,7 @@ void CPathCorner :: Touch( CBaseEntity *pOther )
 
 
 
-TYPEDESCRIPTION	CPathTrack::m_SaveData[] = 
+TypeDescription	CPathTrack::m_SaveData[] = 
 {
 	DEFINE_FIELD( CPathTrack, m_length, FIELD_FLOAT ),
 	DEFINE_FIELD( CPathTrack, m_pnext, FIELD_CLASSPTR ),

@@ -91,13 +91,13 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int m_iMagnitude;// how large is the fireball? how much damage?
 	int m_spriteScale; // what's the exact fireball sprite scale? 
 };
 
-TYPEDESCRIPTION	CEnvExplosion::m_SaveData[] = 
+TypeDescription	CEnvExplosion::m_SaveData[] = 
 {
 	DEFINE_FIELD( CEnvExplosion, m_iMagnitude, FIELD_INTEGER ),
 	DEFINE_FIELD( CEnvExplosion, m_spriteScale, FIELD_INTEGER ),

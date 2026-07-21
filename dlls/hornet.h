@@ -39,7 +39,7 @@ public:
 	int  IRelationship ( CBaseEntity *pTarget );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void IgniteTrail( void );
 	void EXPORT StartTrack ( void );

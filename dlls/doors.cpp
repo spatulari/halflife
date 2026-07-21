@@ -49,7 +49,7 @@ public:
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	
 	virtual void SetToggleState( int state );
 
@@ -77,7 +77,7 @@ public:
 };
 
 
-TYPEDESCRIPTION	CBaseDoor::m_SaveData[] = 
+TypeDescription	CBaseDoor::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseDoor, m_bHealthValue, FIELD_CHARACTER ),
 	DEFINE_FIELD( CBaseDoor, m_bMoveSnd, FIELD_CHARACTER ),
@@ -896,7 +896,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void EXPORT DoorMoveDone( void );
 
@@ -905,7 +905,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( momentary_door, CMomentaryDoor );
 
-TYPEDESCRIPTION	CMomentaryDoor::m_SaveData[] = 
+TypeDescription	CMomentaryDoor::m_SaveData[] = 
 {
 	DEFINE_FIELD( CMomentaryDoor, m_bMoveSnd, FIELD_CHARACTER ),
 };

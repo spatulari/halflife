@@ -46,14 +46,14 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int		m_preSequence;
 };
 
 LINK_ENTITY_TO_CLASS( info_bigmomma, CInfoBM );
 
-TYPEDESCRIPTION	CInfoBM::m_SaveData[] = 
+TypeDescription	CInfoBM::m_SaveData[] = 
 {
 	DEFINE_FIELD( CInfoBM, m_preSequence, FIELD_STRING ),
 };
@@ -110,14 +110,14 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int  m_maxFrame;
 };
 
 LINK_ENTITY_TO_CLASS( bmortar, CBMortar );
 
-TYPEDESCRIPTION	CBMortar::m_SaveData[] = 
+TypeDescription	CBMortar::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBMortar, m_maxFrame, FIELD_INTEGER ),
 };
@@ -291,7 +291,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static const char *pChildDieSounds[];
 	static const char *pSackSounds[];
@@ -314,7 +314,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( monster_bigmomma, CBigMomma );
 
-TYPEDESCRIPTION	CBigMomma::m_SaveData[] = 
+TypeDescription	CBigMomma::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBigMomma, m_nodeTime, FIELD_TIME ),
 	DEFINE_FIELD( CBigMomma, m_crabTime, FIELD_TIME ),

@@ -26,7 +26,7 @@
 #include "animation.h"
 #include "saverestore.h"
 
-TYPEDESCRIPTION	CBaseAnimating::m_SaveData[] = 
+TypeDescription	CBaseAnimating::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseMonster, m_flFrameRate, FIELD_FLOAT ),
 	DEFINE_FIELD( CBaseMonster, m_flGroundSpeed, FIELD_FLOAT ),

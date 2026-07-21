@@ -124,7 +124,7 @@ void CBreakable::KeyValue( KeyValueData* pkvd )
 // func_breakable - bmodel that breaks into pieces after taking damage
 //
 LINK_ENTITY_TO_CLASS( func_breakable, CBreakable );
-TYPEDESCRIPTION CBreakable::m_SaveData[] =
+TypeDescription CBreakable::m_SaveData[] =
 {
 	DEFINE_FIELD( CBreakable, m_Material, FIELD_INTEGER ),
 	DEFINE_FIELD( CBreakable, m_Explosion, FIELD_INTEGER ),
@@ -790,7 +790,7 @@ public:
 	// breakables use an overridden takedamage
 	virtual int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static char *m_soundNames[3];
 	int		m_lastSound;	// no need to save/restore, just keeps the same sound from playing twice in a row
@@ -798,7 +798,7 @@ public:
 	float	m_soundTime;
 };
 
-TYPEDESCRIPTION	CPushable::m_SaveData[] = 
+TypeDescription	CPushable::m_SaveData[] = 
 {
 	DEFINE_FIELD( CPushable, m_maxSpeed, FIELD_FLOAT ),
 	DEFINE_FIELD( CPushable, m_soundTime, FIELD_TIME ),

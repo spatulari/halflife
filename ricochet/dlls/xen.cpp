@@ -33,13 +33,13 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	Activity	m_Activity;
 };
 
-TYPEDESCRIPTION	CActAnimating::m_SaveData[] = 
+TypeDescription	CActAnimating::m_SaveData[] = 
 {
 	DEFINE_FIELD( CActAnimating, m_Activity, FIELD_INTEGER ),
 };
@@ -74,7 +74,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	CSprite		*m_pGlow;
@@ -82,7 +82,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( xen_plantlight, CXenPLight );
 
-TYPEDESCRIPTION	CXenPLight::m_SaveData[] = 
+TypeDescription	CXenPLight::m_SaveData[] = 
 {
 	DEFINE_FIELD( CXenPLight, m_pGlow, FIELD_CLASSPTR ),
 };
@@ -240,7 +240,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static const char *pAttackHitSounds[];
 	static const char *pAttackMissSounds[];
@@ -251,7 +251,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( xen_tree, CXenTree );
 
-TYPEDESCRIPTION	CXenTree::m_SaveData[] = 
+TypeDescription	CXenTree::m_SaveData[] = 
 {
 	DEFINE_FIELD( CXenTree, m_pTrigger, FIELD_CLASSPTR ),
 };

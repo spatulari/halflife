@@ -132,7 +132,7 @@ void CBaseEntity :: SUB_DoNothing( void )
 
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	CBaseDelay::m_SaveData[] = 
+TypeDescription	CBaseDelay::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseDelay, m_flDelay, FIELD_FLOAT ),
 	DEFINE_FIELD( CBaseDelay, m_iszKillTarget, FIELD_STRING ),
@@ -332,7 +332,7 @@ void CBaseDelay::DelayThink( void )
 
 
 // Global Savedata for Toggle
-TYPEDESCRIPTION	CBaseToggle::m_SaveData[] = 
+TypeDescription	CBaseToggle::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseToggle, m_toggle_state, FIELD_INTEGER ),
 	DEFINE_FIELD( CBaseToggle, m_flActivateFinished, FIELD_TIME ),

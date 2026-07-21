@@ -35,7 +35,7 @@ static char *memfgets( byte *pMemFile, int fileSize, int &filePos, char *pBuffer
 // runtime pitch shift and volume fadein/out structure
 
 // NOTE: IF YOU CHANGE THIS STRUCT YOU MUST CHANGE THE SAVE/RESTORE VERSION NUMBER
-// SEE BELOW (in the typedescription for the class)
+// SEE BELOW (in the TypeDescription for the class)
 typedef struct dynpitchvol
 {
 	// NOTE: do not change the order of these parameters 
@@ -128,7 +128,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 	float m_flAttenuation;		// attenuation value
@@ -139,7 +139,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( ambient_generic, CAmbientGeneric );
-TYPEDESCRIPTION	CAmbientGeneric::m_SaveData[] = 
+TypeDescription	CAmbientGeneric::m_SaveData[] = 
 {
 	DEFINE_FIELD( CAmbientGeneric, m_flAttenuation, FIELD_FLOAT ),
 	DEFINE_FIELD( CAmbientGeneric, m_fActive, FIELD_BOOLEAN ),
@@ -811,14 +811,14 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float m_flRadius;
 	float m_flRoomtype;
 };
 
 LINK_ENTITY_TO_CLASS( env_sound, CEnvSound );
-TYPEDESCRIPTION	CEnvSound::m_SaveData[] = 
+TypeDescription	CEnvSound::m_SaveData[] = 
 {
 	DEFINE_FIELD( CEnvSound, m_flRadius, FIELD_FLOAT ),
 	DEFINE_FIELD( CEnvSound, m_flRoomtype, FIELD_FLOAT ),
@@ -1801,7 +1801,7 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	
@@ -1809,7 +1809,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( speaker, CSpeaker );
-TYPEDESCRIPTION	CSpeaker::m_SaveData[] = 
+TypeDescription	CSpeaker::m_SaveData[] = 
 {
 	DEFINE_FIELD( CSpeaker, m_preset, FIELD_INTEGER ),
 };

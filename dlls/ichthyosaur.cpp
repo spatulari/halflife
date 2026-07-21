@@ -61,7 +61,7 @@ public:
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	Schedule_t *GetSchedule( void );
 	Schedule_t *GetScheduleOfType ( int Type );
@@ -128,7 +128,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_ichthyosaur, CIchthyosaur );
 
-TYPEDESCRIPTION	CIchthyosaur::m_SaveData[] = 
+TypeDescription	CIchthyosaur::m_SaveData[] = 
 {
 	DEFINE_FIELD( CIchthyosaur, m_SaveVelocity, FIELD_VECTOR ),
 	DEFINE_FIELD( CIchthyosaur, m_idealDist, FIELD_FLOAT ),

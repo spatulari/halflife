@@ -30,7 +30,7 @@ class CNihilanth : public CBaseMonster
 public:
 	int		Save( CSave &save ); 
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
@@ -133,7 +133,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_nihilanth, CNihilanth );
 
-TYPEDESCRIPTION	CNihilanth::m_SaveData[] = 
+TypeDescription	CNihilanth::m_SaveData[] = 
 {
 	DEFINE_FIELD( CNihilanth, m_flForce, FIELD_FLOAT ),
 	DEFINE_FIELD( CNihilanth, m_flNextPainSound, FIELD_TIME ),
@@ -174,7 +174,7 @@ class CNihilanthHVR : public CBaseMonster
 public:
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
@@ -217,7 +217,7 @@ public:
 LINK_ENTITY_TO_CLASS( nihilanth_energy_ball, CNihilanthHVR );
 
 
-TYPEDESCRIPTION	CNihilanthHVR::m_SaveData[] = 
+TypeDescription	CNihilanthHVR::m_SaveData[] = 
 {
 	DEFINE_FIELD( CNihilanthHVR, m_flIdealVel, FIELD_FLOAT ),
 	DEFINE_FIELD( CNihilanthHVR, m_vecIdeal, FIELD_VECTOR ),

@@ -42,7 +42,7 @@ class COsprey : public CBaseMonster
 public:
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	int		ObjectCaps( void ) { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	
 	void Spawn( void );
@@ -107,7 +107,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_osprey, COsprey );
 
-TYPEDESCRIPTION	COsprey::m_SaveData[] = 
+TypeDescription	COsprey::m_SaveData[] = 
 {
 	DEFINE_FIELD( COsprey, m_pGoalEnt, FIELD_CLASSPTR ),
 	DEFINE_FIELD( COsprey, m_vel1, FIELD_VECTOR ),

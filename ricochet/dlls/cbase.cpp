@@ -35,7 +35,7 @@ extern Vector VecBModelOrigin( entvars_t* pevBModel );
 extern DLL_GLOBAL Vector		g_vecAttackDir;
 extern DLL_GLOBAL int			g_iSkillLevel;
 
-static DLL_FUNCTIONS gFunctionTable = 
+static DLLFunctions gFunctionTable = 
 {
 	GameDLLInit,				//pfnGameInit
 	DispatchSpawn,				//pfnSpawn
@@ -109,18 +109,18 @@ NEW_DLL_FUNCTIONS gNewDLLFunctions =
 
 static void SetObjectCollisionBox( entvars_t *pev );
 
-int GetEntityAPI( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion )
+int GetEntityAPI( DLLFunctions *pFunctionTable, int interfaceVersion )
 {
 	if ( !pFunctionTable || interfaceVersion != INTERFACE_VERSION )
 	{
 		return FALSE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLLFunctions ) );
 	return TRUE;
 }
 
-int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
+int GetEntityAPI2( DLLFunctions *pFunctionTable, int *interfaceVersion )
 {
 	if ( !pFunctionTable || *interfaceVersion != INTERFACE_VERSION )
 	{
@@ -129,7 +129,7 @@ int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
 		return FALSE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLLFunctions ) );
 	return TRUE;
 }
 
@@ -448,14 +448,14 @@ void DispatchObjectCollsionBox( edict_t *pent )
 }
 
 
-void SaveWriteFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+void SaveWriteFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	CSave saveHelper( pSaveData );
 	saveHelper.WriteFields( pname, pBaseData, pFields, fieldCount );
 }
 
 
-void SaveReadFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+void SaveReadFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	CRestore restoreHelper( pSaveData );
 	restoreHelper.ReadFields( pname, pBaseData, pFields, fieldCount );
@@ -607,7 +607,7 @@ CBaseEntity *CBaseEntity::GetNextTarget( void )
 }
 
 // Global Savedata for Delay
-TYPEDESCRIPTION	CBaseEntity::m_SaveData[] = 
+TypeDescription	CBaseEntity::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBaseEntity, m_pGoalEnt, FIELD_CLASSPTR ),
 

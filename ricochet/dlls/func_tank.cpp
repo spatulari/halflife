@@ -87,7 +87,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	BOOL OnControls( entvars_t *pevTest );
 	BOOL StartControl( CBasePlayer* pController );
@@ -131,7 +131,7 @@ protected:
 };
 
 
-TYPEDESCRIPTION	CFuncTank::m_SaveData[] = 
+TypeDescription	CFuncTank::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTank, m_yawCenter, FIELD_FLOAT ),
 	DEFINE_FIELD( CFuncTank, m_yawRate, FIELD_FLOAT ),
@@ -769,7 +769,7 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	CLaser	*m_pLaser;
@@ -777,7 +777,7 @@ private:
 };
 LINK_ENTITY_TO_CLASS( func_tanklaser, CFuncTankLaser );
 
-TYPEDESCRIPTION	CFuncTankLaser::m_SaveData[] = 
+TypeDescription	CFuncTankLaser::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTankLaser, m_pLaser, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CFuncTankLaser, m_laserTime, FIELD_TIME ),
@@ -974,13 +974,13 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	CFuncTank *m_pTank;
 };
 LINK_ENTITY_TO_CLASS( func_tankcontrols, CFuncTankControls );
 
-TYPEDESCRIPTION	CFuncTankControls::m_SaveData[] = 
+TypeDescription	CFuncTankControls::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTankControls, m_pTank, FIELD_CLASSPTR ),
 };

@@ -103,7 +103,7 @@ public:
 	int Restore( CRestore &restore );
 
 	CUSTOM_SCHEDULES;
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	int m_iSpriteTexture;
 	BOOL m_fAsleep;// some houndeyes sleep in idle mode if this is set, the houndeye is lying down
@@ -112,7 +112,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( monster_houndeye, CHoundeye );
 
-TYPEDESCRIPTION	CHoundeye::m_SaveData[] = 
+TypeDescription	CHoundeye::m_SaveData[] = 
 {
 	DEFINE_FIELD( CHoundeye, m_iSpriteTexture, FIELD_INTEGER ),
 	DEFINE_FIELD( CHoundeye, m_fAsleep, FIELD_BOOLEAN ),

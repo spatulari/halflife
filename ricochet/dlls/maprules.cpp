@@ -37,7 +37,7 @@ public:
 	void	KeyValue( KeyValueData *pkvd );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	void	SetMaster( int iszMaster ) { m_iszMaster = iszMaster; }
 
@@ -48,7 +48,7 @@ private:
 	string_t	m_iszMaster;
 };
 
-TYPEDESCRIPTION	CRuleEntity::m_SaveData[] = 
+TypeDescription	CRuleEntity::m_SaveData[] = 
 {
 	DEFINE_FIELD( CRuleEntity, m_iszMaster, FIELD_STRING),
 };
@@ -227,7 +227,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	inline	BOOL	MessageToAll( void ) { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS); }
 	inline	void	MessageSet( const char *pMessage ) { pev->message = ALLOC_STRING(pMessage); }
@@ -242,7 +242,7 @@ LINK_ENTITY_TO_CLASS( game_text, CGameText );
 
 // Save parms as a block.  Will break save/restore if the structure changes, but this entity didn't ship with Half-Life, so
 // it can't impact saved Half-Life games.
-TYPEDESCRIPTION	CGameText::m_SaveData[] = 
+TypeDescription	CGameText::m_SaveData[] = 
 {
 	DEFINE_ARRAY( CGameText, m_textParms, FIELD_CHARACTER, sizeof(hudtextparms_t) ),
 };
@@ -506,7 +506,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	string_t	m_iszInTarget;
@@ -516,7 +516,7 @@ private:
 };
 
 LINK_ENTITY_TO_CLASS( game_zone_player, CGamePlayerZone );
-TYPEDESCRIPTION	CGamePlayerZone::m_SaveData[] = 
+TypeDescription	CGamePlayerZone::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGamePlayerZone, m_iszInTarget, FIELD_STRING ),
 	DEFINE_FIELD( CGamePlayerZone, m_iszOutTarget, FIELD_STRING ),

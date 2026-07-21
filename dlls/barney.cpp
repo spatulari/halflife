@@ -75,7 +75,7 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	BOOL	m_fGunDrawn;
 	float	m_painTime;
@@ -90,7 +90,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( monster_barney, CBarney );
 
-TYPEDESCRIPTION	CBarney::m_SaveData[] = 
+TypeDescription	CBarney::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBarney, m_fGunDrawn, FIELD_BOOLEAN ),
 	DEFINE_FIELD( CBarney, m_painTime, FIELD_TIME ),

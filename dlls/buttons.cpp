@@ -48,14 +48,14 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 	
 	string_t	m_globalstate;
 	int			m_triggermode;
 	int			m_initialstate;
 };
 
-TYPEDESCRIPTION CEnvGlobal::m_SaveData[] =
+TypeDescription CEnvGlobal::m_SaveData[] =
 {
 	DEFINE_FIELD( CEnvGlobal, m_globalstate, FIELD_STRING ),
 	DEFINE_FIELD( CEnvGlobal, m_triggermode, FIELD_INTEGER ),
@@ -132,7 +132,7 @@ void CEnvGlobal::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE us
 
 
 
-TYPEDESCRIPTION CMultiSource::m_SaveData[] =
+TypeDescription CMultiSource::m_SaveData[] =
 {
 	//!!!BUGBUG FIX
 	DEFINE_ARRAY( CMultiSource, m_rgEntities, FIELD_EHANDLE, MS_MAX_TARGETS ),
@@ -272,7 +272,7 @@ void CMultiSource::Register(void)
 }
 
 // CBaseButton
-TYPEDESCRIPTION CBaseButton::m_SaveData[] =
+TypeDescription CBaseButton::m_SaveData[] =
 {
 	DEFINE_FIELD( CBaseButton, m_fStayPushed, FIELD_BOOLEAN ),
 	DEFINE_FIELD( CBaseButton, m_fRotating, FIELD_BOOLEAN ),
@@ -901,7 +901,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	int		m_lastUsed;
 	int		m_direction;
@@ -910,7 +910,7 @@ public:
 	vec3_t	m_end;
 	int		m_sounds;
 };
-TYPEDESCRIPTION CMomentaryRotButton::m_SaveData[] =
+TypeDescription CMomentaryRotButton::m_SaveData[] =
 {
 	DEFINE_FIELD( CMomentaryRotButton, m_lastUsed, FIELD_INTEGER ),
 	DEFINE_FIELD( CMomentaryRotButton, m_direction, FIELD_INTEGER ),
@@ -1137,13 +1137,13 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float	m_flDelay;
 };
 
 
-TYPEDESCRIPTION CEnvSpark::m_SaveData[] =
+TypeDescription CEnvSpark::m_SaveData[] =
 {
 	DEFINE_FIELD( CEnvSpark, m_flDelay, FIELD_FLOAT),
 };

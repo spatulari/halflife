@@ -209,7 +209,7 @@ UTIL_GroupTrace::~UTIL_GroupTrace( void )
 	ENGINE_SETGROUPMASK( g_groupmask, g_groupop );
 }
 
-TYPEDESCRIPTION	gEntvarsDescription[] = 
+TypeDescription	gEntvarsDescription[] = 
 {
 	DEFINE_ENTITY_FIELD( classname, FIELD_STRING ),
 	DEFINE_ENTITY_GLOBAL_FIELD( globalname, FIELD_STRING ),
@@ -2037,7 +2037,7 @@ void CSave :: WriteFunction( const char *pname, void **data, int count )
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd )
 {
 	int i;
-	TYPEDESCRIPTION		*pField;
+	TypeDescription		*pField;
 
 	for ( i = 0; i < ENTVARS_COUNT; i++ )
 	{
@@ -2091,10 +2091,10 @@ int CSave :: WriteEntVars( const char *pname, entvars_t *pev )
 
 
 
-int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+int CSave :: WriteFields( const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	int				i, j, actualCount, emptyCount;
-	TYPEDESCRIPTION	*pTest;
+	TypeDescription	*pTest;
 	int				entityArray[MAX_ENTITYARRAY];
 
 	// Precalculate the number of empty fields
@@ -2263,10 +2263,10 @@ void CSave :: BufferData( const char *pdata, int size )
 //
 // --------------------------------------------------------------
 
-int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount, int startField, int size, char *pName, void *pData )
+int CRestore::ReadField( void *pBaseData, TypeDescription *pFields, int fieldCount, int startField, int size, char *pName, void *pData )
 {
 	int i, j, stringCount, fieldNumber, entityIndex;
-	TYPEDESCRIPTION *pTest;
+	TypeDescription *pTest;
 	float	time, timeData;
 	Vector	position;
 	edict_t	*pent;
@@ -2435,7 +2435,7 @@ int CRestore::ReadEntVars( const char *pname, entvars_t *pev )
 }
 
 
-int CRestore::ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount )
+int CRestore::ReadFields( const char *pname, void *pBaseData, TypeDescription *pFields, int fieldCount )
 {
 	unsigned short	i, token;
 	int		lastField, fileCount;

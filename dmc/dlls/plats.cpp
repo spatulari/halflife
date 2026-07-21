@@ -42,14 +42,14 @@ public:
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	BYTE	m_bMoveSnd;			// sound a plat makes while moving
 	BYTE	m_bStopSnd;			// sound a plat makes when it stops
 	float	m_volume;			// Sound volume
 };
 
-TYPEDESCRIPTION	CBasePlatTrain::m_SaveData[] = 
+TypeDescription	CBasePlatTrain::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBasePlatTrain, m_bMoveSnd, FIELD_CHARACTER ),
 	DEFINE_FIELD( CBasePlatTrain, m_bStopSnd, FIELD_CHARACTER ),
@@ -526,12 +526,12 @@ public:
 	void			RotMove( Vector &destAngle, float time );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	Vector	m_end, m_start;
 };
 LINK_ENTITY_TO_CLASS( func_platrot, CFuncPlatRot );
-TYPEDESCRIPTION	CFuncPlatRot::m_SaveData[] = 
+TypeDescription	CFuncPlatRot::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncPlatRot, m_end, FIELD_VECTOR ),
 	DEFINE_FIELD( CFuncPlatRot, m_start, FIELD_VECTOR ),
@@ -642,7 +642,7 @@ public:
 	void EXPORT Next( void );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	entvars_t	*m_pevCurrentTarget;
 	int			m_sounds;
@@ -650,7 +650,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( func_train, CFuncTrain );
-TYPEDESCRIPTION	CFuncTrain::m_SaveData[] = 
+TypeDescription	CFuncTrain::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTrain, m_sounds, FIELD_INTEGER ),
 	DEFINE_FIELD( CFuncTrain, m_pevCurrentTarget, FIELD_EVARS ),
@@ -935,7 +935,7 @@ void CFuncTrain::OverrideReset( void )
 //
 // ---------------------------------------------------------------------
 
-TYPEDESCRIPTION	CFuncTrackTrain::m_SaveData[] = 
+TypeDescription	CFuncTrackTrain::m_SaveData[] = 
 {
 	DEFINE_FIELD( CFuncTrackTrain, m_ppath, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CFuncTrackTrain, m_length, FIELD_FLOAT ),
@@ -1642,7 +1642,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	virtual void	OverrideReset( void );
 
@@ -1661,7 +1661,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( func_trackchange, CFuncTrackChange );
 
-TYPEDESCRIPTION	CFuncTrackChange::m_SaveData[] = 
+TypeDescription	CFuncTrackChange::m_SaveData[] = 
 {
 	DEFINE_GLOBAL_FIELD( CFuncTrackChange, m_trackTop, FIELD_CLASSPTR ),
 	DEFINE_GLOBAL_FIELD( CFuncTrackChange, m_trackBottom, FIELD_CLASSPTR ),
@@ -2123,7 +2123,7 @@ public:
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 private:
 	BOOL			m_on;
@@ -2132,7 +2132,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( func_guntarget, CGunTarget );
 
-TYPEDESCRIPTION	CGunTarget::m_SaveData[] = 
+TypeDescription	CGunTarget::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGunTarget, m_on, FIELD_BOOLEAN ),
 };

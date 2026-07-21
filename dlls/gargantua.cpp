@@ -241,7 +241,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	CUSTOM_SCHEDULES;
 
@@ -274,7 +274,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( monster_gargantua, CGargantua );
 
-TYPEDESCRIPTION	CGargantua::m_SaveData[] = 
+TypeDescription	CGargantua::m_SaveData[] = 
 {
 	DEFINE_FIELD( CGargantua, m_pEyeGlow, FIELD_CLASSPTR ),
 	DEFINE_FIELD( CGargantua, m_eyeBrightness, FIELD_INTEGER ),

@@ -102,7 +102,7 @@ public:
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	static const char *pAttackHitSounds[];
 	static const char *pAttackMissSounds[];
@@ -124,7 +124,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( monster_alien_grunt, CAGrunt );
 
-TYPEDESCRIPTION	CAGrunt::m_SaveData[] = 
+TypeDescription	CAGrunt::m_SaveData[] = 
 {
 	DEFINE_FIELD( CAGrunt, m_fCanHornetAttack, FIELD_BOOLEAN ),
 	DEFINE_FIELD( CAGrunt, m_flNextHornetAttackCheck, FIELD_TIME ),

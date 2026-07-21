@@ -45,7 +45,7 @@ public:
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	float m_flAltitude;
 	float m_flKillVictimTime;
@@ -56,7 +56,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS( monster_barnacle, CBarnacle );
 
-TYPEDESCRIPTION	CBarnacle::m_SaveData[] = 
+TypeDescription	CBarnacle::m_SaveData[] = 
 {
 	DEFINE_FIELD( CBarnacle, m_flAltitude, FIELD_FLOAT ),
 	DEFINE_FIELD( CBarnacle, m_flKillVictimTime, FIELD_TIME ),

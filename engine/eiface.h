@@ -379,6 +379,7 @@ SAVERESTOREDATA
 #endif
 ;
 
+// IMPORTANT: Don't refactor. Except if you have hours to waste
 typedef enum _fieldtypes
 {
 	FIELD_FLOAT = 0,		// Any floating point value
@@ -417,21 +418,23 @@ typedef enum _fieldtypes
 
 #define FTYPEDESC_GLOBAL			0x0001		// This field is masked for global entity save/restore
 
-typedef struct 
+/// @todo doc comments & get rid of hungarian notation
+struct TypeDescription
 {
 	FIELDTYPE		fieldType;
 	char			*fieldName;
 	int				fieldOffset;
 	short			fieldSize;
 	short			flags;
-} TYPEDESCRIPTION;
+};
 
 #ifndef ARRAYSIZE
 #define ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
 #endif // ARRAYSIZE
 
 
-typedef struct 
+/// @todo doc comments & get rid of hungarian notation
+struct DLLFunctions
 {
 	// Initialize/shutdown the game (one-time call after loading of game .dll )
 	void			(*pfnGameInit)			( void );				
@@ -445,8 +448,8 @@ typedef struct
 	int 			(*pfnRestore)			( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity );
 	void			(*pfnSetAbsBox)			( edict_t *pent );
 
-	void			(*pfnSaveWriteFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
-	void			(*pfnSaveReadFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
+	void			(*pfnSaveWriteFields)	( SAVERESTOREDATA *, const char *, void *, TypeDescription *, int );
+	void			(*pfnSaveReadFields)	( SAVERESTOREDATA *, const char *, void *, TypeDescription *, int );
 
 	void			(*pfnSaveGlobalState)		( SAVERESTOREDATA * );
 	void			(*pfnRestoreGlobalState)	( SAVERESTOREDATA * );
@@ -461,14 +464,14 @@ typedef struct
 	void			(*pfnClientUserInfoChanged)( edict_t *pEntity, char *infobuffer );
 
 	void			(*pfnServerActivate)	( edict_t *pEdictList, int edictCount, int clientMax );
-	void			(*pfnServerDeactivate)	( void );
+	void			(*pfnServerDeactivate)	();
 
 	void			(*pfnPlayerPreThink)	( edict_t *pEntity );
 	void			(*pfnPlayerPostThink)	( edict_t *pEntity );
 
-	void			(*pfnStartFrame)		( void );
-	void			(*pfnParmsNewLevel)		( void );
-	void			(*pfnParmsChangeLevel)	( void );
+	void			(*pfnStartFrame)		();
+	void			(*pfnParmsNewLevel)		();
+	void			(*pfnParmsChangeLevel)	();
 
 	 // Returns string describing current .dll.  E.g., TeamFotrress 2, Half-Life
 	const char     *(*pfnGetGameDescription)( void );     
@@ -516,9 +519,9 @@ typedef struct
 	// Most games right now should return 0, until client-side weapon prediction code is written
 	//  and tested for them.
 	int				(*pfnAllowLagCompensation)( void );
-} DLL_FUNCTIONS;
+};
 
-extern DLL_FUNCTIONS		gEntityInterface;
+extern DLLFunctions		gEntityInterface;
 
 // Current version.
 #define NEW_DLL_FUNCTIONS_VERSION	1
@@ -538,7 +541,7 @@ typedef int	(*NEW_DLL_FUNCTIONS_FN)( NEW_DLL_FUNCTIONS *pFunctionTable, int *int
 // Pointers will be nullptr if the game DLL doesn't support this API.
 extern NEW_DLL_FUNCTIONS	gNewDLLFunctions;
 
-typedef int	(*APIFUNCTION)( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
-typedef int	(*APIFUNCTION2)( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+typedef int	(*APIFUNCTION)( DLLFunctions *pFunctionTable, int interfaceVersion );
+typedef int	(*APIFUNCTION2)( DLLFunctions *pFunctionTable, int *interfaceVersion );
 
 #endif EIFACE_H

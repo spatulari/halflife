@@ -105,7 +105,7 @@ public:
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	CUSTOM_SCHEDULES;
 
@@ -117,7 +117,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( monster_scientist, CScientist );
 
-TYPEDESCRIPTION	CScientist::m_SaveData[] = 
+TypeDescription	CScientist::m_SaveData[] = 
 {
 	DEFINE_FIELD( CScientist, m_painTime, FIELD_TIME ),
 	DEFINE_FIELD( CScientist, m_healTime, FIELD_TIME ),
@@ -1199,7 +1199,7 @@ public:
 	int	Classify ( void );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	static	TypeDescription m_SaveData[];
 
 	virtual void SetAnswerQuestion( CTalkMonster *pSpeaker );
 	int FriendNumber( int arrayNumber );
@@ -1211,7 +1211,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( monster_sitting_scientist, CSittingScientist );
-TYPEDESCRIPTION	CSittingScientist::m_SaveData[] = 
+TypeDescription	CSittingScientist::m_SaveData[] = 
 {
 	// Don't need to save/restore m_baseSequence (recalced)
 	DEFINE_FIELD( CSittingScientist, m_headTurn, FIELD_INTEGER ),

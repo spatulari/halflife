@@ -86,7 +86,7 @@ public:
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
-	static TYPEDESCRIPTION m_SaveData[];
+	static TypeDescription m_SaveData[];
 
 	float m_flLastShot;
 	float m_flDiviation;
@@ -107,7 +107,7 @@ public:
 LINK_ENTITY_TO_CLASS( monster_human_assassin, CHAssassin );
 
 
-TYPEDESCRIPTION	CHAssassin::m_SaveData[] = 
+TypeDescription	CHAssassin::m_SaveData[] = 
 {
 	DEFINE_FIELD( CHAssassin, m_flLastShot, FIELD_TIME ),
 	DEFINE_FIELD( CHAssassin, m_flDiviation, FIELD_FLOAT ),
