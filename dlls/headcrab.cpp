@@ -156,7 +156,7 @@ const char *CHeadCrab::pBiteSounds[] =
 //=========================================================
 int	CHeadCrab :: Classify ( void )
 {
-	return	CLASS_ALIEN_PREY;
+	return	static_cast<int>(EntityClass::AlienPrey);
 }
 
 //=========================================================

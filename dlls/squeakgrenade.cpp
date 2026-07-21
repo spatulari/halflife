@@ -94,7 +94,7 @@ int CSqueakGrenade :: Classify ( void )
 
 	if (m_hEnemy != nullptr)
 	{
-		m_iMyClass = CLASS_INSECT; // no one cares about it
+		m_iMyClass = static_cast<int>(EntityClass::Insect); // no one cares about it
 		switch( m_hEnemy->Classify( ) )
 		{
 			case EntityClass::Player:

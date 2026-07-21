@@ -42,7 +42,7 @@ LINK_ENTITY_TO_CLASS( monster_rat, CRat );
 //=========================================================
 int	CRat :: Classify ( void )
 {
-	return	CLASS_INSECT;
+	return	static_cast<int>(EntityClass::Insect);
 }
 
 //=========================================================

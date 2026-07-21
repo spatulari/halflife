@@ -75,7 +75,7 @@ int CRoach :: ISoundMask ( void )
 //=========================================================
 int	CRoach :: Classify ( void )
 {
-	return CLASS_INSECT;
+	return static_cast<int>(EntityClass::Insect);
 }
 
 //=========================================================

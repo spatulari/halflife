@@ -425,7 +425,7 @@ int CBullsquid :: ISoundMask ( void )
 //=========================================================
 int	CBullsquid :: Classify ( void )
 {
-	return	CLASS_ALIEN_PREDATOR;
+	return	static_cast<int>(EntityClass::AlienPredator); // TODO-003
 }
 
 //=========================================================

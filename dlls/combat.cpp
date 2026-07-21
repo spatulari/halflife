@@ -257,10 +257,11 @@ BOOL CBaseMonster :: HasHumanGibs( void )
 {
 	int myClass = Classify();
 
-	if ( myClass == CLASS_HUMAN_MILITARY ||
-		 myClass == EntityClass::Player_ALLY	||
-		 myClass == CLASS_HUMAN_PASSIVE  ||
-		 myClass == EntityClass::Player )
+	// TODO-003
+	if ( myClass == static_cast<int>(EntityClass::HumanMilitary) ||
+		 myClass == static_cast<int>(EntityClass::PlayerAlly) ||
+		 myClass == static_cast<int>(EntityClass::HumanPassive) ||
+		 myClass == static_cast<int>(EntityClass::Player) )
 
 		 return TRUE;
 
@@ -272,12 +273,13 @@ BOOL CBaseMonster :: HasAlienGibs( void )
 {
 	int myClass = Classify();
 
-	if ( myClass == CLASS_ALIEN_MILITARY ||
-		 myClass == EntityClass::AlienMonster	||
-		 myClass == CLASS_ALIEN_PASSIVE  ||
-		 myClass == CLASS_INSECT  ||
-		 myClass == CLASS_ALIEN_PREDATOR  ||
-		 myClass == CLASS_ALIEN_PREY )
+	// TODO-003
+	if ( myClass == static_cast<int>(EntityClass::AlienMilitary) ||
+		 myClass == static_cast<int>(EntityClass::AlienMonster)	||
+		 myClass == static_cast<int>(EntityClass::AlienPassive)  ||
+		 myClass == static_cast<int>(EntityClass::Insect)  ||
+		 myClass == static_cast<int>(EntityClass::AlienPredator)  ||
+		 myClass == static_cast<int>(EntityClass::AlienPrey) )
 
 		 return TRUE;
 
@@ -1060,7 +1062,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
 			// UNDONE: this should check a damage mask, not an ignore
-			if ( iClassIgnore != EntityClass::None && pEntity->Classify() == iClassIgnore )
+			if ( iClassIgnore != static_cast<int>(EntityClass::None) && pEntity->Classify() == iClassIgnore ) // TODO-003
 			{// houndeyes don't hurt other houndeyes with their attack
 				continue;
 			}

@@ -157,7 +157,7 @@ const char *CController::pDeathSounds[] =
 //=========================================================
 int	CController :: Classify ( void )
 {
-	return	CLASS_ALIEN_MILITARY;
+	return static_cast<int>(EntityClass::AlienMilitary);
 }
 
 //=========================================================

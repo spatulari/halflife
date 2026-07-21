@@ -91,7 +91,7 @@ void CCrossbowBolt::Precache( )
 
 int	CCrossbowBolt :: Classify ( void )
 {
-	return	EntityClass::None;
+	return	static_cast<int>(EntityClass::None);
 }
 
 void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
