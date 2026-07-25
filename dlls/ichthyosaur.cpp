@@ -327,7 +327,7 @@ IMPLEMENT_CUSTOM_SCHEDULES(CIchthyosaur, CFlyingMonster);
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CIchthyosaur :: Classify ( void )
+EntityClass	CIchthyosaur :: Classify ()
 {
 	return	EntityClass::AlienMonster;
 }

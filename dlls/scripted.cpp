@@ -1227,7 +1227,7 @@ class CFurniture : public CBaseMonster
 public:
 	void Spawn ( void );
 	void Die( void );
-	int	 Classify ( void );
+	EntityClass Classify();
 	virtual int	ObjectCaps( void ) { return (CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 };
 
@@ -1273,7 +1273,7 @@ void CFurniture :: Spawn( )
 //=========================================================
 // ID's Furniture as neutral (noone will attack it)
 //=========================================================
-int CFurniture::Classify ( void )
+EntityClass CFurniture::Classify()
 {
 	return	EntityClass::None;
 }

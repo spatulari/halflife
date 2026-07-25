@@ -32,7 +32,7 @@ public:
 	void Spawn( void );
 	void Precache( void );
 	void SetYawSpeed( void );
-	int  Classify ( void );
+	EntityClass Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	int ISoundMask ( void );
 
@@ -66,7 +66,7 @@ IMPLEMENT_SAVERESTORE( CGMan, CBaseMonster );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CGMan :: Classify ( void )
+EntityClass CGMan :: Classify ()
 {
 	return	EntityClass::None;
 }

@@ -70,7 +70,7 @@ public:
 	void Precache( void );
 
 	void SetYawSpeed( void );
-	int  Classify ( void );
+	EntityClass Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	void RunTask( Task_t *pTask );
 	void StartTask( Task_t *pTask );
@@ -599,9 +599,9 @@ void CScientist :: RunTask( Task_t *pTask )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CScientist :: Classify ( void )
+EntityClass CScientist :: Classify ()
 {
-	return	CLASS_HUMAN_PASSIVE;
+	return	EntityClass::HumanPassive;
 }
 
 
@@ -1115,7 +1115,7 @@ class CDeadScientist : public CBaseMonster
 {
 public:
 	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_HUMAN_PASSIVE; }
+	EntityClass Classify ( void ) { return	EntityClass::HumanPassive; }
 
 	// passed into Precache which is non-const
 	char* GetScientistModel() const;
@@ -1196,7 +1196,7 @@ public:
 	void  Precache( void );
 
 	void EXPORT SittingThink( void );
-	int	Classify ( void );
+	EntityClass	Classify ();
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	static	TypeDescription m_SaveData[];
@@ -1282,9 +1282,9 @@ void CSittingScientist :: Precache( void )
 //=========================================================
 // ID as a passive human
 //=========================================================
-int	CSittingScientist :: Classify ( void )
+EntityClass	CSittingScientist :: Classify ()
 {
-	return	CLASS_HUMAN_PASSIVE;
+	return	EntityClass::HumanPassive;
 }
 
 

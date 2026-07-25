@@ -48,7 +48,7 @@ public:
 
 	float	m_flLastLightLevel;
 	float	m_flNextSmellTime;
-	int		Classify ( void );
+	EntityClass	Classify ();
 	void	Look ( int iDistance );
 	int		ISoundMask ( void );
 	
@@ -73,9 +73,9 @@ int CRoach :: ISoundMask ( void )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CRoach :: Classify ( void )
+EntityClass CRoach :: Classify ()
 {
-	return static_cast<int>(EntityClass::Insect);
+	return EntityClass::Insect;
 }
 
 //=========================================================

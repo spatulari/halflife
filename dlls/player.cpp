@@ -1782,7 +1782,7 @@ void CBasePlayer::Duck( )
 //
 // ID's player as such.
 //
-int  CBasePlayer::Classify ( void )
+EntityClass  CBasePlayer::Classify ()
 {
 	return EntityClass::Player;
 }
@@ -4869,7 +4869,7 @@ class CDeadHEV : public CBaseMonster
 {
 public:
 	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_HUMAN_MILITARY; }
+	EntityClass	Classify () { return EntityClass::HumanMilitary; }
 
 	void KeyValue( KeyValueData *pkvd );
 

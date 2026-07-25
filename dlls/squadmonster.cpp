@@ -308,7 +308,7 @@ int CSquadMonster :: SquadCount( void )
 int CSquadMonster :: SquadRecruit( int searchRadius, int maxMembers )
 {
 	int squadCount;
-	int iMyClass = Classify();// cache this monster's class
+	EntityClass iMyClass = Classify(); // cache this monster's class
 
 
 	// Don't recruit if I'm already in a group
@@ -334,7 +334,7 @@ int CSquadMonster :: SquadRecruit( int searchRadius, int maxMembers )
 
 			if ( pRecruit )
 			{
-				if ( !pRecruit->InSquad() && pRecruit->Classify() == iMyClass && pRecruit != this )
+				if ( !pRecruit->InSquad() && pRecruit->Classify() == iMyClass && pRecruit != this ) 
 				{
 					// minimum protection here against user error.in worldcraft. 
 					if (!SquadAdd( pRecruit ))
@@ -360,7 +360,7 @@ int CSquadMonster :: SquadRecruit( int searchRadius, int maxMembers )
 				    FStringNull( pRecruit->pev->netname ) )
 				{
 					TraceResult tr;
-					UTIL_TraceLine( pev->origin + pev->view_ofs, pRecruit->pev->origin + pev->view_ofs, ignore_monsters, pRecruit->edict(), &tr );// try to hit recruit with a traceline.
+					UTIL_TraceLine( pev->origin + pev->view_ofs, pRecruit->pev->origin + pev->view_ofs, ignore_monsters, pRecruit->edict(), &tr ); // try to hit recruit with a traceline.
 					if ( tr.flFraction == 1.0 )
 					{
 						if (!SquadAdd( pRecruit ))

@@ -35,7 +35,7 @@ public:
 	void Spawn( void );
 	void Precache( void );
 	void SetYawSpeed( void );
-	int  Classify ( void );
+	EntityClass  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 
 	void PainSound( void );
@@ -55,7 +55,7 @@ LINK_ENTITY_TO_CLASS( monster_bloater, CBloater );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CBloater :: Classify ( void )
+EntityClass	CBloater :: Classify ()
 {
 	return	EntityClass::AlienMonster;
 }

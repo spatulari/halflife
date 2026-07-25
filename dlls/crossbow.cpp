@@ -36,7 +36,7 @@ class CCrossbowBolt : public CBaseEntity
 {
 	void Spawn( void );
 	void Precache( void );
-	int  Classify ( void );
+	EntityClass Classify();
 	void EXPORT BubbleThink( void );
 	void EXPORT BoltTouch( CBaseEntity *pOther );
 	void EXPORT ExplodeThink( void );
@@ -89,9 +89,9 @@ void CCrossbowBolt::Precache( )
 }
 
 
-int	CCrossbowBolt :: Classify ( void )
+EntityClass	CCrossbowBolt :: Classify ()
 {
-	return	static_cast<int>(EntityClass::None);
+	return	EntityClass::None;
 }
 
 void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )

@@ -883,7 +883,7 @@ float CBaseMonster :: DamageForce( float damage )
 // only damage ents that can clearly be seen by the explosion!
 
 	
-void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, EntityClass iClassIgnore, int bitsDamageType )
+void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType )
 {
 	CBaseEntity *pEntity = nullptr;
 	TraceResult	tr;
@@ -908,7 +908,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
 			// UNDONE: this should check a damage mask, not an ignore
-			if ( iClassIgnore != EntityClass::None && pEntity->Classify() == iClassIgnore )
+			if ( iClassIgnore != CLASS_NONE && pEntity->Classify() == iClassIgnore )
 			{// houndeyes don't hurt other houndeyes with their attack
 				continue;
 			}

@@ -46,7 +46,7 @@ class CSqueakGrenade : public CGrenade
 {
 	void Spawn( void );
 	void Precache( void );
-	int  Classify( void );
+	EntityClass Classify();
 	void EXPORT SuperBounceTouch( CBaseEntity *pOther );
 	void EXPORT HuntThink( void );
 	int  BloodColor( void ) { return BLOOD_COLOR_YELLOW; }
@@ -67,7 +67,7 @@ class CSqueakGrenade : public CGrenade
 	float m_flNextHit;
 	Vector m_posPrev;
 	EHANDLE m_hOwner;
-	int  m_iMyClass;
+	EntityClass m_iMyClass; // needs renaming
 };
 
 float CSqueakGrenade::m_flNextBounceSoundTime = 0;
@@ -87,26 +87,26 @@ IMPLEMENT_SAVERESTORE( CSqueakGrenade, CGrenade );
 
 #define SQUEEK_DETONATE_DELAY	15.0
 
-int CSqueakGrenade :: Classify ( void )
+EntityClass CSqueakGrenade :: Classify ()
 {
-	if (m_iMyClass != 0)
+	if (m_iMyClass != EntityClass::None)
 		return m_iMyClass; // protect against recursion
 
 	if (m_hEnemy != nullptr)
 	{
-		m_iMyClass = static_cast<int>(EntityClass::Insect); // no one cares about it
+		m_iMyClass = EntityClass::Insect; // no one cares about it
 		switch( m_hEnemy->Classify( ) )
 		{
 			case EntityClass::Player:
-			case CLASS_HUMAN_PASSIVE:
-			case CLASS_HUMAN_MILITARY:
-				m_iMyClass = 0;
-				return CLASS_ALIEN_MILITARY; // barney's get mad, grunts get mad at it
+			case EntityClass::HumanPassive:
+			case EntityClass::HumanMilitary:
+				m_iMyClass = EntityClass::None;
+				return EntityClass::AlienMilitary; // barney's get mad, grunts get mad at it
 		}
-		m_iMyClass = 0;
+		m_iMyClass = EntityClass::None;
 	}
 
-	return CLASS_ALIEN_BIOWEAPON;
+	return EntityClass::AlienBioweapon;
 }
 
 void CSqueakGrenade :: Spawn( void )

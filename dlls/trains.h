@@ -140,7 +140,7 @@ public:
 	void EXPORT DeadEnd( void );
 
 	void		NextThink( float thinkTime, BOOL alwaysThink );
-	int			Classify (void);
+	EntityClass Classify();
 	void		CollisionDetection(void);
 	void		TerrainFollowing(void);
 	void		CheckTurning(void);

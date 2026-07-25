@@ -425,7 +425,7 @@ int CBullsquid :: ISoundMask ( void )
 //=========================================================
 EntityClass	CBullsquid :: Classify ()
 {
-	EntityClass::AlienPredator;
+	return EntityClass::AlienPredator;
 }
 
 //=========================================================
