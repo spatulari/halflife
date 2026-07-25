@@ -46,7 +46,7 @@ class CSqueakGrenade : public CGrenade
 {
 	void Spawn( void );
 	void Precache( void );
-	int  Classify( void );
+	EntityClass Classify();
 	void EXPORT SuperBounceTouch( CBaseEntity *pOther );
 	void EXPORT HuntThink( void );
 	int  BloodColor( void ) { return BLOOD_COLOR_YELLOW; }
@@ -67,7 +67,7 @@ class CSqueakGrenade : public CGrenade
 	float m_flNextHit;
 	Vector m_posPrev;
 	EHANDLE m_hOwner;
-	int  m_iMyClass;
+	EntityClass m_iMyClass; // needs renaming
 };
 
 float CSqueakGrenade::m_flNextBounceSoundTime = 0;
@@ -87,26 +87,26 @@ IMPLEMENT_SAVERESTORE( CSqueakGrenade, CGrenade );
 
 #define SQUEEK_DETONATE_DELAY	15.0
 
-int CSqueakGrenade :: Classify ( void )
+EntityClass CSqueakGrenade :: Classify ()
 {
-	if (m_iMyClass != 0)
+	if (m_iMyClass != EntityClass::None)
 		return m_iMyClass; // protect against recursion
 
 	if (m_hEnemy != nullptr)
 	{
-		m_iMyClass = CLASS_INSECT; // no one cares about it
+		m_iMyClass = EntityClass::Insect; // no one cares about it
 		switch( m_hEnemy->Classify( ) )
 		{
-			case CLASS_PLAYER:
-			case CLASS_HUMAN_PASSIVE:
-			case CLASS_HUMAN_MILITARY:
-				m_iMyClass = 0;
-				return CLASS_ALIEN_MILITARY; // barney's get mad, grunts get mad at it
+			case EntityClass::Player:
+			case EntityClass::HumanPassive:
+			case EntityClass::HumanMilitary:
+				m_iMyClass = EntityClass::None;
+				return EntityClass::AlienMilitary; // barney's get mad, grunts get mad at it
 		}
-		m_iMyClass = 0;
+		m_iMyClass = EntityClass::None;
 	}
 
-	return CLASS_ALIEN_BIOWEAPON;
+	return EntityClass::AlienBioweapon;
 }
 
 void CSqueakGrenade :: Spawn( void )
@@ -179,9 +179,9 @@ void CSqueakGrenade :: Killed( entvars_t *pevAttacker, int iGib )
 	UTIL_BloodDrips( pev->origin, g_vecZero, BloodColor(), 80 );
 
 	if (m_hOwner != nullptr)
-		RadiusDamage ( pev, m_hOwner->pev, pev->dmg, CLASS_NONE, DMG_BLAST );
+		RadiusDamage ( pev, m_hOwner->pev, pev->dmg, EntityClass::None, DMG_BLAST );
 	else
-		RadiusDamage ( pev, pev, pev->dmg, CLASS_NONE, DMG_BLAST );
+		RadiusDamage ( pev, pev, pev->dmg, EntityClass::None, DMG_BLAST );
 
 	// reset owner so death message happens
 	if (m_hOwner != nullptr)

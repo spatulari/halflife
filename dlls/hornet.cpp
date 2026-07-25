@@ -151,15 +151,15 @@ int CHornet::IRelationship ( CBaseEntity *pTarget )
 //=========================================================
 // ID's Hornet as their owner
 //=========================================================
-int CHornet::Classify ( void )
+EntityClass CHornet::Classify ()
 {
 
 	if ( pev->owner && pev->owner->v.flags & FL_CLIENT)
 	{
-		return CLASS_PLAYER_BIOWEAPON;
+		return EntityClass::PlayerBioweapon;
 	}
 
-	return	CLASS_ALIEN_BIOWEAPON;
+	return	EntityClass::AlienBioweapon;
 }
 
 //=========================================================

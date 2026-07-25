@@ -55,7 +55,7 @@ public:
 	void  Spawn( void );
 	void  Precache( void );
 	void  SetYawSpeed( void );
-	int   Classify( void );
+	EntityClass Classify();
 	void  HandleAnimEvent( MonsterEvent_t *pEvent );
 	CUSTOM_SCHEDULES;
 
@@ -327,9 +327,9 @@ IMPLEMENT_CUSTOM_SCHEDULES(CIchthyosaur, CFlyingMonster);
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CIchthyosaur :: Classify ( void )
+EntityClass	CIchthyosaur :: Classify ()
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 

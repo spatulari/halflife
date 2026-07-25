@@ -74,7 +74,7 @@ public:
 	void Spawn( void );
 	void Precache( void );
 	void SetYawSpeed ( void );
-	int  Classify ( void );
+	EntityClass  Classify ();
 	int  ISoundMask ( void );
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	void SetObjectCollisionBox( void )
@@ -383,9 +383,9 @@ void CAGrunt :: PainSound ( void )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CAGrunt :: Classify ( void )
+EntityClass	CAGrunt :: Classify ( void )
 {
-	return	CLASS_ALIEN_MILITARY;
+	return	EntityClass::AlienMilitary;
 }
 
 //=========================================================

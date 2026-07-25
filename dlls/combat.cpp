@@ -255,12 +255,12 @@ void CGib :: SpawnRandomGibs( entvars_t *pevVictim, int cGibs, int human )
 
 BOOL CBaseMonster :: HasHumanGibs( void )
 {
-	int myClass = Classify();
+	EntityClass myClass = Classify();
 
-	if ( myClass == CLASS_HUMAN_MILITARY ||
-		 myClass == CLASS_PLAYER_ALLY	||
-		 myClass == CLASS_HUMAN_PASSIVE  ||
-		 myClass == CLASS_PLAYER )
+	if ( myClass == EntityClass::HumanMilitary ||
+		 myClass == EntityClass::PlayerAlly ||
+		 myClass == EntityClass::HumanPassive ||
+		 myClass == EntityClass::Player )
 
 		 return TRUE;
 
@@ -270,14 +270,14 @@ BOOL CBaseMonster :: HasHumanGibs( void )
 
 BOOL CBaseMonster :: HasAlienGibs( void )
 {
-	int myClass = Classify();
+	EntityClass myClass = Classify();
 
-	if ( myClass == CLASS_ALIEN_MILITARY ||
-		 myClass == CLASS_ALIEN_MONSTER	||
-		 myClass == CLASS_ALIEN_PASSIVE  ||
-		 myClass == CLASS_INSECT  ||
-		 myClass == CLASS_ALIEN_PREDATOR  ||
-		 myClass == CLASS_ALIEN_PREY )
+	if ( myClass == EntityClass::AlienMilitary ||
+		 myClass == EntityClass::AlienMonster ||
+		 myClass == EntityClass::AlienPassive  ||
+		 myClass == EntityClass::Insect  ||
+		 myClass == EntityClass::AlienPredator ||
+		 myClass == EntityClass::AlienPrey )
 
 		 return TRUE;
 
@@ -1035,7 +1035,7 @@ float CBaseMonster :: DamageForce( float damage )
 // only damage ents that can clearly be seen by the explosion!
 
 	
-void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType )
+void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, EntityClass iClassIgnore, int bitsDamageType )
 {
 	CBaseEntity *pEntity = nullptr;
 	TraceResult	tr;
@@ -1060,7 +1060,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
 			// UNDONE: this should check a damage mask, not an ignore
-			if ( iClassIgnore != CLASS_NONE && pEntity->Classify() == iClassIgnore )
+			if ( iClassIgnore != EntityClass::None && pEntity->Classify() == iClassIgnore )
 			{// houndeyes don't hurt other houndeyes with their attack
 				continue;
 			}
@@ -1110,13 +1110,13 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 }
 
 
-void CBaseMonster :: RadiusDamage(entvars_t* pevInflictor, entvars_t*	pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType )
+void CBaseMonster :: RadiusDamage(entvars_t* pevInflictor, entvars_t*	pevAttacker, float flDamage, EntityClass iClassIgnore, int bitsDamageType )
 {
 	::RadiusDamage( pev->origin, pevInflictor, pevAttacker, flDamage, flDamage * 2.5, iClassIgnore, bitsDamageType );
 }
 
 
-void CBaseMonster :: RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType )
+void CBaseMonster :: RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, EntityClass iClassIgnore, int bitsDamageType )
 {
 	::RadiusDamage( vecSrc, pevInflictor, pevAttacker, flDamage, flDamage * 2.5, iClassIgnore, bitsDamageType );
 }

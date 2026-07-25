@@ -49,7 +49,7 @@ public:
 	int  ISoundMask( void );
 	void BarneyFirePistol( void );
 	void AlertSound( void );
-	int  Classify ( void );
+	EntityClass  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	
 	void RunTask( Task_t *pTask );
@@ -259,9 +259,9 @@ int CBarney :: ISoundMask ( void)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CBarney :: Classify ( void )
+EntityClass	CBarney :: Classify ( void )
 {
-	return	CLASS_PLAYER_ALLY;
+	return	EntityClass::PlayerAlly;
 }
 
 //=========================================================
@@ -791,7 +791,7 @@ class CDeadBarney : public CBaseMonster
 {
 public:
 	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_PLAYER_ALLY; } 
+	EntityClass	Classify ( void ) { return EntityClass::PlayerAlly; }
 
 	void KeyValue( KeyValueData *pkvd );
 

@@ -34,7 +34,7 @@ public:
 
 	void Spawn( void );
 	void Precache( void );
-	int  Classify( void ) { return CLASS_ALIEN_MILITARY; };
+	EntityClass Classify() { return EntityClass::AlienMilitary; };
 	int  BloodColor( void ) { return BLOOD_COLOR_YELLOW; }
 	void Killed( entvars_t *pevAttacker, int iGib );
 	void GibMonster( void );
@@ -1541,7 +1541,7 @@ void CNihilanthHVR::ZapTouch( CBaseEntity *pOther )
 {
 	UTIL_EmitAmbientSound( edict(), pev->origin, "weapons/electro4.wav", 1.0, ATTN_NORM, 0, RANDOM_LONG( 90, 95 ) );
 
-	RadiusDamage( pev, pev, 50, CLASS_NONE, DMG_SHOCK );
+	RadiusDamage( pev, pev, 50, EntityClass::None, DMG_SHOCK );
 	pev->velocity = pev->velocity * 0;
 
 	/*

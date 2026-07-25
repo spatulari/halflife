@@ -192,7 +192,7 @@ public:
 	BOOL ShouldGoToNode( void );
 
 	void SetYawSpeed( void );
-	int  Classify ( void );
+	EntityClass Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	void LayHeadcrab( void );
 
@@ -404,9 +404,9 @@ void CBigMomma :: KeyValue( KeyValueData *pkvd )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CBigMomma :: Classify ( void )
+EntityClass	CBigMomma :: Classify ()
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 //=========================================================
@@ -1244,7 +1244,8 @@ void CBMortar::Touch( CBaseEntity *pOther )
 	if ( pev->owner )
 		pevOwner = VARS(pev->owner);
 
-	RadiusDamage( pev->origin, pev, pevOwner, gSkillData.bigmommaDmgBlast, gSkillData.bigmommaRadiusBlast, CLASS_NONE, DMG_ACID );
+	RadiusDamage( pev->origin, pev, pevOwner, gSkillData.bigmommaDmgBlast, gSkillData.bigmommaRadiusBlast, EntityClass::None, DMG_ACID ); 
+
 	UTIL_Remove( this );
 }
 

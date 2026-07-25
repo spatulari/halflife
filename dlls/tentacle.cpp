@@ -73,7 +73,7 @@ public:
 	MONSTERSTATE GetIdealState ( void ) { return MONSTERSTATE_IDLE; };
 	int CanPlaySequence( BOOL fDisregardState ) { return TRUE; };
 
-	int Classify( void );
+	EntityClass Classify();
 
 	int Level( float dz );
 	int MyLevel( void );
@@ -239,9 +239,9 @@ typedef enum
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CTentacle :: Classify ( void )
+EntityClass	CTentacle :: Classify ()
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 //

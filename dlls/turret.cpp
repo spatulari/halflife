@@ -61,7 +61,7 @@ public:
 	
 	virtual void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
 	virtual int	 TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
-	virtual int	 Classify(void);
+	virtual EntityClass Classify();
 
 	int BloodColor( void ) { return DONT_BLEED; }
 	void GibMonster( void ) {}	// UNDONE: Throw turret gibs?
@@ -1129,11 +1129,11 @@ int CBaseTurret::MoveTurret(void)
 //
 // ID as a machine
 //
-int	CBaseTurret::Classify ( void )
+EntityClass CBaseTurret::Classify()
 {
 	if (m_iOn || m_iAutoStart)
-		return	CLASS_MACHINE;
-	return CLASS_NONE;
+		return	EntityClass::Machine;
+	return EntityClass::None;
 }
 
 

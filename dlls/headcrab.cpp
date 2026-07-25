@@ -84,9 +84,9 @@ public:
 	void PainSound( void );
 	void DeathSound( void );
 	void IdleSound( void );
-	void AlertSound( void );
+	void AlertSound( void );	
 	void PrescheduleThink( void );
-	int  Classify ( void );
+	EntityClass Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	BOOL CheckRangeAttack1 ( float flDot, float flDist );
 	BOOL CheckRangeAttack2 ( float flDot, float flDist );
@@ -154,9 +154,9 @@ const char *CHeadCrab::pBiteSounds[] =
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CHeadCrab :: Classify ( void )
+EntityClass	CHeadCrab :: Classify ()
 {
-	return	CLASS_ALIEN_PREY;
+	return	EntityClass::AlienPrey;
 }
 
 //=========================================================

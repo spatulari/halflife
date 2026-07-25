@@ -47,7 +47,7 @@ public:
 	
 	void Spawn( void );
 	void Precache( void );
-	int  Classify( void ) { return CLASS_MACHINE; };
+	EntityClass  Classify() { return EntityClass::Machine; };
 	int  BloodColor( void ) { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib );
 
@@ -685,7 +685,7 @@ void COsprey :: DyingThink( void )
 
 		EMIT_SOUND(ENT(pev), CHAN_STATIC, "weapons/mortarhit.wav", 1.0, 0.3);
 
-		RadiusDamage( pev->origin, pev, pev, 300, CLASS_NONE, DMG_BLAST );
+		RadiusDamage( pev->origin, pev, pev, 300, EntityClass::None, DMG_BLAST );
 
 		// gibs
 		vecSpot = pev->origin + (pev->mins + pev->maxs) * 0.5;

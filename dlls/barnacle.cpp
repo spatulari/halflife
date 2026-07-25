@@ -37,7 +37,7 @@ public:
 	void Spawn( void );
 	void Precache( void );
 	CBaseEntity *TongueTouchEnt ( float *pflLength );
-	int  Classify ( void );
+	EntityClass  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	void EXPORT BarnacleThink ( void );
 	void EXPORT WaitTillDead ( void );
@@ -73,9 +73,9 @@ IMPLEMENT_SAVERESTORE( CBarnacle, CBaseMonster );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CBarnacle :: Classify ( void )
+EntityClass	CBarnacle :: Classify ( void )
 {
-	return	CLASS_ALIEN_MONSTER;
+	return	EntityClass::AlienMonster;
 }
 
 //=========================================================

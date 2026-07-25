@@ -147,7 +147,7 @@ float EV_HLDM_PlayTextureSound( int idx, pmtrace_t *ptr, float *vecSrc, float *v
 		// JoshA: Look up the entity and find the EFLAG_FLESH_SOUND flag.
 		// This broke at some point then TF:C added prediction.
 		//
-		// It used to use Classify of pEntity->Classify() != CLASS_NONE && pEntity->Classify() != CLASS_MACHINE
+		// It used to use Classify of pEntity->Classify() != EntityClass::None && pEntity->Classify() != CLASS_MACHINE
 		// to determine what sound to play, but that's server side and isn't available on the client
 		// and got lost in the translation to that.
 		// Now the server will replicate that state via an eflag.

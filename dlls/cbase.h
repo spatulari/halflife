@@ -39,7 +39,7 @@
 
 #define		MAX_PATH_SIZE	10 // max number of nodes available for a path.
 
-// These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
+ // These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
 #define		FCAP_CUSTOMSAVE				0x00000001
 #define		FCAP_ACROSS_TRANSITION		0x00000002		// should transfer between transitions
 #define		FCAP_MUST_SPAWN				0x00000004		// Spawn after restore
@@ -103,24 +103,70 @@ typedef void (CBaseEntity::* BASEPTR)(void);
 typedef void (CBaseEntity::* ENTITYFUNCPTR)(CBaseEntity* pOther);
 typedef void (CBaseEntity::* USEPTR)(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
-// For CLASSIFY
-#define	CLASS_NONE				0
-#define CLASS_MACHINE			1
-#define CLASS_PLAYER			2
-#define	CLASS_HUMAN_PASSIVE		3
-#define CLASS_HUMAN_MILITARY	4
-#define CLASS_ALIEN_MILITARY	5
-#define CLASS_ALIEN_PASSIVE		6
-#define CLASS_ALIEN_MONSTER		7
-#define CLASS_ALIEN_PREY		8
-#define CLASS_ALIEN_PREDATOR	9
-#define CLASS_INSECT			10
-#define CLASS_PLAYER_ALLY		11
-#define CLASS_PLAYER_BIOWEAPON	12 // hornets and snarks.launched by players
-#define CLASS_ALIEN_BIOWEAPON	13 // hornets and snarks.launched by the alien menace
-#define	CLASS_BARNACLE			99 // special because no one pays attention to it, and it eats a wide cross-section of creatures.
+/**
+ * @brief Entity relationship classification.
+ *
+ * Used by the AI relationship system to determine how entities perceive and
+ * react to one another. These values are returned by `Classify()` and are
+ * used when resolving friend-or-foe interactions.
+ */
+enum class EntityClass : std::uint8_t
+{
+	/** No classification. */
+	None = 0,
 
-#define CLASS_VEHICLE			14
+	/** Mechanical entities such as turrets and other machines. */
+	Machine,
+
+	/** The player. */
+	Player,
+
+	/** Passive human NPCs that are generally non-hostile. */
+	HumanPassive,
+
+	/** Human military forces. */
+	HumanMilitary,
+
+	/** Military aliens. */
+	AlienMilitary,
+
+	/** Passive alien lifeforms. */
+	AlienPassive,
+
+	/** Hostile alien monsters. */
+	AlienMonster,
+
+	/** Alien creatures typically considered prey. */
+	AlienPrey,
+
+	/** Alien predators. */
+	AlienPredator,
+
+	/** Insects and insect-like creatures. */
+	Insect,
+
+	/** Friendly NPCs allied with the player. */
+	PlayerAlly,
+
+	/** Bioweapons launched or created by the player (e.g. hornets and snarks). */
+	PlayerBioweapon,
+
+	/** Bioweapons launched or created by alien enemies. */
+	AlienBioweapon,
+
+	/** Vehicles. */
+	Vehicle = 14,
+
+	/**
+	 * @brief Barnacle.
+	 *
+	 * Special because no one pays attention to it, and it eats a wide
+	 * cross-section of creatures.
+	 *
+	 * (Original Valve comment preserved.)
+	 */
+	Barnacle = 99,
+};
 
 class CBaseEntity;
 class CBaseToggle;
@@ -276,17 +322,17 @@ public:
 	virtual void SetObjectCollisionBox();
 
 	/**
-	 * @brief Returns the entity's classification.
+	 * @brief Returns the entity's relationship classification.
 	 *
-	 * Classification identifies the entity's faction or relationship group,
-	 * allowing AI to determine allies, enemies, and neutral entities. Multiple
-	 * entity classes may share the same classification (for example, different
-	 * human soldiers all belong to the same military faction).
+	 * The classification identifies the entity's faction or relationship group,
+	 * allowing the AI relationship system to determine allies, enemies, and
+	 * neutral entities. Multiple entity types may share the same classification
+	 * (for example, different human soldiers all return
+	 * `EntityClass::HumanMilitary`). 
 	 *
-	 * @return One of the `CLASS_*` classification constants.
+	 * @return The entity's relationship classification as an `EntityClass` value.
 	 */
-	virtual int Classify() { return CLASS_NONE; }
-
+	virtual EntityClass Classify() { return EntityClass::None; }
 	/**
 	 * @brief Notifies the entity that one of its children has died.
 	 *
@@ -303,18 +349,18 @@ public:
 	static TypeDescription m_SaveData[];
 
 	/**
- * @brief Applies damage from an attack trace.
- *
- * Called when an attack intersects the entity before damage is fully
- * processed. Allows entities to modify or accumulate damage, spawn
- * effects, or determine hitgroup-specific behavior.
- *
- * @param pevAttacker The entity responsible for the attack.
- * @param flDamage Amount of incoming damage.
- * @param vecDir Direction the attack traveled.
- * @param ptr Trace result describing the impact.
- * @param bitsDamageType Bitmask of `DMG_*` damage types.
- */
+	 * @brief Applies damage from an attack trace.
+	 *
+	 * Called when an attack intersects the entity before damage is fully
+	 * processed. Allows entities to modify or accumulate damage, spawn
+	 * effects, or determine hitgroup-specific behavior.
+	 *
+	 * @param pevAttacker The entity responsible for the attack.
+	 * @param flDamage Amount of incoming damage.
+	 * @param vecDir Direction the attack traveled.
+	 * @param ptr Trace result describing the impact.
+	 * @param bitsDamageType Bitmask of `DMG_*` damage types.
+	 */
 	virtual void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
 
 	/**

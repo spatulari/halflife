@@ -46,7 +46,7 @@ public:
 	void Precache( void );
 	void SetYawSpeed( void );
 	int	 ISoundMask( void );
-	int  Classify ( void );
+	EntityClass Classify ();
 	int  IRelationship( CBaseEntity *pTarget );
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	BOOL CheckRangeAttack1 ( float flDot, float flDist );
@@ -145,9 +145,9 @@ const char *CISlave::pDeathSounds[] =
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CISlave :: Classify ( void )
+EntityClass	CISlave :: Classify ()
 {
-	return	CLASS_ALIEN_MILITARY;
+	return	EntityClass::AlienMilitary;
 }
 
 

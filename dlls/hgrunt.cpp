@@ -126,7 +126,7 @@ public:
 	void Spawn( void );
 	void Precache( void );
 	void SetYawSpeed ( void );
-	int  Classify ( void );
+	EntityClass Classify ();
 	int ISoundMask ( void );
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	BOOL FCanCheckAttacks ( void );
@@ -425,8 +425,8 @@ BOOL CHGrunt :: CheckMeleeAttack1 ( float flDot, float flDist )
 	}
 
 	if ( flDist <= 64 && flDot >= 0.7	&& 
-		 pEnemy->Classify() != CLASS_ALIEN_BIOWEAPON &&
-		 pEnemy->Classify() != CLASS_PLAYER_BIOWEAPON )
+		 pEnemy->Classify() != EntityClass::AlienBioweapon &&
+		 pEnemy->Classify() != EntityClass::PlayerBioweapon )
 	{
 		return TRUE;
 	}
@@ -738,9 +738,9 @@ void CHGrunt :: CheckAmmo ( void )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CHGrunt :: Classify ( void )
+EntityClass	CHGrunt :: Classify ()
 {
-	return	CLASS_HUMAN_MILITARY;
+	return	EntityClass::HumanMilitary;
 }
 
 //=========================================================
@@ -2069,9 +2069,9 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 								// player
 								SENTENCEG_PlayRndSz( ENT(pev), "HG_ALERT", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 							else if ((m_hEnemy != nullptr) &&
-									(m_hEnemy->Classify() != CLASS_PLAYER_ALLY) && 
-									(m_hEnemy->Classify() != CLASS_HUMAN_PASSIVE) && 
-									(m_hEnemy->Classify() != CLASS_MACHINE))
+									(m_hEnemy->Classify() != EntityClass::PlayerAlly) && 
+									(m_hEnemy->Classify() != EntityClass::HumanPassive) && 
+									(m_hEnemy->Classify() != EntityClass::Machine))
 								// monster
 								SENTENCEG_PlayRndSz( ENT(pev), "HG_MONST", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 
@@ -2438,7 +2438,7 @@ class CDeadHGrunt : public CBaseMonster
 {
 public:
 	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_HUMAN_MILITARY; }
+	EntityClass Classify() { return	EntityClass::HumanMilitary; }
 
 	void KeyValue( KeyValueData *pkvd );
 
