@@ -92,9 +92,27 @@ typedef int BOOL;
 #endif
 #endif
 
-// This is the glue that hooks .MAP entity class names to our CPP classes
-// The _declspec forces them to be exported by name so we can do a lookup with GetProcAddress()
-// The function is used to intialize / allocate the object for the entity
+/**
+ * @brief Links a BSP entity classname to its C++ implementation.
+ *
+ * Registers an exported factory function whose name matches the entity
+ * classname defined in a map. When the engine encounters an entity with
+ * this classname, it locates the exported function via `GetProcAddress()`
+ * and calls it to construct or initialize the corresponding C++ entity.
+ *
+ * The generated function simply forwards the entity's @p entvars_t pointer
+ * to GetClassPtr(), which allocates or retrieves an instance of the specified
+ * C++ class.
+ *
+ * @param mapClassName The entity classname used in the map (for example,
+ *        `monster_scientist` or `func_door`).
+ * @param DLLClassName The C++ class implementing the entity's behavior.
+ *
+ * @note The generated function is exported with C linkage to ensure the
+ *       engine can locate it by its unmangled symbol name.
+ *
+ * @see GetClassPtr
+ */
 #define LINK_ENTITY_TO_CLASS(mapClassName,DLLClassName) \
 	extern "C" UTIL_DLLEXPORT void mapClassName( entvars_t *pev ); \
 	void mapClassName( entvars_t *pev ) { GetClassPtr( (DLLClassName *)pev ); }
