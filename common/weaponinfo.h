@@ -12,41 +12,167 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined ( WEAPONINFOH )
+
+/**
+ * @file weaponinfo.h
+ * @brief Defines the shared weapon state structure used for client/server synchronization.
+ *
+ * This file contains the weapon state exchanged between the server and client
+ * prediction systems. Each weapon serializes its runtime state into a
+ * ::weapon_data_t instance to ensure consistent behavior during prediction.
+ */
+
+#if !defined(WEAPONINFOH)
 #define WEAPONINFOH
+
 #ifdef _WIN32
 #pragma once
 #endif
 
-// Info about weapons player might have in his/her possession
+ /**
+  * @brief Stores the runtime state of a weapon.
+  *
+  * This structure contains the information required to synchronize weapon
+  * behavior between the server and the client. Along with generic weapon
+  * properties such as ammunition counts and attack timers, it also provides
+  * several user-defined fields that individual weapons may use for custom
+  * state.
+  */
 typedef struct weapon_data_s
 {
-	int			m_iId;
-	int			m_iClip;
+	/// @brief Unique identifier of the weapon.
+	int m_iId;
 
-	float		m_flNextPrimaryAttack;
-	float		m_flNextSecondaryAttack;
-	float		m_flTimeWeaponIdle;
+	/// @brief Number of rounds currently loaded in the weapon's clip.
+	int m_iClip;
 
-	int			m_fInReload;
-	int			m_fInSpecialReload;
-	float		m_flNextReload;
-	float		m_flPumpTime;
-	float		m_fReloadTime;
+	/// @brief Time until the primary attack may be used again.
+	float m_flNextPrimaryAttack;
 
-	float		m_fAimedDamage;
-	float		m_fNextAimBonus;
-	int			m_fInZoom;
-	int			m_iWeaponState;
+	/// @brief Time until the secondary attack may be used again.
+	float m_flNextSecondaryAttack;
 
-	int			iuser1;
-	int			iuser2;
-	int			iuser3;
-	int			iuser4;
-	float		fuser1;
-	float		fuser2;
-	float		fuser3;
-	float		fuser4;
+	/// @brief Time until the weapon's idle animation should play.
+	float m_flTimeWeaponIdle;
+
+	/// @brief Non-zero if the weapon is currently reloading.
+	int m_fInReload;
+
+	/// @brief Non-zero if the weapon is performing a staged reload sequence.
+	int m_fInSpecialReload;
+
+	/// @brief Time until the next reload step occurs.
+	float m_flNextReload;
+
+	/// @brief Time until the next pump action occurs.
+	float m_flPumpTime;
+
+	/// @brief Remaining duration of the reload operation.
+	float m_fReloadTime;
+
+	/// @brief Current aimed damage value or multiplier used by applicable weapons.
+	float m_fAimedDamage;
+
+	/// @brief Time until the next aim bonus is applied.
+	float m_fNextAimBonus;
+
+	/// @brief Non-zero if the weapon is currently zoomed.
+	int m_fInZoom;
+
+	/// @brief Weapon-specific state flags.
+	int m_iWeaponState;
+	
+	/**
+	 * @brief General-purpose integer reserved for weapon-specific data.
+	 *
+	 * The engine does not assign any meaning to this field. Individual weapons
+	 * may use it to store custom state that needs to be synchronized between
+	 * the server and the client.
+	 *
+	 * @note For example, one weapon might use this to store its firing mode,
+	 * while another could use it as a simple state machine or animation index.
+	 */
+	int iuser1;
+
+	/**
+	 * @brief General-purpose integer reserved for weapon-specific data.
+	 *
+	 * The engine does not assign any meaning to this field. Individual weapons
+	 * may use it to store custom state that needs to be synchronized between
+	 * the server and the client.
+	 *
+	 * @note For example, one weapon might use this to store its firing mode,
+	 * while another could use it as a simple state machine or animation index.
+	 */
+	int iuser2;
+
+	/**
+	 * @brief General-purpose integer reserved for weapon-specific data.
+	 *
+	 * The engine does not assign any meaning to this field. Individual weapons
+	 * may use it to store custom state that needs to be synchronized between
+	 * the server and the client.
+	 *
+	 * @note For example, one weapon might use it to store its firing mode,
+	 * while another could use it as a simple state machine or animation index.
+	 */
+	int iuser3;
+
+	/**
+	 * @brief General-purpose integer reserved for weapon-specific data.
+	 *
+	 * The engine does not assign any meaning to this field. Individual weapons
+	 * may use it to store custom state that needs to be synchronized between
+	 * the server and the client.
+	 *
+	 * @note For example, one weapon might use it to store its firing mode,
+	 * while another could use it as a simple state machine or animation index.
+	 */
+	int iuser4;
+
+	/**
+	 * @brief General-purpose floating-point value reserved for weapon-specific data.
+	 *
+	 * Like @ref iuser1, the engine does not interpret this value. Weapons can
+	 * use it to synchronize custom floating-point data, such as timers,
+	 * cooldowns, charge levels, or other values that do not fit into the
+	 * predefined fields.
+	 */
+	float fuser1;
+
+	/**
+	 * @brief General-purpose floating-point value reserved for weapon-specific data.
+	 *
+	 * Like @ref iuser1, the engine does not interpret this value. Weapons can
+	 * use it to synchronize custom floating-point data, such as timers,
+	 * cooldowns, charge levels, or other values that do not fit into the
+	 * predefined fields.
+	 */
+	float fuser2;
+
+	/**
+	 * @brief General-purpose floating-point value reserved for weapon-specific data.
+	 *
+	 * Like @ref iuser1, the engine does not interpret this value. Weapons can
+	 * use it to synchronize custom floating-point data, such as timers,
+	 * cooldowns, charge levels, or other values that do not fit into the
+	 * predefined fields.
+	 */
+	float fuser3;
+
+	/**
+	 * @brief General-purpose floating-point value reserved for weapon-specific data.
+	 *
+	 * Like @ref iuser1, the engine does not interpret this value. Weapons can
+	 * use it to synchronize custom floating-point data, such as timers,
+	 * cooldowns, charge levels, or other values that do not fit into the
+	 * predefined fields.
+	 */
+	float fuser4;
+
+	// Had to copy the doc comments around because the 3 GB RAM hog (Visual Studio)
+	// still can't understand @copydoc. "Professional IDE" my ass.
+
 } weapon_data_t;
 
 #endif
