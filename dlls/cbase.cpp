@@ -31,7 +31,23 @@ extern Vector VecBModelOrigin( entvars_t* pevBModel );
 extern DLL_GLOBAL Vector		g_vecAttackDir;
 extern DLL_GLOBAL int			g_iSkillLevel;
 
-static DLLFunctions gFunctionTable = 
+/**
+ * @brief The engine callback function table exported by the Game DLL.
+ *
+ * This table contains pointers to every callback the GoldSrc engine may invoke
+ * during gameplay. The engine retrieves this structure through
+ * GetEntityAPI() (or GetEntityAPI2()) when the Game DLL is loaded.
+ *
+ * Each entry corresponds to a specific engine event, such as entity lifecycle,
+ * client management, player movement, networking, save/restore, or server
+ * initialization. The order of the function pointers must exactly match the
+ * layout of the DLLFunctions structure expected by the engine.
+ *
+ * @note Modifying the order of entries will break compatibility with the
+ *       GoldSrc engine, as callbacks are resolved by their position in the
+ *       structure rather than by name.
+ */
+static DLLFunctions gFunctionTable =
 {
 	GameDLLInit,				//pfnGameInit
 	DispatchSpawn,				//pfnSpawn
