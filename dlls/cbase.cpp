@@ -20,13 +20,12 @@
 #include	"decals.h"
 #include	"gamerules.h"
 #include	"game.h"
+#include    "pm_shared.h"
 
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd );
 
-// TODO: Just include pm_shared.h, but I am too scared to face potential linker errors right now
-void PM_Move(struct playermove_s* ppmove, int server);
-void PM_Init(struct playermove_s* ppmove);
-char PM_FindTextureType(char* name);
+// Past me feared linker errors.
+// Past me was wrong.
 
 extern Vector VecBModelOrigin( entvars_t* pevBModel );
 extern DLL_GLOBAL Vector		g_vecAttackDir;
