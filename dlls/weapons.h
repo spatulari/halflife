@@ -840,7 +840,7 @@ public:
 
 	void UseAmmo( int count );
 	
-	enum EGON_FIREMODE { FIRE_NARROW, FIRE_WIDE};
+	enum class EgonFireMode { Narrow, Wide};
 
 	CBeam				*m_pBeam;
 	CBeam				*m_pNoise;
@@ -859,7 +859,7 @@ public:
 
 private:
 	float				m_shootTime;
-	EGON_FIREMODE		m_fireMode;
+	EgonFireMode		m_fireMode;
 	float				m_shakeTime;
 	BOOL				m_deployed;
 

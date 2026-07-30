@@ -93,7 +93,7 @@ void CEgon::Precache( void )
 BOOL CEgon::Deploy( void )
 {
 	m_deployed = FALSE;
-	m_fireState = static_cast<int>(EgonFirestate::Off); // TODO-001
+	m_fireState = EgonFirestate::Off;
 	return DefaultDeploy( "models/v_egon.mdl", "models/p_egon.mdl", EGON_DRAW, "egon" );
 }
 
@@ -178,7 +178,7 @@ void CEgon::Attack( void )
 	if ( m_pPlayer->pev->waterlevel == 3 )
 	{
 		
-		if ( m_fireState != static_cast<int>(EgonFirestate::Off) || m_pBeam ) // TODO-001
+		if ( m_fireState != EgonFirestate::Off || m_pBeam )
 		{
 			EndAttack();
 		}
@@ -202,7 +202,7 @@ void CEgon::Attack( void )
 
 	switch( m_fireState )
 	{
-		case static_cast<int>(EgonFirestate::Off): // TODO-001
+		case EgonFirestate::Off:
 		{
 			if ( !HasAmmo() )
 			{
@@ -211,9 +211,9 @@ void CEgon::Attack( void )
 				return;
 			}
 
-			m_flAmmoUseTime = gpGlobals->time;// start using ammo ASAP.
+			m_flAmmoUseTime = gpGlobals->time; // start using ammo ASAP.
 
-			PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usEgonFire, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, m_fireState, m_fireMode, 1, 0 );
+			PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usEgonFire, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, static_cast<int>(m_fireState), static_cast<int>(m_fireMode), 1, 0 );
 						
 			m_shakeTime = 0;
 
@@ -222,18 +222,18 @@ void CEgon::Attack( void )
 			pev->fuser1	= UTIL_WeaponTimeBase() + 2;
 
 			pev->dmgtime = gpGlobals->time + GetPulseInterval();
-			m_fireState = static_cast<int>(EgonFirestate::Charge); // TODO-001
+			m_fireState = EgonFirestate::Charge;
 		}
 		break;
 
-		case static_cast<int>(EgonFirestate::Charge): // TODO-001
+		case EgonFirestate::Charge:
 		{
 			Fire( vecSrc, vecAiming );
 			m_pPlayer->m_iWeaponVolume = EGON_PRIMARY_VOLUME;
 		
 			if ( pev->fuser1 <= UTIL_WeaponTimeBase() )
 			{
-				PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usEgonFire, 0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, m_fireState, m_fireMode, 0, 0 );
+				PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usEgonFire, 0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, static_cast<int>(m_fireState), static_cast<int>(m_fireMode), 0, 0 );
 				pev->fuser1 = 1000;
 			}
 
@@ -250,7 +250,7 @@ void CEgon::Attack( void )
 
 void CEgon::PrimaryAttack( void )
 {
-	m_fireMode = FIRE_WIDE;
+	m_fireMode = EgonFireMode::Wide;
 	Attack();
 
 }
@@ -296,7 +296,7 @@ void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 
 	switch ( m_fireMode )
 	{
-	case FIRE_NARROW:
+	case EgonFireMode::Narrow:
 #ifndef CLIENT_DLL
 		if ( pev->dmgtime < gpGlobals->time )
 		{
@@ -333,7 +333,7 @@ void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 		timedist = ( pev->dmgtime - gpGlobals->time ) / GetPulseInterval();
 		break;
 	
-	case FIRE_WIDE:
+	case EgonFireMode::Wide:
 #ifndef CLIENT_DLL
 		if ( pev->dmgtime < gpGlobals->time )
 		{
@@ -407,7 +407,7 @@ void CEgon::UpdateEffect( const Vector &startPoint, const Vector &endPoint, floa
 	m_pBeam->SetBrightness( 255 - (timeBlend*180) );
 	m_pBeam->SetWidth( 40 - (timeBlend*20) );
 
-	if ( m_fireMode == FIRE_WIDE )
+	if ( m_fireMode == EgonFireMode::Wide )
 		m_pBeam->SetColor( 30 + (25*timeBlend), 30 + (30*timeBlend), 64 + 80*fabs(sin(gpGlobals->time*10)) );
 	else
 		m_pBeam->SetColor( 60 + (25*timeBlend), 120 + (30*timeBlend), 64 + 80*fabs(sin(gpGlobals->time*10)) );
@@ -456,7 +456,7 @@ void CEgon::CreateEffect( void )
 	//m_pSprite->pev->flags |= FL_SKIPLOCALHOST;
 	m_pSprite->pev->owner = m_pPlayer->edict();
 
-	if ( m_fireMode == FIRE_WIDE )
+	if ( m_fireMode == EgonFireMode::Wide )
 	{
 		m_pBeam->SetScrollRate( 50 );
 		m_pBeam->SetNoise( 20 );
@@ -491,7 +491,7 @@ void CEgon::DestroyEffect( void )
 	}
 	if ( m_pSprite )
 	{
-		if ( m_fireMode == FIRE_WIDE )
+		if ( m_fireMode == EgonFireMode::Wide )
 			m_pSprite->Expand( 10, 500 );
 		else
 			UTIL_Remove( m_pSprite );
@@ -510,7 +510,7 @@ void CEgon::WeaponIdle( void )
 	if ( m_flTimeWeaponIdle > gpGlobals->time )
 		return;
 
-	if ( m_fireState != static_cast<int>(EgonFirestate::Off) ) // TODO-001
+	if ( m_fireState != EgonFirestate::Off) 
 		 EndAttack();
 	
 	int iAnim;
@@ -548,7 +548,7 @@ void CEgon::EndAttack( void )
 {
 	bool bMakeNoise = false;
 		
-	if ( m_fireState != static_cast<int>(EgonFirestate::Off) ) // Checking the button just in case!. TODO-001
+	if ( m_fireState != EgonFirestate::Off) // Checking the button just in case!.
 		 bMakeNoise = true;
 
 	PLAYBACK_EVENT_FULL( FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, (float *)&m_pPlayer->pev->origin, (float *)&m_pPlayer->pev->angles, 0.0, 0.0, bMakeNoise, 0, 0, 0 );
@@ -556,7 +556,7 @@ void CEgon::EndAttack( void )
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;
 
-	m_fireState = static_cast<int>(EgonFirestate::Off); // TODO-001
+	m_fireState = EgonFirestate::Off;
 
 	DestroyEffect();
 }

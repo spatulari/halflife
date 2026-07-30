@@ -1359,7 +1359,7 @@ public:
 	 * @note this is an `int` for compatibility with the original codebase, but it should be an `EgonFirestate` enum for type safety and clarity. This will be addressed in a future refactor.
 	 * @todo TODO-001: Change `m_fireState` to be of type `EgonFirestate` instead of `int` for better type safety and clarity.
 	 */
-	int m_fireState{ static_cast<int>(EgonFirestate::Off) };
+	EgonFirestate m_fireState{ EgonFirestate::Off };
 	// TODO-001: EgonFirestate m_fireState{ EgonFirestate::Off };
 };
 
