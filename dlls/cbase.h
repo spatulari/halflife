@@ -1342,7 +1342,7 @@ public:
 	/**
 	 * @brief Firing states for the Egon weapon.
 	 */
-	enum class EgonFirestate
+	enum class EgonFireState
 	{
 		/// @brief The weapon is not firing.
 		Off,
@@ -1359,8 +1359,8 @@ public:
 	 * @note this is an `int` for compatibility with the original codebase, but it should be an `EgonFirestate` enum for type safety and clarity. This will be addressed in a future refactor.
 	 * @todo TODO-001: Change `m_fireState` to be of type `EgonFirestate` instead of `int` for better type safety and clarity.
 	 */
-	EgonFirestate m_fireState{ EgonFirestate::Off };
-	// TODO-001: EgonFirestate m_fireState{ EgonFirestate::Off };
+	EgonFireState m_fireState{ EgonFireState::Off };
+	// TODO-001: EgonFireState m_fireState{ EgonFireState::Off };
 };
 
 /**
